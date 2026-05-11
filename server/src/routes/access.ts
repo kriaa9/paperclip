@@ -15,7 +15,7 @@ import { fileURLToPath } from "node:url";
 import { Router } from "express";
 import type { Request } from "express";
 import { and, desc, eq, gt, inArray, isNotNull, isNull, lte, ne, sql } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   assets,
   agentApiKeys,
@@ -27,7 +27,7 @@ import {
   invites,
   joinRequests,
   principalPermissionGrants,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   acceptInviteSchema,
   createCliAuthChallengeSchema,
@@ -44,8 +44,8 @@ import {
   updateMemberPermissionsSchema,
   updateUserCompanyAccessSchema,
   PERMISSION_KEYS
-} from "@jasminiaai/shared";
-import type { DeploymentExposure, DeploymentMode, HumanCompanyMembershipRole, PermissionKey } from "@jasminiaai/shared";
+} from "@jasminia/shared";
+import type { DeploymentExposure, DeploymentMode, HumanCompanyMembershipRole, PermissionKey } from "@jasminia/shared";
 import {
   forbidden,
   conflict,
@@ -163,7 +163,7 @@ function readSkillMarkdown(skillName: string): string | null {
 }
 
 /** Resolve the Jasmin.ia repo skills directory (built-in / managed skills). */
-function resolveJasmin.iaSkillsDir(): string | null {
+function resolveJasminiaSkillsDir(): string | null {
   const moduleDir = path.dirname(fileURLToPath(import.meta.url));
   const candidates = [
     path.resolve(moduleDir, "../../skills"),         // published
@@ -202,14 +202,14 @@ function parseSkillFrontmatter(markdown: string): { description: string } {
 interface AvailableSkill {
   name: string;
   description: string;
-  isJasmin.iaManaged: boolean;
+  isJasminiaManaged: boolean;
 }
 
 /** Discover all available Claude Code skills from ~/.claude/skills/. */
 function listAvailableSkills(): AvailableSkill[] {
   const homeDir = process.env.HOME || process.env.USERPROFILE || "";
   const claudeSkillsDir = path.join(homeDir, ".claude", "skills");
-  const jasminiaSkillsDir = resolveJasmin.iaSkillsDir();
+  const jasminiaSkillsDir = resolveJasminiaSkillsDir();
 
   // Build set of Jasmin.ia-managed skill names
   const jasminiaSkillNames = new Set<string>();
@@ -237,7 +237,7 @@ function listAvailableSkills(): AvailableSkill[] {
       skills.push({
         name: entry.name,
         description,
-        isJasmin.iaManaged: jasminiaSkillNames.has(entry.name),
+        isJasminiaManaged: jasminiaSkillNames.has(entry.name),
       });
     }
   } catch { /* ~/.claude/skills/ doesn't exist */ }
@@ -471,8 +471,8 @@ export function buildJoinDefaultsPayloadForAccept(input: {
     : ({} as Record<string, unknown>);
 
   if (!nonEmptyTrimmedString(merged.jasminiaApiUrl)) {
-    const legacyJasmin.iaApiUrl = nonEmptyTrimmedString(input.jasminiaApiUrl);
-    if (legacyJasmin.iaApiUrl) merged.jasminiaApiUrl = legacyJasmin.iaApiUrl;
+    const legacyJasminiaApiUrl = nonEmptyTrimmedString(input.jasminiaApiUrl);
+    if (legacyJasminiaApiUrl) merged.jasminiaApiUrl = legacyJasminiaApiUrl;
   }
   const mergedHeaders = normalizeHeaderMap(merged.headers) ?? {};
 
@@ -852,35 +852,35 @@ export function normalizeAgentDefaultsForJoin(input: {
     }
   }
 
-  const rawJasmin.iaApiUrl =
+  const rawJasminiaApiUrl =
     typeof defaults.jasminiaApiUrl === "string"
       ? defaults.jasminiaApiUrl.trim()
       : "";
-  if (rawJasmin.iaApiUrl) {
+  if (rawJasminiaApiUrl) {
     try {
-      const parsedJasmin.iaApiUrl = new URL(rawJasmin.iaApiUrl);
+      const parsedJasminiaApiUrl = new URL(rawJasminiaApiUrl);
       if (
-        parsedJasmin.iaApiUrl.protocol !== "http:" &&
-        parsedJasmin.iaApiUrl.protocol !== "https:"
+        parsedJasminiaApiUrl.protocol !== "http:" &&
+        parsedJasminiaApiUrl.protocol !== "https:"
       ) {
         diagnostics.push({
           code: "openclaw_gateway_jasminia_api_url_protocol",
           level: "warn",
-          message: `jasminiaApiUrl must use http:// or https:// (got ${parsedJasmin.iaApiUrl.protocol}).`
+          message: `jasminiaApiUrl must use http:// or https:// (got ${parsedJasminiaApiUrl.protocol}).`
         });
       } else {
-        normalized.jasminiaApiUrl = parsedJasmin.iaApiUrl.toString();
+        normalized.jasminiaApiUrl = parsedJasminiaApiUrl.toString();
         diagnostics.push({
           code: "openclaw_gateway_jasminia_api_url_configured",
           level: "info",
-          message: `jasminiaApiUrl set to ${parsedJasmin.iaApiUrl.toString()}`
+          message: `jasminiaApiUrl set to ${parsedJasminiaApiUrl.toString()}`
         });
       }
     } catch {
       diagnostics.push({
         code: "openclaw_gateway_jasminia_api_url_invalid",
         level: "warn",
-        message: `Invalid jasminiaApiUrl: ${rawJasmin.iaApiUrl}`
+        message: `Invalid jasminiaApiUrl: ${rawJasminiaApiUrl}`
       });
     }
   }
@@ -1457,7 +1457,7 @@ function buildOnboardingDiscoveryDiagnostics(input: {
       code: "openclaw_onboarding_private_host_not_allowed",
       level: "warn",
       message: `Onboarding host "${apiHost}" is not in allowed hostnames for authenticated/private mode.`,
-      hint: `Run pnpm jasminiaai allowed-hostname ${apiHost}`
+      hint: `Run pnpm jasminia allowed-hostname ${apiHost}`
     });
   }
 
@@ -1588,7 +1588,7 @@ function buildInviteOnboardingManifest(
         guidance:
           opts.deploymentMode === "authenticated" &&
           opts.deploymentExposure === "private"
-            ? "If OpenClaw runs on another machine, ensure the Jasmin.ia hostname is reachable and allowed via `pnpm jasminiaai allowed-hostname <host>`."
+            ? "If OpenClaw runs on another machine, ensure the Jasmin.ia hostname is reachable and allowed via `pnpm jasminia allowed-hostname <host>`."
             : "Ensure OpenClaw can reach this Jasmin.ia API base URL for invite, claim, and skill bootstrap calls."
       },
       textInstructions: {
@@ -1821,7 +1821,7 @@ export function buildInviteOnboardingTextDocument(
 
       If none are reachable: ask your human operator for a reachable hostname/address and help them update network configuration.
       For authenticated/private mode, they may need:
-      - pnpm jasminiaai allowed-hostname <host>
+      - pnpm jasminia allowed-hostname <host>
       - then restart Jasmin.ia and retry onboarding.
     `);
   }

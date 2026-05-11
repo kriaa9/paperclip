@@ -65,7 +65,7 @@ function createBootstrapInvite() {
     pnpmCommand,
     [
       "--filter",
-      "@jasminiaai/db",
+      "@jasminia/db",
       "exec",
       "tsx",
       BOOTSTRAP_SCRIPT_PATH,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildCodexLocalConfig } from "./build-config.js";
-import type { CreateConfigValues } from "@jasminiaai/adapter-utils";
+import type { CreateConfigValues } from "@jasminia/adapter-utils";
 
 function makeValues(overrides: Partial<CreateConfigValues> = {}): CreateConfigValues {
   return {

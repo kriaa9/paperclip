@@ -1,4 +1,4 @@
-# `@jasminiaai/plugin-cloudflare-sandbox`
+# `@jasminia/plugin-cloudflare-sandbox`
 
 Published Cloudflare sandbox provider plugin for Jasmin.ia.
 
@@ -9,7 +9,7 @@ This package lives in the Jasmin.ia monorepo, but it is intentionally excluded f
 From a Jasmin.ia instance, install:
 
 ```text
-@jasminiaai/plugin-cloudflare-sandbox
+@jasminia/plugin-cloudflare-sandbox
 ```
 
 Configure Cloudflare from `Company Settings -> Environments`, not from the plugin's instance settings page.
@@ -45,4 +45,4 @@ pnpm test
 pnpm typecheck
 ```
 
-These commands assume the repo root has already been installed once so the local `@jasminiaai/plugin-sdk` workspace package is available to the compiler during development.
+These commands assume the repo root has already been installed once so the local `@jasminia/plugin-sdk` workspace package is available to the compiler during development.

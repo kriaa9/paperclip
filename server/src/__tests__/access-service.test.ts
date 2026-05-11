@@ -8,7 +8,7 @@ import {
   instanceUserRoles,
   issues,
   principalPermissionGrants,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,

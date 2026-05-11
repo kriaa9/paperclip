@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { agents } from "@jasminiaai/db";
-import { sessionCodec as codexSessionCodec } from "@jasminiaai/adapter-codex-local/server";
+import type { agents } from "@jasminia/db";
+import { sessionCodec as codexSessionCodec } from "@jasminia/adapter-codex-local/server";
 import { resolveDefaultAgentWorkspaceDir } from "../home-paths.js";
 import {
   applyPersistedExecutionWorkspaceConfig,

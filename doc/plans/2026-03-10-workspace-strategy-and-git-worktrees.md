@@ -1177,7 +1177,7 @@ Acceptance:
 
 - runtime service startup remains opt-in
 - failures produce actionable run logs and issue comments
-- same embedded DB / Jasmin.ia instance can be reused through env/config injection when appropriate
+- same embedded DB / Jasminia instance can be reused through env/config injection when appropriate
 - remote service realizations are represented without pretending to be local processes
 
 ## Phase 5: Runtime Service Reuse, Tracking, and Shutdown

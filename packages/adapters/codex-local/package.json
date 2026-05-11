@@ -2,13 +2,13 @@
   "name": "@jasminia/adapter-codex-local",
   "version": "0.3.1",
   "license": "MIT",
-  "homepage": "#
+  "homepage": "#",
   "bugs": {
-    "url": "#
+    "url": "#"
   },
   "repository": {
     "type": "git",
-    "url": "#
+    "url": "#",
     "directory": "packages/adapters/codex-local"
   },
   "type": "module",

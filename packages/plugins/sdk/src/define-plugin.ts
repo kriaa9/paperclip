@@ -11,7 +11,7 @@
  * @example
  * ```ts
  * // dist/worker.ts
- * import { definePlugin } from "@jasminiaai/plugin-sdk";
+ * import { definePlugin } from "@jasminia/plugin-sdk";
  *
  * export default definePlugin({
  *   async setup(ctx) {
@@ -288,7 +288,7 @@ export interface PluginDefinition {
 }
 
 // ---------------------------------------------------------------------------
-// Jasmin.iaPlugin — the sealed object returned by definePlugin()
+// JasminiaPlugin — the sealed object returned by definePlugin()
 // ---------------------------------------------------------------------------
 
 /**
@@ -299,7 +299,7 @@ export interface PluginDefinition {
  *
  * @see PLUGIN_SPEC.md §14 — SDK Surface
  */
-export interface Jasmin.iaPlugin {
+export interface JasminiaPlugin {
   /** The original plugin definition passed to `definePlugin()`. */
   readonly definition: PluginDefinition;
 }
@@ -316,11 +316,11 @@ export interface Jasmin.iaPlugin {
  * on the returned object.
  *
  * @param definition - Plugin lifecycle handlers
- * @returns A sealed `Jasmin.iaPlugin` object for the host to consume
+ * @returns A sealed `JasminiaPlugin` object for the host to consume
  *
  * @example
  * ```ts
- * import { definePlugin } from "@jasminiaai/plugin-sdk";
+ * import { definePlugin } from "@jasminia/plugin-sdk";
  *
  * export default definePlugin({
  *   async setup(ctx) {
@@ -338,6 +338,6 @@ export interface Jasmin.iaPlugin {
  *
  * @see PLUGIN_SPEC.md §14.1 — Example SDK Shape
  */
-export function definePlugin(definition: PluginDefinition): Jasmin.iaPlugin {
+export function definePlugin(definition: PluginDefinition): JasminiaPlugin {
   return Object.freeze({ definition });
 }

@@ -1,4 +1,4 @@
-import type { RoutineListItem } from "@jasminiaai/shared";
+import type { RoutineListItem } from "@jasminia/shared";
 import { describe, expect, it } from "vitest";
 import {
   getWorkspaceSpecificRoutineVariableNames,

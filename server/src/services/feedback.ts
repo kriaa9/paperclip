@@ -1,7 +1,7 @@
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { and, asc, desc, eq, getTableColumns, gte, lte, ne, or } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   agents,
   companies,
@@ -17,11 +17,11 @@ import {
   issueComments,
   issueDocuments,
   issues,
-} from "@jasminiaai/db";
-import { readJasmin.iaSkillSyncPreference } from "@jasminiaai/adapter-utils/server-utils";
-import { claudeConfigDir, parseClaudeStreamJson } from "@jasminiaai/adapter-claude-local/server";
-import { codexHomeDir, parseCodexJsonl } from "@jasminiaai/adapter-codex-local/server";
-import { parseOpenCodeJsonl } from "@jasminiaai/adapter-opencode-local/server";
+} from "@jasminia/db";
+import { readJasminiaSkillSyncPreference } from "@jasminia/adapter-utils/server-utils";
+import { claudeConfigDir, parseClaudeStreamJson } from "@jasminia/adapter-claude-local/server";
+import { codexHomeDir, parseCodexJsonl } from "@jasminia/adapter-codex-local/server";
+import { parseOpenCodeJsonl } from "@jasminia/adapter-opencode-local/server";
 import {
   DEFAULT_FEEDBACK_DATA_SHARING_PREFERENCE,
   DEFAULT_FEEDBACK_DATA_SHARING_TERMS_VERSION,
@@ -34,8 +34,8 @@ import {
   type FeedbackTraceStatus,
   type FeedbackTraceTargetSummary,
   type FeedbackVoteValue,
-} from "@jasminiaai/shared";
-import { resolveHomeAwarePath, resolveJasmin.iaInstanceRoot } from "../home-paths.js";
+} from "@jasminia/shared";
+import { resolveHomeAwarePath, resolveJasminiaInstanceRoot } from "../home-paths.js";
 import { notFound, unprocessable } from "../errors.js";
 import { agentInstructionsService } from "./agent-instructions.js";
 import {
@@ -391,7 +391,7 @@ async function buildCodexTraceFiles(input: {
   }
 
   const managedRoot = path.join(
-    resolveJasmin.iaInstanceRoot(),
+    resolveJasminiaInstanceRoot(),
     "companies",
     input.companyId,
     "codex-home",
@@ -1106,7 +1106,7 @@ async function buildAgentContext(
 
   const adapterConfig = asRecord(agent.adapterConfig) ?? {};
   const runtimeConfig = asRecord(agent.runtimeConfig) ?? {};
-  const desiredSkillRefs = uniqueNonEmpty(readJasmin.iaSkillSyncPreference(adapterConfig).desiredSkills).slice(0, MAX_SKILLS);
+  const desiredSkillRefs = uniqueNonEmpty(readJasminiaSkillSyncPreference(adapterConfig).desiredSkills).slice(0, MAX_SKILLS);
   const availableSkills = desiredSkillRefs.length === 0
     ? []
     : await db

@@ -1,7 +1,7 @@
 import express from "express";
 import request from "supertest";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { pluginManifestV1Schema, type Jasmin.iaPluginManifestV1 } from "@jasminiaai/shared";
+import { pluginManifestV1Schema, type JasminiaPluginManifestV1 } from "@jasminia/shared";
 
 const mockRegistry = vi.hoisted(() => ({
   getById: vi.fn(),
@@ -38,7 +38,7 @@ vi.mock("../services/live-events.js", () => ({
   publishGlobalLiveEvent: vi.fn(),
 }));
 
-function manifest(apiRoutes: NonNullable<Jasmin.iaPluginManifestV1["apiRoutes"]>): Jasmin.iaPluginManifestV1 {
+function manifest(apiRoutes: NonNullable<JasminiaPluginManifestV1["apiRoutes"]>): JasminiaPluginManifestV1 {
   return {
     id: "jasminia.scoped-api-test",
     apiVersion: 1,

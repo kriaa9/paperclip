@@ -1,6 +1,6 @@
 import { and, eq, gte, sql } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { agents, approvals, companies, costEvents, heartbeatRuns, issues } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { agents, approvals, companies, costEvents, heartbeatRuns, issues } from "@jasminia/db";
 import { notFound } from "../errors.js";
 import { budgetService } from "./budgets.js";
 

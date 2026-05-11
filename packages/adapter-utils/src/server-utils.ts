@@ -97,7 +97,7 @@ function expandHomePrefix(value: string): string {
   return value;
 }
 
-export function resolveJasmin.iaInstanceRootForAdapter(input: {
+export function resolveJasminiaInstanceRootForAdapter(input: {
   homeDir?: string;
   instanceId?: string;
   env?: NodeJS.ProcessEnv;
@@ -129,7 +129,7 @@ export const DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE = [
   "- Respect budget, pause/cancel, approval gates, and company boundaries.",
 ].join("\n");
 
-export interface Jasmin.iaSkillEntry {
+export interface JasminiaSkillEntry {
   key: string;
   runtimeName: string;
   source: string;
@@ -142,14 +142,14 @@ export interface InstalledSkillTarget {
   kind: "symlink" | "directory" | "file";
 }
 
-export interface MaterializedJasmin.iaSkillCopyResult {
+export interface MaterializedJasminiaSkillCopyResult {
   copiedFiles: number;
   skippedSymlinks: string[];
 }
 
 interface PersistentSkillSnapshotOptions {
   adapterType: string;
-  availableEntries: Jasmin.iaSkillEntry[];
+  availableEntries: JasminiaSkillEntry[];
   desiredSkills: string[];
   installed: Map<string, InstalledSkillTarget>;
   skillsHome: string;
@@ -300,7 +300,7 @@ export function joinPromptSections(
     .join(separator);
 }
 
-type Jasmin.iaWakeIssue = {
+type JasminiaWakeIssue = {
   id: string | null;
   identifier: string | null;
   title: string | null;
@@ -309,18 +309,18 @@ type Jasmin.iaWakeIssue = {
   priority: string | null;
 };
 
-type Jasmin.iaWakeExecutionPrincipal = {
+type JasminiaWakeExecutionPrincipal = {
   type: "agent" | "user" | null;
   agentId: string | null;
   userId: string | null;
 };
 
-type Jasmin.iaWakeExecutionStage = {
+type JasminiaWakeExecutionStage = {
   wakeRole: "reviewer" | "approver" | "executor" | null;
   stageId: string | null;
   stageType: string | null;
-  currentParticipant: Jasmin.iaWakeExecutionPrincipal | null;
-  returnAssignee: Jasmin.iaWakeExecutionPrincipal | null;
+  currentParticipant: JasminiaWakeExecutionPrincipal | null;
+  returnAssignee: JasminiaWakeExecutionPrincipal | null;
   reviewRequest: {
     instructions: string;
   } | null;
@@ -328,7 +328,7 @@ type Jasmin.iaWakeExecutionStage = {
   allowedActions: string[];
 };
 
-type Jasmin.iaWakeComment = {
+type JasminiaWakeComment = {
   id: string | null;
   issueId: string | null;
   body: string;
@@ -338,7 +338,7 @@ type Jasmin.iaWakeComment = {
   authorId: string | null;
 };
 
-type Jasmin.iaWakeContinuationSummary = {
+type JasminiaWakeContinuationSummary = {
   key: string | null;
   title: string | null;
   body: string;
@@ -346,7 +346,7 @@ type Jasmin.iaWakeContinuationSummary = {
   updatedAt: string | null;
 };
 
-type Jasmin.iaWakeLivenessContinuation = {
+type JasminiaWakeLivenessContinuation = {
   attempt: number | null;
   maxAttempts: number | null;
   sourceRunId: string | null;
@@ -355,7 +355,7 @@ type Jasmin.iaWakeLivenessContinuation = {
   instruction: string | null;
 };
 
-type Jasmin.iaWakeChildIssueSummary = {
+type JasminiaWakeChildIssueSummary = {
   id: string | null;
   identifier: string | null;
   title: string | null;
@@ -364,7 +364,7 @@ type Jasmin.iaWakeChildIssueSummary = {
   summary: string | null;
 };
 
-type Jasmin.iaWakeBlockerSummary = {
+type JasminiaWakeBlockerSummary = {
   id: string | null;
   identifier: string | null;
   title: string | null;
@@ -372,32 +372,32 @@ type Jasmin.iaWakeBlockerSummary = {
   priority: string | null;
 };
 
-type Jasmin.iaWakeTreeHoldSummary = {
+type JasminiaWakeTreeHoldSummary = {
   holdId: string | null;
   rootIssueId: string | null;
   mode: string | null;
   reason: string | null;
 };
 
-type Jasmin.iaWakePayload = {
+type JasminiaWakePayload = {
   reason: string | null;
-  issue: Jasmin.iaWakeIssue | null;
+  issue: JasminiaWakeIssue | null;
   checkedOutByHarness: boolean;
   dependencyBlockedInteraction: boolean;
   treeHoldInteraction: boolean;
-  activeTreeHold: Jasmin.iaWakeTreeHoldSummary | null;
+  activeTreeHold: JasminiaWakeTreeHoldSummary | null;
   unresolvedBlockerIssueIds: string[];
-  unresolvedBlockerSummaries: Jasmin.iaWakeBlockerSummary[];
-  executionStage: Jasmin.iaWakeExecutionStage | null;
-  continuationSummary: Jasmin.iaWakeContinuationSummary | null;
-  livenessContinuation: Jasmin.iaWakeLivenessContinuation | null;
+  unresolvedBlockerSummaries: JasminiaWakeBlockerSummary[];
+  executionStage: JasminiaWakeExecutionStage | null;
+  continuationSummary: JasminiaWakeContinuationSummary | null;
+  livenessContinuation: JasminiaWakeLivenessContinuation | null;
   interactionKind: string | null;
   interactionStatus: string | null;
-  childIssueSummaries: Jasmin.iaWakeChildIssueSummary[];
+  childIssueSummaries: JasminiaWakeChildIssueSummary[];
   childIssueSummaryTruncated: boolean;
   commentIds: string[];
   latestCommentId: string | null;
-  comments: Jasmin.iaWakeComment[];
+  comments: JasminiaWakeComment[];
   requestedCount: number;
   includedCount: number;
   missingCount: number;
@@ -405,7 +405,7 @@ type Jasmin.iaWakePayload = {
   fallbackFetchNeeded: boolean;
 };
 
-function normalizeJasmin.iaWakeIssue(value: unknown): Jasmin.iaWakeIssue | null {
+function normalizeJasminiaWakeIssue(value: unknown): JasminiaWakeIssue | null {
   const issue = parseObject(value);
   const id = asString(issue.id, "").trim() || null;
   const identifier = asString(issue.identifier, "").trim() || null;
@@ -424,7 +424,7 @@ function normalizeJasmin.iaWakeIssue(value: unknown): Jasmin.iaWakeIssue | null 
   };
 }
 
-function normalizeJasmin.iaWakeComment(value: unknown): Jasmin.iaWakeComment | null {
+function normalizeJasminiaWakeComment(value: unknown): JasminiaWakeComment | null {
   const comment = parseObject(value);
   const author = parseObject(comment.author);
   const body = asString(comment.body, "");
@@ -440,7 +440,7 @@ function normalizeJasmin.iaWakeComment(value: unknown): Jasmin.iaWakeComment | n
   };
 }
 
-function normalizeJasmin.iaWakeContinuationSummary(value: unknown): Jasmin.iaWakeContinuationSummary | null {
+function normalizeJasminiaWakeContinuationSummary(value: unknown): JasminiaWakeContinuationSummary | null {
   const summary = parseObject(value);
   const body = asString(summary.body, "").trim();
   if (!body) return null;
@@ -453,7 +453,7 @@ function normalizeJasmin.iaWakeContinuationSummary(value: unknown): Jasmin.iaWak
   };
 }
 
-function normalizeJasmin.iaWakeLivenessContinuation(value: unknown): Jasmin.iaWakeLivenessContinuation | null {
+function normalizeJasminiaWakeLivenessContinuation(value: unknown): JasminiaWakeLivenessContinuation | null {
   const continuation = parseObject(value);
   const attempt = asNumber(continuation.attempt, 0);
   const maxAttempts = asNumber(continuation.maxAttempts, 0);
@@ -472,7 +472,7 @@ function normalizeJasmin.iaWakeLivenessContinuation(value: unknown): Jasmin.iaWa
   };
 }
 
-function normalizeJasmin.iaWakeChildIssueSummary(value: unknown): Jasmin.iaWakeChildIssueSummary | null {
+function normalizeJasminiaWakeChildIssueSummary(value: unknown): JasminiaWakeChildIssueSummary | null {
   const child = parseObject(value);
   const id = asString(child.id, "").trim() || null;
   const identifier = asString(child.identifier, "").trim() || null;
@@ -484,7 +484,7 @@ function normalizeJasmin.iaWakeChildIssueSummary(value: unknown): Jasmin.iaWakeC
   return { id, identifier, title, status, priority, summary };
 }
 
-function normalizeJasmin.iaWakeBlockerSummary(value: unknown): Jasmin.iaWakeBlockerSummary | null {
+function normalizeJasminiaWakeBlockerSummary(value: unknown): JasminiaWakeBlockerSummary | null {
   const blocker = parseObject(value);
   const id = asString(blocker.id, "").trim() || null;
   const identifier = asString(blocker.identifier, "").trim() || null;
@@ -495,7 +495,7 @@ function normalizeJasmin.iaWakeBlockerSummary(value: unknown): Jasmin.iaWakeBloc
   return { id, identifier, title, status, priority };
 }
 
-function normalizeJasmin.iaWakeTreeHoldSummary(value: unknown): Jasmin.iaWakeTreeHoldSummary | null {
+function normalizeJasminiaWakeTreeHoldSummary(value: unknown): JasminiaWakeTreeHoldSummary | null {
   const hold = parseObject(value);
   const holdId = asString(hold.holdId, "").trim() || null;
   const rootIssueId = asString(hold.rootIssueId, "").trim() || null;
@@ -505,7 +505,7 @@ function normalizeJasmin.iaWakeTreeHoldSummary(value: unknown): Jasmin.iaWakeTre
   return { holdId, rootIssueId, mode, reason };
 }
 
-function normalizeJasmin.iaWakeExecutionPrincipal(value: unknown): Jasmin.iaWakeExecutionPrincipal | null {
+function normalizeJasminiaWakeExecutionPrincipal(value: unknown): JasminiaWakeExecutionPrincipal | null {
   const principal = parseObject(value);
   const typeRaw = asString(principal.type, "").trim().toLowerCase();
   if (typeRaw !== "agent" && typeRaw !== "user") return null;
@@ -516,7 +516,7 @@ function normalizeJasmin.iaWakeExecutionPrincipal(value: unknown): Jasmin.iaWake
   };
 }
 
-function normalizeJasmin.iaWakeExecutionStage(value: unknown): Jasmin.iaWakeExecutionStage | null {
+function normalizeJasminiaWakeExecutionStage(value: unknown): JasminiaWakeExecutionStage | null {
   const stage = parseObject(value);
   const wakeRoleRaw = asString(stage.wakeRole, "").trim().toLowerCase();
   const wakeRole =
@@ -528,8 +528,8 @@ function normalizeJasmin.iaWakeExecutionStage(value: unknown): Jasmin.iaWakeExec
         .filter((entry): entry is string => typeof entry === "string" && entry.trim().length > 0)
         .map((entry) => entry.trim())
     : [];
-  const currentParticipant = normalizeJasmin.iaWakeExecutionPrincipal(stage.currentParticipant);
-  const returnAssignee = normalizeJasmin.iaWakeExecutionPrincipal(stage.returnAssignee);
+  const currentParticipant = normalizeJasminiaWakeExecutionPrincipal(stage.currentParticipant);
+  const returnAssignee = normalizeJasminiaWakeExecutionPrincipal(stage.returnAssignee);
   const reviewRequestRaw = parseObject(stage.reviewRequest);
   const reviewInstructions = asString(reviewRequestRaw.instructions, "").trim();
   const reviewRequest = reviewInstructions ? { instructions: reviewInstructions } : null;
@@ -553,12 +553,12 @@ function normalizeJasmin.iaWakeExecutionStage(value: unknown): Jasmin.iaWakeExec
   };
 }
 
-export function normalizeJasmin.iaWakePayload(value: unknown): Jasmin.iaWakePayload | null {
+export function normalizeJasminiaWakePayload(value: unknown): JasminiaWakePayload | null {
   const payload = parseObject(value);
   const comments = Array.isArray(payload.comments)
     ? payload.comments
-        .map((entry) => normalizeJasmin.iaWakeComment(entry))
-        .filter((entry): entry is Jasmin.iaWakeComment => Boolean(entry))
+        .map((entry) => normalizeJasminiaWakeComment(entry))
+        .filter((entry): entry is JasminiaWakeComment => Boolean(entry))
     : [];
   const commentWindow = parseObject(payload.commentWindow);
   const commentIds = Array.isArray(payload.commentIds)
@@ -566,13 +566,13 @@ export function normalizeJasmin.iaWakePayload(value: unknown): Jasmin.iaWakePayl
         .filter((entry): entry is string => typeof entry === "string" && entry.trim().length > 0)
         .map((entry) => entry.trim())
     : [];
-  const executionStage = normalizeJasmin.iaWakeExecutionStage(payload.executionStage);
-  const continuationSummary = normalizeJasmin.iaWakeContinuationSummary(payload.continuationSummary);
-  const livenessContinuation = normalizeJasmin.iaWakeLivenessContinuation(payload.livenessContinuation);
+  const executionStage = normalizeJasminiaWakeExecutionStage(payload.executionStage);
+  const continuationSummary = normalizeJasminiaWakeContinuationSummary(payload.continuationSummary);
+  const livenessContinuation = normalizeJasminiaWakeLivenessContinuation(payload.livenessContinuation);
   const childIssueSummaries = Array.isArray(payload.childIssueSummaries)
     ? payload.childIssueSummaries
-        .map((entry) => normalizeJasmin.iaWakeChildIssueSummary(entry))
-        .filter((entry): entry is Jasmin.iaWakeChildIssueSummary => Boolean(entry))
+        .map((entry) => normalizeJasminiaWakeChildIssueSummary(entry))
+        .filter((entry): entry is JasminiaWakeChildIssueSummary => Boolean(entry))
     : [];
   const unresolvedBlockerIssueIds = Array.isArray(payload.unresolvedBlockerIssueIds)
     ? payload.unresolvedBlockerIssueIds
@@ -581,18 +581,18 @@ export function normalizeJasmin.iaWakePayload(value: unknown): Jasmin.iaWakePayl
     : [];
   const unresolvedBlockerSummaries = Array.isArray(payload.unresolvedBlockerSummaries)
     ? payload.unresolvedBlockerSummaries
-        .map((entry) => normalizeJasmin.iaWakeBlockerSummary(entry))
-        .filter((entry): entry is Jasmin.iaWakeBlockerSummary => Boolean(entry))
+        .map((entry) => normalizeJasminiaWakeBlockerSummary(entry))
+        .filter((entry): entry is JasminiaWakeBlockerSummary => Boolean(entry))
     : [];
 
-  const activeTreeHold = normalizeJasmin.iaWakeTreeHoldSummary(payload.activeTreeHold);
-  if (comments.length === 0 && commentIds.length === 0 && childIssueSummaries.length === 0 && unresolvedBlockerIssueIds.length === 0 && unresolvedBlockerSummaries.length === 0 && !activeTreeHold && !executionStage && !continuationSummary && !livenessContinuation && !normalizeJasmin.iaWakeIssue(payload.issue)) {
+  const activeTreeHold = normalizeJasminiaWakeTreeHoldSummary(payload.activeTreeHold);
+  if (comments.length === 0 && commentIds.length === 0 && childIssueSummaries.length === 0 && unresolvedBlockerIssueIds.length === 0 && unresolvedBlockerSummaries.length === 0 && !activeTreeHold && !executionStage && !continuationSummary && !livenessContinuation && !normalizeJasminiaWakeIssue(payload.issue)) {
     return null;
   }
 
   return {
     reason: asString(payload.reason, "").trim() || null,
-    issue: normalizeJasmin.iaWakeIssue(payload.issue),
+    issue: normalizeJasminiaWakeIssue(payload.issue),
     checkedOutByHarness: asBoolean(payload.checkedOutByHarness, false),
     dependencyBlockedInteraction: asBoolean(payload.dependencyBlockedInteraction, false),
     treeHoldInteraction: asBoolean(payload.treeHoldInteraction, false),
@@ -617,30 +617,30 @@ export function normalizeJasmin.iaWakePayload(value: unknown): Jasmin.iaWakePayl
   };
 }
 
-export function stringifyJasmin.iaWakePayload(value: unknown): string | null {
-  const normalized = normalizeJasmin.iaWakePayload(value);
+export function stringifyJasminiaWakePayload(value: unknown): string | null {
+  const normalized = normalizeJasminiaWakePayload(value);
   if (!normalized) return null;
   return JSON.stringify(normalized);
 }
 
-export function readJasmin.iaIssueWorkModeFromContext(value: unknown): string | null {
+export function readJasminiaIssueWorkModeFromContext(value: unknown): string | null {
   const context = parseObject(value);
   const issue = parseObject(context.jasminiaIssue);
   const direct = asString(issue.workMode, "").trim();
   if (direct) return direct;
-  const wake = normalizeJasmin.iaWakePayload(context.jasminiaWake);
+  const wake = normalizeJasminiaWakePayload(context.jasminiaWake);
   return wake?.issue?.workMode ?? null;
 }
 
-export function renderJasmin.iaWakePrompt(
+export function renderJasminiaWakePrompt(
   value: unknown,
   options: { resumedSession?: boolean } = {},
 ): string {
-  const normalized = normalizeJasmin.iaWakePayload(value);
+  const normalized = normalizeJasminiaWakePayload(value);
   if (!normalized) return "";
   const resumedSession = options.resumedSession === true;
   const executionStage = normalized.executionStage;
-  const principalLabel = (principal: Jasmin.iaWakeExecutionPrincipal | null) => {
+  const principalLabel = (principal: JasminiaWakeExecutionPrincipal | null) => {
     if (!principal || !principal.type) return "unknown";
     if (principal.type === "agent") return principal.agentId ? `agent ${principal.agentId}` : "agent";
     return principal.userId ? `user ${principal.userId}` : "user";
@@ -890,7 +890,7 @@ export function buildInvocationEnvForLogs(
   return redactEnvForLogs(merged);
 }
 
-export function buildJasmin.iaEnv(agent: { id: string; companyId: string }): Record<string, string> {
+export function buildJasminiaEnv(agent: { id: string; companyId: string }): Record<string, string> {
   const resolveHostForUrl = (rawHost: string): string => {
     const host = rawHost.trim();
     if (!host || host === "0.0.0.0" || host === "::") return "localhost";
@@ -913,7 +913,7 @@ export function buildJasmin.iaEnv(agent: { id: string; companyId: string }): Rec
   return vars;
 }
 
-export function applyJasmin.iaWorkspaceEnv(
+export function applyJasminiaWorkspaceEnv(
   env: Record<string, string>,
   input: {
     workspaceCwd?: string | null;
@@ -948,7 +948,7 @@ export function applyJasmin.iaWorkspaceEnv(
   return env;
 }
 
-export function shapeJasmin.iaWorkspaceEnvForExecution(input: {
+export function shapeJasminiaWorkspaceEnvForExecution(input: {
   workspaceCwd?: string | null;
   workspaceWorktreePath?: string | null;
   workspaceHints?: Array<Record<string, unknown>>;
@@ -990,7 +990,7 @@ export function shapeJasmin.iaWorkspaceEnvForExecution(input: {
   if (executionCwd === null) {
     // eslint-disable-next-line no-console
     console.warn(
-      "[jasminia] shapeJasmin.iaWorkspaceEnvForExecution called with executionCwd=null on a remote target; " +
+      "[jasminia] shapeJasminiaWorkspaceEnvForExecution called with executionCwd=null on a remote target; " +
         "stripping workspaceCwd to avoid leaking local paths into the remote environment.",
     );
   }
@@ -1058,7 +1058,7 @@ export function rewriteWorkspaceCwdEnvVarsForExecution(input: {
   return nextEnv;
 }
 
-export function refreshJasmin.iaWorkspaceEnvForExecution(input: {
+export function refreshJasminiaWorkspaceEnvForExecution(input: {
   env: Record<string, string>;
   envConfig?: Record<string, unknown>;
   workspaceCwd?: string | null;
@@ -1078,7 +1078,7 @@ export function refreshJasmin.iaWorkspaceEnvForExecution(input: {
   workspaceWorktreePath: string | null;
   workspaceHints: Array<Record<string, unknown>>;
 } {
-  const shapedWorkspaceEnv = shapeJasmin.iaWorkspaceEnvForExecution({
+  const shapedWorkspaceEnv = shapeJasminiaWorkspaceEnvForExecution({
     workspaceCwd: input.workspaceCwd,
     workspaceWorktreePath: input.workspaceWorktreePath,
     workspaceHints: input.workspaceHints,
@@ -1090,7 +1090,7 @@ export function refreshJasmin.iaWorkspaceEnvForExecution(input: {
   delete input.env.JASMINIA_WORKSPACE_WORKTREE_PATH;
   delete input.env.JASMINIA_WORKSPACES_JSON;
 
-  applyJasmin.iaWorkspaceEnv(input.env, {
+  applyJasminiaWorkspaceEnv(input.env, {
     workspaceCwd: shapedWorkspaceEnv.workspaceCwd,
     workspaceSource: input.workspaceSource,
     workspaceStrategy: input.workspaceStrategy,
@@ -1119,7 +1119,7 @@ export function refreshJasmin.iaWorkspaceEnvForExecution(input: {
   return shapedWorkspaceEnv;
 }
 
-export function sanitizeInheritedJasmin.iaEnv(baseEnv: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
+export function sanitizeInheritedJasminiaEnv(baseEnv: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
   const env: NodeJS.ProcessEnv = { ...baseEnv };
   for (const key of Object.keys(env)) {
     if (!key.startsWith("JASMINIA_")) continue;
@@ -1308,7 +1308,7 @@ export async function ensureAbsoluteDirectory(
   }
 }
 
-export async function resolveJasmin.iaSkillsDir(
+export async function resolveJasminiaSkillsDir(
   moduleDir: string,
   additionalCandidates: string[] = [],
 ): Promise<string | null> {
@@ -1342,11 +1342,11 @@ async function readSkillRequired(skillDir: string): Promise<boolean> {
   }
 }
 
-export async function listJasmin.iaSkillEntries(
+export async function listJasminiaSkillEntries(
   moduleDir: string,
   additionalCandidates: string[] = [],
-): Promise<Jasmin.iaSkillEntry[]> {
-  const root = await resolveJasmin.iaSkillsDir(moduleDir, additionalCandidates);
+): Promise<JasminiaSkillEntry[]> {
+  const root = await resolveJasminiaSkillsDir(moduleDir, additionalCandidates);
   if (!root) return [];
 
   try {
@@ -1356,7 +1356,7 @@ export async function listJasmin.iaSkillEntries(
       const skillDir = path.join(root, entry.name);
       const required = await readSkillRequired(skillDir);
       return {
-        key: `jasminiaai/jasminia/${entry.name}`,
+        key: `jasminia/jasminia/${entry.name}`,
         runtimeName: entry.name,
         source: skillDir,
         required,
@@ -1483,9 +1483,9 @@ export function buildPersistentSkillSnapshot(
   };
 }
 
-function normalizeConfiguredJasmin.iaRuntimeSkills(value: unknown): Jasmin.iaSkillEntry[] {
+function normalizeConfiguredJasminiaRuntimeSkills(value: unknown): JasminiaSkillEntry[] {
   if (!Array.isArray(value)) return [];
-  const out: Jasmin.iaSkillEntry[] = [];
+  const out: JasminiaSkillEntry[] = [];
   for (const rawEntry of value) {
     const entry = parseObject(rawEntry);
     const key = asString(entry.key, asString(entry.name, "")).trim();
@@ -1506,24 +1506,24 @@ function normalizeConfiguredJasmin.iaRuntimeSkills(value: unknown): Jasmin.iaSki
   return out;
 }
 
-export async function readJasmin.iaRuntimeSkillEntries(
+export async function readJasminiaRuntimeSkillEntries(
   config: Record<string, unknown>,
   moduleDir: string,
   additionalCandidates: string[] = [],
-): Promise<Jasmin.iaSkillEntry[]> {
-  const configuredEntries = normalizeConfiguredJasmin.iaRuntimeSkills(config.jasminiaRuntimeSkills);
+): Promise<JasminiaSkillEntry[]> {
+  const configuredEntries = normalizeConfiguredJasminiaRuntimeSkills(config.jasminiaRuntimeSkills);
   if (configuredEntries.length > 0) return configuredEntries;
-  return listJasmin.iaSkillEntries(moduleDir, additionalCandidates);
+  return listJasminiaSkillEntries(moduleDir, additionalCandidates);
 }
 
-export async function readJasmin.iaSkillMarkdown(
+export async function readJasminiaSkillMarkdown(
   moduleDir: string,
   skillKey: string,
 ): Promise<string | null> {
   const normalized = skillKey.trim().toLowerCase();
   if (!normalized) return null;
 
-  const entries = await listJasmin.iaSkillEntries(moduleDir);
+  const entries = await listJasminiaSkillEntries(moduleDir);
   const match = entries.find((entry) => entry.key === normalized);
   if (!match) return null;
 
@@ -1534,7 +1534,7 @@ export async function readJasmin.iaSkillMarkdown(
   }
 }
 
-export function readJasmin.iaSkillSyncPreference(config: Record<string, unknown>): {
+export function readJasminiaSkillSyncPreference(config: Record<string, unknown>): {
   explicit: boolean;
   desiredSkills: string[];
 } {
@@ -1556,7 +1556,7 @@ export function readJasmin.iaSkillSyncPreference(config: Record<string, unknown>
   };
 }
 
-function canonicalizeDesiredJasmin.iaSkillReference(
+function canonicalizeDesiredJasminiaSkillReference(
   reference: string,
   availableEntries: Array<{ key: string; runtimeName?: string | null }>,
 ): string {
@@ -1579,11 +1579,11 @@ function canonicalizeDesiredJasmin.iaSkillReference(
   return normalizedReference;
 }
 
-export function resolveJasmin.iaDesiredSkillNames(
+export function resolveJasminiaDesiredSkillNames(
   config: Record<string, unknown>,
   availableEntries: Array<{ key: string; runtimeName?: string | null; required?: boolean }>,
 ): string[] {
-  const preference = readJasmin.iaSkillSyncPreference(config);
+  const preference = readJasminiaSkillSyncPreference(config);
   const requiredSkills = availableEntries
     .filter((entry) => entry.required)
     .map((entry) => entry.key);
@@ -1591,12 +1591,12 @@ export function resolveJasmin.iaDesiredSkillNames(
     return Array.from(new Set(requiredSkills));
   }
   const desiredSkills = preference.desiredSkills
-    .map((reference) => canonicalizeDesiredJasmin.iaSkillReference(reference, availableEntries))
+    .map((reference) => canonicalizeDesiredJasminiaSkillReference(reference, availableEntries))
     .filter(Boolean);
   return Array.from(new Set([...requiredSkills, ...desiredSkills]));
 }
 
-export function writeJasmin.iaSkillSyncPreference(
+export function writeJasminiaSkillSyncPreference(
   config: Record<string, unknown>,
   desiredSkills: string[],
 ): Record<string, unknown> {
@@ -1617,7 +1617,7 @@ export function writeJasmin.iaSkillSyncPreference(
   return next;
 }
 
-export async function ensureJasmin.iaSkillSymlink(
+export async function ensureJasminiaSkillSymlink(
   source: string,
   target: string,
   linkSkill: (source: string, target: string) => Promise<void> = (linkSource, linkTarget) =>
@@ -1749,10 +1749,10 @@ async function removeStaleMaterializeLock(lockDir: string, staleMs: number): Pro
   return true;
 }
 
-export async function materializeJasmin.iaSkillCopy(
+export async function materializeJasminiaSkillCopy(
   source: string,
   target: string,
-): Promise<MaterializedJasmin.iaSkillCopyResult> {
+): Promise<MaterializedJasminiaSkillCopyResult> {
   const sourceRoot = path.resolve(source);
   const targetRoot = path.resolve(target);
   const relativeTarget = path.relative(sourceRoot, targetRoot);
@@ -1774,7 +1774,7 @@ export async function materializeJasmin.iaSkillCopy(
     throw new Error("Jasmin.ia skills must be directories.");
   }
 
-  const result: MaterializedJasmin.iaSkillCopyResult = {
+  const result: MaterializedJasminiaSkillCopyResult = {
     copiedFiles: 0,
     skippedSymlinks: [],
   };
@@ -1915,14 +1915,14 @@ export async function runChildProcess(
   const onLogError = opts.onLogError ?? ((err, id, msg) => console.warn({ err, runId: id }, msg));
   return new Promise<RunProcessResult>((resolve, reject) => {
     const rawMerged: NodeJS.ProcessEnv = {
-      ...sanitizeInheritedJasmin.iaEnv(process.env),
+      ...sanitizeInheritedJasminiaEnv(process.env),
       ...opts.env,
     };
 
     // Strip Claude Code nesting-guard env vars so spawned `claude` processes
     // don't refuse to start with "cannot be launched inside another session".
     // These vars leak in when the Jasmin.ia server itself is started from
-    // within a Claude Code session (e.g. `npx jasminiaai run` in a terminal
+    // within a Claude Code session (e.g. `npx jasminia run` in a terminal
     // owned by Claude Code) or when cron inherits a contaminated shell env.
     const CLAUDE_CODE_NESTING_VARS = [
       "CLAUDECODE",

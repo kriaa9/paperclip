@@ -8,10 +8,10 @@ import {
   assertWorkspaceRealizationLifecycle,
   assertExecutionLifecycle,
   assertEnvironmentError,
-} from "@jasminiaai/plugin-sdk/testing";
-import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/shared";
+} from "@jasminia/plugin-sdk/testing";
+import type { JasminiaPluginManifestV1 } from "@jasminia/shared";
 
-const FAKE_MANIFEST: Jasmin.iaPluginManifestV1 = {
+const FAKE_MANIFEST: JasminiaPluginManifestV1 = {
   id: "test-env-plugin",
   apiVersion: 1,
   version: "0.1.0",

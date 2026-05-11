@@ -1,4 +1,4 @@
-import type { ExecutionWorkspace, Issue, Project } from "@jasminiaai/shared";
+import type { ExecutionWorkspace, Issue, Project } from "@jasminia/shared";
 
 type ProjectWorkspaceLike = Pick<Project, "workspaces" | "primaryWorkspace">;
 

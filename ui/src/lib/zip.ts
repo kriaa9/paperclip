@@ -1,4 +1,4 @@
-import type { CompanyPortabilityFileEntry } from "@jasminiaai/shared";
+import type { CompanyPortabilityFileEntry } from "@jasminia/shared";
 
 const textEncoder = new TextEncoder();
 const textDecoder = new TextDecoder();

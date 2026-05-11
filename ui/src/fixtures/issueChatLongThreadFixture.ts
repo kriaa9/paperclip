@@ -1,4 +1,4 @@
-import type { Agent } from "@jasminiaai/shared";
+import type { Agent } from "@jasminia/shared";
 import type { LiveRunForIssue } from "../api/heartbeats";
 import type {
   IssueChatComment,

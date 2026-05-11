@@ -9,19 +9,19 @@ import {
   type SDKAgent,
   type SDKMessage,
 } from "@cursor/sdk";
-import type { AdapterExecutionContext, AdapterExecutionResult, AdapterInvocationMeta } from "@jasminiaai/adapter-utils";
+import type { AdapterExecutionContext, AdapterExecutionResult, AdapterInvocationMeta } from "@jasminia/adapter-utils";
 import {
   DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE,
   asBoolean,
   asString,
-  buildJasmin.iaEnv,
+  buildJasminiaEnv,
   joinPromptSections,
   parseObject,
-  readJasmin.iaIssueWorkModeFromContext,
-  renderJasmin.iaWakePrompt,
+  readJasminiaIssueWorkModeFromContext,
+  renderJasminiaWakePrompt,
   renderTemplate,
-  stringifyJasmin.iaWakePayload,
-} from "@jasminiaai/adapter-utils/server-utils";
+  stringifyJasminiaWakePayload,
+} from "@jasminia/adapter-utils/server-utils";
 
 type CursorCloudSession = {
   cursorAgentId: string;
@@ -104,7 +104,7 @@ function buildWakeEnv(ctx: AdapterExecutionContext, configEnv: Record<string, st
   const { runId, agent, context, authToken } = ctx;
   const env: Record<string, string> = {
     ...configEnv,
-    ...buildJasmin.iaEnv(agent),
+    ...buildJasminiaEnv(agent),
     JASMINIA_RUN_ID: runId,
   };
 
@@ -116,8 +116,8 @@ function buildWakeEnv(ctx: AdapterExecutionContext, configEnv: Record<string, st
   const linkedIssueIds = Array.isArray(context.issueIds)
     ? context.issueIds.filter((value): value is string => typeof value === "string" && value.trim().length > 0)
     : [];
-  const wakePayloadJson = stringifyJasmin.iaWakePayload(context.jasminiaWake);
-  const issueWorkMode = readJasmin.iaIssueWorkModeFromContext(context);
+  const wakePayloadJson = stringifyJasminiaWakePayload(context.jasminiaWake);
+  const issueWorkMode = readJasminiaIssueWorkModeFromContext(context);
 
   if (wakeTaskId) env.JASMINIA_TASK_ID = wakeTaskId;
   if (wakeReason) env.JASMINIA_WAKE_REASON = wakeReason;
@@ -188,7 +188,7 @@ async function buildInstructionsPrefix(
   }
 }
 
-function renderJasmin.iaEnvNote(env: Record<string, string>): string {
+function renderJasminiaEnvNote(env: Record<string, string>): string {
   const keys = Object.keys(env)
     .filter((key) => key.startsWith("JASMINIA_"))
     .sort();
@@ -389,7 +389,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
     context,
   };
   const instructions = await buildInstructionsPrefix(config, onLog);
-  const wakePrompt = renderJasmin.iaWakePrompt(context.jasminiaWake, { resumedSession: canReuseSession });
+  const wakePrompt = renderJasminiaWakePrompt(context.jasminiaWake, { resumedSession: canReuseSession });
   const renderedBootstrapPrompt =
     !canReuseSession && bootstrapPromptTemplate.trim().length > 0
       ? renderTemplate(bootstrapPromptTemplate, templateData).trim()
@@ -398,7 +398,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
     canReuseSession && wakePrompt.length > 0
       ? ""
       : renderTemplate(promptTemplate, templateData).trim();
-  const jasminiaEnvNote = renderJasmin.iaEnvNote(remoteEnv);
+  const jasminiaEnvNote = renderJasminiaEnvNote(remoteEnv);
   const prompt = joinPromptSections([
     instructions.prefix,
     renderedBootstrapPrompt,

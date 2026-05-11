@@ -4,8 +4,8 @@ import type {
   PluginDetailTabProps,
   PluginCommentAnnotationProps,
   PluginCommentContextMenuItemProps,
-} from "@jasminiaai/plugin-sdk/ui";
-import { FileTree, usePluginAction, usePluginData } from "@jasminiaai/plugin-sdk/ui";
+} from "@jasminia/plugin-sdk/ui";
+import { FileTree, usePluginAction, usePluginData } from "@jasminia/plugin-sdk/ui";
 import { useCallback, useMemo, useState, useEffect, useRef, type MouseEvent, type RefObject } from "react";
 import { EditorView } from "@codemirror/view";
 import { basicSetup } from "codemirror";

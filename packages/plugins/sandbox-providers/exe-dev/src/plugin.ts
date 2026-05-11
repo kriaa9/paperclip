@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import { chmod, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { spawn } from "node:child_process";
-import { definePlugin } from "@jasminiaai/plugin-sdk";
+import { definePlugin } from "@jasminia/plugin-sdk";
 import type {
   PluginEnvironmentAcquireLeaseParams,
   PluginEnvironmentDestroyLeaseParams,
@@ -18,7 +18,7 @@ import type {
   PluginEnvironmentResumeLeaseParams,
   PluginEnvironmentValidateConfigParams,
   PluginEnvironmentValidationResult,
-} from "@jasminiaai/plugin-sdk";
+} from "@jasminia/plugin-sdk";
 
 interface ExeDevDriverConfig {
   apiKey: string | null;
@@ -71,7 +71,7 @@ const EXE_DEV_SSH_EMAIL_PROMPT = "Please enter your email address:";
 
 // exe.dev's `--setup-script` runs at VM init as the unprivileged `exedev` user, which
 // has passwordless sudo. The Jasmin.ia sandbox callback bridge is a Node script, so
-// every Jasmin.ia workload on this provider needs node on PATH before the bridge can
+// every Jasminia workload on this provider needs node on PATH before the bridge can
 // start. When the operator hasn't supplied their own setup script, install Node 20 via
 // nodesource so the VM comes up ready for Jasmin.ia out of the box.
 const DEFAULT_SETUP_SCRIPT =

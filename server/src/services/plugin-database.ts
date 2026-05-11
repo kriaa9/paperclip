@@ -3,17 +3,17 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { and, eq, sql } from "drizzle-orm";
 import type { SQL } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   pluginDatabaseNamespaces,
   pluginMigrations,
   plugins,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import type {
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginDatabaseCoreReadTable,
   PluginMigrationRecord,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 
 const IDENTIFIER_RE = /^[A-Za-z_][A-Za-z0-9_]*$/;
 const MAX_POSTGRES_IDENTIFIER_LENGTH = 63;
@@ -326,7 +326,7 @@ export function pluginDatabaseService(db: PluginDatabaseRootClient) {
   async function ensureNamespaceWithClient(
     client: PluginDatabaseClient,
     pluginId: string,
-    manifest: Jasmin.iaPluginManifestV1,
+    manifest: JasminiaPluginManifestV1,
   ) {
     if (!manifest.database) return null;
     const namespaceName = derivePluginDatabaseNamespace(
@@ -357,7 +357,7 @@ export function pluginDatabaseService(db: PluginDatabaseRootClient) {
     return rows[0] ?? null;
   }
 
-  async function ensureNamespace(pluginId: string, manifest: Jasmin.iaPluginManifestV1) {
+  async function ensureNamespace(pluginId: string, manifest: JasminiaPluginManifestV1) {
     return ensureNamespaceWithClient(db, pluginId, manifest);
   }
 
@@ -422,7 +422,7 @@ export function pluginDatabaseService(db: PluginDatabaseRootClient) {
 
     async applyMigrations(
       pluginId: string,
-      manifest: Jasmin.iaPluginManifestV1,
+      manifest: JasminiaPluginManifestV1,
       packageRoot: string,
       options: ApplyPluginMigrationsOptions = {},
     ) {

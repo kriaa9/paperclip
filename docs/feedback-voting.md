@@ -26,20 +26,20 @@ When a vote is marked for sharing, Jasmin.ia immediately tries to upload the tra
 ### Quick report (terminal)
 
 ```bash
-pnpm jasminiaai feedback report
+pnpm jasminia feedback report
 ```
 
 Shows a color-coded summary: vote counts, per-trace details with reasons, and export statuses.
 
 ```bash
 # Installed CLI
-jasminiaai feedback report
+jasminia feedback report
 
 # Point to a different server or company
-pnpm jasminiaai feedback report --api-base http://127.0.0.1:3000 --company-id <company-id>
+pnpm jasminia feedback report --api-base http://127.0.0.1:3000 --company-id <company-id>
 
 # Include raw payload dumps in the report
-pnpm jasminiaai feedback report --payloads
+pnpm jasminia feedback report --payloads
 ```
 
 ### API endpoints
@@ -89,7 +89,7 @@ The trace endpoints accept query parameters:
 ### Export to files + zip
 
 ```bash
-pnpm jasminiaai feedback export
+pnpm jasminia feedback export
 ```
 
 Creates a timestamped directory with:
@@ -112,7 +112,7 @@ Exports are full by default. `traces/` keeps the Jasmin.ia envelope, while `full
 
 ```bash
 # Custom server and output directory
-pnpm jasminiaai feedback export --api-base http://127.0.0.1:3000 --company-id <company-id> --out ./my-export
+pnpm jasminia feedback export --api-base http://127.0.0.1:3000 --company-id <company-id> --out ./my-export
 ```
 
 ### Reading an exported trace

@@ -8,14 +8,14 @@ const repoRoot = process.cwd();
 const serverRoot = path.join(repoRoot, "server");
 const serverTestsDir = path.join(repoRoot, "server", "src", "__tests__");
 const nonServerProjects = [
-  "@jasminiaai/shared",
-  "@jasminiaai/db",
-  "@jasminiaai/adapter-utils",
-  "@jasminiaai/adapter-acpx-local",
-  "@jasminiaai/adapter-codex-local",
-  "@jasminiaai/adapter-opencode-local",
-  "@jasminiaai/ui",
-  "jasminiaai",
+  "@jasminia/shared",
+  "@jasminia/db",
+  "@jasminia/adapter-utils",
+  "@jasminia/adapter-acpx-local",
+  "@jasminia/adapter-codex-local",
+  "@jasminia/adapter-opencode-local",
+  "@jasminia/ui",
+  "jasminia",
 ];
 const routeTestPattern = /[^/]*(?:route|routes|authz)[^/]*\.test\.ts$/;
 const additionalSerializedServerTests = new Set([
@@ -237,7 +237,7 @@ function runGeneralSuites(routeTests) {
   }
 
   runVitest(
-    ["--project", "@jasminiaai/server", ...excludeRouteArgs],
+    ["--project", "@jasminia/server", ...excludeRouteArgs],
     `server suites excluding ${routeTests.length} serialized suites`,
   );
 }
@@ -252,7 +252,7 @@ function runSerializedSuites(routeTests, shardIndex, shardCount) {
     runVitest(
       [
         "--project",
-        "@jasminiaai/server",
+        "@jasminia/server",
         routeTest.repoPath,
         "--pool=forks",
         "--poolOptions.forks.isolate=true",

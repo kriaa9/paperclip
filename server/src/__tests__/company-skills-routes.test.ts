@@ -23,7 +23,7 @@ const mockGetTelemetryClient = vi.hoisted(() => vi.fn());
 function registerModuleMocks() {
   vi.doMock("../routes/authz.js", async () => vi.importActual("../routes/authz.js"));
 
-  vi.doMock("@jasminiaai/shared/telemetry", () => ({
+  vi.doMock("@jasminia/shared/telemetry", () => ({
     trackSkillImported: mockTrackSkillImported,
     trackErrorHandlerCrash: vi.fn(),
   }));
@@ -75,7 +75,7 @@ async function createApp(actor: Record<string, unknown>) {
 describe("company skill mutation permissions", () => {
   beforeEach(() => {
     vi.resetModules();
-    vi.doUnmock("@jasminiaai/shared/telemetry");
+    vi.doUnmock("@jasminia/shared/telemetry");
     vi.doUnmock("../telemetry.js");
     vi.doUnmock("../services/access.js");
     vi.doUnmock("../services/activity-log.js");

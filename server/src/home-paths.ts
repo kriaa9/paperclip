@@ -9,22 +9,22 @@ import {
   resolveDefaultSecretsKeyFilePath as resolveSharedDefaultSecretsKeyFilePath,
   resolveDefaultStorageDir as resolveSharedDefaultStorageDir,
   resolveHomeAwarePath,
-  resolveJasmin.iaConfigPathForInstance,
-  resolveJasmin.iaHomeDir,
-  resolveJasmin.iaInstanceId,
-  resolveJasmin.iaInstanceRoot,
-} from "@jasminiaai/shared/home-paths";
+  resolveJasminiaConfigPathForInstance,
+  resolveJasminiaHomeDir,
+  resolveJasminiaInstanceId,
+  resolveJasminiaInstanceRoot,
+} from "@jasminia/shared/home-paths";
 
 export {
   expandHomePrefix,
   resolveHomeAwarePath,
-  resolveJasmin.iaHomeDir,
-  resolveJasmin.iaInstanceId,
-  resolveJasmin.iaInstanceRoot,
+  resolveJasminiaHomeDir,
+  resolveJasminiaInstanceId,
+  resolveJasminiaInstanceRoot,
 };
 
 export function resolveDefaultConfigPath(): string {
-  return resolveJasmin.iaConfigPathForInstance();
+  return resolveJasminiaConfigPathForInstance();
 }
 
 export function resolveDefaultEmbeddedPostgresDir(): string {
@@ -52,7 +52,7 @@ export function resolveDefaultAgentWorkspaceDir(agentId: string): string {
   if (!PATH_SEGMENT_RE.test(trimmed)) {
     throw new Error(`Invalid agent id for workspace path '${agentId}'.`);
   }
-  return path.resolve(resolveJasmin.iaInstanceRoot(), "workspaces", trimmed);
+  return path.resolve(resolveJasminiaInstanceRoot(), "workspaces", trimmed);
 }
 
 function sanitizeFriendlyPathSegment(value: string | null | undefined, fallback = "_default"): string {
@@ -75,7 +75,7 @@ export function resolveManagedProjectWorkspaceDir(input: {
     throw new Error("Managed project workspace path requires companyId and projectId.");
   }
   return path.resolve(
-    resolveJasmin.iaInstanceRoot(),
+    resolveJasminiaInstanceRoot(),
     "projects",
     sanitizeFriendlyPathSegment(companyId, "company"),
     sanitizeFriendlyPathSegment(projectId, "project"),

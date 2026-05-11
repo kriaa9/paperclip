@@ -8,20 +8,20 @@ Get Jasmin.ia running locally in under 5 minutes.
 ## Quick Start (Recommended)
 
 ```sh
-npx jasminiaai onboard --yes
+npx jasminia onboard --yes
 ```
 
 This walks you through setup, configures your environment, and gets Jasmin.ia running.
 
-If you already have a Jasmin.ia install, rerunning `onboard` keeps your current config and data paths intact. Use `jasminiaai configure` if you want to edit settings.
+If you already have a Jasmin.ia install, rerunning `onboard` keeps your current config and data paths intact. Use `jasminia configure` if you want to edit settings.
 
 To start Jasmin.ia again later:
 
 ```sh
-npx jasminiaai run
+npx jasminia run
 ```
 
-> **Note:** If you used `npx` for setup, always use `npx jasminiaai` to run commands. The `pnpm jasminiaai` form only works inside a cloned copy of the Jasmin.ia repository (see Local Development below).
+> **Note:** If you used `npx` for setup, always use `npx jasminia` to run commands. The `pnpm jasminia` form only works inside a cloned copy of the Jasmin.ia repository (see Local Development below).
 
 ## Local Development
 
@@ -41,7 +41,7 @@ No external database required — Jasmin.ia uses an embedded PostgreSQL instance
 When working from the cloned repo, you can also use:
 
 ```sh
-pnpm jasminiaai run
+pnpm jasminia run
 ```
 
 This auto-onboards if config is missing, runs health checks with auto-repair, and starts the server.

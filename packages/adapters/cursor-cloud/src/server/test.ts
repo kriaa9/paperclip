@@ -3,8 +3,8 @@ import type {
   AdapterEnvironmentCheck,
   AdapterEnvironmentTestContext,
   AdapterEnvironmentTestResult,
-} from "@jasminiaai/adapter-utils";
-import { asString, parseObject } from "@jasminiaai/adapter-utils/server-utils";
+} from "@jasminia/adapter-utils";
+import { asString, parseObject } from "@jasminia/adapter-utils/server-utils";
 
 function summarizeStatus(checks: AdapterEnvironmentCheck[]): AdapterEnvironmentTestResult["status"] {
   if (checks.some((check) => check.level === "error")) return "fail";

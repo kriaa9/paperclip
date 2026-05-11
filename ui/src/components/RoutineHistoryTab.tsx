@@ -6,7 +6,7 @@ import type {
   RoutineRevision,
   RoutineRevisionSnapshotTriggerV1,
   RoutineVariable,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
   routinesApi,
   type RestoreRoutineRevisionResponse,

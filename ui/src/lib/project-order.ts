@@ -1,4 +1,4 @@
-import type { Project } from "@jasminiaai/shared";
+import type { Project } from "@jasminia/shared";
 
 export const PROJECT_ORDER_UPDATED_EVENT = "jasminia:project-order-updated";
 export const PROJECT_SORT_MODE_UPDATED_EVENT = "jasminia:project-sort-mode-updated";

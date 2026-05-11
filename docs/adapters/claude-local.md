@@ -50,7 +50,7 @@ The adapter creates a temporary directory with symlinks to Jasmin.ia skills and 
 For manual local CLI usage outside heartbeat runs (for example running as `claudecoder` directly), use:
 
 ```sh
-pnpm jasminiaai agent local-cli claudecoder --company-id <company-id>
+pnpm jasminia agent local-cli claudecoder --company-id <company-id>
 ```
 
 This installs Jasmin.ia skills in `~/.claude/skills`, creates an agent API key, and prints shell exports to run as that agent.

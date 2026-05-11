@@ -8,7 +8,7 @@ import type {
   CompanySkillProjectScanRequest,
   CompanySkillProjectScanResult,
   CompanySkillUpdateStatus,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { api } from "./client";
 
 export const companySkillsApi = {

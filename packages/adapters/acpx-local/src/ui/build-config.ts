@@ -1,4 +1,4 @@
-import type { CreateConfigValues } from "@jasminiaai/adapter-utils";
+import type { CreateConfigValues } from "@jasminia/adapter-utils";
 import {
   DEFAULT_ACPX_LOCAL_AGENT,
   DEFAULT_ACPX_LOCAL_MODE,

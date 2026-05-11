@@ -1,5 +1,5 @@
 import { and, count, eq, gte, inArray, lt, sql } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   companies,
   companyLogos,
@@ -28,7 +28,7 @@ import {
   companyMemberships,
   companySkills,
   documents,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import { notFound, unprocessable } from "../errors.js";
 import { environmentService } from "./environments.js";
 

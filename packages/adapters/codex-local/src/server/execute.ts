@@ -1,14 +1,14 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { inferOpenAiCompatibleBiller, type AdapterExecutionContext, type AdapterExecutionResult } from "@jasminiaai/adapter-utils";
+import { inferOpenAiCompatibleBiller, type AdapterExecutionContext, type AdapterExecutionResult } from "@jasminia/adapter-utils";
 import {
   adapterExecutionTargetIsRemote,
   adapterExecutionTargetRemoteCwd,
   overrideAdapterExecutionTargetRemoteCwd,
   adapterExecutionTargetSessionIdentity,
   adapterExecutionTargetSessionMatches,
-  adapterExecutionTargetUsesJasmin.iaBridge,
+  adapterExecutionTargetUsesJasminiaBridge,
   describeAdapterExecutionTarget,
   ensureAdapterExecutionTargetCommandResolvable,
   ensureAdapterExecutionTargetRuntimeCommandInstalled,
@@ -17,27 +17,27 @@ import {
   resolveAdapterExecutionTargetTimeoutSec,
   resolveAdapterExecutionTargetCommandForLogs,
   runAdapterExecutionTargetProcess,
-  startAdapterExecutionTargetJasmin.iaBridge,
-} from "@jasminiaai/adapter-utils/execution-target";
+  startAdapterExecutionTargetJasminiaBridge,
+} from "@jasminia/adapter-utils/execution-target";
 import {
   asString,
   asNumber,
   parseObject,
-  buildJasmin.iaEnv,
+  buildJasminiaEnv,
   buildInvocationEnvForLogs,
   ensureAbsoluteDirectory,
-  ensureJasmin.iaSkillSymlink,
+  ensureJasminiaSkillSymlink,
   ensurePathInEnv,
-  refreshJasmin.iaWorkspaceEnvForExecution,
-  readJasmin.iaRuntimeSkillEntries,
-  readJasmin.iaIssueWorkModeFromContext,
-  resolveJasmin.iaDesiredSkillNames,
+  refreshJasminiaWorkspaceEnvForExecution,
+  readJasminiaRuntimeSkillEntries,
+  readJasminiaIssueWorkModeFromContext,
+  resolveJasminiaDesiredSkillNames,
   renderTemplate,
-  renderJasmin.iaWakePrompt,
-  stringifyJasmin.iaWakePayload,
+  renderJasminiaWakePrompt,
+  stringifyJasminiaWakePayload,
   DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE,
   joinPromptSections,
-} from "@jasminiaai/adapter-utils/server-utils";
+} from "@jasminia/adapter-utils/server-utils";
 import {
   parseCodexJsonl,
   extractCodexRetryNotBefore,
@@ -93,7 +93,7 @@ function resolveCodexBiller(env: Record<string, string>, billingType: "api" | "s
   return billingType === "subscription" ? "chatgpt" : openAiCompatibleBiller ?? "openai";
 }
 
-async function isLikelyJasmin.iaRepoRoot(candidate: string): Promise<boolean> {
+async function isLikelyJasminiaRepoRoot(candidate: string): Promise<boolean> {
   const [hasWorkspace, hasPackageJson, hasServerDir, hasAdapterUtilsDir] = await Promise.all([
     pathExists(path.join(candidate, "pnpm-workspace.yaml")),
     pathExists(path.join(candidate, "package.json")),
@@ -104,7 +104,7 @@ async function isLikelyJasmin.iaRepoRoot(candidate: string): Promise<boolean> {
   return hasWorkspace && hasPackageJson && hasServerDir && hasAdapterUtilsDir;
 }
 
-async function isLikelyJasmin.iaRuntimeSkillPath(
+async function isLikelyJasminiaRuntimeSkillPath(
   candidate: string,
   skillName: string,
   options: { requireSkillMarkdown?: boolean } = {},
@@ -118,7 +118,7 @@ async function isLikelyJasmin.iaRuntimeSkillPath(
 
   let cursor = path.dirname(skillsRoot);
   for (let depth = 0; depth < 6; depth += 1) {
-    if (await isLikelyJasmin.iaRepoRoot(cursor)) return true;
+    if (await isLikelyJasminiaRepoRoot(cursor)) return true;
     const parent = path.dirname(cursor);
     if (parent === cursor) break;
     cursor = parent;
@@ -127,7 +127,7 @@ async function isLikelyJasmin.iaRuntimeSkillPath(
   return false;
 }
 
-async function pruneBrokenUnavailableJasmin.iaSkillSymlinks(
+async function pruneBrokenUnavailableJasminiaSkillSymlinks(
   skillsHome: string,
   allowedSkillNames: Iterable<string>,
   onLog: AdapterExecutionContext["onLog"],
@@ -145,7 +145,7 @@ async function pruneBrokenUnavailableJasmin.iaSkillSymlinks(
     const resolvedLinkedPath = path.resolve(path.dirname(target), linkedPath);
     if (await pathExists(resolvedLinkedPath)) continue;
     if (
-      !(await isLikelyJasmin.iaRuntimeSkillPath(resolvedLinkedPath, entry.name, {
+      !(await isLikelyJasminiaRuntimeSkillPath(resolvedLinkedPath, entry.name, {
         requireSkillMarkdown: false,
       }))
     ) {
@@ -221,7 +221,7 @@ export async function ensureCodexSkillsInjected(
   onLog: AdapterExecutionContext["onLog"],
   options: EnsureCodexSkillsInjectedOptions = {},
 ) {
-  const allSkillsEntries = options.skillsEntries ?? await readJasmin.iaRuntimeSkillEntries({}, __moduleDir);
+  const allSkillsEntries = options.skillsEntries ?? await readJasminiaRuntimeSkillEntries({}, __moduleDir);
   const desiredSkillNames =
     options.desiredSkillNames ?? allSkillsEntries.map((entry) => entry.key);
   const desiredSet = new Set(desiredSkillNames);
@@ -244,7 +244,7 @@ export async function ensureCodexSkillsInjected(
         if (
           resolvedLinkedPath &&
           resolvedLinkedPath !== entry.source &&
-          (await isLikelyJasmin.iaRuntimeSkillPath(resolvedLinkedPath, entry.runtimeName))
+          (await isLikelyJasminiaRuntimeSkillPath(resolvedLinkedPath, entry.runtimeName))
         ) {
           await fs.unlink(target);
           if (linkSkill) {
@@ -260,7 +260,7 @@ export async function ensureCodexSkillsInjected(
         }
       }
 
-      const result = await ensureJasmin.iaSkillSymlink(entry.source, target, linkSkill);
+      const result = await ensureJasminiaSkillSymlink(entry.source, target, linkSkill);
       if (result === "skipped") continue;
 
       await onLog(
@@ -275,7 +275,7 @@ export async function ensureCodexSkillsInjected(
     }
   }
 
-  await pruneBrokenUnavailableJasmin.iaSkillSymlinks(
+  await pruneBrokenUnavailableJasminiaSkillSymlinks(
     skillsHome,
     skillsEntries.map((entry) => entry.runtimeName),
     onLog,
@@ -332,7 +332,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
     typeof envConfig.CODEX_HOME === "string" && envConfig.CODEX_HOME.trim().length > 0
       ? path.resolve(envConfig.CODEX_HOME.trim())
       : null;
-  const codexSkillEntries = await readJasmin.iaRuntimeSkillEntries(config, __moduleDir);
+  const codexSkillEntries = await readJasminiaRuntimeSkillEntries(config, __moduleDir);
   const desiredSkillNames = resolveCodexDesiredSkillNames(config, codexSkillEntries);
   await ensureAbsoluteDirectory(cwd, { createIfMissing: true });
   const configuredOpenAiApiKey =
@@ -398,14 +398,14 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
   const restoreRemoteWorkspace = preparedExecutionTargetRuntime
     ? () => preparedExecutionTargetRuntime.restoreWorkspace()
     : null;
-  let jasminiaBridge: Awaited<ReturnType<typeof startAdapterExecutionTargetJasmin.iaBridge>> = null;
+  let jasminiaBridge: Awaited<ReturnType<typeof startAdapterExecutionTargetJasminiaBridge>> = null;
   const remoteCodexHome = executionTargetIsRemote
     ? preparedExecutionTargetRuntime?.assetDirs.home ??
       path.posix.join(effectiveExecutionCwd, ".jasminia-runtime", "codex", "home")
     : null;
   const hasExplicitApiKey =
     typeof envConfig.JASMINIA_API_KEY === "string" && envConfig.JASMINIA_API_KEY.trim().length > 0;
-  const env: Record<string, string> = { ...buildJasmin.iaEnv(agent) };
+  const env: Record<string, string> = { ...buildJasminiaEnv(agent) };
   env.JASMINIA_RUN_ID = runId;
   const wakeTaskId =
     (typeof context.taskId === "string" && context.taskId.trim().length > 0 && context.taskId.trim()) ||
@@ -430,8 +430,8 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
   const linkedIssueIds = Array.isArray(context.issueIds)
     ? context.issueIds.filter((value): value is string => typeof value === "string" && value.trim().length > 0)
     : [];
-  const wakePayloadJson = stringifyJasmin.iaWakePayload(context.jasminiaWake);
-  const issueWorkMode = readJasmin.iaIssueWorkModeFromContext(context);
+  const wakePayloadJson = stringifyJasminiaWakePayload(context.jasminiaWake);
+  const issueWorkMode = readJasminiaIssueWorkModeFromContext(context);
   if (wakeTaskId) {
     env.JASMINIA_TASK_ID = wakeTaskId;
   }
@@ -456,7 +456,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
   if (wakePayloadJson) {
     env.JASMINIA_WAKE_PAYLOAD_JSON = wakePayloadJson;
   }
-  refreshJasmin.iaWorkspaceEnvForExecution({
+  refreshJasminiaWorkspaceEnvForExecution({
     env,
     envConfig,
     workspaceCwd: effectiveWorkspaceCwd,
@@ -485,8 +485,8 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
   if (!hasExplicitApiKey && authToken) {
     env.JASMINIA_API_KEY = authToken;
   }
-  if (executionTargetIsRemote && adapterExecutionTargetUsesJasmin.iaBridge(runtimeExecutionTarget)) {
-    jasminiaBridge = await startAdapterExecutionTargetJasmin.iaBridge({
+  if (executionTargetIsRemote && adapterExecutionTargetUsesJasminiaBridge(runtimeExecutionTarget)) {
+    jasminiaBridge = await startAdapterExecutionTargetJasminiaBridge({
       runId,
       target: runtimeExecutionTarget,
       runtimeRootDir: preparedExecutionTargetRuntime?.runtimeRootDir,
@@ -588,7 +588,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
     !sessionId && bootstrapPromptTemplate.trim().length > 0
       ? renderTemplate(bootstrapPromptTemplate, templateData).trim()
       : "";
-  const wakePrompt = renderJasmin.iaWakePrompt(context.jasminiaWake, { resumedSession: Boolean(sessionId) });
+  const wakePrompt = renderJasminiaWakePrompt(context.jasminiaWake, { resumedSession: Boolean(sessionId) });
   const shouldUseResumeDeltaPrompt = Boolean(sessionId) && wakePrompt.length > 0;
   const promptInstructionsPrefix = shouldUseResumeDeltaPrompt ? "" : instructionsPrefix;
   instructionsChars = promptInstructionsPrefix.length;

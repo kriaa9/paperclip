@@ -1,4 +1,4 @@
-import type { AssetImage } from "@jasminiaai/shared";
+import type { AssetImage } from "@jasminia/shared";
 import { api } from "./client";
 
 export const assetsApi = {

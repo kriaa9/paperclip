@@ -1,4 +1,4 @@
-# `@jasminiaai/plugin-daytona`
+# `@jasminia/plugin-daytona`
 
 Published Daytona sandbox provider plugin for Jasmin.ia.
 
@@ -9,7 +9,7 @@ This package lives in the Jasmin.ia monorepo, but it is intentionally excluded f
 From a Jasmin.ia instance, install:
 
 ```text
-@jasminiaai/plugin-daytona
+@jasminia/plugin-daytona
 ```
 
 The host plugin installer runs `npm install` into the managed plugin directory, so transitive dependencies such as `@daytonaio/sdk` are pulled in during installation.
@@ -39,7 +39,7 @@ pnpm test
 pnpm typecheck
 ```
 
-These commands assume the repo root has already been installed once so the local `@jasminiaai/plugin-sdk` workspace package is available to the compiler during development.
+These commands assume the repo root has already been installed once so the local `@jasminia/plugin-sdk` workspace package is available to the compiler during development.
 
 ## Package layout
 

@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/shared";
-import { createTestHarness } from "@jasminiaai/plugin-sdk/testing";
+import type { JasminiaPluginManifestV1 } from "@jasminia/shared";
+import { createTestHarness } from "@jasminia/plugin-sdk/testing";
 
 describe("plugin SDK test harness", () => {
   it("requires skills.managed capability before resetting a missing declaration", async () => {
-    const manifest: Jasmin.iaPluginManifestV1 = {
+    const manifest: JasminiaPluginManifestV1 = {
       id: "jasminia.test-missing-managed-skill-capability",
       apiVersion: 1,
       version: "0.1.0",

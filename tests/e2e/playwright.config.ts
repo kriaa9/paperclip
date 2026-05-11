@@ -32,7 +32,7 @@ export default defineConfig({
   // The webServer directive bootstraps a throwaway instance and then starts it.
   // `onboard --yes --run` works in a non-interactive temp JASMINIA_HOME.
   webServer: {
-    command: `pnpm jasminiaai onboard --yes --run`,
+    command: `pnpm jasminia onboard --yes --run`,
     url: `${BASE_URL}/api/health`,
     // Always boot a dedicated throwaway instance for e2e so browser tests
     // never attach to the developer's active Jasmin.ia home/server.

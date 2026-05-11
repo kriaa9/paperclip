@@ -1,4 +1,4 @@
-import type { HeartbeatRunStatus, IssueStatus, RunLivenessState } from "@jasminiaai/shared";
+import type { HeartbeatRunStatus, IssueStatus, RunLivenessState } from "@jasminia/shared";
 
 export type RunLivenessActionability =
   | "runnable"

@@ -1,4 +1,4 @@
-import { asBoolean, asString, asStringArray } from "@jasminiaai/adapter-utils/server-utils";
+import { asBoolean, asString, asStringArray } from "@jasminia/adapter-utils/server-utils";
 import {
   CODEX_LOCAL_FAST_MODE_SUPPORTED_MODELS,
   isCodexLocalFastModeSupported,

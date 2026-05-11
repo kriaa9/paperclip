@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { runChildProcess } from "@jasminiaai/adapter-utils/server-utils";
-import { execute } from "@jasminiaai/adapter-cursor-local/server";
+import { runChildProcess } from "@jasminia/adapter-utils/server-utils";
+import { execute } from "@jasminia/adapter-cursor-local/server";
 
 async function writeFakeCursorCommand(commandPath: string): Promise<void> {
   const script = `#!/usr/bin/env node

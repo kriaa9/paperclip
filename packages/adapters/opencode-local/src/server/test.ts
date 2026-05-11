@@ -5,15 +5,15 @@ import type {
   AdapterEnvironmentCheck,
   AdapterEnvironmentTestContext,
   AdapterEnvironmentTestResult,
-} from "@jasminiaai/adapter-utils";
-import type { AdapterExecutionTarget } from "@jasminiaai/adapter-utils/execution-target";
+} from "@jasminia/adapter-utils";
+import type { AdapterExecutionTarget } from "@jasminia/adapter-utils/execution-target";
 import {
   asBoolean,
   asString,
   asStringArray,
   parseObject,
   ensurePathInEnv,
-} from "@jasminiaai/adapter-utils/server-utils";
+} from "@jasminia/adapter-utils/server-utils";
 import {
   ensureAdapterExecutionTargetCommandResolvable,
   maybeRunSandboxInstallCommand,
@@ -23,7 +23,7 @@ import {
   resolveAdapterExecutionTargetCwd,
   prepareAdapterExecutionTargetRuntime,
   overrideAdapterExecutionTargetRemoteCwd,
-} from "@jasminiaai/adapter-utils/execution-target";
+} from "@jasminia/adapter-utils/execution-target";
 import { discoverOpenCodeModels, ensureOpenCodeModelConfiguredAndAvailable } from "./models.js";
 import { parseOpenCodeJsonl } from "./parse.js";
 import { SANDBOX_INSTALL_COMMAND } from "../index.js";

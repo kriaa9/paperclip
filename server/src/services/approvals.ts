@@ -1,6 +1,6 @@
 import { and, asc, eq, inArray } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { approvalComments, approvals } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { approvalComments, approvals } from "@jasminia/db";
 import { notFound, unprocessable } from "../errors.js";
 import { redactCurrentUserText } from "../log-redaction.js";
 import { agentService } from "./agents.js";

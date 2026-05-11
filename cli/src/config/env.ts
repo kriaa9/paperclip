@@ -39,7 +39,7 @@ function renderEnvFile(entries: Record<string, string>) {
   return lines.join("\n");
 }
 
-export function resolveJasmin.iaEnvFile(configPath?: string): string {
+export function resolveJasminiaEnvFile(configPath?: string): string {
   return resolveEnvFilePath(configPath);
 }
 
@@ -47,7 +47,7 @@ export function resolveAgentJwtEnvFile(configPath?: string): string {
   return resolveEnvFilePath(configPath);
 }
 
-export function loadJasmin.iaEnvFile(configPath?: string): void {
+export function loadJasminiaEnvFile(configPath?: string): void {
   loadAgentJwtEnvFile(resolveEnvFilePath(configPath));
 }
 
@@ -93,15 +93,15 @@ export function ensureAgentJwtSecret(configPath?: string): { secret: string; cre
 }
 
 export function writeAgentJwtEnv(secret: string, filePath = resolveEnvFilePath()): void {
-  mergeJasmin.iaEnvEntries({ [JWT_SECRET_ENV_KEY]: secret }, filePath);
+  mergeJasminiaEnvEntries({ [JWT_SECRET_ENV_KEY]: secret }, filePath);
 }
 
-export function readJasmin.iaEnvEntries(filePath = resolveEnvFilePath()): Record<string, string> {
+export function readJasminiaEnvEntries(filePath = resolveEnvFilePath()): Record<string, string> {
   if (!fs.existsSync(filePath)) return {};
   return parseEnvFile(fs.readFileSync(filePath, "utf-8"));
 }
 
-export function writeJasmin.iaEnvEntries(entries: Record<string, string>, filePath = resolveEnvFilePath()): void {
+export function writeJasminiaEnvEntries(entries: Record<string, string>, filePath = resolveEnvFilePath()): void {
   const dir = path.dirname(filePath);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(filePath, renderEnvFile(entries), {
@@ -109,17 +109,17 @@ export function writeJasmin.iaEnvEntries(entries: Record<string, string>, filePa
   });
 }
 
-export function mergeJasmin.iaEnvEntries(
+export function mergeJasminiaEnvEntries(
   entries: Record<string, string>,
   filePath = resolveEnvFilePath(),
 ): Record<string, string> {
-  const current = readJasmin.iaEnvEntries(filePath);
+  const current = readJasminiaEnvEntries(filePath);
   const next = {
     ...current,
     ...Object.fromEntries(
       Object.entries(entries).filter(([, value]) => typeof value === "string" && value.trim().length > 0),
     ),
   };
-  writeJasmin.iaEnvEntries(next, filePath);
+  writeJasminiaEnvEntries(next, filePath);
   return next;
 }

@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
-import { pluginOperationIssueOriginKind } from "@jasminiaai/shared";
+import { pluginOperationIssueOriginKind } from "@jasminia/shared";
 import type {
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginCapability,
   PluginEventType,
   PluginIssueOriginKind,
@@ -20,7 +20,7 @@ import type {
   IssueDocument,
   Agent,
   Goal,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import type {
   EventFilter,
   PluginContext,
@@ -56,7 +56,7 @@ import type {
 
 export interface TestHarnessOptions {
   /** Plugin manifest used to seed capability checks and metadata. */
-  manifest: Jasmin.iaPluginManifestV1;
+  manifest: JasminiaPluginManifestV1;
   /** Optional capability override. Defaults to `manifest.capabilities`. */
   capabilities?: PluginCapability[];
   /** Initial config returned by `ctx.config.get()`. */
@@ -388,7 +388,7 @@ function allowsEvent(filter: EventFilter | undefined, event: PluginEvent): boole
   return true;
 }
 
-function requireCapability(manifest: Jasmin.iaPluginManifestV1, allowed: Set<PluginCapability>, capability: PluginCapability) {
+function requireCapability(manifest: JasminiaPluginManifestV1, allowed: Set<PluginCapability>, capability: PluginCapability) {
   if (allowed.has(capability)) return;
   throw new Error(`Plugin '${manifest.id}' is missing required capability '${capability}' in test harness`);
 }

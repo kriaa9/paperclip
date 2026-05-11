@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { RoutineTrigger } from "@jasminiaai/shared";
+import type { RoutineTrigger } from "@jasminia/shared";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

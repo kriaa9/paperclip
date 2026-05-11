@@ -24,7 +24,7 @@ This plan is now **gateway-only**. Jasmin.ia supports OpenClaw through `openclaw
 - `agentDefaultsPayload.url: ws://... | wss://...`
 - `agentDefaultsPayload.headers["x-openclaw-token"]`
 5. Board approves join request.
-6. OpenClaw claims API key and installs/uses Jasmin.ia skill.
+6. OpenClaw claims API key and installs/uses Jasminia skill.
 7. First task run may trigger pairing approval once; after approval, pairing persists via stored device key.
 
 ## Technical Contract (Gateway)
@@ -102,8 +102,8 @@ pnpm build
 
 If full suite is too heavy locally, run at least:
 ```bash
-pnpm --filter @jasminiaai/server test:run -- openclaw-gateway
-pnpm --filter @jasminiaai/server typecheck
-pnpm --filter @jasminiaai/ui typecheck
-pnpm --filter jasminiaai typecheck
+pnpm --filter @jasminia/server test:run -- openclaw-gateway
+pnpm --filter @jasminia/server typecheck
+pnpm --filter @jasminia/ui typecheck
+pnpm --filter jasminia typecheck
 ```

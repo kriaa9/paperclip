@@ -1,4 +1,4 @@
-import type { SidebarBadges } from "@jasminiaai/shared";
+import type { SidebarBadges } from "@jasminia/shared";
 import { api } from "./client";
 
 export const sidebarBadgesApi = {

@@ -1,4 +1,4 @@
-import type { Issue } from "@jasminiaai/shared";
+import type { Issue } from "@jasminia/shared";
 import type { ActiveRunForIssue } from "../api/heartbeats";
 
 export function shouldTrackIssueActiveRun(

@@ -2,7 +2,7 @@ import {
   extractRoutineVariableNames,
   WORKSPACE_BRANCH_ROUTINE_VARIABLE,
   type RoutineListItem,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 
 const WORKSPACE_SPECIFIC_ROUTINE_VARIABLES = new Set([
   WORKSPACE_BRANCH_ROUTINE_VARIABLE,

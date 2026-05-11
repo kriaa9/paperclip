@@ -9,7 +9,7 @@ import {
   inboxDismissals,
   invites,
   joinRequests,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,

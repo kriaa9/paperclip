@@ -1,4 +1,4 @@
-import { SECRET_PROVIDERS, type SecretProvider } from "@jasminiaai/shared";
+import { SECRET_PROVIDERS, type SecretProvider } from "@jasminia/shared";
 
 export function getConfiguredSecretProvider(): SecretProvider {
   const configuredProvider = process.env.JASMINIA_SECRETS_PROVIDER;

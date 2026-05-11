@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { and, desc, eq, gte, isNull, sql } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   activityLog,
   agents,
@@ -9,13 +9,13 @@ import {
   costEvents,
   issueComments,
   issues,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import type {
   UserProfileDailyPoint,
   UserProfileIdentity,
   UserProfileResponse,
   UserProfileWindowStats,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { notFound } from "../errors.js";
 import { assertCompanyAccess } from "./authz.js";
 

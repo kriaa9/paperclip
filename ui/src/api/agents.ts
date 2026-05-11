@@ -12,12 +12,12 @@ import type {
   HeartbeatRun,
   Approval,
   AgentConfigRevision,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import type {
   AdapterModelProfileDefinition,
   AdapterModelProfileKey,
-} from "@jasminiaai/adapter-utils";
-import { isUuidLike, normalizeAgentUrlKey } from "@jasminiaai/shared";
+} from "@jasminia/adapter-utils";
+import { isUuidLike, normalizeAgentUrlKey } from "@jasminia/shared";
 import { ApiError, api } from "./client";
 
 export interface AgentKey {
@@ -229,5 +229,5 @@ export const agentsApi = {
 export interface AvailableSkill {
   name: string;
   description: string;
-  isJasmin.iaManaged: boolean;
+  isJasminiaManaged: boolean;
 }

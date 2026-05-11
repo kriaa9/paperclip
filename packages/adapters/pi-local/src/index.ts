@@ -1,4 +1,4 @@
-import type { AdapterModelProfileDefinition } from "@jasminiaai/adapter-utils";
+import type { AdapterModelProfileDefinition } from "@jasminia/adapter-utils";
 
 export const type = "pi_local";
 export const label = "Pi (local)";

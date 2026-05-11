@@ -11,8 +11,8 @@ import {
   updateIssueSchema,
   upsertIssueDocumentSchema,
   linkIssueApprovalSchema,
-} from "@jasminiaai/shared";
-import { Jasmin.iaApiClient } from "./client.js";
+} from "@jasminia/shared";
+import { JasminiaApiClient } from "./client.js";
 import { formatErrorResponse, formatTextResponse } from "./format.js";
 
 export interface ToolDefinition {
@@ -211,7 +211,7 @@ function selectRuntimeService(
     ?? null;
 }
 
-async function getIssueWorkspaceRuntime(client: Jasmin.iaApiClient, issueId: string) {
+async function getIssueWorkspaceRuntime(client: JasminiaApiClient, issueId: string) {
   const context = await client.requestJson("GET", `/issues/${encodeURIComponent(issueId)}/heartbeat-context`);
   const workspace = readCurrentExecutionWorkspace(context);
   return {
@@ -221,7 +221,7 @@ async function getIssueWorkspaceRuntime(client: Jasmin.iaApiClient, issueId: str
   };
 }
 
-export function createToolDefinitions(client: Jasmin.iaApiClient): ToolDefinition[] {
+export function createToolDefinitions(client: JasminiaApiClient): ToolDefinition[] {
   return [
     makeTool(
       "jasminiaMe",

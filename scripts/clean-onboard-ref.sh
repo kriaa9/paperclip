@@ -83,4 +83,4 @@ env \
   HOST="$JASMINIA_HOST" \
   PORT="$JASMINIA_PORT" \
   JASMINIA_OPEN_ON_LISTEN="$JASMINIA_OPEN_ON_LISTEN" \
-  pnpm jasminiaai onboard --yes --data-dir "$PC_DATA"
+  pnpm jasminia onboard --yes --data-dir "$PC_DATA"

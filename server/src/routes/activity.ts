@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
-import type { Db } from "@jasminiaai/db";
-import { normalizeIssueIdentifier } from "@jasminiaai/shared";
+import type { Db } from "@jasminia/db";
+import { normalizeIssueIdentifier } from "@jasminia/shared";
 import { validate } from "../middleware/validate.js";
 import { activityService, normalizeActivityLimit } from "../services/activity.js";
 import { assertAuthenticated, assertBoard, assertCompanyAccess } from "./authz.js";

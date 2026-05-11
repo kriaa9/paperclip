@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { ApiConnectionError, ApiRequestError, Jasmin.iaApiClient } from "../client/http.js";
+import { ApiConnectionError, ApiRequestError, JasminiaApiClient } from "../client/http.js";
 
-describe("Jasmin.iaApiClient", () => {
+describe("JasminiaApiClient", () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
@@ -12,7 +12,7 @@ describe("Jasmin.iaApiClient", () => {
     );
     vi.stubGlobal("fetch", fetchMock);
 
-    const client = new Jasmin.iaApiClient({
+    const client = new JasminiaApiClient({
       apiBase: "http://localhost:3100",
       apiKey: "token-123",
       runId: "run-abc",
@@ -36,7 +36,7 @@ describe("Jasmin.iaApiClient", () => {
     );
     vi.stubGlobal("fetch", fetchMock);
 
-    const client = new Jasmin.iaApiClient({ apiBase: "http://localhost:3100" });
+    const client = new JasminiaApiClient({ apiBase: "http://localhost:3100" });
     const result = await client.get("/api/missing", { ignoreNotFound: true });
     expect(result).toBeNull();
   });
@@ -50,7 +50,7 @@ describe("Jasmin.iaApiClient", () => {
     );
     vi.stubGlobal("fetch", fetchMock);
 
-    const client = new Jasmin.iaApiClient({ apiBase: "http://localhost:3100" });
+    const client = new JasminiaApiClient({ apiBase: "http://localhost:3100" });
 
     await expect(client.post("/api/issues/1/checkout", {})).rejects.toMatchObject({
       status: 409,
@@ -63,7 +63,7 @@ describe("Jasmin.iaApiClient", () => {
     const fetchMock = vi.fn().mockRejectedValue(new TypeError("fetch failed"));
     vi.stubGlobal("fetch", fetchMock);
 
-    const client = new Jasmin.iaApiClient({ apiBase: "http://localhost:3100" });
+    const client = new JasminiaApiClient({ apiBase: "http://localhost:3100" });
 
     await expect(client.post("/api/companies/import/preview", {})).rejects.toBeInstanceOf(ApiConnectionError);
     await expect(client.post("/api/companies/import/preview", {})).rejects.toMatchObject({
@@ -78,7 +78,7 @@ describe("Jasmin.iaApiClient", () => {
       /curl http:\/\/localhost:3100\/api\/health/,
     );
     await expect(client.post("/api/companies/import/preview", {})).rejects.toThrow(
-      /pnpm dev|pnpm jasminiaai run/,
+      /pnpm dev|pnpm jasminia run/,
     );
   });
 
@@ -90,7 +90,7 @@ describe("Jasmin.iaApiClient", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     const recoverAuth = vi.fn().mockResolvedValue("board-token-123");
-    const client = new Jasmin.iaApiClient({
+    const client = new JasminiaApiClient({
       apiBase: "http://localhost:3100",
       recoverAuth,
     });

@@ -10,7 +10,7 @@ const {
   prepareWorkspaceForSshExecution,
   restoreWorkspaceFromSshExecution,
   syncDirectoryToSsh,
-  startAdapterExecutionTargetJasmin.iaBridge,
+  startAdapterExecutionTargetJasminiaBridge,
 } = vi.hoisted(() => ({
   runChildProcess: vi.fn(async () => ({
     exitCode: 0,
@@ -30,7 +30,7 @@ const {
   prepareWorkspaceForSshExecution: vi.fn(async () => ({ gitBacked: false })),
   restoreWorkspaceFromSshExecution: vi.fn(async () => undefined),
   syncDirectoryToSsh: vi.fn(async () => undefined),
-  startAdapterExecutionTargetJasmin.iaBridge: vi.fn(async () => ({
+  startAdapterExecutionTargetJasminiaBridge: vi.fn(async () => ({
     env: {
       JASMINIA_API_URL: "http://127.0.0.1:4310",
       JASMINIA_API_KEY: "bridge-token",
@@ -40,9 +40,9 @@ const {
   })),
 }));
 
-vi.mock("@jasminiaai/adapter-utils/server-utils", async () => {
-  const actual = await vi.importActual<typeof import("@jasminiaai/adapter-utils/server-utils")>(
-    "@jasminiaai/adapter-utils/server-utils",
+vi.mock("@jasminia/adapter-utils/server-utils", async () => {
+  const actual = await vi.importActual<typeof import("@jasminia/adapter-utils/server-utils")>(
+    "@jasminia/adapter-utils/server-utils",
   );
   return {
     ...actual,
@@ -52,9 +52,9 @@ vi.mock("@jasminiaai/adapter-utils/server-utils", async () => {
   };
 });
 
-vi.mock("@jasminiaai/adapter-utils/ssh", async () => {
-  const actual = await vi.importActual<typeof import("@jasminiaai/adapter-utils/ssh")>(
-    "@jasminiaai/adapter-utils/ssh",
+vi.mock("@jasminia/adapter-utils/ssh", async () => {
+  const actual = await vi.importActual<typeof import("@jasminia/adapter-utils/ssh")>(
+    "@jasminia/adapter-utils/ssh",
   );
   return {
     ...actual,
@@ -64,13 +64,13 @@ vi.mock("@jasminiaai/adapter-utils/ssh", async () => {
   };
 });
 
-vi.mock("@jasminiaai/adapter-utils/execution-target", async () => {
-  const actual = await vi.importActual<typeof import("@jasminiaai/adapter-utils/execution-target")>(
-    "@jasminiaai/adapter-utils/execution-target",
+vi.mock("@jasminia/adapter-utils/execution-target", async () => {
+  const actual = await vi.importActual<typeof import("@jasminia/adapter-utils/execution-target")>(
+    "@jasminia/adapter-utils/execution-target",
   );
   return {
     ...actual,
-    startAdapterExecutionTargetJasmin.iaBridge,
+    startAdapterExecutionTargetJasminiaBridge,
   };
 });
 
@@ -129,7 +129,7 @@ describe("claude remote execution", () => {
           source: "project_primary",
           strategy: "git_worktree",
           workspaceId: "workspace-1",
-          repoUrl: "#
+          repoUrl: "#",
           repoRef: "main",
           branchName: "feature/remote-claude",
           worktreePath: workspaceDir,
@@ -138,13 +138,13 @@ describe("claude remote execution", () => {
           {
             workspaceId: "workspace-1",
             cwd: workspaceDir,
-            repoUrl: "#
+            repoUrl: "#",
             repoRef: "main",
           },
           {
             workspaceId: "workspace-2",
             cwd: alternateWorkspaceDir,
-            repoUrl: "#
+            repoUrl: "#",
             repoRef: "feature/other",
           },
         ],
@@ -190,12 +190,12 @@ describe("claude remote execution", () => {
       {
         workspaceId: "workspace-1",
         cwd: managedRemoteWorkspace,
-        repoUrl: "#
+        repoUrl: "#",
         repoRef: "main",
       },
       {
         workspaceId: "workspace-2",
-        repoUrl: "#
+        repoUrl: "#",
         repoRef: "feature/other",
       },
     ]);
@@ -205,7 +205,7 @@ describe("claude remote execution", () => {
     expect(call?.[3].env.RANDOM_WORKSPACE_CWD).toBe(managedRemoteWorkspace);
     expect(call?.[3].env.OTHER_ENV).toBe(workspaceDir);
     expect(call?.[3].remoteExecution?.remoteCwd).toBe(managedRemoteWorkspace);
-    expect(startAdapterExecutionTargetJasmin.iaBridge).toHaveBeenCalledTimes(1);
+    expect(startAdapterExecutionTargetJasminiaBridge).toHaveBeenCalledTimes(1);
     expect(restoreWorkspaceFromSshExecution).toHaveBeenCalledTimes(1);
     expect(restoreWorkspaceFromSshExecution).toHaveBeenCalledWith(expect.objectContaining({
       localDir: workspaceDir,

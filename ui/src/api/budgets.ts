@@ -4,7 +4,7 @@ import type {
   BudgetOverview,
   BudgetPolicySummary,
   BudgetPolicyUpsertInput,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { api } from "./client";
 
 export const budgetsApi = {

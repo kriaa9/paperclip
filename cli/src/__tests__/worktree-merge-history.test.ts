@@ -292,7 +292,7 @@ describe("worktree merge history planner", () => {
       id: "source-workspace-1",
       projectId: "source-project-1",
       cwd: "/Users/dotta/jasminia-evals",
-      repoUrl: "#
+      repoUrl: "#",
     });
 
     const plan = buildWorktreeMergePlan({

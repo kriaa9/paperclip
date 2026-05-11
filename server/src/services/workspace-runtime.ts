@@ -5,14 +5,14 @@ import net from "node:net";
 import { createHash, randomUUID } from "node:crypto";
 import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
-import type { AdapterRuntimeServiceReport } from "@jasminiaai/adapter-utils";
-import type { Db } from "@jasminiaai/db";
-import { executionWorkspaces, projectWorkspaces, workspaceRuntimeServices } from "@jasminiaai/db";
+import type { AdapterRuntimeServiceReport } from "@jasminia/adapter-utils";
+import type { Db } from "@jasminia/db";
+import { executionWorkspaces, projectWorkspaces, workspaceRuntimeServices } from "@jasminia/db";
 import {
   listWorkspaceServiceCommandDefinitions,
   type WorkspaceRuntimeDesiredState,
   type WorkspaceRuntimeServiceStateMap,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { and, desc, eq, inArray } from "drizzle-orm";
 import { asNumber, asString, parseObject, renderTemplate } from "../adapters/utils.js";
 import { resolveHomeAwarePath } from "../home-paths.js";

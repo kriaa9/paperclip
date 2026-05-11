@@ -3,32 +3,32 @@ import os from "node:os";
 import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import { fileURLToPath } from "node:url";
-import type { AdapterExecutionContext, AdapterExecutionResult } from "@jasminiaai/adapter-utils";
-import { readAdapterExecutionTarget, adapterExecutionTargetSessionIdentity } from "@jasminiaai/adapter-utils/execution-target";
+import type { AdapterExecutionContext, AdapterExecutionResult } from "@jasminia/adapter-utils";
+import { readAdapterExecutionTarget, adapterExecutionTargetSessionIdentity } from "@jasminia/adapter-utils/execution-target";
 import {
   DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE,
-  applyJasmin.iaWorkspaceEnv,
+  applyJasminiaWorkspaceEnv,
   asNumber,
   asString,
   buildInvocationEnvForLogs,
-  buildJasmin.iaEnv,
+  buildJasminiaEnv,
   ensureAbsoluteDirectory,
   ensurePathInEnv,
   joinPromptSections,
-  materializeJasmin.iaSkillCopy,
+  materializeJasminiaSkillCopy,
   parseObject,
-  readJasmin.iaRuntimeSkillEntries,
-  readJasmin.iaIssueWorkModeFromContext,
-  renderJasmin.iaWakePrompt,
+  readJasminiaRuntimeSkillEntries,
+  readJasminiaIssueWorkModeFromContext,
+  renderJasminiaWakePrompt,
   renderTemplate,
-  resolveJasmin.iaInstanceRootForAdapter,
-  resolveJasmin.iaDesiredSkillNames,
+  resolveJasminiaInstanceRootForAdapter,
+  resolveJasminiaDesiredSkillNames,
   rewriteWorkspaceCwdEnvVarsForExecution,
-  shapeJasmin.iaWorkspaceEnvForExecution,
-  stringifyJasmin.iaWakePayload,
-  type Jasmin.iaSkillEntry,
-} from "@jasminiaai/adapter-utils/server-utils";
-import { shellQuote } from "@jasminiaai/adapter-utils/ssh";
+  shapeJasminiaWorkspaceEnvForExecution,
+  stringifyJasminiaWakePayload,
+  type JasminiaSkillEntry,
+} from "@jasminia/adapter-utils/server-utils";
+import { shellQuote } from "@jasminia/adapter-utils/ssh";
 import {
   createAcpRuntime,
   createAgentRegistry,
@@ -113,21 +113,21 @@ function shortHash(value: unknown): string {
   return createHash("sha256").update(stableJson(value)).digest("hex").slice(0, 16);
 }
 
-function defaultJasmin.iaInstanceDir(): string {
+function defaultJasminiaInstanceDir(): string {
   const home = process.env.JASMINIA_HOME?.trim() || path.join(os.homedir(), ".jasminia");
   const instanceId = process.env.JASMINIA_INSTANCE_ID?.trim() || "default";
-  return resolveJasmin.iaInstanceRootForAdapter({
+  return resolveJasminiaInstanceRootForAdapter({
     homeDir: home,
     instanceId,
   });
 }
 
 function defaultStateDir(companyId: string, agentId: string): string {
-  return path.join(defaultJasmin.iaInstanceDir(), "companies", companyId, "acpx-local", "agents", agentId);
+  return path.join(defaultJasminiaInstanceDir(), "companies", companyId, "acpx-local", "agents", agentId);
 }
 
 function resolveManagedCodexHomeDir(companyId: string): string {
-  return path.join(defaultJasmin.iaInstanceDir(), "companies", companyId, "codex-home");
+  return path.join(defaultJasminiaInstanceDir(), "companies", companyId, "codex-home");
 }
 
 function packageRootDir(): string {
@@ -276,7 +276,7 @@ async function hashPathContents(
 }
 
 async function buildSkillSetKey(input: {
-  skills: Jasmin.iaSkillEntry[];
+  skills: JasminiaSkillEntry[];
   label: string;
 }): Promise<string> {
   const hash = createHash("sha256");
@@ -291,9 +291,9 @@ async function buildSkillSetKey(input: {
 
 async function resolveSelectedRuntimeSkills(
   config: Record<string, unknown>,
-): Promise<{ allSkills: Jasmin.iaSkillEntry[]; selectedSkills: Jasmin.iaSkillEntry[]; desiredSkillNames: string[] }> {
-  const allSkills = await readJasmin.iaRuntimeSkillEntries(config, __moduleDir);
-  const desiredSkillNames = resolveJasmin.iaDesiredSkillNames(config, allSkills);
+): Promise<{ allSkills: JasminiaSkillEntry[]; selectedSkills: JasminiaSkillEntry[]; desiredSkillNames: string[] }> {
+  const allSkills = await readJasminiaRuntimeSkillEntries(config, __moduleDir);
+  const desiredSkillNames = resolveJasminiaDesiredSkillNames(config, allSkills);
   const desiredSet = new Set(desiredSkillNames);
   return {
     allSkills,
@@ -320,7 +320,7 @@ async function prepareClaudeSkillRuntime(input: {
   for (const entry of selectedSkills) {
     const target = path.join(skillsHome, entry.runtimeName);
     try {
-      const result = await materializeJasmin.iaSkillCopy(entry.source, target);
+      const result = await materializeJasminiaSkillCopy(entry.source, target);
       if (result.skippedSymlinks.length > 0) {
         await input.onLog(
           "stdout",
@@ -392,8 +392,8 @@ async function removeSkillTarget(target: string): Promise<boolean> {
 
 async function reconcileManagedCodexSkills(input: {
   skillsHome: string;
-  allSkills: Jasmin.iaSkillEntry[];
-  selectedSkills: Jasmin.iaSkillEntry[];
+  allSkills: JasminiaSkillEntry[];
+  selectedSkills: JasminiaSkillEntry[];
   onLog: AdapterExecutionContext["onLog"];
 }): Promise<void> {
   const desired = new Set(input.selectedSkills.map((entry) => entry.runtimeName));
@@ -466,7 +466,7 @@ async function prepareCodexSkillRuntime(input: {
   for (const entry of selectedSkills) {
     const target = path.join(skillsHome, entry.runtimeName);
     try {
-      const result = await materializeJasmin.iaSkillCopy(entry.source, target);
+      const result = await materializeJasminiaSkillCopy(entry.source, target);
       if (result.skippedSymlinks.length > 0) {
         await input.onLog(
           "stdout",
@@ -655,7 +655,7 @@ async function buildRuntime(input: {
       ? remoteExecutionIdentity.remoteCwd
       : cwd;
   const executionTargetIsRemote = remoteExecutionIdentity !== null;
-  const shapedWorkspaceEnv = shapeJasmin.iaWorkspaceEnvForExecution({
+  const shapedWorkspaceEnv = shapeJasminiaWorkspaceEnvForExecution({
     workspaceCwd: effectiveWorkspaceCwd,
     workspaceWorktreePath,
     executionTargetIsRemote,
@@ -677,7 +677,7 @@ async function buildRuntime(input: {
   const envConfig = parseObject(config.env);
   const hasExplicitApiKey =
     typeof envConfig.JASMINIA_API_KEY === "string" && envConfig.JASMINIA_API_KEY.trim().length > 0;
-  const env: Record<string, string> = { ...buildJasmin.iaEnv(agent), JASMINIA_RUN_ID: runId };
+  const env: Record<string, string> = { ...buildJasminiaEnv(agent), JASMINIA_RUN_ID: runId };
   const wakeTaskId =
     (typeof context.taskId === "string" && context.taskId.trim()) ||
     (typeof context.issueId === "string" && context.issueId.trim()) ||
@@ -692,8 +692,8 @@ async function buildRuntime(input: {
   const linkedIssueIds = Array.isArray(context.issueIds)
     ? context.issueIds.filter((value): value is string => typeof value === "string" && value.trim().length > 0)
     : [];
-  const wakePayloadJson = stringifyJasmin.iaWakePayload(context.jasminiaWake);
-  const issueWorkMode = readJasmin.iaIssueWorkModeFromContext(context);
+  const wakePayloadJson = stringifyJasminiaWakePayload(context.jasminiaWake);
+  const issueWorkMode = readJasminiaIssueWorkModeFromContext(context);
   if (wakeTaskId) env.JASMINIA_TASK_ID = wakeTaskId;
   if (issueWorkMode) env.JASMINIA_ISSUE_WORK_MODE = issueWorkMode;
   if (wakeReason) env.JASMINIA_WAKE_REASON = wakeReason;
@@ -702,7 +702,7 @@ async function buildRuntime(input: {
   if (approvalStatus) env.JASMINIA_APPROVAL_STATUS = approvalStatus;
   if (linkedIssueIds.length > 0) env.JASMINIA_LINKED_ISSUE_IDS = linkedIssueIds.join(",");
   if (wakePayloadJson) env.JASMINIA_WAKE_PAYLOAD_JSON = wakePayloadJson;
-  applyJasmin.iaWorkspaceEnv(env, {
+  applyJasminiaWorkspaceEnv(env, {
     workspaceCwd: shapedWorkspaceEnv.workspaceCwd,
     workspaceSource,
     workspaceStrategy,
@@ -746,7 +746,7 @@ async function buildRuntime(input: {
     skillsIdentity = preparedSkills.identity;
     skillCommandNotes.push(...preparedSkills.commandNotes);
   } else {
-    const desired = resolveJasmin.iaDesiredSkillNames(config, await readJasmin.iaRuntimeSkillEntries(config, __moduleDir));
+    const desired = resolveJasminiaDesiredSkillNames(config, await readJasminiaRuntimeSkillEntries(config, __moduleDir));
     skillsIdentity = { mode: "custom_unsupported", desiredSkillNames: desired };
     if (desired.length > 0) {
       skillCommandNotes.push("Selected Jasmin.ia skills are tracked only; ACPX custom commands do not expose a runtime skill contract yet.");
@@ -911,7 +911,7 @@ async function buildPrompt(ctx: AdapterExecutionContext, resumedSession: boolean
     !resumedSession && bootstrapPromptTemplate.trim().length > 0
       ? renderTemplate(bootstrapPromptTemplate, templateData).trim()
       : "";
-  const wakePrompt = renderJasmin.iaWakePrompt(context.jasminiaWake, { resumedSession });
+  const wakePrompt = renderJasminiaWakePrompt(context.jasminiaWake, { resumedSession });
   const shouldUseResumeDeltaPrompt = resumedSession && wakePrompt.length > 0;
   const promptInstructionsPrefix = shouldUseResumeDeltaPrompt ? "" : instructionsPrefix;
   const renderedPrompt = shouldUseResumeDeltaPrompt ? "" : renderTemplate(promptTemplate, templateData);

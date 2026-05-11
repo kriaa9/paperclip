@@ -5,7 +5,7 @@ import {
   parseProjectMentionHref,
   parseSkillMentionHref,
   parseUserMentionHref,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { getAgentIcon } from "./agent-icons";
 import { hexToRgb, pickTextColorForPillBg } from "./color-contrast";
 

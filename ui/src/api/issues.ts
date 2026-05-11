@@ -20,7 +20,7 @@ import type {
   PreviewIssueTreeControl,
   ReleaseIssueTreeHold,
   UpsertIssueDocument,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { api } from "./client";
 
 export type IssueUpdateResponse = Issue & {

@@ -2,8 +2,8 @@ import { describe, expect, it, vi } from "vitest";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { runChildProcess } from "@jasminiaai/adapter-utils/server-utils";
-import { execute } from "@jasminiaai/adapter-claude-local/server";
+import { runChildProcess } from "@jasminia/adapter-utils/server-utils";
+import { execute } from "@jasminia/adapter-claude-local/server";
 
 async function writeFailingClaudeCommand(
   commandPath: string,
@@ -668,8 +668,8 @@ describe("claude execute", () => {
     await writeFakeClaudeCommand(commandPath);
 
     const previousHome = process.env.HOME;
-    const previousJasmin.iaHome = process.env.JASMINIA_HOME;
-    const previousJasmin.iaInstanceId = process.env.JASMINIA_INSTANCE_ID;
+    const previousJasminiaHome = process.env.JASMINIA_HOME;
+    const previousJasminiaInstanceId = process.env.JASMINIA_INSTANCE_ID;
     process.env.HOME = root;
     process.env.JASMINIA_HOME = jasminiaHome;
     delete process.env.JASMINIA_INSTANCE_ID;
@@ -805,10 +805,10 @@ describe("claude execute", () => {
     } finally {
       if (previousHome === undefined) delete process.env.HOME;
       else process.env.HOME = previousHome;
-      if (previousJasmin.iaHome === undefined) delete process.env.JASMINIA_HOME;
-      else process.env.JASMINIA_HOME = previousJasmin.iaHome;
-      if (previousJasmin.iaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
-      else process.env.JASMINIA_INSTANCE_ID = previousJasmin.iaInstanceId;
+      if (previousJasminiaHome === undefined) delete process.env.JASMINIA_HOME;
+      else process.env.JASMINIA_HOME = previousJasminiaHome;
+      if (previousJasminiaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
+      else process.env.JASMINIA_INSTANCE_ID = previousJasminiaInstanceId;
       await fs.rm(root, { recursive: true, force: true });
     }
   });
@@ -827,8 +827,8 @@ describe("claude execute", () => {
     await writeFakeClaudeCommand(commandPath);
 
     const previousHome = process.env.HOME;
-    const previousJasmin.iaHome = process.env.JASMINIA_HOME;
-    const previousJasmin.iaInstanceId = process.env.JASMINIA_INSTANCE_ID;
+    const previousJasminiaHome = process.env.JASMINIA_HOME;
+    const previousJasminiaInstanceId = process.env.JASMINIA_INSTANCE_ID;
     process.env.HOME = root;
     process.env.JASMINIA_HOME = jasminiaHome;
     delete process.env.JASMINIA_INSTANCE_ID;
@@ -910,10 +910,10 @@ describe("claude execute", () => {
     } finally {
       if (previousHome === undefined) delete process.env.HOME;
       else process.env.HOME = previousHome;
-      if (previousJasmin.iaHome === undefined) delete process.env.JASMINIA_HOME;
-      else process.env.JASMINIA_HOME = previousJasmin.iaHome;
-      if (previousJasmin.iaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
-      else process.env.JASMINIA_INSTANCE_ID = previousJasmin.iaInstanceId;
+      if (previousJasminiaHome === undefined) delete process.env.JASMINIA_HOME;
+      else process.env.JASMINIA_HOME = previousJasminiaHome;
+      if (previousJasminiaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
+      else process.env.JASMINIA_INSTANCE_ID = previousJasminiaInstanceId;
       await fs.rm(root, { recursive: true, force: true });
     }
   }, 15_000);

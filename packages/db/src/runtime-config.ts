@@ -3,9 +3,9 @@ import path from "node:path";
 import {
   expandHomePrefix,
   resolveDefaultEmbeddedPostgresDir,
-  resolveJasmin.iaConfigPathForInstance,
-  resolveJasmin.iaEnvPathForConfig,
-} from "@jasminiaai/shared/home-paths";
+  resolveJasminiaConfigPathForInstance,
+  resolveJasminiaEnvPathForConfig,
+} from "@jasminia/shared/home-paths";
 
 const CONFIG_BASENAME = "config.json";
 
@@ -54,15 +54,15 @@ function findConfigFileFromAncestors(startDir: string): string | null {
   }
 }
 
-function resolveJasmin.iaConfigPath(): string {
+function resolveJasminiaConfigPath(): string {
   if (process.env.JASMINIA_CONFIG?.trim()) {
     return path.resolve(process.env.JASMINIA_CONFIG.trim());
   }
-  return findConfigFileFromAncestors(process.cwd()) ?? resolveJasmin.iaConfigPathForInstance();
+  return findConfigFileFromAncestors(process.cwd()) ?? resolveJasminiaConfigPathForInstance();
 }
 
-function resolveJasmin.iaEnvPath(configPath: string): string {
-  return resolveJasmin.iaEnvPathForConfig(configPath);
+function resolveJasminiaEnvPath(configPath: string): string {
+  return resolveJasminiaEnvPathForConfig(configPath);
 }
 
 function parseEnvFile(contents: string): Record<string, string> {
@@ -182,8 +182,8 @@ function readConfig(configPath: string): PartialConfig | null {
 }
 
 export function resolveDatabaseTarget(): ResolvedDatabaseTarget {
-  const configPath = resolveJasmin.iaConfigPath();
-  const envPath = resolveJasmin.iaEnvPath(configPath);
+  const configPath = resolveJasminiaConfigPath();
+  const envPath = resolveJasminiaEnvPath(configPath);
   const envEntries = readEnvEntries(envPath);
 
   const envUrl = process.env.DATABASE_URL?.trim();

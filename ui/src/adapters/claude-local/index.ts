@@ -1,7 +1,7 @@
 import type { UIAdapterModule } from "../types";
-import { parseClaudeStdoutLine } from "@jasminiaai/adapter-claude-local/ui";
+import { parseClaudeStdoutLine } from "@jasminia/adapter-claude-local/ui";
 import { ClaudeLocalConfigFields } from "./config-fields";
-import { buildClaudeLocalConfig } from "@jasminiaai/adapter-claude-local/ui";
+import { buildClaudeLocalConfig } from "@jasminia/adapter-claude-local/ui";
 
 export const claudeLocalUIAdapter: UIAdapterModule = {
   type: "claude_local",

@@ -18,7 +18,7 @@ import type {
   SecretProviderDescriptor,
   SidebarBadges,
   WorkspaceRuntimeService,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import type { RunForIssue } from "@/api/activity";
 import type { LiveRunForIssue } from "@/api/heartbeats";
 
@@ -355,7 +355,7 @@ const storybookWorkspaceRuntime = {
       id: "typecheck-ui",
       name: "UI typecheck",
       kind: "job",
-      command: "pnpm --filter @jasminiaai/ui typecheck",
+      command: "pnpm --filter @jasminia/ui typecheck",
       cwd: ".",
     },
   ],
@@ -369,7 +369,7 @@ export const storybookProjectWorkspaces: Project["workspaces"] = [
     name: "Board UI",
     sourceType: "local_path" as const,
     cwd: `${storybookRepoRoot}/ui`,
-    repoUrl: "#
+    repoUrl: "#",
     repoRef: "master",
     defaultRef: "master",
     visibility: "default" as const,
@@ -396,7 +396,7 @@ export const storybookProjectWorkspaces: Project["workspaces"] = [
     name: "Docs preview sandbox",
     sourceType: "remote_managed",
     cwd: null,
-    repoUrl: "#
+    repoUrl: "#",
     repoRef: "preview/docs-workspaces",
     defaultRef: "master",
     visibility: "advanced",
@@ -457,7 +457,7 @@ export const storybookProjectWorkspaces: Project["workspaces"] = [
     name: "Release smoke local checkout",
     sourceType: "local_path",
     cwd: `${storybookWorkspaceRoot}/release-smoke`,
-    repoUrl: "#
+    repoUrl: "#",
     repoRef: "release/smoke-2026-04-20",
     defaultRef: "master",
     visibility: "advanced",
@@ -501,7 +501,7 @@ export const storybookExecutionWorkspaces: ExecutionWorkspace[] = [
     name: "PAP-1641 storybook worktree",
     status: "active",
     cwd: `${storybookWorktreeRoot}/PAP-1641-create-super-detailed-storybooks-for-our-project`,
-    repoUrl: "#
+    repoUrl: "#",
     baseRef: "master",
     branchName: "PAP-1641-create-super-detailed-storybooks-for-our-project",
     providerType: "git_worktree",
@@ -529,7 +529,7 @@ export const storybookExecutionWorkspaces: ExecutionWorkspace[] = [
     name: "PAP-1608 release smoke cleanup",
     status: "cleanup_failed",
     cwd: `${storybookWorktreeRoot}/PAP-1608-release-smoke-cleanup`,
-    repoUrl: "#
+    repoUrl: "#",
     baseRef: "master",
     branchName: "PAP-1608-release-smoke-cleanup",
     providerType: "git_worktree",
@@ -612,7 +612,7 @@ function createProject(overrides: Partial<Project> = {}): Project {
     },
     codebase: {
       workspaceId: "workspace-board-ui",
-      repoUrl: "#
+      repoUrl: "#",
       repoRef: "master",
       defaultRef: "master",
       repoName: "jasminia",

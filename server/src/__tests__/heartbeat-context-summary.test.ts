@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
-  buildJasmin.iaTaskMarkdown,
+  buildJasminiaTaskMarkdown,
   mergeCoalescedContextSnapshot,
   summarizeHeartbeatRunContextSnapshot,
   summarizeHeartbeatRunListResultJson,
 } from "../services/heartbeat.js";
 
-describe("buildJasmin.iaTaskMarkdown", () => {
+describe("buildJasminiaTaskMarkdown", () => {
   it("adds planning directives for assignment and comment task context", () => {
-    const assignment = buildJasmin.iaTaskMarkdown({
+    const assignment = buildJasminiaTaskMarkdown({
       issue: {
         id: "issue-1",
         identifier: "PAP-3404",
@@ -21,7 +21,7 @@ describe("buildJasmin.iaTaskMarkdown", () => {
     expect(assignment).toContain("- Work mode: \"planning\"");
     expect(assignment).toContain("Make the plan only. Do not write code or perform implementation work.");
 
-    const commentWake = buildJasmin.iaTaskMarkdown({
+    const commentWake = buildJasminiaTaskMarkdown({
       issue: {
         id: "issue-1",
         identifier: "PAP-3404",
@@ -37,7 +37,7 @@ describe("buildJasmin.iaTaskMarkdown", () => {
 
     expect(commentWake).toContain("Update the plan only. Do not write code or perform implementation work.");
 
-    const acceptedConfirmation = buildJasmin.iaTaskMarkdown({
+    const acceptedConfirmation = buildJasminiaTaskMarkdown({
       issue: {
         id: "issue-1",
         identifier: "PAP-3404",
@@ -56,7 +56,7 @@ describe("buildJasmin.iaTaskMarkdown", () => {
   });
 
   it("prefers ordinary comment planning guidance over stale accepted confirmation state", () => {
-    const commentWake = buildJasmin.iaTaskMarkdown({
+    const commentWake = buildJasminiaTaskMarkdown({
       issue: {
         id: "issue-1",
         identifier: "PAP-3404",

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   createCostEventSchema,
   createFinanceEventSchema,
@@ -7,7 +7,7 @@ import {
   resolveBudgetIncidentSchema,
   updateBudgetSchema,
   upsertBudgetPolicySchema,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { validate } from "../middleware/validate.js";
 import {
   budgetService,

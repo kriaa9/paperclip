@@ -1,4 +1,4 @@
-import type { Agent } from "@jasminiaai/shared";
+import type { Agent } from "@jasminia/shared";
 
 export const AGENT_ORDER_UPDATED_EVENT = "jasminia:agent-order-updated";
 export const AGENT_SORT_MODE_UPDATED_EVENT = "jasminia:agent-sort-mode-updated";

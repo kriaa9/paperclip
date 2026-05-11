@@ -2,8 +2,8 @@ import { describe, expect, it, vi } from "vitest";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { runChildProcess } from "@jasminiaai/adapter-utils/server-utils";
-import { execute } from "@jasminiaai/adapter-codex-local/server";
+import { runChildProcess } from "@jasminia/adapter-utils/server-utils";
+import { execute } from "@jasminia/adapter-codex-local/server";
 
 async function writeFakeCodexCommand(commandPath: string): Promise<void> {
   const script = `#!/usr/bin/env node
@@ -115,9 +115,9 @@ describe("codex execute", () => {
     await writeFakeCodexCommand(commandPath);
 
     const previousHome = process.env.HOME;
-    const previousJasmin.iaHome = process.env.JASMINIA_HOME;
-    const previousJasmin.iaInstanceId = process.env.JASMINIA_INSTANCE_ID;
-    const previousJasmin.iaInWorktree = process.env.JASMINIA_IN_WORKTREE;
+    const previousJasminiaHome = process.env.JASMINIA_HOME;
+    const previousJasminiaInstanceId = process.env.JASMINIA_INSTANCE_ID;
+    const previousJasminiaInWorktree = process.env.JASMINIA_IN_WORKTREE;
     const previousCodexHome = process.env.CODEX_HOME;
     process.env.HOME = root;
     process.env.JASMINIA_HOME = jasminiaHome;
@@ -179,12 +179,12 @@ describe("codex execute", () => {
     } finally {
       if (previousHome === undefined) delete process.env.HOME;
       else process.env.HOME = previousHome;
-      if (previousJasmin.iaHome === undefined) delete process.env.JASMINIA_HOME;
-      else process.env.JASMINIA_HOME = previousJasmin.iaHome;
-      if (previousJasmin.iaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
-      else process.env.JASMINIA_INSTANCE_ID = previousJasmin.iaInstanceId;
-      if (previousJasmin.iaInWorktree === undefined) delete process.env.JASMINIA_IN_WORKTREE;
-      else process.env.JASMINIA_IN_WORKTREE = previousJasmin.iaInWorktree;
+      if (previousJasminiaHome === undefined) delete process.env.JASMINIA_HOME;
+      else process.env.JASMINIA_HOME = previousJasminiaHome;
+      if (previousJasminiaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
+      else process.env.JASMINIA_INSTANCE_ID = previousJasminiaInstanceId;
+      if (previousJasminiaInWorktree === undefined) delete process.env.JASMINIA_IN_WORKTREE;
+      else process.env.JASMINIA_IN_WORKTREE = previousJasminiaInWorktree;
       if (previousCodexHome === undefined) delete process.env.CODEX_HOME;
       else process.env.CODEX_HOME = previousCodexHome;
       await fs.rm(root, { recursive: true, force: true });
@@ -1064,9 +1064,9 @@ describe("codex execute", () => {
     await writeFakeCodexCommand(commandPath);
 
     const previousHome = process.env.HOME;
-    const previousJasmin.iaHome = process.env.JASMINIA_HOME;
-    const previousJasmin.iaInstanceId = process.env.JASMINIA_INSTANCE_ID;
-    const previousJasmin.iaInWorktree = process.env.JASMINIA_IN_WORKTREE;
+    const previousJasminiaHome = process.env.JASMINIA_HOME;
+    const previousJasminiaInstanceId = process.env.JASMINIA_INSTANCE_ID;
+    const previousJasminiaInWorktree = process.env.JASMINIA_IN_WORKTREE;
     const previousCodexHome = process.env.CODEX_HOME;
     process.env.HOME = root;
     process.env.JASMINIA_HOME = jasminiaHome;
@@ -1146,12 +1146,12 @@ describe("codex execute", () => {
     } finally {
       if (previousHome === undefined) delete process.env.HOME;
       else process.env.HOME = previousHome;
-      if (previousJasmin.iaHome === undefined) delete process.env.JASMINIA_HOME;
-      else process.env.JASMINIA_HOME = previousJasmin.iaHome;
-      if (previousJasmin.iaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
-      else process.env.JASMINIA_INSTANCE_ID = previousJasmin.iaInstanceId;
-      if (previousJasmin.iaInWorktree === undefined) delete process.env.JASMINIA_IN_WORKTREE;
-      else process.env.JASMINIA_IN_WORKTREE = previousJasmin.iaInWorktree;
+      if (previousJasminiaHome === undefined) delete process.env.JASMINIA_HOME;
+      else process.env.JASMINIA_HOME = previousJasminiaHome;
+      if (previousJasminiaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
+      else process.env.JASMINIA_INSTANCE_ID = previousJasminiaInstanceId;
+      if (previousJasminiaInWorktree === undefined) delete process.env.JASMINIA_IN_WORKTREE;
+      else process.env.JASMINIA_IN_WORKTREE = previousJasminiaInWorktree;
       if (previousCodexHome === undefined) delete process.env.CODEX_HOME;
       else process.env.CODEX_HOME = previousCodexHome;
       await fs.rm(root, { recursive: true, force: true });
@@ -1172,9 +1172,9 @@ describe("codex execute", () => {
     await writeFakeCodexCommand(commandPath);
 
     const previousHome = process.env.HOME;
-    const previousJasmin.iaHome = process.env.JASMINIA_HOME;
-    const previousJasmin.iaInstanceId = process.env.JASMINIA_INSTANCE_ID;
-    const previousJasmin.iaInWorktree = process.env.JASMINIA_IN_WORKTREE;
+    const previousJasminiaHome = process.env.JASMINIA_HOME;
+    const previousJasminiaInstanceId = process.env.JASMINIA_INSTANCE_ID;
+    const previousJasminiaInWorktree = process.env.JASMINIA_IN_WORKTREE;
     const previousCodexHome = process.env.CODEX_HOME;
     process.env.HOME = root;
     process.env.JASMINIA_HOME = jasminiaHome;
@@ -1222,12 +1222,12 @@ describe("codex execute", () => {
     } finally {
       if (previousHome === undefined) delete process.env.HOME;
       else process.env.HOME = previousHome;
-      if (previousJasmin.iaHome === undefined) delete process.env.JASMINIA_HOME;
-      else process.env.JASMINIA_HOME = previousJasmin.iaHome;
-      if (previousJasmin.iaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
-      else process.env.JASMINIA_INSTANCE_ID = previousJasmin.iaInstanceId;
-      if (previousJasmin.iaInWorktree === undefined) delete process.env.JASMINIA_IN_WORKTREE;
-      else process.env.JASMINIA_IN_WORKTREE = previousJasmin.iaInWorktree;
+      if (previousJasminiaHome === undefined) delete process.env.JASMINIA_HOME;
+      else process.env.JASMINIA_HOME = previousJasminiaHome;
+      if (previousJasminiaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
+      else process.env.JASMINIA_INSTANCE_ID = previousJasminiaInstanceId;
+      if (previousJasminiaInWorktree === undefined) delete process.env.JASMINIA_IN_WORKTREE;
+      else process.env.JASMINIA_IN_WORKTREE = previousJasminiaInWorktree;
       if (previousCodexHome === undefined) delete process.env.CODEX_HOME;
       else process.env.CODEX_HOME = previousCodexHome;
       await fs.rm(root, { recursive: true, force: true });

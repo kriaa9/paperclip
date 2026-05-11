@@ -1,4 +1,4 @@
-# `@jasminiaai/plugin-e2b`
+# `@jasminia/plugin-e2b`
 
 Published E2B sandbox provider plugin for Jasmin.ia.
 
@@ -9,7 +9,7 @@ This package lives in the Jasmin.ia monorepo, but it is intentionally excluded f
 From a Jasmin.ia instance, install:
 
 ```text
-@jasminiaai/plugin-e2b
+@jasminia/plugin-e2b
 ```
 
 The host plugin installer runs `npm install` into the managed plugin directory, so package dependencies such as `e2b` are pulled in during installation.
@@ -32,7 +32,7 @@ pnpm test
 pnpm typecheck
 ```
 
-These commands assume the repo root has already been installed once so the local `@jasminiaai/plugin-sdk` workspace package is available to the compiler during development.
+These commands assume the repo root has already been installed once so the local `@jasminia/plugin-sdk` workspace package is available to the compiler during development.
 
 ## Package layout
 

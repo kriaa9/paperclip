@@ -18,7 +18,7 @@ import type {
   PluginRecord,
   PluginConfig,
   PluginStatus,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { api } from "./client";
 
 /**

@@ -50,7 +50,7 @@ interface ApiClientOptions {
   recoverAuth?: (input: RecoverAuthInput) => Promise<string | null>;
 }
 
-export class Jasmin.iaApiClient {
+export class JasminiaApiClient {
   readonly apiBase: string;
   apiKey?: string;
   readonly runId?: string;
@@ -217,7 +217,7 @@ function buildConnectionErrorMessage(input: {
     "This usually means the Jasmin.ia server is not running, the configured URL is wrong, or the request is being blocked before it reaches Jasmin.ia.",
     "",
     "Try:",
-    "- Start Jasmin.ia with `pnpm dev` or `pnpm jasminiaai run`.",
+    "- Start Jasmin.ia with `pnpm dev` or `pnpm jasminia run`.",
     `- Verify the server is reachable with \`curl ${healthUrl}\`.`,
     `- If Jasmin.ia is running elsewhere, pass \`--api-base ${input.apiBase.replace(/\/+$/, "")}\` or set \`JASMINIA_API_URL\`.`,
   );

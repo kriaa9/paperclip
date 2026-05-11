@@ -33,14 +33,14 @@ Current runtime assumptions:
 Use the scaffold package instead of hand-writing the boilerplate:
 
 ```bash
-pnpm --filter @jasminiaai/create-jasminia-plugin build
+pnpm --filter @jasminia/create-jasminia-plugin build
 node packages/plugins/create-jasminia-plugin/dist/index.js <npm-package-name> --output <target-dir>
 ```
 
 For a plugin that lives outside the Jasmin.ia repo, pass `--sdk-path` and let the scaffold snapshot the local SDK/shared packages into `.jasminia-sdk/`:
 
 ```bash
-pnpm --filter @jasminiaai/create-jasminia-plugin build
+pnpm --filter @jasminia/create-jasminia-plugin build
 node packages/plugins/create-jasminia-plugin/dist/index.js @acme/plugin-name \
   --output /absolute/path/to/plugin-repos \
   --sdk-path /absolute/path/to/jasminia/packages/plugins/sdk

@@ -7,7 +7,7 @@ import type {
   FeedbackVote,
   FeedbackVoteValue,
   IssueComment,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Check, Copy, Jasmin.ia } from "lucide-react";

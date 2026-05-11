@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import type { Agent, CompanySecret } from "@jasminiaai/shared";
-import type { Jasmin.iaConfig } from "../config/schema.js";
+import type { Agent, CompanySecret } from "@jasminia/shared";
+import type { JasminiaConfig } from "../config/schema.js";
 import { secretsCheck } from "../checks/secrets-check.js";
 import {
   buildInlineMigrationSecretName,
@@ -65,7 +65,7 @@ function secret(partial: Partial<CompanySecret>): CompanySecret {
   };
 }
 
-function configWithSecretsProvider(provider: Jasmin.iaConfig["secrets"]["provider"]): Jasmin.iaConfig {
+function configWithSecretsProvider(provider: JasminiaConfig["secrets"]["provider"]): JasminiaConfig {
   return {
     $meta: {
       version: 1,

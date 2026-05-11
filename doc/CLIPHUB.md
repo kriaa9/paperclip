@@ -209,7 +209,7 @@ ClipHub is a **separate service** from Jasmin.ia itself. Jasmin.ia is self-hoste
 |---|---|
 | **ClipHub Web** | Browse, search, discover, comment, star — the website |
 | **ClipHub API** | Registry API for publishing, downloading, searching programmatically |
-| **Jasmin.ia CLI** | `jasminiaai install`, `jasminiaai publish`, `jasminiaai cliphub sync` — built into Jasmin.ia |
+| **Jasmin.ia CLI** | `jasminia install`, `jasminia publish`, `jasminia cliphub sync` — built into Jasmin.ia |
 | **Jasmin.ia UI** | "Browse ClipHub" panel in the Jasmin.ia web UI for discovering templates without leaving the app |
 
 ### Tech Stack
@@ -260,7 +260,7 @@ Report
 1. Open ClipHub, browse by category or search "dev shop for building SaaS"
 2. Find a template that fits — "Lean SaaS Dev Shop (CEO + CTO + 3 Engineers)"
 3. Read the description, inspect the org chart, check the comments
-4. Run `jasminiaai install cliphub:acme/lean-saas-shop`
+4. Run `jasminia install cliphub:acme/lean-saas-shop`
 5. Jasmin.ia creates the company locally with all agents pre-configured
 6. Set your API keys, adjust budgets, add your initial tasks
 7. Hit go
@@ -268,8 +268,8 @@ Report
 ### "I built something great and want to share it"
 
 1. Build and iterate on a company in Jasmin.ia until it works well
-2. Export: `jasminiaai export --template my-agency`
-3. Publish: `jasminiaai publish cliphub my-agency`
+2. Export: `jasminia export --template my-agency`
+3. Publish: `jasminia publish cliphub my-agency`
 4. Fill in description, category, tags on the web UI
 5. Template is live — others can find and install it
 
@@ -285,7 +285,7 @@ Report
 
 1. Search ClipHub for agent templates: "senior python engineer"
 2. Find a well-starred agent config
-3. Install just that agent: `jasminiaai install cliphub:acme/senior-python-eng --agent`
+3. Install just that agent: `jasminia install cliphub:acme/senior-python-eng --agent`
 4. Assign it to a manager in your existing company
 5. Done
 
@@ -311,7 +311,7 @@ ClipHub is to Jasmin.ia what a package registry is to a language runtime: option
 - [ ] Template browsing (list, filter by category)
 - [ ] Template detail page (description, org chart, agent list, install command)
 - [ ] Semantic search (vector embeddings)
-- [ ] `jasminiaai install cliphub:<publisher>/<slug>` CLI command
+- [ ] `jasminia install cliphub:<publisher>/<slug>` CLI command
 - [ ] GitHub OAuth authentication
 - [ ] Stars
 - [ ] Download counts
@@ -326,7 +326,7 @@ ClipHub is to Jasmin.ia what a package registry is to a language runtime: option
 - [ ] Verified publisher badges
 - [ ] Automated security scanning of adapter configs
 - [ ] "Browse ClipHub" panel in Jasmin.ia web UI
-- [ ] `jasminiaai cliphub sync` for bulk publishing
+- [ ] `jasminia cliphub sync` for bulk publishing
 - [ ] Publisher profiles and portfolios
 
 ### Not in Scope

@@ -1,19 +1,19 @@
 import { describe, expect, it } from "vitest";
-import { sessionCodec as claudeSessionCodec } from "@jasminiaai/adapter-claude-local/server";
-import { sessionCodec as codexSessionCodec, isCodexUnknownSessionError } from "@jasminiaai/adapter-codex-local/server";
+import { sessionCodec as claudeSessionCodec } from "@jasminia/adapter-claude-local/server";
+import { sessionCodec as codexSessionCodec, isCodexUnknownSessionError } from "@jasminia/adapter-codex-local/server";
 import {
   sessionCodec as cursorSessionCodec,
   isCursorUnknownSessionError,
-} from "@jasminiaai/adapter-cursor-local/server";
+} from "@jasminia/adapter-cursor-local/server";
 import {
   sessionCodec as geminiSessionCodec,
   isGeminiUnknownSessionError,
-} from "@jasminiaai/adapter-gemini-local/server";
+} from "@jasminia/adapter-gemini-local/server";
 import {
   sessionCodec as opencodeSessionCodec,
   isOpenCodeUnknownSessionError,
-} from "@jasminiaai/adapter-opencode-local/server";
-import { sessionCodec as acpxSessionCodec } from "@jasminiaai/adapter-acpx-local/server";
+} from "@jasminia/adapter-opencode-local/server";
+import { sessionCodec as acpxSessionCodec } from "@jasminia/adapter-acpx-local/server";
 
 describe("adapter session codecs", () => {
   it("normalizes claude session params with cwd", () => {

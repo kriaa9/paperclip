@@ -1,11 +1,11 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it, vi } from "vitest";
-import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/shared";
+import type { JasminiaPluginManifestV1 } from "@jasminia/shared";
 import {
   JsonRpcCallError,
   type HostToWorkerMethods,
-} from "@jasminiaai/plugin-sdk";
+} from "@jasminia/plugin-sdk";
 import {
   appendStderrExcerpt,
   createPluginWorkerHandle,
@@ -16,7 +16,7 @@ const FIXTURES_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), "fi
 const DELAYED_WORKER_ENTRYPOINT = path.join(FIXTURES_DIR, "plugin-worker-delayed.cjs");
 const TERMINATED_WORKER_ENTRYPOINT = path.join(FIXTURES_DIR, "plugin-worker-terminated.cjs");
 
-const TEST_MANIFEST: Jasmin.iaPluginManifestV1 = {
+const TEST_MANIFEST: JasminiaPluginManifestV1 = {
   id: "test.plugin",
   apiVersion: 1,
   version: "1.0.0",

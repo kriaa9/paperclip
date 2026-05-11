@@ -14,7 +14,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { resolveJasmin.iaHomeDir } from "../home-paths.js";
+import { resolveJasminiaHomeDir } from "../home-paths.js";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -44,7 +44,7 @@ interface AdapterSettings {
 // ---------------------------------------------------------------------------
 
 function adapterPluginPaths() {
-  const jasminiaDir = resolveJasmin.iaHomeDir();
+  const jasminiaDir = resolveJasminiaHomeDir();
   return {
     adapterPluginsDir: path.join(jasminiaDir, "adapter-plugins"),
     adapterPluginsStorePath: path.join(jasminiaDir, "adapter-plugins.json"),

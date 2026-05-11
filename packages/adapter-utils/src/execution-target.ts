@@ -92,7 +92,7 @@ export interface AdapterExecutionTargetShellOptions {
   onLog?: (stream: "stdout" | "stderr", chunk: string) => Promise<void>;
 }
 
-export interface AdapterExecutionTargetJasmin.iaBridgeHandle {
+export interface AdapterExecutionTargetJasminiaBridgeHandle {
   env: Record<string, string>;
   stop(): Promise<void>;
 }
@@ -122,7 +122,7 @@ function resolveHostForUrl(rawHost: string): string {
   return host;
 }
 
-function resolveDefaultJasmin.iaApiUrl(): string {
+function resolveDefaultJasminiaApiUrl(): string {
   const runtimeHost = resolveHostForUrl(
     process.env.JASMINIA_LISTEN_HOST ?? process.env.HOST ?? "localhost",
   );
@@ -208,7 +208,7 @@ export function resolveAdapterExecutionTargetCwd(
   return adapterExecutionTargetRemoteCwd(target, localFallbackCwd);
 }
 
-export function adapterExecutionTargetUsesJasmin.iaBridge(
+export function adapterExecutionTargetUsesJasminiaBridge(
   target: AdapterExecutionTarget | null | undefined,
 ): boolean {
   return target?.kind === "remote";
@@ -1048,7 +1048,7 @@ async function readBridgeForwardResponseBody(response: Response, maxBodyBytes: n
   return Buffer.concat(chunks, totalBytes).toString("utf8");
 }
 
-export async function startAdapterExecutionTargetJasmin.iaBridge(input: {
+export async function startAdapterExecutionTargetJasminiaBridge(input: {
   runId: string;
   target: AdapterExecutionTarget | null | undefined;
   runtimeRootDir: string | null | undefined;
@@ -1058,8 +1058,8 @@ export async function startAdapterExecutionTargetJasmin.iaBridge(input: {
   hostApiUrl?: string | null;
   onLog?: (stream: "stdout" | "stderr", chunk: string) => Promise<void>;
   maxBodyBytes?: number | null;
-}): Promise<AdapterExecutionTargetJasmin.iaBridgeHandle | null> {
-  if (!adapterExecutionTargetUsesJasmin.iaBridge(input.target)) {
+}): Promise<AdapterExecutionTargetJasminiaBridgeHandle | null> {
+  if (!adapterExecutionTargetUsesJasminiaBridge(input.target)) {
     return null;
   }
   if (!input.target || input.target.kind !== "remote") {
@@ -1089,7 +1089,7 @@ export async function startAdapterExecutionTargetJasmin.iaBridge(input: {
     input.hostApiUrl?.trim() ||
     process.env.JASMINIA_RUNTIME_API_URL?.trim() ||
     process.env.JASMINIA_API_URL?.trim() ||
-    resolveDefaultJasmin.iaApiUrl();
+    resolveDefaultJasminiaApiUrl();
   const shellCommand = adapterExecutionTargetShellCommand(target);
   const runner = adapterExecutionTargetCommandRunner(target);
   const bridgeTimeoutMs =

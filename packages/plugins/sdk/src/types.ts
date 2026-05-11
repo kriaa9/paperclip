@@ -2,7 +2,7 @@
  * Core types for the Jasmin.ia plugin worker-side SDK.
  *
  * These types define the stable public API surface that plugin workers import
- * from `@jasminiaai/plugin-sdk`.  The host provides a concrete implementation
+ * from `@jasminia/plugin-sdk`.  The host provides a concrete implementation
  * of `PluginContext` to the plugin at initialisation time.
  *
  * @see PLUGIN_SPEC.md §14 — SDK Surface
@@ -10,7 +10,7 @@
  */
 
 import type {
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginStateScopeKind,
   PluginEventType,
   PluginToolDeclaration,
@@ -39,14 +39,14 @@ import type {
   RoutineRun,
   Agent,
   Goal,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 
 // ---------------------------------------------------------------------------
-// Re-exports from @jasminiaai/shared (plugin authors import from one place)
+// Re-exports from @jasminia/shared (plugin authors import from one place)
 // ---------------------------------------------------------------------------
 
 export type {
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginJobDeclaration,
   PluginWebhookDeclaration,
   PluginToolDeclaration,
@@ -120,7 +120,7 @@ export type {
   IssueSurfaceVisibility,
   Agent,
   Goal,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 
 // ---------------------------------------------------------------------------
 // Scope key — identifies where plugin state is stored
@@ -441,7 +441,7 @@ export interface PluginLocalFolderListing {
 
 export interface PluginLocalFoldersClient {
   /** Manifest-declared local folders for this plugin. */
-  declarations(): import("@jasminiaai/shared").PluginLocalFolderDeclaration[];
+  declarations(): import("@jasminia/shared").PluginLocalFolderDeclaration[];
   /** Persist a company-scoped local folder path after validating it. */
   configure(input: PluginLocalFolderConfigureInput): Promise<PluginLocalFolderStatus>;
   /** Check the stored folder readiness for a company and folder key. */
@@ -1547,7 +1547,7 @@ export interface PluginGoalsClient {
  * ctx.streams.close("chat");
  * ```
  *
- * @see usePluginStream in `@jasminiaai/plugin-sdk/ui`
+ * @see usePluginStream in `@jasminia/plugin-sdk/ui`
  */
 export interface PluginStreamsClient {
   /**
@@ -1584,7 +1584,7 @@ export interface PluginStreamsClient {
  *
  * @example
  * ```ts
- * import { definePlugin } from "@jasminiaai/plugin-sdk";
+ * import { definePlugin } from "@jasminia/plugin-sdk";
  *
  * export default definePlugin({
  *   async setup(ctx) {
@@ -1604,7 +1604,7 @@ export interface PluginStreamsClient {
  */
 export interface PluginContext {
   /** The plugin's manifest as validated at install time. */
-  manifest: Jasmin.iaPluginManifestV1;
+  manifest: JasminiaPluginManifestV1;
 
   /** Read resolved operator configuration. */
   config: PluginConfigClient;

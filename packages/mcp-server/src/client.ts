@@ -1,6 +1,6 @@
-import type { Jasmin.iaMcpConfig } from "./config.js";
+import type { JasminiaMcpConfig } from "./config.js";
 
-export class Jasmin.iaApiError extends Error {
+export class JasminiaApiError extends Error {
   readonly status: number;
   readonly method: string;
   readonly path: string;
@@ -14,7 +14,7 @@ export class Jasmin.iaApiError extends Error {
     message: string;
   }) {
     super(input.message);
-    this.name = "Jasmin.iaApiError";
+    this.name = "JasminiaApiError";
     this.status = input.status;
     this.method = input.method;
     this.path = input.path;
@@ -48,8 +48,8 @@ async function parseResponseBody(response: Response): Promise<unknown> {
   }
 }
 
-export class Jasmin.iaApiClient {
-  constructor(private readonly config: Jasmin.iaMcpConfig) {}
+export class JasminiaApiClient {
+  constructor(private readonly config: JasminiaMcpConfig) {}
 
   get defaults() {
     return {
@@ -100,7 +100,7 @@ export class Jasmin.iaApiClient {
     const parsedBody = await parseResponseBody(response);
 
     if (!response.ok) {
-      throw new Jasmin.iaApiError({
+      throw new JasminiaApiError({
         status: response.status,
         method: method.toUpperCase(),
         path,

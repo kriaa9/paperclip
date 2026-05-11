@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-import type { AdapterConfigSchema, ConfigFieldSchema, CreateConfigValues } from "@jasminiaai/adapter-utils";
+import type { AdapterConfigSchema, ConfigFieldSchema, CreateConfigValues } from "@jasminia/adapter-utils";
 
 import type { AdapterConfigFieldsProps } from "./types";
 import {

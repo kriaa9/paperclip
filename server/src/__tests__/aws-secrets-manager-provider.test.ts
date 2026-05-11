@@ -370,7 +370,7 @@ describe("awsSecretsManagerProvider", () => {
           "arn:aws:secretsmanager:us-east-1:123456789012:secret:jasminia/prod-use1/company-2/openai-api-key",
         providerVersionRef: "linked-version-7",
       }),
-    ).rejects.toThrow(/Jasmin.ia-managed namespace/i);
+    ).rejects.toThrow(/Jasminia-managed namespace/i);
   });
 
   it("lists remote AWS secrets with metadata only and never resolves plaintext", async () => {
@@ -456,7 +456,7 @@ describe("awsSecretsManagerProvider", () => {
 
   it("redacts AWS provider exception text when remote listing fails", async () => {
     const rawProviderMessage =
-      "AccessDeniedException: User: arn:aws:sts::123456789012:assumed-role/prod/Jasmin.ia is not authorized to perform secretsmanager:ListSecrets on arn:aws:secretsmanager:us-east-1:123456789012:secret:prod/openai";
+      "AccessDeniedException: User: arn:aws:sts::123456789012:assumed-role/prod/Jasminia is not authorized to perform secretsmanager:ListSecrets on arn:aws:secretsmanager:us-east-1:123456789012:secret:prod/openai";
     const provider = createAwsSecretsManagerProvider({
       config: {
         region: "us-east-1",

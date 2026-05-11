@@ -1,4 +1,4 @@
-import type { Environment, EnvironmentCapabilities, EnvironmentLease, EnvironmentProbeResult } from "@jasminiaai/shared";
+import type { Environment, EnvironmentCapabilities, EnvironmentLease, EnvironmentProbeResult } from "@jasminia/shared";
 import { api } from "./client";
 
 export const environmentsApi = {

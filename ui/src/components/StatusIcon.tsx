@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { IssueBlockerAttention } from "@jasminiaai/shared";
+import type { IssueBlockerAttention } from "@jasminia/shared";
 import { cn } from "../lib/utils";
 import { issueStatusIcon, issueStatusIconDefault } from "../lib/status-colors";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";

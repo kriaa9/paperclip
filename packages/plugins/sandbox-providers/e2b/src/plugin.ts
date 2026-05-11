@@ -6,7 +6,7 @@ import {
   SandboxNotFoundError,
   TimeoutError,
 } from "e2b";
-import { definePlugin } from "@jasminiaai/plugin-sdk";
+import { definePlugin } from "@jasminia/plugin-sdk";
 import type {
   PluginEnvironmentAcquireLeaseParams,
   PluginEnvironmentDestroyLeaseParams,
@@ -21,7 +21,7 @@ import type {
   PluginEnvironmentResumeLeaseParams,
   PluginEnvironmentValidateConfigParams,
   PluginEnvironmentValidationResult,
-} from "@jasminiaai/plugin-sdk";
+} from "@jasminia/plugin-sdk";
 
 interface E2bDriverConfig {
   template: string;

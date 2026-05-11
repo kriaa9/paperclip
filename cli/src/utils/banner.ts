@@ -11,7 +11,7 @@ const JASMINIA_ART = [
 
 const TAGLINE = "Open-source orchestration for zero-human companies";
 
-export function printJasmin.iaCliBanner(): void {
+export function printJasminiaCliBanner(): void {
   const lines = [
     "",
     ...JASMINIA_ART.map((line) => pc.cyan(line)),

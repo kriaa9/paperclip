@@ -6,21 +6,21 @@ import {
   type ExternalStoreAdapter,
 } from "@assistant-ui/react";
 
-export interface Jasmin.iaIssueRuntimeReassignment {
+export interface JasminiaIssueRuntimeReassignment {
   assigneeAgentId: string | null;
   assigneeUserId: string | null;
 }
 
-export interface Jasmin.iaIssueRuntimeSendOptions {
+export interface JasminiaIssueRuntimeSendOptions {
   body: string;
   reopen?: boolean;
-  reassignment?: Jasmin.iaIssueRuntimeReassignment;
+  reassignment?: JasminiaIssueRuntimeReassignment;
 }
 
-interface UseJasmin.iaIssueRuntimeOptions {
+interface UseJasminiaIssueRuntimeOptions {
   messages: readonly ThreadMessage[];
   isRunning: boolean;
-  onSend: (options: Jasmin.iaIssueRuntimeSendOptions) => Promise<void>;
+  onSend: (options: JasminiaIssueRuntimeSendOptions) => Promise<void>;
   onCancel?: (() => Promise<void>) | undefined;
 }
 
@@ -37,12 +37,12 @@ function readTextContent(message: AppendMessage) {
     .trim();
 }
 
-export function useJasmin.iaIssueRuntime({
+export function useJasminiaIssueRuntime({
   messages,
   isRunning,
   onSend,
   onCancel,
-}: UseJasmin.iaIssueRuntimeOptions) {
+}: UseJasminiaIssueRuntimeOptions) {
   const onSendRef = useRef(onSend);
   const onCancelRef = useRef(onCancel);
 

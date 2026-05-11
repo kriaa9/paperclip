@@ -25,7 +25,7 @@ import { fileURLToPath } from "node:url";
 import { Router } from "express";
 import type { Request, Response } from "express";
 import { and, desc, eq, gte } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   agents,
   companies,
@@ -33,17 +33,17 @@ import {
   pluginLogs,
   pluginWebhookDeliveries,
   projects,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import type {
   PluginApiRouteDeclaration,
   PluginStatus,
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginBridgeErrorCode,
   PluginLauncherRenderContextSnapshot,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
   PLUGIN_STATUSES,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { pluginRegistryService } from "../services/plugin-registry.js";
 import { pluginLifecycleManager } from "../services/plugin-lifecycle.js";
 import { getPluginUiContributionMetadata, pluginLoader } from "../services/plugin-loader.js";
@@ -55,8 +55,8 @@ import type { PluginJobStore } from "../services/plugin-job-store.js";
 import type { PluginWorkerManager } from "../services/plugin-worker-manager.js";
 import type { PluginStreamBus } from "../services/plugin-stream-bus.js";
 import type { PluginToolDispatcher } from "../services/plugin-tool-dispatcher.js";
-import type { ToolRunContext } from "@jasminiaai/plugin-sdk";
-import { JsonRpcCallError, PLUGIN_RPC_ERROR_CODES } from "@jasminiaai/plugin-sdk";
+import type { ToolRunContext } from "@jasminia/plugin-sdk";
+import { JsonRpcCallError, PLUGIN_RPC_ERROR_CODES } from "@jasminia/plugin-sdk";
 import {
   assertAuthenticated,
   assertBoard,
@@ -80,9 +80,9 @@ import {
 import { badRequest, forbidden, notFound, unauthorized, unprocessable } from "../errors.js";
 
 /** UI slot declaration extracted from plugin manifest */
-type PluginUiSlotDeclaration = NonNullable<NonNullable<Jasmin.iaPluginManifestV1["ui"]>["slots"]>[number];
+type PluginUiSlotDeclaration = NonNullable<NonNullable<JasminiaPluginManifestV1["ui"]>["slots"]>[number];
 /** Launcher declaration extracted from plugin manifest */
-type PluginLauncherDeclaration = NonNullable<Jasmin.iaPluginManifestV1["launchers"]>[number];
+type PluginLauncherDeclaration = NonNullable<JasminiaPluginManifestV1["launchers"]>[number];
 
 /**
  * Normalized UI contribution for frontend slot host consumption.
@@ -153,7 +153,7 @@ const REPO_ROOT = path.resolve(__dirname, "../../..");
 
 const BUNDLED_PLUGIN_EXAMPLES: AvailablePluginExample[] = [
   {
-    packageName: "@jasminiaai/plugin-hello-world-example",
+    packageName: "@jasminia/plugin-hello-world-example",
     pluginKey: "jasminia.hello-world-example",
     displayName: "Hello World Widget (Example)",
     description: "Reference UI plugin that adds a simple Hello World widget to the Jasmin.ia dashboard.",
@@ -161,7 +161,7 @@ const BUNDLED_PLUGIN_EXAMPLES: AvailablePluginExample[] = [
     tag: "example",
   },
   {
-    packageName: "@jasminiaai/plugin-file-browser-example",
+    packageName: "@jasminia/plugin-file-browser-example",
     pluginKey: "jasminia-file-browser-example",
     displayName: "File Browser (Example)",
     description: "Example plugin that adds a Files link in project navigation plus a project detail file browser.",
@@ -169,7 +169,7 @@ const BUNDLED_PLUGIN_EXAMPLES: AvailablePluginExample[] = [
     tag: "example",
   },
   {
-    packageName: "@jasminiaai/plugin-kitchen-sink-example",
+    packageName: "@jasminia/plugin-kitchen-sink-example",
     pluginKey: "jasminia-kitchen-sink-example",
     displayName: "Kitchen Sink (Example)",
     description: "Reference plugin that demonstrates the current Jasmin.ia plugin API surface, bridge flows, UI extension surfaces, jobs, webhooks, tools, streams, and trusted local workspace/process demos.",
@@ -177,8 +177,8 @@ const BUNDLED_PLUGIN_EXAMPLES: AvailablePluginExample[] = [
     tag: "example",
   },
   {
-    packageName: "@jasminiaai/plugin-orchestration-smoke-example",
-    pluginKey: "jasminiaai.plugin-orchestration-smoke-example",
+    packageName: "@jasminia/plugin-orchestration-smoke-example",
+    pluginKey: "jasminia.plugin-orchestration-smoke-example",
     displayName: "Orchestration Smoke (Example)",
     description: "Acceptance fixture for scoped plugin routes, restricted database namespaces, issue orchestration, documents, wakeups, summaries, and UI status surfaces.",
     localPath: "packages/plugins/examples/plugin-orchestration-smoke-example",

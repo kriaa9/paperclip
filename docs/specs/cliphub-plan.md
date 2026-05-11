@@ -113,7 +113,7 @@ interface Listing {
   // Compatibility
   compatibleAdapters: string[];    // ['claude_local', 'codex_local', ...]
   requiredModels: string[];        // ['claude-opus-4-6', 'claude-sonnet-4-6']
-  jasminiaVersionMin: string;     // Minimum Jasmin.ia version
+  jasminiaVersionMin: string;     // Minimum Jasminia version
 
   // Social proof
   installCount: number;
@@ -218,7 +218,7 @@ interface Purchase {
   id: string;
   listingId: string;
   buyerUserId: string;
-  buyerCompanyId: string | null;    // Target Jasmin.ia company
+  buyerCompanyId: string | null;    // Target Jasminia company
   pricePaidCents: number;
   paymentIntentId: string | null;   // Stripe
   installedAt: string | null;       // When deployed to company

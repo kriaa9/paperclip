@@ -1,4 +1,4 @@
-import type { ActivityEvent, Issue, SuccessfulRunHandoffState } from "@jasminiaai/shared";
+import type { ActivityEvent, Issue, SuccessfulRunHandoffState } from "@jasminia/shared";
 
 export const SUCCESSFUL_RUN_HANDOFF_REQUIRED_ACTION = "issue.successful_run_handoff_required";
 export const SUCCESSFUL_RUN_HANDOFF_RESOLVED_ACTION = "issue.successful_run_handoff_resolved";
@@ -67,7 +67,7 @@ export function isSuccessfulRunHandoffComment(text: string) {
 export function isSuccessfulRunHandoffEscalationComment(text: string) {
   const trimmed = text.trim();
   return trimmed === SUCCESSFUL_RUN_HANDOFF_EXHAUSTED_NOTICE_BODY
-    || /^Jasmin.ia exhausted the bounded successful-run handoff correction\b/i.test(trimmed);
+    || /^Jasminia exhausted the bounded successful-run handoff correction\b/i.test(trimmed);
 }
 
 export function successfulRunHandoffActivityTone(action: string) {

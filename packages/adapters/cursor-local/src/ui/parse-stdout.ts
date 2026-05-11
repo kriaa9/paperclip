@@ -1,4 +1,4 @@
-import type { TranscriptEntry } from "@jasminiaai/adapter-utils";
+import type { TranscriptEntry } from "@jasminia/adapter-utils";
 import { normalizeCursorStreamLine } from "../shared/stream.js";
 
 function safeJsonParse(text: string): unknown {

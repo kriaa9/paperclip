@@ -1,4 +1,4 @@
-import type { WorkspaceRuntimeControlTarget } from "@jasminiaai/shared";
+import type { WorkspaceRuntimeControlTarget } from "@jasminia/shared";
 
 export function sanitizeWorkspaceRuntimeControlTarget(
   target: WorkspaceRuntimeControlTarget = {},

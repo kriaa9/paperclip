@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { $createLinkNode, LinkNode } from "@lexical/link";
-import { buildAgentMentionHref } from "@jasminiaai/shared";
+import { buildAgentMentionHref } from "@jasminia/shared";
 import {
   createEditor,
   $createParagraphNode,

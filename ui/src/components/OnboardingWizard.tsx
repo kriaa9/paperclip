@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import type { AdapterEnvironmentTestResult } from "@jasminiaai/shared";
+import type { AdapterEnvironmentTestResult } from "@jasminia/shared";
 import { useLocation, useNavigate, useParams } from "@/lib/router";
 import { useDialog } from "../context/DialogContext";
 import { useCompany } from "../context/CompanyContext";
@@ -40,10 +40,10 @@ import { buildNewAgentRuntimeConfig } from "../lib/new-agent-runtime-config";
 import {
   DEFAULT_CODEX_LOCAL_BYPASS_APPROVALS_AND_SANDBOX,
   DEFAULT_CODEX_LOCAL_MODEL
-} from "@jasminiaai/adapter-codex-local";
-import { DEFAULT_CURSOR_LOCAL_MODEL } from "@jasminiaai/adapter-cursor-local";
-import { DEFAULT_GEMINI_LOCAL_MODEL } from "@jasminiaai/adapter-gemini-local";
-import { DEFAULT_OPENCODE_LOCAL_MODEL, isValidOpenCodeModelId } from "@jasminiaai/adapter-opencode-local";
+} from "@jasminia/adapter-codex-local";
+import { DEFAULT_CURSOR_LOCAL_MODEL } from "@jasminia/adapter-cursor-local";
+import { DEFAULT_GEMINI_LOCAL_MODEL } from "@jasminia/adapter-gemini-local";
+import { DEFAULT_OPENCODE_LOCAL_MODEL, isValidOpenCodeModelId } from "@jasminia/adapter-opencode-local";
 import { resolveRouteOnboardingOptions } from "../lib/onboarding-route";
 import { AsciiArtAnimation } from "./AsciiArtAnimation";
 import {

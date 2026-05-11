@@ -1,4 +1,4 @@
-import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/plugin-sdk";
+import type { JasminiaPluginManifestV1 } from "@jasminia/plugin-sdk";
 
 /**
  * Stable plugin ID used by host registration and namespacing.
@@ -11,7 +11,7 @@ const DASHBOARD_WIDGET_EXPORT_NAME = "HelloWorldDashboardWidget";
 /**
  * Minimal manifest demonstrating a UI-only plugin with one dashboard widget slot.
  */
-const manifest: Jasmin.iaPluginManifestV1 = {
+const manifest: JasminiaPluginManifestV1 = {
   id: PLUGIN_ID,
   apiVersion: 1,
   version: PLUGIN_VERSION,

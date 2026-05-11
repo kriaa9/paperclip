@@ -1,4 +1,4 @@
-import type { Approval, ApprovalComment, Issue } from "@jasminiaai/shared";
+import type { Approval, ApprovalComment, Issue } from "@jasminia/shared";
 import { api } from "./client";
 
 export const approvalsApi = {

@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { definePlugin, runWorker, type PluginApiRequestInput } from "@jasminiaai/plugin-sdk";
+import { definePlugin, runWorker, type PluginApiRequestInput } from "@jasminia/plugin-sdk";
 
 type SmokeInput = {
   companyId: string;

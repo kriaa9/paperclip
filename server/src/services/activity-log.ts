@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
-import type { Db } from "@jasminiaai/db";
-import { activityLog } from "@jasminiaai/db";
-import { PLUGIN_EVENT_TYPES, type PluginEventType } from "@jasminiaai/shared";
-import type { PluginEvent } from "@jasminiaai/plugin-sdk";
+import type { Db } from "@jasminia/db";
+import { activityLog } from "@jasminia/db";
+import { PLUGIN_EVENT_TYPES, type PluginEventType } from "@jasminia/shared";
+import type { PluginEvent } from "@jasminia/plugin-sdk";
 import { publishLiveEvent } from "./live-events.js";
 import { redactCurrentUserValue } from "../log-redaction.js";
 import { sanitizeRecord } from "../redaction.js";

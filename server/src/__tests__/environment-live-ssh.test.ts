@@ -9,7 +9,7 @@ import {
   startSshEnvLabFixture,
   stopSshEnvLabFixture,
   type SshConnectionConfig,
-} from "@jasminiaai/adapter-utils/ssh";
+} from "@jasminia/adapter-utils/ssh";
 
 async function readOptionalSecret(
   value: string | undefined,

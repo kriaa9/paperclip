@@ -1,4 +1,4 @@
-import { definePlugin, runWorker } from "@jasminiaai/plugin-sdk";
+import { definePlugin, runWorker } from "@jasminia/plugin-sdk";
 
 const PLUGIN_NAME = "hello-world-example";
 const HEALTH_MESSAGE = "Hello World example plugin ready";

@@ -1,10 +1,10 @@
 import * as p from "@clack/prompts";
-import type { SecretProvider } from "@jasminiaai/shared";
+import type { SecretProvider } from "@jasminia/shared";
 import type { SecretsConfig } from "../config/schema.js";
-import { resolveDefaultSecretsKeyFilePath, resolveJasmin.iaInstanceId } from "../config/home.js";
+import { resolveDefaultSecretsKeyFilePath, resolveJasminiaInstanceId } from "../config/home.js";
 
 function defaultKeyFilePath(): string {
-  return resolveDefaultSecretsKeyFilePath(resolveJasmin.iaInstanceId());
+  return resolveDefaultSecretsKeyFilePath(resolveJasminiaInstanceId());
 }
 
 export function defaultSecretsConfig(): SecretsConfig {

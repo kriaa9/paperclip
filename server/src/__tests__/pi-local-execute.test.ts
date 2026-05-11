@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { execute } from "@jasminiaai/adapter-pi-local/server";
+import { execute } from "@jasminia/adapter-pi-local/server";
 
 async function writeFakePiCommand(commandPath: string): Promise<void> {
   const script = `#!/usr/bin/env node
@@ -186,7 +186,7 @@ describe("pi_local execute", () => {
           model: "google/gemini-3-flash-preview",
           promptTemplate: "Keep working.",
           // required:false with no explicit jasminiaSkillSync preference →
-          // resolveJasmin.iaDesiredSkillNames returns [] → skill is not injected.
+          // resolveJasminiaDesiredSkillNames returns [] → skill is not injected.
           jasminiaRuntimeSkills: [
             { key: "not-injected", runtimeName: "not-injected", source: nonInjectedSkillDir, required: false },
           ],

@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
 import { HttpError } from "../errors.js";
-import { trackErrorHandlerCrash } from "@jasminiaai/shared/telemetry";
+import { trackErrorHandlerCrash } from "@jasminia/shared/telemetry";
 import { getTelemetryClient } from "../telemetry.js";
 
 export interface ErrorContext {

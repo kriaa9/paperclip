@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   updateCompanyMemberWithPermissionsSchema,
   updateCurrentUserProfileSchema,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 
 describe("access validators", () => {
   it("accepts HTTP(S) and Jasmin.ia asset image URLs", () => {

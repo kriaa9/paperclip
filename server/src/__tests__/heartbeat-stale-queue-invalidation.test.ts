@@ -18,8 +18,8 @@ import {
   issueRelations,
   issueTreeHolds,
   issues,
-} from "@jasminiaai/db";
-import { ISSUE_CONTINUATION_SUMMARY_DOCUMENT_KEY } from "@jasminiaai/shared";
+} from "@jasminia/db";
+import { ISSUE_CONTINUATION_SUMMARY_DOCUMENT_KEY } from "@jasminia/shared";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,

@@ -1,4 +1,4 @@
-import type { RoutineTrigger } from "@jasminiaai/shared";
+import type { RoutineTrigger } from "@jasminia/shared";
 
 export type RoutineTriggerEditorDraft = {
   label: string;

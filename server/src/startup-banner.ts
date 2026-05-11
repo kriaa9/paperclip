@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
-import { resolveJasmin.iaConfigPath, resolveJasmin.iaEnvPath } from "./paths.js";
-import type { BindMode, DeploymentExposure, DeploymentMode } from "@jasminiaai/shared";
+import { resolveJasminiaConfigPath, resolveJasminiaEnvPath } from "./paths.js";
+import type { BindMode, DeploymentExposure, DeploymentMode } from "@jasminia/shared";
 
 import { parse as parseEnvFileContents } from "dotenv";
 
@@ -93,7 +93,7 @@ function resolveAgentJwtSecretStatus(
 
   return {
     status: "warn",
-    message: "missing (run `pnpm jasminiaai onboard`)",
+    message: "missing (run `pnpm jasminia onboard`)",
   };
 }
 
@@ -102,8 +102,8 @@ export function printStartupBanner(opts: StartupBannerOptions): void {
   const baseUrl = `http://${baseHost}:${opts.listenPort}`;
   const apiUrl = `${baseUrl}/api`;
   const uiUrl = opts.uiMode === "none" ? "disabled" : baseUrl;
-  const configPath = resolveJasmin.iaConfigPath();
-  const envFilePath = resolveJasmin.iaEnvPath();
+  const configPath = resolveJasminiaConfigPath();
+  const envFilePath = resolveJasminiaEnvPath();
   const agentJwtSecret = resolveAgentJwtSecretStatus(envFilePath);
 
   const dbMode =

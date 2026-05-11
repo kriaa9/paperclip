@@ -16,7 +16,7 @@
  */
 
 import type {
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginLauncherBounds,
   PluginLauncherRenderContextSnapshot,
   PluginLauncherRenderEnvironment,
@@ -39,8 +39,8 @@ import type {
   Agent,
   Goal,
   PluginLocalFolderDeclaration,
-} from "@jasminiaai/shared";
-export type { PluginLauncherRenderContextSnapshot } from "@jasminiaai/shared";
+} from "@jasminia/shared";
+export type { PluginLauncherRenderContextSnapshot } from "@jasminia/shared";
 
 import type {
   PluginEvent,
@@ -191,7 +191,7 @@ export type JsonRpcErrorCode =
   (typeof JSONRPC_ERROR_CODES)[keyof typeof JSONRPC_ERROR_CODES];
 
 /**
- * Jasmin.ia plugin-specific error codes.
+ * Jasminia plugin-specific error codes.
  *
  * These live in the JSON-RPC "server error" reserved range (-32000 to -32099)
  * as specified by JSON-RPC 2.0 for implementation-defined server errors.
@@ -227,7 +227,7 @@ export type PluginRpcErrorCode =
  */
 export interface InitializeParams {
   /** Full plugin manifest snapshot. */
-  manifest: Jasmin.iaPluginManifestV1;
+  manifest: JasminiaPluginManifestV1;
   /** Resolved operator configuration (validated against `instanceConfigSchema`). */
   config: Record<string, unknown>;
   /** Instance-level metadata. */

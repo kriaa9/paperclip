@@ -1,9 +1,9 @@
-import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/plugin-sdk";
+import type { JasminiaPluginManifestV1 } from "@jasminia/plugin-sdk";
 
 const PLUGIN_ID = "jasminia.cloudflare-sandbox-provider";
 const PLUGIN_VERSION = "0.1.0";
 
-const manifest: Jasmin.iaPluginManifestV1 = {
+const manifest: JasminiaPluginManifestV1 = {
   id: PLUGIN_ID,
   apiVersion: 1,
   version: PLUGIN_VERSION,

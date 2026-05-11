@@ -1,10 +1,10 @@
 import { and, eq } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   companyUserSidebarPreferences,
   userSidebarPreferences,
-} from "@jasminiaai/db";
-import type { SidebarOrderPreference } from "@jasminiaai/shared";
+} from "@jasminia/db";
+import type { SidebarOrderPreference } from "@jasminia/shared";
 
 function normalizeOrderedIds(value: unknown): string[] {
   if (!Array.isArray(value)) return [];

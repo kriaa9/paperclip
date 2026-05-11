@@ -1,5 +1,5 @@
-import type { SecretProvider, SecretProviderDescriptor } from "@jasminiaai/shared";
-import type { DeploymentMode } from "@jasminiaai/shared";
+import type { SecretProvider, SecretProviderDescriptor } from "@jasminia/shared";
+import type { DeploymentMode } from "@jasminia/shared";
 
 export interface StoredSecretVersionMaterial {
   [key: string]: unknown;

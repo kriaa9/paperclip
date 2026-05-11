@@ -11,4 +11,4 @@ git clone # repo
 cd repo
 pnpm install
 env HOME="$PC_HOME" npm_config_cache="$PC_CACHE" npm_config_userconfig="$PC_HOME/.npmrc" \
-  pnpm jasminiaai onboard --yes --data-dir "$PC_DATA"
+  pnpm jasminia onboard --yes --data-dir "$PC_DATA"

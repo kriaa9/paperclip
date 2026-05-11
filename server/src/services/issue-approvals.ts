@@ -1,6 +1,6 @@
 import { and, desc, eq, inArray } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { approvals, issueApprovals, issues } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { approvals, issueApprovals, issues } from "@jasminia/db";
 import { notFound, unprocessable } from "../errors.js";
 import { redactEventPayload } from "../redaction.js";
 

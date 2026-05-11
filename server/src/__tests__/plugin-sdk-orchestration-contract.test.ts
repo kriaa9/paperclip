@@ -1,9 +1,9 @@
 import { randomUUID } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import type { Issue, Jasmin.iaPluginManifestV1 } from "@jasminiaai/shared";
+import type { Issue, JasminiaPluginManifestV1 } from "@jasminia/shared";
 import { createTestHarness } from "../../../packages/plugins/sdk/src/testing.js";
 
-function manifest(capabilities: Jasmin.iaPluginManifestV1["capabilities"]): Jasmin.iaPluginManifestV1 {
+function manifest(capabilities: JasminiaPluginManifestV1["capabilities"]): JasminiaPluginManifestV1 {
   return {
     id: "jasminia.test-orchestration",
     apiVersion: 1,

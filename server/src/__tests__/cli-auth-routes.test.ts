@@ -112,8 +112,8 @@ describe.sequential("cli auth routes", () => {
     const res = await request(app)
       .post("/api/cli-auth/challenges")
       .send({
-        command: "jasminiaai company import",
-        clientName: "jasminiaai cli",
+        command: "jasminia company import",
+        clientName: "jasminia cli",
         requestedAccess: "board",
       });
 
@@ -175,8 +175,8 @@ describe.sequential("cli auth routes", () => {
     mockBoardAuthService.describeCliAuthChallenge.mockResolvedValue({
       id: "challenge-1",
       status: "pending",
-      command: "jasminiaai company import",
-      clientName: "jasminiaai cli",
+      command: "jasminia company import",
+      clientName: "jasminia cli",
       requestedAccess: "board",
       requestedCompanyId: null,
       requestedCompanyName: null,

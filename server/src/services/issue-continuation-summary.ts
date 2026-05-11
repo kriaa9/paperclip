@@ -1,7 +1,7 @@
 import { and, eq } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { documents, issueDocuments, issues } from "@jasminiaai/db";
-import { ISSUE_CONTINUATION_SUMMARY_DOCUMENT_KEY } from "@jasminiaai/shared";
+import type { Db } from "@jasminia/db";
+import { documents, issueDocuments, issues } from "@jasminia/db";
+import { ISSUE_CONTINUATION_SUMMARY_DOCUMENT_KEY } from "@jasminia/shared";
 import { documentService } from "./documents.js";
 
 export { ISSUE_CONTINUATION_SUMMARY_DOCUMENT_KEY };

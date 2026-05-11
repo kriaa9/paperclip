@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { ActivityEvent } from "@jasminiaai/shared";
+import type { ActivityEvent } from "@jasminia/shared";
 import { extractIssueTimelineEvents } from "./issue-timeline-events";
 
 describe("extractIssueTimelineEvents", () => {

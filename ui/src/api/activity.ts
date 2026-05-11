@@ -1,7 +1,7 @@
-import type { ActivityEvent, RunLivenessState } from "@jasminiaai/shared";
+import type { ActivityEvent, RunLivenessState } from "@jasminia/shared";
 import { api } from "./client";
 
-export type { RunLivenessState } from "@jasminiaai/shared";
+export type { RunLivenessState } from "@jasminia/shared";
 
 export interface RunForIssue {
   runId: string;

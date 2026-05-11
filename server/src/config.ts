@@ -3,7 +3,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import { config as loadDotenv } from "dotenv";
-import { resolveJasmin.iaEnvPath } from "./paths.js";
+import { resolveJasminiaEnvPath } from "./paths.js";
 import { maybeRepairLegacyWorktreeConfigAndEnvFiles } from "./worktree-config.js";
 import {
   AUTH_BASE_URL_MODES,
@@ -21,7 +21,7 @@ import {
   inferBindModeFromHost,
   resolveRuntimeBind,
   validateConfiguredBindMode,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
   resolveDefaultBackupDir,
   resolveDefaultEmbeddedPostgresDir,
@@ -30,7 +30,7 @@ import {
   resolveHomeAwarePath,
 } from "./home-paths.js";
 
-const JASMINIA_ENV_FILE_PATH = resolveJasmin.iaEnvPath();
+const JASMINIA_ENV_FILE_PATH = resolveJasminiaEnvPath();
 if (existsSync(JASMINIA_ENV_FILE_PATH)) {
   loadDotenv({ path: JASMINIA_ENV_FILE_PATH, override: false, quiet: true });
 }

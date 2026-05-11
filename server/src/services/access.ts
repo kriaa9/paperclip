@@ -1,13 +1,13 @@
 import { and, eq, inArray, ne, sql } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   agents,
   companyMemberships,
   instanceUserRoles,
   issues,
   principalPermissionGrants,
-} from "@jasminiaai/db";
-import type { PermissionKey, PrincipalType } from "@jasminiaai/shared";
+} from "@jasminia/db";
+import type { PermissionKey, PrincipalType } from "@jasminia/shared";
 import { conflict } from "../errors.js";
 
 type MembershipRow = typeof companyMemberships.$inferSelect;

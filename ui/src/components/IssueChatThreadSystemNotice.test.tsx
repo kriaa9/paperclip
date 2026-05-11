@@ -7,7 +7,7 @@ import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { IssueChatThread } from "./IssueChatThread";
 import type { IssueChatComment } from "../lib/issue-chat-messages";
-import type { Agent, SuccessfulRunHandoffState } from "@jasminiaai/shared";
+import type { Agent, SuccessfulRunHandoffState } from "@jasminia/shared";
 
 vi.mock("@assistant-ui/react", () => ({
   AssistantRuntimeProvider: ({ children }: { children: ReactNode }) => <div>{children}</div>,
@@ -48,8 +48,8 @@ vi.mock("./IssueLinkQuicklook", () => ({
     to: string;
   }) => <a href={to}>{children}</a>,
 }));
-vi.mock("../hooks/useJasmin.iaIssueRuntime", () => ({
-  useJasmin.iaIssueRuntime: () => ({}),
+vi.mock("../hooks/useJasminiaIssueRuntime", () => ({
+  useJasminiaIssueRuntime: () => ({}),
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

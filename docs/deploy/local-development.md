@@ -29,13 +29,13 @@ No Docker or external database required. Jasmin.ia uses embedded PostgreSQL auto
 For a first-time install:
 
 ```sh
-pnpm jasminiaai run
+pnpm jasminia run
 ```
 
 This does:
 
 1. Auto-onboards if config is missing
-2. Runs `jasminiaai doctor` with repair enabled
+2. Runs `jasminia doctor` with repair enabled
 3. Starts the server when checks pass
 
 ## Bind Presets In Dev
@@ -64,7 +64,7 @@ pnpm dev --authenticated-private
 Allow additional private hostnames:
 
 ```sh
-pnpm jasminiaai allowed-hostname dotta-macbook-pro
+pnpm jasminia allowed-hostname dotta-macbook-pro
 ```
 
 For full setup and troubleshooting, see [Tailscale Private Access](/deploy/tailscale-private-access).
@@ -101,5 +101,5 @@ pnpm dev
 Override with environment variables:
 
 ```sh
-JASMINIA_HOME=/custom/path JASMINIA_INSTANCE_ID=dev pnpm jasminiaai run
+JASMINIA_HOME=/custom/path JASMINIA_INSTANCE_ID=dev pnpm jasminia run
 ```

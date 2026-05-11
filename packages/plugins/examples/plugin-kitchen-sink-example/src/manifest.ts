@@ -1,4 +1,4 @@
-import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/plugin-sdk";
+import type { JasminiaPluginManifestV1 } from "@jasminia/plugin-sdk";
 import {
   DEFAULT_CONFIG,
   EXPORT_NAMES,
@@ -11,7 +11,7 @@ import {
   WEBHOOK_KEYS,
 } from "./constants.js";
 
-const manifest: Jasmin.iaPluginManifestV1 = {
+const manifest: JasminiaPluginManifestV1 = {
   id: PLUGIN_ID,
   apiVersion: 1,
   version: PLUGIN_VERSION,

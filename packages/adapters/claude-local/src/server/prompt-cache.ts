@@ -2,14 +2,14 @@ import { constants as fsConstants } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { createHash, type Hash } from "node:crypto";
-import type { AdapterExecutionContext } from "@jasminiaai/adapter-utils";
+import type { AdapterExecutionContext } from "@jasminia/adapter-utils";
 import {
-  ensureJasmin.iaSkillSymlink,
-  resolveJasmin.iaInstanceRootForAdapter,
-  type Jasmin.iaSkillEntry,
-} from "@jasminiaai/adapter-utils/server-utils";
+  ensureJasminiaSkillSymlink,
+  resolveJasminiaInstanceRootForAdapter,
+  type JasminiaSkillEntry,
+} from "@jasminia/adapter-utils/server-utils";
 
-type SkillEntry = Jasmin.iaSkillEntry;
+type SkillEntry = JasminiaSkillEntry;
 
 export interface ClaudePromptBundle {
   bundleKey: string;
@@ -26,7 +26,7 @@ function resolveManagedClaudePromptCacheRoot(
   env: NodeJS.ProcessEnv,
   companyId: string,
 ): string {
-  const instanceRoot = resolveJasmin.iaInstanceRootForAdapter({
+  const instanceRoot = resolveJasminiaInstanceRootForAdapter({
     homeDir: nonEmpty(env.JASMINIA_HOME) ?? undefined,
     instanceId: nonEmpty(env.JASMINIA_INSTANCE_ID) ?? undefined,
     env,
@@ -149,7 +149,7 @@ export async function prepareClaudePromptBundle(input: {
   for (const entry of skills) {
     const target = path.join(skillsHome, entry.runtimeName);
     try {
-      await ensureJasmin.iaSkillSymlink(entry.source, target);
+      await ensureJasminiaSkillSymlink(entry.source, target);
     } catch (err) {
       await onLog(
         "stderr",

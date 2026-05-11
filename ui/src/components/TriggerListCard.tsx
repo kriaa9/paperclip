@@ -1,5 +1,5 @@
 import { Clock3, Pencil, RefreshCw, Trash2, Webhook, Zap } from "lucide-react";
-import type { RoutineTrigger } from "@jasminiaai/shared";
+import type { RoutineTrigger } from "@jasminia/shared";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ToggleSwitch } from "@/components/ui/toggle-switch";

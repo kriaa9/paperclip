@@ -5,8 +5,8 @@ import { afterEach, describe, expect, it } from "vitest";
 import {
   describeLocalInstancePaths,
   expandHomePrefix,
-  resolveJasmin.iaHomeDir,
-  resolveJasmin.iaInstanceId,
+  resolveJasminiaHomeDir,
+  resolveJasminiaInstanceId,
 } from "../config/home.js";
 
 const ORIGINAL_ENV = { ...process.env };
@@ -30,13 +30,13 @@ describe("home path resolution", () => {
   it("supports JASMINIA_HOME and explicit instance ids", () => {
     process.env.JASMINIA_HOME = "~/jasminia-home";
 
-    const home = resolveJasmin.iaHomeDir();
+    const home = resolveJasminiaHomeDir();
     expect(home).toBe(path.resolve(os.homedir(), "jasminia-home"));
-    expect(resolveJasmin.iaInstanceId("dev_1")).toBe("dev_1");
+    expect(resolveJasminiaInstanceId("dev_1")).toBe("dev_1");
   });
 
   it("rejects invalid instance ids", () => {
-    expect(() => resolveJasmin.iaInstanceId("bad/id")).toThrow(/Invalid JASMINIA_INSTANCE_ID/);
+    expect(() => resolveJasminiaInstanceId("bad/id")).toThrow(/Invalid JASMINIA_INSTANCE_ID/);
   });
 
   it("expands ~ prefixes", () => {

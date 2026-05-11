@@ -1,7 +1,7 @@
 import { and, eq } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { agents } from "@jasminiaai/db";
-import type { HireApprovedPayload } from "@jasminiaai/adapter-utils";
+import type { Db } from "@jasminia/db";
+import { agents } from "@jasminia/db";
+import type { HireApprovedPayload } from "@jasminia/adapter-utils";
 import { findActiveServerAdapter } from "../adapters/registry.js";
 import { logger } from "../middleware/logger.js";
 import { logActivity } from "./activity-log.js";

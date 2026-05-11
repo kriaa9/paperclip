@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import {
   listCursorSkills,
   syncCursorSkills,
-} from "@jasminiaai/adapter-cursor-local/server";
+} from "@jasminia/adapter-cursor-local/server";
 
 async function makeTempDir(prefix: string): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), prefix));
@@ -19,7 +19,7 @@ async function createSkillDir(root: string, name: string) {
 }
 
 describe("cursor local skill sync", () => {
-  const jasminiaKey = "jasminiaai/jasminia/jasminia";
+  const jasminiaKey = "jasminia/jasminia/jasminia";
   const cleanupDirs = new Set<string>();
 
   afterEach(async () => {

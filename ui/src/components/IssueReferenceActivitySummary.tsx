@@ -1,4 +1,4 @@
-import type { ActivityEvent } from "@jasminiaai/shared";
+import type { ActivityEvent } from "@jasminia/shared";
 import { Plus, Minus } from "lucide-react";
 import { IssueReferencePill } from "./IssueReferencePill";
 

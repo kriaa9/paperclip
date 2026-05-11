@@ -1,4 +1,4 @@
-import { definePlugin, runWorker } from "@jasminiaai/plugin-sdk";
+import { definePlugin, runWorker } from "@jasminia/plugin-sdk";
 import * as fs from "node:fs";
 import * as path from "node:path";
 

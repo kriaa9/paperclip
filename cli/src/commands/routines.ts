@@ -10,9 +10,9 @@ import {
   ensurePostgresDatabase,
   formatEmbeddedPostgresError,
   routines,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import { eq, inArray } from "drizzle-orm";
-import { loadJasmin.iaEnvFile } from "../config/env.js";
+import { loadJasminiaEnvFile } from "../config/env.js";
 import { readConfig, resolveConfigPath } from "../config/store.js";
 
 type RoutinesDisableAllOptions = {
@@ -234,7 +234,7 @@ export async function disableAllRoutinesInConfig(
   options: Pick<RoutinesDisableAllOptions, "config" | "companyId">,
 ): Promise<DisableAllRoutinesResult> {
   const configPath = resolveConfigPath(options.config);
-  loadJasmin.iaEnvFile(configPath);
+  loadJasminiaEnvFile(configPath);
   const companyId =
     nonEmpty(options.companyId)
     ?? nonEmpty(process.env.JASMINIA_COMPANY_ID)

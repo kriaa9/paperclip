@@ -483,9 +483,9 @@ The CLI should continue to support direct import/export without a registry.
 
 Target commands:
 
-- `jasminiaai company export <company-id> --out <path>`
-- `jasminiaai company import <path-or-url> --dry-run`
-- `jasminiaai company import <path-or-url> --target existing -C <company-id>`
+- `jasminia company export <company-id> --out <path>`
+- `jasminia company import <path-or-url> --dry-run`
+- `jasminia company import <path-or-url> --target existing -C <company-id>`
 
 Planned additions:
 

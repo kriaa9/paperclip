@@ -8,8 +8,8 @@ import {
   createDb,
   pluginManagedResources,
   plugins,
-} from "@jasminiaai/db";
-import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/shared";
+} from "@jasminia/db";
+import type { JasminiaPluginManifestV1 } from "@jasminia/shared";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,
@@ -34,7 +34,7 @@ function issuePrefix(id: string) {
   return `T${id.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
 }
 
-function manifest(): Jasmin.iaPluginManifestV1 {
+function manifest(): JasminiaPluginManifestV1 {
   return {
     id: "jasminia.managed-skills-test",
     apiVersion: 1,
@@ -95,7 +95,7 @@ describeEmbeddedPostgres("plugin-managed skills", () => {
     await db.insert(plugins).values({
       id: pluginId,
       pluginKey: pluginManifest.id,
-      packageName: "@jasminiaai/plugin-managed-skills-test",
+      packageName: "@jasminia/plugin-managed-skills-test",
       version: pluginManifest.version,
       apiVersion: pluginManifest.apiVersion,
       categories: pluginManifest.categories,

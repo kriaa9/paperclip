@@ -4,7 +4,7 @@ import {
   type PluginDetailTabProps,
   type PluginSettingsPageProps,
   type PluginWidgetProps,
-} from "@jasminiaai/plugin-sdk/ui";
+} from "@jasminia/plugin-sdk/ui";
 import type React from "react";
 
 type SurfaceStatus = {

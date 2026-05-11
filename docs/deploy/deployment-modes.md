@@ -17,7 +17,7 @@ The default mode. Optimized for single-operator local use.
 
 ```sh
 # Set during onboard
-pnpm jasminiaai onboard
+pnpm jasminia onboard
 # Choose "local_trusted"
 ```
 
@@ -35,14 +35,14 @@ For private network access (Tailscale, VPN, LAN).
 - **Bind**: choose `loopback`, `lan`, `tailnet`, or `custom`
 
 ```sh
-pnpm jasminiaai onboard
+pnpm jasminia onboard
 # Choose "authenticated" -> "private"
 ```
 
 Allow custom Tailscale hostnames:
 
 ```sh
-pnpm jasminiaai allowed-hostname my-machine
+pnpm jasminia allowed-hostname my-machine
 ```
 
 ### `authenticated` + `public`
@@ -55,7 +55,7 @@ For internet-facing deployment.
 - **Bind**: usually `loopback` behind a reverse proxy; `lan/custom` is advanced
 
 ```sh
-pnpm jasminiaai onboard
+pnpm jasminia onboard
 # Choose "authenticated" -> "public"
 ```
 
@@ -78,11 +78,11 @@ A signed-in user visits this URL to claim board ownership. This:
 Update the deployment mode:
 
 ```sh
-pnpm jasminiaai configure --section server
+pnpm jasminia configure --section server
 ```
 
 Runtime override via environment variable:
 
 ```sh
-JASMINIA_DEPLOYMENT_MODE=authenticated JASMINIA_BIND=lan pnpm jasminiaai run
+JASMINIA_DEPLOYMENT_MODE=authenticated JASMINIA_BIND=lan pnpm jasminia run
 ```

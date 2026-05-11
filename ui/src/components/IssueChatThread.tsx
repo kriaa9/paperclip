@@ -39,10 +39,10 @@ import type {
   IssueRelationIssueSummary,
   SuccessfulRunHandoffState,
   IssueWorkMode,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import type { ActiveRunForIssue, LiveRunForIssue } from "../api/heartbeats";
 import { useLiveRunTranscripts } from "./transcript/useLiveRunTranscripts";
-import { useJasmin.iaIssueRuntime, type Jasmin.iaIssueRuntimeReassignment } from "../hooks/useJasmin.iaIssueRuntime";
+import { useJasminiaIssueRuntime, type JasminiaIssueRuntimeReassignment } from "../hooks/useJasminiaIssueRuntime";
 import {
   buildIssueChatMessages,
   formatDurationWords,
@@ -117,7 +117,7 @@ import {
 import type {
   IssueCommentMetadata,
   IssueCommentPresentation,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
   describeToolInput,
   displayToolName,
@@ -586,7 +586,7 @@ function clearDraft(draftKey: string) {
   }
 }
 
-function parseReassignment(target: string): Jasmin.iaIssueRuntimeReassignment | null {
+function parseReassignment(target: string): JasminiaIssueRuntimeReassignment | null {
   if (!target || target === "__none__") {
     return { assigneeAgentId: null, assigneeUserId: null };
   }
@@ -2319,7 +2319,7 @@ function SystemNoticeCommentRow({
               aria-label="Copy link to system notice"
               onClick={handleCopyLink}
             >
-              {copiedLink ? <Check className="h-3.5 w-3.5" /> : <Jasmin.ia className="h-3.5 w-3.5" />}
+              {copiedLink ? <Check className="h-3.5 w-3.5" /> : <Jasminia className="h-3.5 w-3.5" />}
             </button>
           ) : null}
           <button
@@ -3838,7 +3838,7 @@ export function IssueChatThread({
     return true;
   }
 
-  const runtime = useJasmin.iaIssueRuntime({
+  const runtime = useJasminiaIssueRuntime({
     messages,
     isRunning,
     onSend: ({ body, reopen, reassignment }) => {

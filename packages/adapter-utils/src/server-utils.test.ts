@@ -4,19 +4,19 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {
-  applyJasmin.iaWorkspaceEnv,
+  applyJasminiaWorkspaceEnv,
   appendWithByteCap,
   buildInvocationEnvForLogs,
   DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE,
-  materializeJasmin.iaSkillCopy,
-  refreshJasmin.iaWorkspaceEnvForExecution,
-  renderJasmin.iaWakePrompt,
+  materializeJasminiaSkillCopy,
+  refreshJasminiaWorkspaceEnvForExecution,
+  renderJasminiaWakePrompt,
   runningProcesses,
   runChildProcess,
   sanitizeSshRemoteEnv,
-  shapeJasmin.iaWorkspaceEnvForExecution,
+  shapeJasminiaWorkspaceEnvForExecution,
   rewriteWorkspaceCwdEnvVarsForExecution,
-  stringifyJasmin.iaWakePayload,
+  stringifyJasminiaWakePayload,
 } from "./server-utils.js";
 
 function isPidAlive(pid: number) {
@@ -144,7 +144,7 @@ describe("sanitizeSshRemoteEnv", () => {
   });
 });
 
-describe("materializeJasmin.iaSkillCopy", () => {
+describe("materializeJasminiaSkillCopy", () => {
   it("refuses to materialize into an ancestor of the source", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-skill-copy-"));
     try {
@@ -152,7 +152,7 @@ describe("materializeJasmin.iaSkillCopy", () => {
       await fs.mkdir(source, { recursive: true });
       await fs.writeFile(path.join(source, "SKILL.md"), "# skill\n", "utf8");
 
-      await expect(materializeJasmin.iaSkillCopy(source, path.join(root, "parent"))).rejects.toThrow(
+      await expect(materializeJasminiaSkillCopy(source, path.join(root, "parent"))).rejects.toThrow(
         /ancestor/,
       );
       await expect(fs.readFile(path.join(source, "SKILL.md"), "utf8")).resolves.toBe("# skill\n");
@@ -169,11 +169,11 @@ describe("materializeJasmin.iaSkillCopy", () => {
       await fs.mkdir(source, { recursive: true });
       await fs.writeFile(path.join(source, "SKILL.md"), "# skill\n", "utf8");
 
-      const first = await materializeJasmin.iaSkillCopy(source, target);
+      const first = await materializeJasminiaSkillCopy(source, target);
       expect(first.copiedFiles).toBe(1);
       await fs.writeFile(path.join(target, "local-marker.txt"), "keep\n", "utf8");
 
-      const second = await materializeJasmin.iaSkillCopy(source, target);
+      const second = await materializeJasminiaSkillCopy(source, target);
       expect(second.copiedFiles).toBe(0);
       await expect(fs.readFile(path.join(target, "local-marker.txt"), "utf8")).resolves.toBe("keep\n");
     } finally {
@@ -196,7 +196,7 @@ describe("materializeJasmin.iaSkillCopy", () => {
         "utf8",
       );
 
-      await expect(materializeJasmin.iaSkillCopy(source, target)).resolves.toMatchObject({ copiedFiles: 1 });
+      await expect(materializeJasminiaSkillCopy(source, target)).resolves.toMatchObject({ copiedFiles: 1 });
       await expect(fs.readFile(path.join(target, "SKILL.md"), "utf8")).resolves.toBe("# skill\n");
     } finally {
       await fs.rm(root, { recursive: true, force: true });
@@ -416,7 +416,7 @@ describe("runChildProcess", () => {
   });
 });
 
-describe("renderJasmin.iaWakePrompt", () => {
+describe("renderJasminiaWakePrompt", () => {
   it("keeps the default local-agent prompt action-oriented", () => {
     expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("Start actionable work in this heartbeat");
     expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("do not stop at a plan");
@@ -437,7 +437,7 @@ describe("renderJasmin.iaWakePrompt", () => {
   });
 
   it("adds the execution contract to scoped wake prompts", () => {
-    const prompt = renderJasmin.iaWakePrompt({
+    const prompt = renderJasminiaWakePrompt({
       reason: "issue_assigned",
       issue: {
         id: "issue-1",
@@ -463,7 +463,7 @@ describe("renderJasmin.iaWakePrompt", () => {
   });
 
   it("renders planning-mode directives for assignment and comment wakes", () => {
-    const assignmentPrompt = renderJasmin.iaWakePrompt({
+    const assignmentPrompt = renderJasminiaWakePrompt({
       reason: "issue_assigned",
       issue: {
         id: "issue-1",
@@ -480,7 +480,7 @@ describe("renderJasmin.iaWakePrompt", () => {
     expect(assignmentPrompt).toContain("- issue work mode: planning");
     expect(assignmentPrompt).toContain("Make the plan only. Do not write code or perform implementation work.");
 
-    const commentPrompt = renderJasmin.iaWakePrompt({
+    const commentPrompt = renderJasminiaWakePrompt({
       reason: "issue_commented",
       issue: {
         id: "issue-1",
@@ -500,7 +500,7 @@ describe("renderJasmin.iaWakePrompt", () => {
   });
 
   it("does not render stale accepted-plan continuation guidance for later planning comment wakes", () => {
-    const prompt = renderJasmin.iaWakePrompt({
+    const prompt = renderJasminiaWakePrompt({
       reason: "issue_commented",
       issue: {
         id: "issue-1",
@@ -524,7 +524,7 @@ describe("renderJasmin.iaWakePrompt", () => {
   });
 
   it("renders accepted-plan continuation guidance for planning issues", () => {
-    const prompt = renderJasmin.iaWakePrompt({
+    const prompt = renderJasminiaWakePrompt({
       reason: "issue_commented",
       issue: {
         id: "issue-1",
@@ -547,7 +547,7 @@ describe("renderJasmin.iaWakePrompt", () => {
   });
 
   it("keeps accepted-plan guidance when stale comment ids have no loaded comments", () => {
-    const prompt = renderJasmin.iaWakePrompt({
+    const prompt = renderJasminiaWakePrompt({
       reason: "issue_commented",
       issue: {
         id: "issue-1",
@@ -571,7 +571,7 @@ describe("renderJasmin.iaWakePrompt", () => {
   });
 
   it("renders dependency-blocked interaction guidance", () => {
-    const prompt = renderJasmin.iaWakePrompt({
+    const prompt = renderJasminiaWakePrompt({
       reason: "issue_commented",
       issue: {
         id: "issue-1",
@@ -607,7 +607,7 @@ describe("renderJasmin.iaWakePrompt", () => {
   });
 
   it("renders loose review request instructions for execution handoffs", () => {
-    const prompt = renderJasmin.iaWakePrompt({
+    const prompt = renderJasminiaWakePrompt({
       reason: "execution_review_requested",
       issue: {
         id: "issue-1",
@@ -670,7 +670,7 @@ describe("renderJasmin.iaWakePrompt", () => {
       ],
     };
 
-    expect(JSON.parse(stringifyJasmin.iaWakePayload(payload) ?? "{}")).toMatchObject({
+    expect(JSON.parse(stringifyJasminiaWakePayload(payload) ?? "{}")).toMatchObject({
       continuationSummary: {
         body: expect.stringContaining("Continuation Summary"),
       },
@@ -689,7 +689,7 @@ describe("renderJasmin.iaWakePrompt", () => {
       ],
     });
 
-    const prompt = renderJasmin.iaWakePrompt(payload);
+    const prompt = renderJasminiaWakePrompt(payload);
     expect(prompt).toContain("Issue continuation summary:");
     expect(prompt).toContain("Integrate child outputs.");
     expect(prompt).toContain("Run liveness continuation:");
@@ -704,16 +704,16 @@ describe("renderJasmin.iaWakePrompt", () => {
   });
 });
 
-describe("applyJasmin.iaWorkspaceEnv", () => {
+describe("applyJasminiaWorkspaceEnv", () => {
   it("adds shared workspace env vars including AGENT_HOME", () => {
-    const env = applyJasmin.iaWorkspaceEnv(
+    const env = applyJasminiaWorkspaceEnv(
       {},
       {
         workspaceCwd: "/tmp/workspace",
         workspaceSource: "project_primary",
         workspaceStrategy: "git_worktree",
         workspaceId: "workspace-1",
-        workspaceRepoUrl: "#
+        workspaceRepoUrl: "#",
         workspaceRepoRef: "main",
         workspaceBranch: "feature/test",
         workspaceWorktreePath: "/tmp/worktree",
@@ -726,7 +726,7 @@ describe("applyJasmin.iaWorkspaceEnv", () => {
       JASMINIA_WORKSPACE_SOURCE: "project_primary",
       JASMINIA_WORKSPACE_STRATEGY: "git_worktree",
       JASMINIA_WORKSPACE_ID: "workspace-1",
-      JASMINIA_WORKSPACE_REPO_URL: "#
+      JASMINIA_WORKSPACE_REPO_URL: "#",
       JASMINIA_WORKSPACE_REPO_REF: "main",
       JASMINIA_WORKSPACE_BRANCH: "feature/test",
       JASMINIA_WORKSPACE_WORKTREE_PATH: "/tmp/worktree",
@@ -735,7 +735,7 @@ describe("applyJasmin.iaWorkspaceEnv", () => {
   });
 
   it("skips empty workspace env values", () => {
-    const env = applyJasmin.iaWorkspaceEnv(
+    const env = applyJasminiaWorkspaceEnv(
       {},
       {
         workspaceCwd: "",
@@ -748,25 +748,25 @@ describe("applyJasmin.iaWorkspaceEnv", () => {
   });
 });
 
-describe("shapeJasmin.iaWorkspaceEnvForExecution", () => {
+describe("shapeJasminiaWorkspaceEnvForExecution", () => {
   it("rewrites workspace env paths for remote execution", () => {
-    const shaped = shapeJasmin.iaWorkspaceEnvForExecution({
+    const shaped = shapeJasminiaWorkspaceEnvForExecution({
       workspaceCwd: "/tmp/workspace",
       workspaceWorktreePath: "/tmp/worktree",
       workspaceHints: [
         {
           workspaceId: "workspace-1",
           cwd: "/tmp/workspace",
-          repoUrl: "#
+          repoUrl: "#",
         },
         {
           workspaceId: "workspace-2",
           cwd: "/tmp/other-workspace",
-          repoUrl: "#
+          repoUrl: "#",
         },
         {
           workspaceId: "workspace-3",
-          repoUrl: "#
+          repoUrl: "#",
         },
       ],
       executionTargetIsRemote: true,
@@ -780,15 +780,15 @@ describe("shapeJasmin.iaWorkspaceEnvForExecution", () => {
         {
           workspaceId: "workspace-1",
           cwd: "/remote/workspace",
-          repoUrl: "#
+          repoUrl: "#",
         },
         {
           workspaceId: "workspace-2",
-          repoUrl: "#
+          repoUrl: "#",
         },
         {
           workspaceId: "workspace-3",
-          repoUrl: "#
+          repoUrl: "#",
         },
       ],
     });
@@ -796,7 +796,7 @@ describe("shapeJasmin.iaWorkspaceEnvForExecution", () => {
 
   it("leaves local execution workspace paths unchanged", () => {
     const workspaceHints = [{ workspaceId: "workspace-1", cwd: "/tmp/workspace" }];
-    const shaped = shapeJasmin.iaWorkspaceEnvForExecution({
+    const shaped = shapeJasminiaWorkspaceEnvForExecution({
       workspaceCwd: "/tmp/workspace",
       workspaceWorktreePath: "/tmp/worktree",
       workspaceHints,
@@ -870,7 +870,7 @@ describe("rewriteWorkspaceCwdEnvVarsForExecution", () => {
   });
 });
 
-describe("refreshJasmin.iaWorkspaceEnvForExecution", () => {
+describe("refreshJasminiaWorkspaceEnvForExecution", () => {
   it("rewrites Jasmin.ia workspace env to the prepared remote runtime cwd", () => {
     const env: Record<string, string> = {
       JASMINIA_WORKSPACE_CWD: "/remote/workspace",
@@ -882,7 +882,7 @@ describe("refreshJasmin.iaWorkspaceEnvForExecution", () => {
       QA_PROJECT_WORKSPACE_CWD: "/remote/workspace",
     };
 
-    const shaped = refreshJasmin.iaWorkspaceEnvForExecution({
+    const shaped = refreshJasminiaWorkspaceEnvForExecution({
       env,
       envConfig: {
         QA_PROJECT_WORKSPACE_CWD: "/host/workspace",

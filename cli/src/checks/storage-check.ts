@@ -1,9 +1,9 @@
 import fs from "node:fs";
-import type { Jasmin.iaConfig } from "../config/schema.js";
+import type { JasminiaConfig } from "../config/schema.js";
 import type { CheckResult } from "./index.js";
 import { resolveRuntimeLikePath } from "./path-resolver.js";
 
-export function storageCheck(config: Jasmin.iaConfig, configPath?: string): CheckResult {
+export function storageCheck(config: JasminiaConfig, configPath?: string): CheckResult {
   if (config.storage.provider === "local_disk") {
     const baseDir = resolveRuntimeLikePath(config.storage.localDisk.baseDir, configPath);
     if (!fs.existsSync(baseDir)) {
@@ -36,7 +36,7 @@ export function storageCheck(config: Jasmin.iaConfig, configPath?: string): Chec
       status: "fail",
       message: "S3 storage requires non-empty bucket and region",
       canRepair: false,
-      repairHint: "Run `jasminiaai configure --section storage`",
+      repairHint: "Run `jasminia configure --section storage`",
     };
   }
 

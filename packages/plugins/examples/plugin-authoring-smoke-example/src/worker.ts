@@ -1,4 +1,4 @@
-import { definePlugin, runWorker } from "@jasminiaai/plugin-sdk";
+import { definePlugin, runWorker } from "@jasminia/plugin-sdk";
 
 const plugin = definePlugin({
   async setup(ctx) {

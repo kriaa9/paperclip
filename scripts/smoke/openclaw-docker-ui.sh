@@ -278,7 +278,7 @@ EOF
   Auto-detect failed. Try: http://host.docker.internal:${JASMINIA_HOST_PORT}
   (Do not use http://127.0.0.1:${JASMINIA_HOST_PORT} inside the container.)
   If Jasmin.ia rejects the host, run on host machine:
-    pnpm jasminiaai allowed-hostname host.docker.internal
+    pnpm jasminia allowed-hostname host.docker.internal
   Then restart Jasmin.ia and re-run this script.
 EOF
   fi
@@ -311,7 +311,7 @@ EOF
   Auto-detect failed. Try: http://host.docker.internal:${JASMINIA_HOST_PORT}
   (Do not use http://127.0.0.1:${JASMINIA_HOST_PORT} inside the container.)
   If Jasmin.ia rejects the host, run on host machine:
-    pnpm jasminiaai allowed-hostname host.docker.internal
+    pnpm jasminia allowed-hostname host.docker.internal
   Then restart Jasmin.ia and re-run this script.
 EOF
   fi

@@ -9,12 +9,12 @@ import {
   heartbeatRuns,
   issueComments,
   issues,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,
 } from "./helpers/embedded-postgres.js";
-import { MAX_ISSUE_REQUEST_DEPTH } from "@jasminiaai/shared";
+import { MAX_ISSUE_REQUEST_DEPTH } from "@jasminia/shared";
 import {
   DEFAULT_PRODUCTIVITY_REVIEW_MAX_REFRESH_COMMENTS,
   DEFAULT_PRODUCTIVITY_REVIEW_NO_COMMENT_STREAK_RUNS,

@@ -3,7 +3,7 @@ import path from "node:path";
 import { mkdtemp, readFile } from "node:fs/promises";
 import { Command } from "commander";
 import { describe, expect, it } from "vitest";
-import type { FeedbackTrace } from "@jasminiaai/shared";
+import type { FeedbackTrace } from "@jasminia/shared";
 import { readZipArchive } from "../commands/client/zip.js";
 import {
   buildFeedbackTraceQuery,

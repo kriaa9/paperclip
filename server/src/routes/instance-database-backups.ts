@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { BackupRetentionPolicy, RunDatabaseBackupResult } from "@jasminiaai/db";
+import type { BackupRetentionPolicy, RunDatabaseBackupResult } from "@jasminia/db";
 import { assertInstanceAdmin } from "./authz.js";
 
 export type InstanceDatabaseBackupTrigger = "manual" | "scheduled";

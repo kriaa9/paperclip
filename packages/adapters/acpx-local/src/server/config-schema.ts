@@ -1,4 +1,4 @@
-import type { AdapterConfigSchema } from "@jasminiaai/adapter-utils";
+import type { AdapterConfigSchema } from "@jasminia/adapter-utils";
 import {
   DEFAULT_ACPX_LOCAL_AGENT,
   DEFAULT_ACPX_LOCAL_NON_INTERACTIVE_PERMISSIONS,

@@ -1,7 +1,7 @@
 // @vitest-environment node
 
 import { describe, expect, it } from "vitest";
-import type { Agent } from "@jasminiaai/shared";
+import type { Agent } from "@jasminia/shared";
 import { buildAgentUpdatePatch, type AgentConfigOverlay } from "./agent-config-patch";
 
 function makeAgent(): Agent {

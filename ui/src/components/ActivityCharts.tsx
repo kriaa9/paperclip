@@ -1,4 +1,4 @@
-import type { DashboardRunActivityDay, HeartbeatRun } from "@jasminiaai/shared";
+import type { DashboardRunActivityDay, HeartbeatRun } from "@jasminia/shared";
 
 /* ---- Utilities ---- */
 

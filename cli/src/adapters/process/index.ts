@@ -1,4 +1,4 @@
-import type { CLIAdapterModule } from "@jasminiaai/adapter-utils";
+import type { CLIAdapterModule } from "@jasminia/adapter-utils";
 import { printProcessStdoutEvent } from "./format-event.js";
 
 export const processCLIAdapter: CLIAdapterModule = {

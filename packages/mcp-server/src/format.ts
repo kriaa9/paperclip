@@ -1,4 +1,4 @@
-import { Jasmin.iaApiError } from "./client.js";
+import { JasminiaApiError } from "./client.js";
 
 type McpTextResponse = {
   content: Array<{ type: "text"; text: string }>;
@@ -16,7 +16,7 @@ export function formatTextResponse(value: unknown): McpTextResponse {
 }
 
 export function formatErrorResponse(error: unknown): McpTextResponse {
-  if (error instanceof Jasmin.iaApiError) {
+  if (error instanceof JasminiaApiError) {
     return formatTextResponse({
       error: error.message,
       status: error.status,

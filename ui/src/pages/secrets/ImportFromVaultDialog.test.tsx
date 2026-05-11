@@ -9,7 +9,7 @@ import type {
   RemoteSecretImportCandidate,
   RemoteSecretImportPreviewResult,
   RemoteSecretImportResult,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ApiError } from "../../api/client";
 
@@ -725,7 +725,7 @@ describe("ImportFromVaultDialog", () => {
 
   it("renders sanitized preview provider errors without raw AWS exception text", async () => {
     const rawProviderMessage =
-      "AccessDeniedException: User: arn:aws:sts::123456789012:assumed-role/prod/Jasmin.ia is not authorized";
+      "AccessDeniedException: User: arn:aws:sts::123456789012:assumed-role/prod/Jasminia is not authorized";
     mockSecretsApi.remoteImportPreview.mockRejectedValueOnce(
       new ApiError(
         "AWS Secrets Manager denied the request. Check IAM permissions for this provider vault.",

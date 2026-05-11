@@ -10,8 +10,8 @@ import {
   issueDocuments,
   issues,
   projects,
-} from "@jasminiaai/db";
-import { companySearchQuerySchema, COMPANY_SEARCH_MAX_QUERY_LENGTH } from "@jasminiaai/shared";
+} from "@jasminia/db";
+import { companySearchQuerySchema, COMPANY_SEARCH_MAX_QUERY_LENGTH } from "@jasminia/shared";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,

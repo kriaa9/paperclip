@@ -1,6 +1,6 @@
 import { and, desc, eq } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { inboxDismissals } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { inboxDismissals } from "@jasminia/db";
 
 export function inboxDismissalService(db: Db) {
   return {

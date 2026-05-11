@@ -10,7 +10,7 @@ import {
   createDb,
   projects,
   routines,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,

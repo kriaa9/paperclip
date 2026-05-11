@@ -5,35 +5,35 @@ summary: Onboard, run, doctor, and configure
 
 Instance setup and diagnostics commands.
 
-## `jasminiaai run`
+## `jasminia run`
 
 One-command bootstrap and start:
 
 ```sh
-pnpm jasminiaai run
+pnpm jasminia run
 ```
 
 Does:
 
 1. Auto-onboards if config is missing
-2. Runs `jasminiaai doctor` with repair enabled
+2. Runs `jasminia doctor` with repair enabled
 3. Starts the server when checks pass
 
 Choose a specific instance:
 
 ```sh
-pnpm jasminiaai run --instance dev
+pnpm jasminia run --instance dev
 ```
 
-## `jasminiaai onboard`
+## `jasminia onboard`
 
 Interactive first-time setup:
 
 ```sh
-pnpm jasminiaai onboard
+pnpm jasminia onboard
 ```
 
-If Jasmin.ia is already configured, rerunning `onboard` keeps the existing config in place. Use `jasminiaai configure` to change settings on an existing install.
+If Jasmin.ia is already configured, rerunning `onboard` keeps the existing config in place. Use `jasminia configure` to change settings on an existing install.
 
 First prompt:
 
@@ -43,24 +43,24 @@ First prompt:
 Start immediately after onboarding:
 
 ```sh
-pnpm jasminiaai onboard --run
+pnpm jasminia onboard --run
 ```
 
 Non-interactive defaults + immediate start (opens browser on server listen):
 
 ```sh
-pnpm jasminiaai onboard --yes
+pnpm jasminia onboard --yes
 ```
 
 On an existing install, `--yes` now preserves the current config and just starts Jasmin.ia with that setup.
 
-## `jasminiaai doctor`
+## `jasminia doctor`
 
 Health checks with optional auto-repair:
 
 ```sh
-pnpm jasminiaai doctor
-pnpm jasminiaai doctor --repair
+pnpm jasminia doctor
+pnpm jasminia doctor --repair
 ```
 
 Validates:
@@ -72,14 +72,14 @@ Validates:
 - Storage configuration
 - Missing key files
 
-## `jasminiaai configure`
+## `jasminia configure`
 
 Update configuration sections:
 
 ```sh
-pnpm jasminiaai configure --section server
-pnpm jasminiaai configure --section secrets
-pnpm jasminiaai configure --section storage
+pnpm jasminia configure --section server
+pnpm jasminia configure --section secrets
+pnpm jasminia configure --section storage
 ```
 
 `--section secrets` updates the deployment-level provider used as the fallback
@@ -89,22 +89,22 @@ coming-soon GCP/Vault) live in the board UI under
 `Company Settings → Secrets → Provider vaults` and the
 `/api/companies/{companyId}/secret-provider-configs` API.
 
-## `jasminiaai env`
+## `jasminia env`
 
 Show resolved environment configuration:
 
 ```sh
-pnpm jasminiaai env
+pnpm jasminia env
 ```
 
 This now includes bind-oriented deployment settings such as `JASMINIA_BIND` and `JASMINIA_BIND_HOST` when configured.
 
-## `jasminiaai allowed-hostname`
+## `jasminia allowed-hostname`
 
 Allow a private hostname for authenticated/private mode:
 
 ```sh
-pnpm jasminiaai allowed-hostname my-tailscale-host
+pnpm jasminia allowed-hostname my-tailscale-host
 ```
 
 ## Local Storage Paths
@@ -120,12 +120,12 @@ pnpm jasminiaai allowed-hostname my-tailscale-host
 Override with:
 
 ```sh
-JASMINIA_HOME=/custom/home JASMINIA_INSTANCE_ID=dev pnpm jasminiaai run
+JASMINIA_HOME=/custom/home JASMINIA_INSTANCE_ID=dev pnpm jasminia run
 ```
 
 Or pass `--data-dir` directly on any command:
 
 ```sh
-pnpm jasminiaai run --data-dir ./tmp/jasminia-dev
-pnpm jasminiaai doctor --data-dir ./tmp/jasminia-dev
+pnpm jasminia run --data-dir ./tmp/jasminia-dev
+pnpm jasminia doctor --data-dir ./tmp/jasminia-dev
 ```

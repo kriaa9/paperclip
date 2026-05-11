@@ -1,4 +1,4 @@
-# @jasminiaai/adapter-openclaw-gateway
+# @jasminia/adapter-openclaw-gateway
 
 ## 0.3.1
 
@@ -6,7 +6,7 @@
 
 - Stable release preparation for 0.3.1
 - Updated dependencies
-  - @jasminiaai/adapter-utils@0.3.1
+  - @jasminia/adapter-utils@0.3.1
 
 ## 0.3.0
 
@@ -17,4 +17,4 @@
 ### Patch Changes
 
 - Updated dependencies
-  - @jasminiaai/adapter-utils@0.3.0
+  - @jasminia/adapter-utils@0.3.0

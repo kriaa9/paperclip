@@ -1,14 +1,14 @@
 import path from "node:path";
 import * as p from "@clack/prompts";
 import pc from "picocolors";
-import { formatDatabaseBackupResult, runDatabaseBackup } from "@jasminiaai/db";
+import { formatDatabaseBackupResult, runDatabaseBackup } from "@jasminia/db";
 import {
   expandHomePrefix,
   resolveDefaultBackupDir,
-  resolveJasmin.iaInstanceId,
+  resolveJasminiaInstanceId,
 } from "../config/home.js";
 import { readConfig, resolveConfigPath } from "../config/store.js";
-import { printJasmin.iaCliBanner } from "../utils/banner.js";
+import { printJasminiaCliBanner } from "../utils/banner.js";
 
 type DbBackupOptions = {
   config?: string;
@@ -47,13 +47,13 @@ function resolveBackupDir(raw: string): string {
 }
 
 export async function dbBackupCommand(opts: DbBackupOptions): Promise<void> {
-  printJasmin.iaCliBanner();
+  printJasminiaCliBanner();
   p.intro(pc.bgCyan(pc.black(" jasminia db:backup ")));
 
   const configPath = resolveConfigPath(opts.config);
   const config = readConfig(opts.config);
   const connection = resolveConnectionString(opts.config);
-  const defaultDir = resolveDefaultBackupDir(resolveJasmin.iaInstanceId());
+  const defaultDir = resolveDefaultBackupDir(resolveJasminiaInstanceId());
   const configuredDir = opts.dir?.trim() || config?.database.backup.dir || defaultDir;
   const backupDir = resolveBackupDir(configuredDir);
   const retentionDays = normalizeRetentionDays(

@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
-import type { AdapterModel } from "@jasminiaai/adapter-utils";
-import { asString, runChildProcess } from "@jasminiaai/adapter-utils/server-utils";
+import type { AdapterModel } from "@jasminia/adapter-utils";
+import { asString, runChildProcess } from "@jasminia/adapter-utils/server-utils";
 
 const MODELS_CACHE_TTL_MS = 60_000;
 

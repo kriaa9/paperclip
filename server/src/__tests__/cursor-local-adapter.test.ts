@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import { isCursorUnknownSessionError, parseCursorJsonl } from "@jasminiaai/adapter-cursor-local/server";
-import { parseCursorStdoutLine } from "@jasminiaai/adapter-cursor-local/ui";
-import { printCursorStreamEvent } from "@jasminiaai/adapter-cursor-local/cli";
+import { isCursorUnknownSessionError, parseCursorJsonl } from "@jasminia/adapter-cursor-local/server";
+import { parseCursorStdoutLine } from "@jasminia/adapter-cursor-local/ui";
+import { printCursorStreamEvent } from "@jasminia/adapter-cursor-local/cli";
 
 describe("cursor parser", () => {
   it("extracts session, summary, usage, cost, and terminal error message", () => {

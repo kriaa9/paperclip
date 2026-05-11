@@ -25,15 +25,15 @@ function makeAgent(adapterConfig: Record<string, unknown>): TestAgent {
 }
 
 describe("agent instructions service", () => {
-  const originalJasmin.iaHome = process.env.JASMINIA_HOME;
-  const originalJasmin.iaInstanceId = process.env.JASMINIA_INSTANCE_ID;
+  const originalJasminiaHome = process.env.JASMINIA_HOME;
+  const originalJasminiaInstanceId = process.env.JASMINIA_INSTANCE_ID;
   const cleanupDirs = new Set<string>();
 
   afterEach(async () => {
-    if (originalJasmin.iaHome === undefined) delete process.env.JASMINIA_HOME;
-    else process.env.JASMINIA_HOME = originalJasmin.iaHome;
-    if (originalJasmin.iaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
-    else process.env.JASMINIA_INSTANCE_ID = originalJasmin.iaInstanceId;
+    if (originalJasminiaHome === undefined) delete process.env.JASMINIA_HOME;
+    else process.env.JASMINIA_HOME = originalJasminiaHome;
+    if (originalJasminiaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
+    else process.env.JASMINIA_INSTANCE_ID = originalJasminiaInstanceId;
 
     await Promise.all([...cleanupDirs].map(async (dir) => {
       await fs.rm(dir, { recursive: true, force: true });

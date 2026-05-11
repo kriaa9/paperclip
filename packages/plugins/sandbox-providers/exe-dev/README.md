@@ -1,4 +1,4 @@
-# `@jasminiaai/plugin-exe-dev`
+# `@jasminia/plugin-exe-dev`
 
 Published exe.dev sandbox provider plugin for Jasmin.ia.
 
@@ -9,7 +9,7 @@ This package lives in the Jasmin.ia monorepo, but it is intentionally excluded f
 From a Jasmin.ia instance, install:
 
 ```text
-@jasminiaai/plugin-exe-dev
+@jasminia/plugin-exe-dev
 ```
 
 ## Configuration
@@ -49,7 +49,7 @@ pnpm test
 pnpm typecheck
 ```
 
-These commands assume the repo root has already been installed once so the local `@jasminiaai/plugin-sdk` workspace package is available to the compiler during development.
+These commands assume the repo root has already been installed once so the local `@jasminia/plugin-sdk` workspace package is available to the compiler during development.
 
 ## Package layout
 

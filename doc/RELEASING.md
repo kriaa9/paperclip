@@ -35,7 +35,7 @@ Important constraints:
 Every stable release has four separate surfaces:
 
 1. **Verification** — the exact git SHA passes typecheck, tests, and build
-2. **npm** — `jasminiaai` and public workspace packages are published
+2. **npm** — `jasminia` and public workspace packages are published
 3. **GitHub** — the stable release gets a git tag and GitHub Release
 4. **Website / announcements** — the stable changelog is published externally and announced
 
@@ -70,9 +70,9 @@ It:
 Users install canaries with:
 
 ```bash
-npx jasminiaai@canary onboard
+npx jasminia@canary onboard
 # or
-npx jasminiaai@canary onboard --data-dir "$(mktemp -d /tmp/jasminia-canary.XXXXXX)"
+npx jasminia@canary onboard --data-dir "$(mktemp -d /tmp/jasminia-canary.XXXXXX)"
 ```
 
 ### Stable
@@ -187,7 +187,7 @@ gh workflow run release-smoke.yml -f jasminia_version=latest
 
 Minimum checks:
 
-- `npx jasminiaai@canary onboard` installs
+- `npx jasminia@canary onboard` installs
 - onboarding completes without crashes
 - authenticated login works with the smoke credentials
 - the browser lands in onboarding on a fresh instance

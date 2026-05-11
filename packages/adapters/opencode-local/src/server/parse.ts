@@ -1,4 +1,4 @@
-import { asNumber, asString, parseJson, parseObject } from "@jasminiaai/adapter-utils/server-utils";
+import { asNumber, asString, parseJson, parseObject } from "@jasminia/adapter-utils/server-utils";
 
 function errorText(value: unknown): string {
   if (typeof value === "string") return value;

@@ -61,7 +61,7 @@ const mockAdapter = vi.hoisted(() => ({
   syncSkills: vi.fn(),
 }));
 
-vi.mock("@jasminiaai/shared/telemetry", () => ({
+vi.mock("@jasminia/shared/telemetry", () => ({
   trackAgentCreated: mockTrackAgentCreated,
   trackErrorHandlerCrash: vi.fn(),
 }));
@@ -95,7 +95,7 @@ vi.mock("../adapters/index.js", () => ({
 }));
 
 function registerModuleMocks() {
-  vi.doMock("@jasminiaai/shared/telemetry", () => ({
+  vi.doMock("@jasminia/shared/telemetry", () => ({
     trackAgentCreated: mockTrackAgentCreated,
     trackErrorHandlerCrash: vi.fn(),
   }));
@@ -242,7 +242,7 @@ describe.sequential("agent skill routes", () => {
     mockSecretService.resolveAdapterConfigForRuntime.mockResolvedValue({ config: { env: {} } });
     mockCompanySkillService.listRuntimeSkillEntries.mockResolvedValue([
       {
-        key: "jasminiaai/jasminia/jasminia",
+        key: "jasminia/jasminia/jasminia",
         runtimeName: "jasminia",
         source: "/tmp/jasminia",
         required: true,
@@ -253,7 +253,7 @@ describe.sequential("agent skill routes", () => {
       async (_companyId: string, requested: string[]) =>
         requested.map((value) =>
           value === "jasminia"
-            ? "jasminiaai/jasminia/jasminia"
+            ? "jasminia/jasminia/jasminia"
             : value,
         ),
     );
@@ -261,7 +261,7 @@ describe.sequential("agent skill routes", () => {
       adapterType: "claude_local",
       supported: true,
       mode: "ephemeral",
-      desiredSkills: ["jasminiaai/jasminia/jasminia"],
+      desiredSkills: ["jasminia/jasminia/jasminia"],
       entries: [],
       warnings: [],
     });
@@ -269,7 +269,7 @@ describe.sequential("agent skill routes", () => {
       adapterType: "claude_local",
       supported: true,
       mode: "ephemeral",
-      desiredSkills: ["jasminiaai/jasminia/jasminia"],
+      desiredSkills: ["jasminia/jasminia/jasminia"],
       entries: [],
       warnings: [],
     });
@@ -348,7 +348,7 @@ describe.sequential("agent skill routes", () => {
       adapterType: "codex_local",
       supported: true,
       mode: "ephemeral",
-      desiredSkills: ["jasminiaai/jasminia/jasminia"],
+      desiredSkills: ["jasminia/jasminia/jasminia"],
       entries: [],
       warnings: [],
     });
@@ -374,7 +374,7 @@ describe.sequential("agent skill routes", () => {
       adapterType: "acpx_local",
       supported: true,
       mode: "ephemeral",
-      desiredSkills: ["jasminiaai/jasminia/jasminia"],
+      desiredSkills: ["jasminia/jasminia/jasminia"],
       entries: [],
       warnings: [],
     });
@@ -413,7 +413,7 @@ describe.sequential("agent skill routes", () => {
       config: {
         agent: "codex",
         jasminiaSkillSync: {
-          desiredSkills: ["jasminiaai/jasminia/jasminia"],
+          desiredSkills: ["jasminia/jasminia/jasminia"],
         },
       },
     });
@@ -421,7 +421,7 @@ describe.sequential("agent skill routes", () => {
       adapterType: "acpx_local",
       supported: true,
       mode: "ephemeral",
-      desiredSkills: ["jasminiaai/jasminia/jasminia"],
+      desiredSkills: ["jasminia/jasminia/jasminia"],
       entries: [],
       warnings: [],
     });
@@ -437,7 +437,7 @@ describe.sequential("agent skill routes", () => {
         adapterConfig: expect.objectContaining({
           agent: "codex",
           jasminiaSkillSync: expect.objectContaining({
-            desiredSkills: ["jasminiaai/jasminia/jasminia"],
+            desiredSkills: ["jasminia/jasminia/jasminia"],
           }),
         }),
       }),
@@ -451,7 +451,7 @@ describe.sequential("agent skill routes", () => {
           jasminiaRuntimeSkills: expect.any(Array),
         }),
       }),
-      ["jasminiaai/jasminia/jasminia"],
+      ["jasminia/jasminia/jasminia"],
     );
   });
 
@@ -461,7 +461,7 @@ describe.sequential("agent skill routes", () => {
       adapterType: "cursor",
       supported: true,
       mode: "persistent",
-      desiredSkills: ["jasminiaai/jasminia/jasminia"],
+      desiredSkills: ["jasminia/jasminia/jasminia"],
       entries: [],
       warnings: [],
     });
@@ -480,7 +480,7 @@ describe.sequential("agent skill routes", () => {
 
     const res = await requestApp(await createApp(), (baseUrl) => request(baseUrl)
       .post("/api/agents/11111111-1111-4111-8111-111111111111/skills/sync?companyId=company-1")
-      .send({ desiredSkills: ["jasminiaai/jasminia/jasminia"] }));
+      .send({ desiredSkills: ["jasminia/jasminia/jasminia"] }));
 
     expect(res.status, JSON.stringify(res.body)).toBe(200);
     expect(mockAdapter.syncSkills).toHaveBeenCalled();
@@ -499,7 +499,7 @@ describe.sequential("agent skill routes", () => {
       expect.objectContaining({
         adapterConfig: expect.objectContaining({
           jasminiaSkillSync: expect.objectContaining({
-            desiredSkills: ["jasminiaai/jasminia/jasminia"],
+            desiredSkills: ["jasminia/jasminia/jasminia"],
           }),
         }),
       }),
@@ -524,7 +524,7 @@ describe.sequential("agent skill routes", () => {
       expect.objectContaining({
         adapterConfig: expect.objectContaining({
           jasminiaSkillSync: expect.objectContaining({
-            desiredSkills: ["jasminiaai/jasminia/jasminia"],
+            desiredSkills: ["jasminia/jasminia/jasminia"],
           }),
         }),
       }),
@@ -705,9 +705,9 @@ describe.sequential("agent skill routes", () => {
       "company-1",
       expect.objectContaining({
         payload: expect.objectContaining({
-          desiredSkills: ["jasminiaai/jasminia/jasminia"],
+          desiredSkills: ["jasminia/jasminia/jasminia"],
           requestedConfigurationSnapshot: expect.objectContaining({
-            desiredSkills: ["jasminiaai/jasminia/jasminia"],
+            desiredSkills: ["jasminia/jasminia/jasminia"],
           }),
         }),
       }),
@@ -737,7 +737,7 @@ describe.sequential("agent skill routes", () => {
         icon: "crown",
         adapterConfig: expect.objectContaining({
           jasminiaSkillSync: expect.objectContaining({
-            desiredSkills: ["jasminiaai/jasminia/jasminia"],
+            desiredSkills: ["jasminia/jasminia/jasminia"],
           }),
         }),
       }),
@@ -747,9 +747,9 @@ describe.sequential("agent skill routes", () => {
       expect.objectContaining({
         payload: expect.objectContaining({
           icon: "crown",
-          desiredSkills: ["jasminiaai/jasminia/jasminia"],
+          desiredSkills: ["jasminia/jasminia/jasminia"],
           requestedConfigurationSnapshot: expect.objectContaining({
-            desiredSkills: ["jasminiaai/jasminia/jasminia"],
+            desiredSkills: ["jasminia/jasminia/jasminia"],
           }),
         }),
       }),

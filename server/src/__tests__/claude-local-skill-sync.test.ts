@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import {
   listClaudeSkills,
   syncClaudeSkills,
-} from "@jasminiaai/adapter-claude-local/server";
+} from "@jasminia/adapter-claude-local/server";
 
 async function makeTempDir(prefix: string): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), prefix));
@@ -19,8 +19,8 @@ async function createSkillDir(root: string, name: string) {
 }
 
 describe("claude local skill sync", () => {
-  const jasminiaKey = "jasminiaai/jasminia/jasminia";
-  const createAgentKey = "jasminiaai/jasminia/jasminia-create-agent";
+  const jasminiaKey = "jasminia/jasminia/jasminia";
+  const createAgentKey = "jasminia/jasminia/jasminia-create-agent";
   const cleanupDirs = new Set<string>();
 
   afterEach(async () => {

@@ -16,12 +16,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "#
+    "url": "#",
     "directory": "cli"
   },
-  "homepage": "#
+  "homepage": "#",
   "bugs": {
-    "url": "#
+    "url": "#"
   },
   "files": [
     "dist"

@@ -10,7 +10,7 @@ import type {
   EnvBinding,
   SecretProvider,
   SecretProviderDescriptor,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
   addCommonClientOptions,
   formatInlineRecord,

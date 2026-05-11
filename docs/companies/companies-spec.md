@@ -433,7 +433,7 @@ Example uses:
 - budgets
 - approval policies
 - project execution workspace policies
-- issue/task Jasmin.ia-only metadata
+- issue/task Jasminia-only metadata
 
 Rules:
 

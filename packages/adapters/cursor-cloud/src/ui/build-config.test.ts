@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { CreateConfigValues } from "@jasminiaai/adapter-utils";
+import type { CreateConfigValues } from "@jasminia/adapter-utils";
 import { buildCursorCloudConfig } from "./build-config.js";
 
 function makeValues(overrides: Partial<CreateConfigValues> = {}): CreateConfigValues {
@@ -45,7 +45,7 @@ describe("buildCursorCloudConfig", () => {
         bootstrapPrompt: "bootstrap",
         model: "gpt-5.4",
         adapterSchemaValues: {
-          repoUrl: "#
+          repoUrl: "#",
           runtimeEnvType: "pool",
           runtimeEnvName: "trusted-workers",
           autoCreatePR: true,
@@ -58,7 +58,7 @@ describe("buildCursorCloudConfig", () => {
       promptTemplate: "hello {{agent.name}}",
       bootstrapPromptTemplate: "bootstrap",
       model: "gpt-5.4",
-      repoUrl: "#
+      repoUrl: "#",
       runtimeEnvType: "pool",
       runtimeEnvName: "trusted-workers",
       autoCreatePR: true,

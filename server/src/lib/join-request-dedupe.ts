@@ -1,4 +1,4 @@
-import { joinRequests } from "@jasminiaai/db";
+import { joinRequests } from "@jasminia/db";
 
 type JoinRequestLike = Pick<
   typeof joinRequests.$inferSelect,

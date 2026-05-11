@@ -13,7 +13,7 @@ import {
   heartbeatRuns,
   issues,
   projects,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import { costService } from "../services/costs.ts";
 import { financeService } from "../services/finance.ts";
 import {

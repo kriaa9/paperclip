@@ -22,12 +22,12 @@
  * @see PLUGIN_SPEC.md §13.10 — `executeTool`
  */
 
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import type {
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginRecord,
-} from "@jasminiaai/shared";
-import type { ToolRunContext, ToolResult } from "@jasminiaai/plugin-sdk";
+} from "@jasminia/shared";
+import type { ToolRunContext, ToolResult } from "@jasminia/plugin-sdk";
 import type { PluginWorkerManager } from "./plugin-worker-manager.js";
 import type { PluginLifecycleManager } from "./plugin-lifecycle.js";
 import {
@@ -155,7 +155,7 @@ export interface PluginToolDispatcher {
    */
   registerPluginTools(
     pluginId: string,
-    manifest: Jasmin.iaPluginManifestV1,
+    manifest: JasminiaPluginManifestV1,
   ): void;
 
   /**
@@ -428,7 +428,7 @@ export function createPluginToolDispatcher(
 
     registerPluginTools(
       pluginId: string,
-      manifest: Jasmin.iaPluginManifestV1,
+      manifest: JasminiaPluginManifestV1,
     ): void {
       registry.registerPlugin(pluginId, manifest);
     },

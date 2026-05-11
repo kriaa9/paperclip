@@ -20,8 +20,8 @@
  * @see PLUGIN_SPEC.md §16.2 — Plugin-to-Plugin Events
  */
 
-import type { PluginEventType } from "@jasminiaai/shared";
-import type { PluginEvent, EventFilter } from "@jasminiaai/plugin-sdk";
+import type { PluginEventType } from "@jasminia/shared";
+import type { PluginEvent, EventFilter } from "@jasminia/plugin-sdk";
 
 // ---------------------------------------------------------------------------
 // Internal types

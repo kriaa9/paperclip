@@ -13,7 +13,7 @@ import {
   heartbeatRuns,
   issueRelations,
   issues,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,

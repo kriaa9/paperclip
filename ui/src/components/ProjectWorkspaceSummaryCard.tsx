@@ -1,5 +1,5 @@
 import { Link } from "@/lib/router";
-import type { ExecutionWorkspace, Issue } from "@jasminiaai/shared";
+import type { ExecutionWorkspace, Issue } from "@jasminia/shared";
 import { Button } from "@/components/ui/button";
 import { CopyText } from "./CopyText";
 import { IssuesQuicklook } from "./IssuesQuicklook";

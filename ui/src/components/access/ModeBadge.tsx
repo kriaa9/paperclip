@@ -1,4 +1,4 @@
-import type { DeploymentExposure, DeploymentMode } from "@jasminiaai/shared";
+import type { DeploymentExposure, DeploymentMode } from "@jasminia/shared";
 import { Badge } from "@/components/ui/badge";
 
 export function ModeBadge({

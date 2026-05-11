@@ -23,7 +23,7 @@ import { registerRoutineCommands } from "./commands/routines.js";
 import { runCommand } from "./commands/run.js";
 import { registerWorktreeCommands } from "./commands/worktree.js";
 import { applyDataDirOverride, type DataDirOptionLike } from "./config/data-dir.js";
-import { loadJasmin.iaEnvFile } from "./config/env.js";
+import { loadJasminiaEnvFile } from "./config/env.js";
 import { flushTelemetry, initTelemetryFromConfigFile } from "./telemetry.js";
 import { cliVersion } from "./version.js";
 
@@ -43,7 +43,7 @@ program.hook("preAction", (_thisCommand, actionCommand) => {
     hasConfigOption: optionNames.has("config"),
     hasContextOption: optionNames.has("context"),
   });
-  loadJasmin.iaEnvFile(options.config);
+  loadJasminiaEnvFile(options.config);
   initTelemetryFromConfigFile(options.config);
 });
 

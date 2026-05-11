@@ -82,7 +82,7 @@ JASMINIA_COOKIE="your_session_cookie=..." pnpm smoke:openclaw-join
 - If Jasmin.ia rejects the container-visible host with a hostname error, allow it from host:
 
 ```bash
-pnpm jasminiaai allowed-hostname host.docker.internal
+pnpm jasminia allowed-hostname host.docker.internal
 ```
 
 Then restart Jasmin.ia and rerun the smoke script.
@@ -90,7 +90,7 @@ Then restart Jasmin.ia and rerun the smoke script.
 - Authenticated/private mode: ensure hostnames are in the allowed list when required:
 
 ```bash
-pnpm jasminiaai allowed-hostname <host>
+pnpm jasminia allowed-hostname <host>
 ```
 
 ## Prerequisites

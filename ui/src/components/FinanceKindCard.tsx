@@ -1,4 +1,4 @@
-import type { FinanceByKind } from "@jasminiaai/shared";
+import type { FinanceByKind } from "@jasminia/shared";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { financeEventKindDisplayName, formatCents } from "@/lib/utils";
 

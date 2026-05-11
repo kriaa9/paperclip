@@ -12,8 +12,8 @@ import {
   pluginDatabaseNamespaces,
   pluginMigrations,
   plugins,
-} from "@jasminiaai/db";
-import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/shared";
+} from "@jasminia/db";
+import type { JasminiaPluginManifestV1 } from "@jasminia/shared";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,
@@ -113,7 +113,7 @@ describeEmbeddedPostgres("plugin database namespaces", () => {
     await tempDb?.cleanup();
   });
 
-  async function createPluginPackage(manifest: Jasmin.iaPluginManifestV1, migrationSql: string) {
+  async function createPluginPackage(manifest: JasminiaPluginManifestV1, migrationSql: string) {
     const packageRoot = await mkdtemp(path.join(os.tmpdir(), "jasminia-plugin-package-"));
     packageRoots.push(packageRoot);
     const migrationsDir = path.join(packageRoot, manifest.database!.migrationsDir);
@@ -123,7 +123,7 @@ describeEmbeddedPostgres("plugin database namespaces", () => {
   }
 
   async function createInstallablePluginPackage(
-    pluginManifest: Jasmin.iaPluginManifestV1,
+    pluginManifest: JasminiaPluginManifestV1,
     migrationSql: string,
   ) {
     const packageRoot = await createPluginPackage(pluginManifest, migrationSql);
@@ -147,7 +147,7 @@ describeEmbeddedPostgres("plugin database namespaces", () => {
     return packageRoot;
   }
 
-  async function installPluginRecord(manifest: Jasmin.iaPluginManifestV1) {
+  async function installPluginRecord(manifest: JasminiaPluginManifestV1) {
     const pluginId = randomUUID();
     await db.insert(plugins).values({
       id: pluginId,
@@ -163,7 +163,7 @@ describeEmbeddedPostgres("plugin database namespaces", () => {
     return pluginId;
   }
 
-  function manifest(pluginKey = "jasminia.dbtest"): Jasmin.iaPluginManifestV1 {
+  function manifest(pluginKey = "jasminia.dbtest"): JasminiaPluginManifestV1 {
     return {
       id: pluginKey,
       apiVersion: 1,
@@ -339,7 +339,7 @@ describeEmbeddedPostgres("plugin database namespaces", () => {
 
   it("refreshes persisted manifests from disk before activation", async () => {
     const staleManifest = manifest("jasminia.refresh");
-    const refreshedManifest: Jasmin.iaPluginManifestV1 = {
+    const refreshedManifest: JasminiaPluginManifestV1 = {
       ...staleManifest,
       database: {
         ...staleManifest.database!,

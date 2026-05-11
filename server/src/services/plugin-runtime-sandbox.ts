@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, realpathSync } from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
-import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/shared";
+import type { JasminiaPluginManifestV1 } from "@jasminia/shared";
 import type { PluginCapabilityValidator } from "./plugin-capability-validator.js";
 
 export class PluginSandboxError extends Error {
@@ -54,7 +54,7 @@ const DEFAULT_GLOBALS: Record<string, unknown> = {
 };
 
 export function createCapabilityScopedInvoker(
-  manifest: Jasmin.iaPluginManifestV1,
+  manifest: JasminiaPluginManifestV1,
   validator: PluginCapabilityValidator,
 ): CapabilityScopedInvoker {
   return {

@@ -1,4 +1,4 @@
-import type { ActivityEvent } from "@jasminiaai/shared";
+import type { ActivityEvent } from "@jasminia/shared";
 
 export interface IssueTimelineAssignee {
   agentId: string | null;

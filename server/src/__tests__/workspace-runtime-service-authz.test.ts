@@ -8,7 +8,7 @@ import {
   issues,
   projectWorkspaces,
   projects,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,

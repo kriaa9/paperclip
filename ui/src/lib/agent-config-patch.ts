@@ -1,4 +1,4 @@
-import type { Agent } from "@jasminiaai/shared";
+import type { Agent } from "@jasminia/shared";
 
 export interface AgentModelProfileOverlay {
   enabled?: boolean;

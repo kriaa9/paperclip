@@ -50,7 +50,7 @@ can create AWS-backed company secrets:
    and the configured KMS key.
 4. Configure the server runtime with the non-secret provider environment
    variables below.
-5. Run `jasminiaai doctor` or the provider health endpoint from the deployed
+5. Run `jasminia doctor` or the provider health endpoint from the deployed
    runtime and confirm that the provider reports the expected region, prefix,
    deployment id, KMS setting, and AWS SDK credential source.
 
@@ -148,7 +148,7 @@ Example minimum policy shape:
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "Jasmin.iaDeploymentSecrets",
+      "Sid": "JasminiaDeploymentSecrets",
       "Effect": "Allow",
       "Action": [
         "secretsmanager:CreateSecret",
@@ -159,7 +159,7 @@ Example minimum policy shape:
       "Resource": "arn:aws:secretsmanager:<region>:<account-id>:secret:jasminia/<deployment-id>/*"
     },
     {
-      "Sid": "Jasmin.iaDeploymentKms",
+      "Sid": "JasminiaDeploymentKms",
       "Effect": "Allow",
       "Action": [
         "kms:Encrypt",
@@ -184,7 +184,7 @@ Remote import preview needs one additional AWS permission:
 
 ```json
 {
-  "Sid": "Jasmin.iaRemoteSecretInventory",
+  "Sid": "JasminiaRemoteSecretInventory",
   "Effect": "Allow",
   "Action": "secretsmanager:ListSecrets",
   "Resource": "*"
@@ -209,7 +209,7 @@ operator-approved external prefixes that Jasmin.ia is allowed to consume:
 
 ```json
 {
-  "Sid": "Jasmin.iaResolveImportedExternalReferences",
+  "Sid": "JasminiaResolveImportedExternalReferences",
   "Effect": "Allow",
   "Action": "secretsmanager:GetSecretValue",
   "Resource": [

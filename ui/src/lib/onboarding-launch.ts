@@ -1,4 +1,4 @@
-import type { Goal } from "@jasminiaai/shared";
+import type { Goal } from "@jasminia/shared";
 
 export const ONBOARDING_PROJECT_NAME = "Onboarding";
 

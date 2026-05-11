@@ -3,10 +3,10 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { and, asc, eq } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { companies, companySkills } from "@jasminiaai/db";
-import { readJasmin.iaSkillSyncPreference } from "@jasminiaai/adapter-utils/server-utils";
-import type { Jasmin.iaSkillEntry } from "@jasminiaai/adapter-utils/server-utils";
+import type { Db } from "@jasminia/db";
+import { companies, companySkills } from "@jasminia/db";
+import { readJasminiaSkillSyncPreference } from "@jasminia/adapter-utils/server-utils";
+import type { JasminiaSkillEntry } from "@jasminia/adapter-utils/server-utils";
 import type {
   CompanySkill,
   CompanySkillCreateRequest,
@@ -25,9 +25,9 @@ import type {
   CompanySkillTrustLevel,
   CompanySkillUpdateStatus,
   CompanySkillUsageAgent,
-} from "@jasminiaai/shared";
-import { normalizeAgentUrlKey } from "@jasminiaai/shared";
-import { resolveJasmin.iaInstanceRoot } from "../home-paths.js";
+} from "@jasminia/shared";
+import { normalizeAgentUrlKey } from "@jasminia/shared";
+import { resolveJasminiaInstanceRoot } from "../home-paths.js";
 import { notFound, unprocessable } from "../errors.js";
 import { ghFetch, gitHubApiBase, resolveRawGitHubUrl } from "./github-fetch.js";
 import { agentService } from "./agents.js";
@@ -301,7 +301,7 @@ function uniqueImportedSkillKey(companyId: string, baseSlug: string, usedKeys: S
 }
 
 function buildSkillRuntimeName(key: string, slug: string) {
-  if (key.startsWith("jasminiaai/jasminia/")) return slug;
+  if (key.startsWith("jasminia/jasminia/")) return slug;
   return `${slug}--${hashSkillValue(key)}`;
 }
 
@@ -332,7 +332,7 @@ function deriveCanonicalSkillKey(
 
   const sourceKind = asString(metadata?.sourceKind);
   if (sourceKind === "jasminia_bundled") {
-    return `jasminiaai/jasminia/${slug}`;
+    return `jasminia/jasminia/${slug}`;
   }
 
   const owner = normalizeSkillSlug(asString(metadata?.owner));
@@ -1336,7 +1336,7 @@ function resolveDesiredSkillKeys(
   skills: SkillReferenceTarget[],
   config: Record<string, unknown>,
 ) {
-  const preference = readJasmin.iaSkillSyncPreference(config);
+  const preference = readJasminiaSkillSyncPreference(config);
   return Array.from(new Set(
     preference.desiredSkills
       .map((reference) => resolveSkillReference(skills, reference).skill?.key ?? normalizeSkillKey(reference))
@@ -1383,7 +1383,7 @@ export async function findMissingLocalSkillIds(
 }
 
 function resolveManagedSkillsRoot(companyId: string) {
-  return path.resolve(resolveJasmin.iaInstanceRoot(), "skills", companyId);
+  return path.resolve(resolveJasminiaInstanceRoot(), "skills", companyId);
 }
 
 function resolveLocalSkillFilePath(skill: CompanySkill, relativePath: string) {
@@ -2166,10 +2166,10 @@ export function companySkillService(db: Db) {
   async function listRuntimeSkillEntries(
     companyId: string,
     options: RuntimeSkillEntryOptions = {},
-  ): Promise<Jasmin.iaSkillEntry[]> {
+  ): Promise<JasminiaSkillEntry[]> {
     const skills = await listFull(companyId);
 
-    const out: Jasmin.iaSkillEntry[] = [];
+    const out: JasminiaSkillEntry[] = [];
     for (const skill of skills) {
       const sourceKind = asString(getSkillMeta(skill).sourceKind);
       let source = normalizeSkillDirectory(skill);
@@ -2330,7 +2330,7 @@ export function companySkillService(db: Db) {
         existing
         && existingMeta.sourceKind === "jasminia_bundled"
         && incomingKind === "github"
-        && incomingOwner === "jasminiaai"
+        && incomingOwner === "jasminia"
         && incomingRepo === "jasminia"
       ) {
         out.push(existing);

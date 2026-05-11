@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { buildSkillMentionHref } from "@jasminiaai/shared";
+import { buildSkillMentionHref } from "@jasminia/shared";
 import {
   applyRunScopedMentionedSkillKeys,
   extractMentionedSkillIdsFromSources,
@@ -119,13 +119,13 @@ describe("applyRunScopedMentionedSkillKeys", () => {
     const originalConfig = {
       command: "codex",
       jasminiaSkillSync: {
-        desiredSkills: ["jasminiaai/jasminia/jasminia"],
+        desiredSkills: ["jasminia/jasminia/jasminia"],
       },
     };
 
     const updatedConfig = applyRunScopedMentionedSkillKeys(originalConfig, [
       "company/company-1/release-changelog",
-      "jasminiaai/jasminia/jasminia",
+      "jasminia/jasminia/jasminia",
       "company/company-1/release-changelog",
     ]);
 
@@ -133,7 +133,7 @@ describe("applyRunScopedMentionedSkillKeys", () => {
       command: "codex",
       jasminiaSkillSync: {
         desiredSkills: [
-          "jasminiaai/jasminia/jasminia",
+          "jasminia/jasminia/jasminia",
           "company/company-1/release-changelog",
         ],
       },
@@ -141,7 +141,7 @@ describe("applyRunScopedMentionedSkillKeys", () => {
     expect(originalConfig).toEqual({
       command: "codex",
       jasminiaSkillSync: {
-        desiredSkills: ["jasminiaai/jasminia/jasminia"],
+        desiredSkills: ["jasminia/jasminia/jasminia"],
       },
     });
   });

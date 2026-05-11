@@ -1,4 +1,4 @@
-import { definePlugin } from "@jasminiaai/plugin-sdk";
+import { definePlugin } from "@jasminia/plugin-sdk";
 import type {
   PluginLogger,
   PluginEnvironmentAcquireLeaseParams,
@@ -14,7 +14,7 @@ import type {
   PluginEnvironmentResumeLeaseParams,
   PluginEnvironmentValidateConfigParams,
   PluginEnvironmentValidationResult,
-} from "@jasminiaai/plugin-sdk";
+} from "@jasminia/plugin-sdk";
 import { CloudflareBridgeError, createCloudflareBridgeClient } from "./bridge-client.js";
 import {
   parseCloudflareDriverConfig,

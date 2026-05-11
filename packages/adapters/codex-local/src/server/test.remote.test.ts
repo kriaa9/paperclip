@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { AdapterExecutionTarget } from "@jasminiaai/adapter-utils/execution-target";
+import type { AdapterExecutionTarget } from "@jasminia/adapter-utils/execution-target";
 
 const {
   ensureAdapterExecutionTargetDirectory,
@@ -54,9 +54,9 @@ const {
   };
 });
 
-vi.mock("@jasminiaai/adapter-utils/execution-target", async () => {
-  const actual = await vi.importActual<typeof import("@jasminiaai/adapter-utils/execution-target")>(
-    "@jasminiaai/adapter-utils/execution-target",
+vi.mock("@jasminia/adapter-utils/execution-target", async () => {
+  const actual = await vi.importActual<typeof import("@jasminia/adapter-utils/execution-target")>(
+    "@jasminia/adapter-utils/execution-target",
   );
   return {
     ...actual,

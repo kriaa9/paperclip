@@ -5,7 +5,7 @@ import type {
   FakeSandboxEnvironmentConfig,
   SandboxEnvironmentConfig,
   SandboxEnvironmentProvider,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 
 export interface SandboxProviderValidationResult {
   ok: boolean;

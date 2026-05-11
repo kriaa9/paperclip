@@ -1,4 +1,4 @@
-# @jasminiaai/adapter-utils
+# @jasminia/adapter-utils
 
 ## 0.3.1
 

@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "description": "E2B sandbox provider plugin for Jasmin.ia environments",
   "license": "MIT",
-  "homepage": "#
+  "homepage": "#",
   "bugs": {
-    "url": "#
+    "url": "#"
   },
   "repository": {
     "type": "git",
-    "url": "#
+    "url": "#",
     "directory": "packages/plugins/sandbox-providers/e2b"
   },
   "type": "module",

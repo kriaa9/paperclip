@@ -1,6 +1,6 @@
 import { and, asc, desc, eq, gt, inArray, isNull, notInArray, sql } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { clampIssueRequestDepth } from "@jasminiaai/shared";
+import type { Db } from "@jasminia/db";
+import { clampIssueRequestDepth } from "@jasminia/shared";
 import {
   agents,
   companies,
@@ -9,7 +9,7 @@ import {
   issueComments,
   issues,
   projects,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import { logger } from "../middleware/logger.js";
 import { logActivity } from "./activity-log.js";
 import { budgetService } from "./budgets.js";

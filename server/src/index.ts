@@ -22,7 +22,7 @@ import {
   companies,
   companyMemberships,
   instanceUserRoles,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import detectPort from "detect-port";
 import { createApp } from "./app.js";
 import { loadConfig } from "./config.js";

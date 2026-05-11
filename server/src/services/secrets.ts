@@ -1,5 +1,5 @@
 import { and, desc, eq, inArray, like, ne, notInArray, sql } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   agents,
   companySecretBindings,
@@ -12,7 +12,7 @@ import {
   projects,
   routines,
   secretAccessEvents,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import type {
   AgentEnvConfig,
   CompanySecretBindingTarget,
@@ -26,7 +26,7 @@ import type {
   SecretProviderConfigHealthStatus,
   SecretProviderConfigStatus,
   SecretVersionSelector,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
   createSecretProviderConfigSchema,
   deriveProjectUrlKey,
@@ -35,7 +35,7 @@ import {
   normalizeAgentUrlKey,
   secretProviderConfigPayloadSchema,
   updateSecretProviderConfigSchema,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { conflict, HttpError, notFound, unprocessable } from "../errors.js";
 import { logger } from "../middleware/logger.js";
 import {

@@ -158,7 +158,7 @@ describe("project workspace skill discovery", () => {
         "metadata:",
         "  sources:",
         "    - kind: github-dir",
-        "      repo: jasminiaai/jasminia",
+        "      repo: jasminia/jasminia",
         "      path: skills/jasminia",
         "---",
         "",
@@ -179,7 +179,7 @@ describe("project workspace skill discovery", () => {
       sources: [
         {
           kind: "github-dir",
-          repo: "jasminiaai/jasminia",
+          repo: "jasminia/jasminia",
           path: "skills/jasminia",
         },
       ],

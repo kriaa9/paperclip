@@ -1,4 +1,4 @@
-import { redactHomePathUserSegments, redactTranscriptEntryPaths } from "@jasminiaai/adapter-utils";
+import { redactHomePathUserSegments, redactTranscriptEntryPaths } from "@jasminia/adapter-utils";
 import type { TranscriptEntry, StdoutLineParser, TranscriptParserSource } from "./types";
 
 export type RunLogChunk = { ts: string; stream: "stdout" | "stderr" | "system"; chunk: string };

@@ -1,9 +1,9 @@
 import { Command } from "commander";
-import type { Agent } from "@jasminiaai/shared";
+import type { Agent } from "@jasminia/shared";
 import {
   removeMaintainerOnlySkillSymlinks,
-  resolveJasmin.iaSkillsDir,
-} from "@jasminiaai/adapter-utils/server-utils";
+  resolveJasminiaSkillsDir,
+} from "@jasminia/adapter-utils/server-utils";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -248,7 +248,7 @@ export function registerAgentCommands(program: Command): void {
 
           const installSummaries: SkillsInstallSummary[] = [];
           if (opts.installSkills !== false) {
-            const skillsDir = await resolveJasmin.iaSkillsDir(__moduleDir, [path.resolve(process.cwd(), "skills")]);
+            const skillsDir = await resolveJasminiaSkillsDir(__moduleDir, [path.resolve(process.cwd(), "skills")]);
             if (!skillsDir) {
               throw new Error(
                 "Could not locate local Jasmin.ia skills directory. Expected ./skills in the repo checkout.",

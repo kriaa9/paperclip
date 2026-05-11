@@ -9,7 +9,7 @@ import {
   getSshEnvLabSupport,
   startSshEnvLabFixture,
   stopSshEnvLabFixture,
-} from "@jasminiaai/adapter-utils/ssh";
+} from "@jasminia/adapter-utils/ssh";
 import {
   agents,
   companies,
@@ -20,7 +20,7 @@ import {
   environments,
   heartbeatRuns,
   plugins,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,
@@ -427,7 +427,7 @@ describeEmbeddedPostgres("environmentRuntimeService", () => {
     await db.insert(plugins).values({
       id: pluginId,
       pluginKey: "jasminia.fake-plugin-sandbox-provider",
-      packageName: "@jasminiaai/plugin-fake-sandbox",
+      packageName: "@jasminia/plugin-fake-sandbox",
       version: "1.0.0",
       apiVersion: 1,
       categories: ["automation"],

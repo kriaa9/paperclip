@@ -18,7 +18,7 @@ await esbuild.build({
     "react",
     "react-dom",
     "react/jsx-runtime",
-    "@jasminiaai/plugin-sdk/ui",
+    "@jasminia/plugin-sdk/ui",
   ],
   logLevel: "info",
 });

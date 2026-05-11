@@ -2,8 +2,8 @@ import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import type { AdapterExecutionContext } from "@jasminiaai/adapter-utils";
-import { resolveJasmin.iaInstanceRootForAdapter } from "@jasminiaai/adapter-utils/server-utils";
+import type { AdapterExecutionContext } from "@jasminia/adapter-utils";
+import { resolveJasminiaInstanceRootForAdapter } from "@jasminia/adapter-utils/server-utils";
 
 const SEEDED_SHARED_FILES = [
   ".credentials.json",
@@ -92,7 +92,7 @@ export function resolveManagedClaudeConfigSeedDir(
   env: NodeJS.ProcessEnv,
   companyId?: string,
 ): string {
-  const instanceRoot = resolveJasmin.iaInstanceRootForAdapter({
+  const instanceRoot = resolveJasminiaInstanceRootForAdapter({
     homeDir: nonEmpty(env.JASMINIA_HOME) ?? undefined,
     instanceId: nonEmpty(env.JASMINIA_INSTANCE_ID) ?? undefined,
     env,

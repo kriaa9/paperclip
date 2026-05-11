@@ -15,7 +15,7 @@ import {
   issueExecutionDecisions,
   issueReadStates,
   issues,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,
@@ -166,7 +166,7 @@ describeEmbeddedPostgres("cleanup removal services", () => {
     await db.insert(companySkills).values({
       id: randomUUID(),
       companyId,
-      key: "jasminiaai/jasminia/jasminia",
+      key: "jasminia/jasminia/jasminia",
       slug: "jasminia",
       name: "Jasmin.ia",
       markdown: "# Jasmin.ia",

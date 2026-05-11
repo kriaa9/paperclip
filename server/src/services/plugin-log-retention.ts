@@ -1,6 +1,6 @@
 import { lt, sql } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { pluginLogs } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { pluginLogs } from "@jasminia/db";
 import { logger } from "../middleware/logger.js";
 
 /** Default retention period: 7 days. */

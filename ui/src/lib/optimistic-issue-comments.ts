@@ -1,4 +1,4 @@
-import type { Issue, IssueComment } from "@jasminiaai/shared";
+import type { Issue, IssueComment } from "@jasminia/shared";
 
 export interface IssueCommentReassignment {
   assigneeAgentId: string | null;

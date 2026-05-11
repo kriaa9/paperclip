@@ -3,7 +3,7 @@ import type { Dirent } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { AdapterExecutionContext, AdapterExecutionResult } from "@jasminiaai/adapter-utils";
+import type { AdapterExecutionContext, AdapterExecutionResult } from "@jasminia/adapter-utils";
 import {
   adapterExecutionTargetIsRemote,
   adapterExecutionTargetRemoteCwd,
@@ -11,7 +11,7 @@ import {
   adapterExecutionTargetSessionIdentity,
   adapterExecutionTargetSessionMatches,
   adapterExecutionTargetUsesManagedHome,
-  adapterExecutionTargetUsesJasmin.iaBridge,
+  adapterExecutionTargetUsesJasminiaBridge,
   describeAdapterExecutionTarget,
   ensureAdapterExecutionTargetCommandResolvable,
   ensureAdapterExecutionTargetRuntimeCommandInstalled,
@@ -22,31 +22,31 @@ import {
   resolveAdapterExecutionTargetCommandForLogs,
   runAdapterExecutionTargetProcess,
   runAdapterExecutionTargetShellCommand,
-  startAdapterExecutionTargetJasmin.iaBridge,
-} from "@jasminiaai/adapter-utils/execution-target";
+  startAdapterExecutionTargetJasminiaBridge,
+} from "@jasminia/adapter-utils/execution-target";
 import {
   asBoolean,
   asNumber,
   asString,
   asStringArray,
-  buildJasmin.iaEnv,
+  buildJasminiaEnv,
   buildInvocationEnvForLogs,
   ensureAbsoluteDirectory,
-  ensureJasmin.iaSkillSymlink,
+  ensureJasminiaSkillSymlink,
   joinPromptSections,
   ensurePathInEnv,
-  refreshJasmin.iaWorkspaceEnvForExecution,
-  readJasmin.iaRuntimeSkillEntries,
-  readJasmin.iaIssueWorkModeFromContext,
-  resolveJasmin.iaDesiredSkillNames,
+  refreshJasminiaWorkspaceEnvForExecution,
+  readJasminiaRuntimeSkillEntries,
+  readJasminiaIssueWorkModeFromContext,
+  resolveJasminiaDesiredSkillNames,
   removeMaintainerOnlySkillSymlinks,
   parseObject,
   renderTemplate,
-  renderJasmin.iaWakePrompt,
-  stringifyJasmin.iaWakePayload,
+  renderJasminiaWakePrompt,
+  stringifyJasminiaWakePayload,
   DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE,
   runChildProcess,
-} from "@jasminiaai/adapter-utils/server-utils";
+} from "@jasminia/adapter-utils/server-utils";
 import { DEFAULT_GEMINI_LOCAL_MODEL, SANDBOX_INSTALL_COMMAND } from "../index.js";
 import {
   describeGeminiFailure,
@@ -70,7 +70,7 @@ function resolveGeminiBillingType(env: Record<string, string>): "api" | "subscri
     : "subscription";
 }
 
-function renderJasmin.iaEnvNote(env: Record<string, string>): string {
+function renderJasminiaEnvNote(env: Record<string, string>): string {
   const jasminiaKeys = Object.keys(env)
     .filter((key) => key.startsWith("JASMINIA_"))
     .sort();
@@ -141,7 +141,7 @@ async function ensureGeminiSkillsInjected(
     const target = path.join(skillsHome, entry.runtimeName);
 
     try {
-      const result = await ensureJasmin.iaSkillSymlink(entry.source, target);
+      const result = await ensureJasminiaSkillSymlink(entry.source, target);
       if (result === "skipped") continue;
       await onLog(
         "stderr",
@@ -162,8 +162,8 @@ async function buildGeminiSkillsDir(
   const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-gemini-skills-"));
   const target = path.join(tmp, "skills");
   await fs.mkdir(target, { recursive: true });
-  const availableEntries = await readJasmin.iaRuntimeSkillEntries(config, __moduleDir);
-  const desiredNames = new Set(resolveJasmin.iaDesiredSkillNames(config, availableEntries));
+  const availableEntries = await readJasminiaRuntimeSkillEntries(config, __moduleDir);
+  const desiredNames = new Set(resolveJasminiaDesiredSkillNames(config, availableEntries));
   for (const entry of availableEntries) {
     if (!desiredNames.has(entry.key)) continue;
     await fs.symlink(entry.source, path.join(target, entry.runtimeName));
@@ -205,8 +205,8 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
   const cwd = effectiveWorkspaceCwd || configuredCwd || process.cwd();
   let effectiveExecutionCwd = adapterExecutionTargetRemoteCwd(executionTarget, cwd);
   await ensureAbsoluteDirectory(cwd, { createIfMissing: true });
-  const geminiSkillEntries = await readJasmin.iaRuntimeSkillEntries(config, __moduleDir);
-  const desiredGeminiSkillNames = resolveJasmin.iaDesiredSkillNames(config, geminiSkillEntries);
+  const geminiSkillEntries = await readJasminiaRuntimeSkillEntries(config, __moduleDir);
+  const desiredGeminiSkillNames = resolveJasminiaDesiredSkillNames(config, geminiSkillEntries);
   if (!executionTargetIsRemote) {
     await ensureGeminiSkillsInjected(onLog, geminiSkillEntries, desiredGeminiSkillNames);
   }
@@ -214,7 +214,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
   const envConfig = parseObject(config.env);
   const hasExplicitApiKey =
     typeof envConfig.JASMINIA_API_KEY === "string" && envConfig.JASMINIA_API_KEY.trim().length > 0;
-  const env: Record<string, string> = { ...buildJasmin.iaEnv(agent) };
+  const env: Record<string, string> = { ...buildJasminiaEnv(agent) };
   env.JASMINIA_RUN_ID = runId;
   const wakeTaskId =
     (typeof context.taskId === "string" && context.taskId.trim().length > 0 && context.taskId.trim()) ||
@@ -239,8 +239,8 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
   const linkedIssueIds = Array.isArray(context.issueIds)
     ? context.issueIds.filter((value): value is string => typeof value === "string" && value.trim().length > 0)
     : [];
-  const wakePayloadJson = stringifyJasmin.iaWakePayload(context.jasminiaWake);
-  const issueWorkMode = readJasmin.iaIssueWorkModeFromContext(context);
+  const wakePayloadJson = stringifyJasminiaWakePayload(context.jasminiaWake);
+  const issueWorkMode = readJasminiaIssueWorkModeFromContext(context);
   if (wakeTaskId) env.JASMINIA_TASK_ID = wakeTaskId;
   if (issueWorkMode) env.JASMINIA_ISSUE_WORK_MODE = issueWorkMode;
   if (wakeReason) env.JASMINIA_WAKE_REASON = wakeReason;
@@ -249,7 +249,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
   if (approvalStatus) env.JASMINIA_APPROVAL_STATUS = approvalStatus;
   if (linkedIssueIds.length > 0) env.JASMINIA_LINKED_ISSUE_IDS = linkedIssueIds.join(",");
   if (wakePayloadJson) env.JASMINIA_WAKE_PAYLOAD_JSON = wakePayloadJson;
-  refreshJasmin.iaWorkspaceEnvForExecution({
+  refreshJasminiaWorkspaceEnvForExecution({
     env,
     envConfig,
     workspaceCwd: effectiveWorkspaceCwd,
@@ -315,7 +315,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
   let remoteSkillsDir: string | null = null;
   let localSkillsDir: string | null = null;
   let remoteRuntimeRootDir: string | null = null;
-  let jasminiaBridge: Awaited<ReturnType<typeof startAdapterExecutionTargetJasmin.iaBridge>> = null;
+  let jasminiaBridge: Awaited<ReturnType<typeof startAdapterExecutionTargetJasminiaBridge>> = null;
 
   if (executionTargetIsRemote) {
     try {
@@ -340,7 +340,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
       });
       restoreRemoteWorkspace = () => preparedExecutionTargetRuntime.restoreWorkspace();
       effectiveExecutionCwd = preparedExecutionTargetRuntime.workspaceRemoteDir ?? effectiveExecutionCwd;
-      refreshJasmin.iaWorkspaceEnvForExecution({
+      refreshJasminiaWorkspaceEnvForExecution({
         env,
         envConfig,
         workspaceCwd: effectiveWorkspaceCwd,
@@ -385,8 +385,8 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
     }
   }
   const runtimeExecutionTarget = overrideAdapterExecutionTargetRemoteCwd(executionTarget, effectiveExecutionCwd);
-  if (executionTargetIsRemote && adapterExecutionTargetUsesJasmin.iaBridge(executionTarget)) {
-    jasminiaBridge = await startAdapterExecutionTargetJasmin.iaBridge({
+  if (executionTargetIsRemote && adapterExecutionTargetUsesJasminiaBridge(executionTarget)) {
+    jasminiaBridge = await startAdapterExecutionTargetJasminiaBridge({
       runId,
       target: runtimeExecutionTarget,
       runtimeRootDir: remoteRuntimeRootDir,
@@ -478,11 +478,11 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
     !sessionId && bootstrapPromptTemplate.trim().length > 0
       ? renderTemplate(bootstrapPromptTemplate, templateData).trim()
       : "";
-  const wakePrompt = renderJasmin.iaWakePrompt(context.jasminiaWake, { resumedSession: Boolean(sessionId) });
+  const wakePrompt = renderJasminiaWakePrompt(context.jasminiaWake, { resumedSession: Boolean(sessionId) });
   const shouldUseResumeDeltaPrompt = Boolean(sessionId) && wakePrompt.length > 0;
   const renderedPrompt = shouldUseResumeDeltaPrompt ? "" : renderTemplate(promptTemplate, templateData);
   const sessionHandoffNote = asString(context.jasminiaSessionHandoffMarkdown, "").trim();
-  const jasminiaEnvNote = renderJasmin.iaEnvNote(env);
+  const jasminiaEnvNote = renderJasminiaEnvNote(env);
   const apiAccessNote = renderApiAccessNote(env);
   const prompt = joinPromptSections([
     instructionsPrefix,

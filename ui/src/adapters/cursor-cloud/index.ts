@@ -3,7 +3,7 @@ import { SchemaConfigFields } from "../schema-config-fields";
 import {
   buildCursorCloudConfig,
   parseCursorCloudStdoutLine,
-} from "@jasminiaai/adapter-cursor-cloud/ui";
+} from "@jasminia/adapter-cursor-cloud/ui";
 
 export const cursorCloudUIAdapter: UIAdapterModule = {
   type: "cursor_cloud",

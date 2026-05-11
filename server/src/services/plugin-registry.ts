@@ -1,5 +1,5 @@
 import { asc, eq, ne, sql, and } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   plugins,
   pluginConfig,
@@ -8,9 +8,9 @@ import {
   pluginJobs,
   pluginJobRuns,
   pluginWebhookDeliveries,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import type {
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginStatus,
   InstallPlugin,
   UpdatePluginStatus,
@@ -26,7 +26,7 @@ import type {
   PluginJobRunStatus,
   PluginJobRunTrigger,
   PluginWebhookDeliveryStatus,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { conflict, notFound } from "../errors.js";
 
 // ---------------------------------------------------------------------------
@@ -136,7 +136,7 @@ export function pluginRegistryService(db: Db) {
      * manifest from the package.  This method persists the plugin row and
      * assigns the next install order.
      */
-    install: async (input: InstallPlugin, manifest: Jasmin.iaPluginManifestV1) => {
+    install: async (input: InstallPlugin, manifest: JasminiaPluginManifestV1) => {
       const existing = await getByKey(manifest.id);
       if (existing) {
         if (existing.status !== "uninstalled") {
@@ -200,7 +200,7 @@ export function pluginRegistryService(db: Db) {
       data: {
         packageName?: string;
         version?: string;
-        manifest?: Jasmin.iaPluginManifestV1;
+        manifest?: JasminiaPluginManifestV1;
       },
     ) => {
       const plugin = await getById(id);

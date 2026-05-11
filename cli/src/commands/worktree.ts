@@ -45,13 +45,13 @@ import {
   runDatabaseRestore,
   createEmbeddedPostgresLogBuffer,
   formatEmbeddedPostgresError,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import type { Command } from "commander";
-import { ensureAgentJwtSecret, loadJasmin.iaEnvFile, mergeJasmin.iaEnvEntries, readJasmin.iaEnvEntries, resolveJasmin.iaEnvFile } from "../config/env.js";
+import { ensureAgentJwtSecret, loadJasminiaEnvFile, mergeJasminiaEnvEntries, readJasminiaEnvEntries, resolveJasminiaEnvFile } from "../config/env.js";
 import { expandHomePrefix } from "../config/home.js";
-import type { Jasmin.iaConfig } from "../config/schema.js";
+import type { JasminiaConfig } from "../config/schema.js";
 import { readConfig, resolveConfigPath, writeConfig } from "../config/store.js";
-import { printJasmin.iaCliBanner } from "../utils/banner.js";
+import { printJasminiaCliBanner } from "../utils/banner.js";
 import { resolveRuntimeLikePath } from "../utils/path-resolver.js";
 import {
   buildWorktreeConfig,
@@ -322,7 +322,7 @@ function buildS3ObjectKey(prefix: string, objectKey: string): string {
 
 const dynamicImport = new Function("specifier", "return import(specifier);") as (specifier: string) => Promise<any>;
 
-function createConfiguredStorageFromJasmin.iaConfig(config: Jasmin.iaConfig): ConfiguredStorage {
+function createConfiguredStorageFromJasminiaConfig(config: JasminiaConfig): ConfiguredStorage {
   if (config.storage.provider === "local_disk") {
     const baseDir = expandHomePrefix(config.storage.localDisk.baseDir);
     return {
@@ -391,7 +391,7 @@ function openConfiguredStorage(configPath: string): ConfiguredStorage {
   if (!config) {
     throw new Error(`Config not found at ${configPath}.`);
   }
-  return createConfiguredStorageFromJasmin.iaConfig(config);
+  return createConfiguredStorageFromJasminiaConfig(config);
 }
 
 async function streamToBuffer(stream: NodeJS.ReadableStream): Promise<Buffer> {
@@ -868,7 +868,7 @@ export function resolveWorktreeReseedTargetPaths(input: {
   configPath: string;
   rootPath: string;
 }): WorktreeLocalPaths {
-  const envEntries = readJasmin.iaEnvEntries(resolveJasmin.iaEnvFile(input.configPath));
+  const envEntries = readJasminiaEnvEntries(resolveJasminiaEnvFile(input.configPath));
   const homeDir = nonEmpty(envEntries.JASMINIA_HOME);
   const instanceId = nonEmpty(envEntries.JASMINIA_INSTANCE_ID);
 
@@ -895,7 +895,7 @@ function resolveExistingGitWorktree(selector: string, cwd: string): MergeSourceC
       worktree: directPath,
       branch: null,
       branchLabel: path.basename(directPath),
-      hasJasmin.iaConfig: existsSync(path.resolve(directPath, ".jasminia", "config.json")),
+      hasJasminiaConfig: existsSync(path.resolve(directPath, ".jasminia", "config.json")),
       isCurrent: directPath === path.resolve(cwd),
     };
   }
@@ -984,7 +984,7 @@ async function ensureRepairTargetWorktree(input: {
   };
 }
 
-function resolveSourceConnectionString(config: Jasmin.iaConfig, envEntries: Record<string, string>, portOverride?: number): string {
+function resolveSourceConnectionString(config: JasminiaConfig, envEntries: Record<string, string>, portOverride?: number): string {
   if (config.database.mode === "postgres") {
     const connectionString = nonEmpty(envEntries.DATABASE_URL) ?? nonEmpty(config.database.connectionString);
     if (!connectionString) {
@@ -1001,7 +1001,7 @@ function resolveSourceConnectionString(config: Jasmin.iaConfig, envEntries: Reco
 
 export function copySeededSecretsKey(input: {
   sourceConfigPath: string;
-  sourceConfig: Jasmin.iaConfig;
+  sourceConfig: JasminiaConfig;
   sourceEnvEntries: Record<string, string>;
   targetKeyFilePath: string;
 }): void {
@@ -1273,16 +1273,16 @@ export async function quarantineSeededWorktreeExecutionState(
 
 async function seedWorktreeDatabase(input: {
   sourceConfigPath: string;
-  sourceConfig: Jasmin.iaConfig;
-  targetConfig: Jasmin.iaConfig;
+  sourceConfig: JasminiaConfig;
+  targetConfig: JasminiaConfig;
   targetPaths: WorktreeLocalPaths;
   instanceId: string;
   seedMode: WorktreeSeedMode;
   preserveLiveWork?: boolean;
 }): Promise<SeedWorktreeDatabaseResult> {
   const seedPlan = resolveWorktreeSeedPlan(input.seedMode);
-  const sourceEnvFile = resolveJasmin.iaEnvFile(input.sourceConfigPath);
-  const sourceEnvEntries = readJasmin.iaEnvEntries(sourceEnvFile);
+  const sourceEnvFile = resolveJasminiaEnvFile(input.sourceConfigPath);
+  const sourceEnvEntries = readJasminiaEnvEntries(sourceEnvFile);
   copySeededSecretsKey({
     sourceConfigPath: input.sourceConfigPath,
     sourceConfig: input.sourceConfig,
@@ -1405,11 +1405,11 @@ async function runWorktreeInit(opts: WorktreeInitOptions): Promise<void> {
   });
 
   writeConfig(targetConfig, paths.configPath);
-  const sourceEnvEntries = readJasmin.iaEnvEntries(resolveJasmin.iaEnvFile(sourceConfigPath));
+  const sourceEnvEntries = readJasminiaEnvEntries(resolveJasminiaEnvFile(sourceConfigPath));
   const existingAgentJwtSecret =
     nonEmpty(sourceEnvEntries.JASMINIA_AGENT_JWT_SECRET) ??
     nonEmpty(process.env.JASMINIA_AGENT_JWT_SECRET);
-  mergeJasmin.iaEnvEntries(
+  mergeJasminiaEnvEntries(
     {
       ...buildWorktreeEnvEntries(paths, branding),
       ...(existingAgentJwtSecret ? { JASMINIA_AGENT_JWT_SECRET: existingAgentJwtSecret } : {}),
@@ -1417,7 +1417,7 @@ async function runWorktreeInit(opts: WorktreeInitOptions): Promise<void> {
     paths.envPath,
   );
   ensureAgentJwtSecret(paths.configPath);
-  loadJasmin.iaEnvFile(paths.configPath);
+  loadJasminiaEnvFile(paths.configPath);
   const copiedGitHooks = copyGitHooksToWorktreeGitDir(cwd);
 
   let seedSummary: string | null = null;
@@ -1491,14 +1491,14 @@ async function runWorktreeInit(opts: WorktreeInitOptions): Promise<void> {
 }
 
 export async function worktreeInitCommand(opts: WorktreeInitOptions): Promise<void> {
-  printJasmin.iaCliBanner();
-  p.intro(pc.bgCyan(pc.black(" jasminiaai worktree init ")));
+  printJasminiaCliBanner();
+  p.intro(pc.bgCyan(pc.black(" jasminia worktree init ")));
   await runWorktreeInit(opts);
 }
 
 export async function worktreeMakeCommand(nameArg: string, opts: WorktreeMakeOptions): Promise<void> {
-  printJasmin.iaCliBanner();
-  p.intro(pc.bgCyan(pc.black(" jasminiaai worktree:make ")));
+  printJasminiaCliBanner();
+  p.intro(pc.bgCyan(pc.black(" jasminia worktree:make ")));
 
   const name = resolveWorktreeMakeName(nameArg);
   const startPoint = resolveWorktreeStartPoint(opts.startPoint);
@@ -1593,7 +1593,7 @@ type MergeSourceChoice = {
   worktree: string;
   branch: string | null;
   branchLabel: string;
-  hasJasmin.iaConfig: boolean;
+  hasJasminiaConfig: boolean;
   isCurrent: boolean;
 };
 
@@ -1664,7 +1664,7 @@ function toMergeSourceChoices(cwd: string): MergeSourceChoice[] {
       worktree: worktreePath,
       branch: entry.branch,
       branchLabel,
-      hasJasmin.iaConfig: existsSync(path.resolve(worktreePath, ".jasminia", "config.json")),
+      hasJasminiaConfig: existsSync(path.resolve(worktreePath, ".jasminia", "config.json")),
       isCurrent: worktreePath === currentCwd,
     };
   });
@@ -1710,8 +1710,8 @@ function worktreePathHasUncommittedChanges(worktreePath: string): boolean {
 }
 
 export async function worktreeCleanupCommand(nameArg: string, opts: WorktreeCleanupOptions): Promise<void> {
-  printJasmin.iaCliBanner();
-  p.intro(pc.bgCyan(pc.black(" jasminiaai worktree:cleanup ")));
+  printJasminiaCliBanner();
+  p.intro(pc.bgCyan(pc.black(" jasminia worktree:cleanup ")));
 
   const name = resolveWorktreeMakeName(nameArg);
   const sourceCwd = process.cwd();
@@ -1847,8 +1847,8 @@ export async function worktreeCleanupCommand(nameArg: string, opts: WorktreeClea
 
 export async function worktreeEnvCommand(opts: WorktreeEnvOptions): Promise<void> {
   const configPath = resolveConfigPath(opts.config);
-  const envPath = resolveJasmin.iaEnvFile(configPath);
-  const envEntries = readJasmin.iaEnvEntries(envPath);
+  const envPath = resolveJasminiaEnvFile(configPath);
+  const envEntries = readJasminiaEnvEntries(envPath);
   const out = {
     JASMINIA_CONFIG: configPath,
     ...(envEntries.JASMINIA_HOME ? { JASMINIA_HOME: envEntries.JASMINIA_HOME } : {}),
@@ -1902,7 +1902,7 @@ function resolveAttachmentLookupStorages(input: {
     resolveCurrentEndpoint().configPath,
     input.targetEndpoint.configPath,
     ...toMergeSourceChoices(process.cwd())
-      .filter((choice) => choice.hasJasmin.iaConfig)
+      .filter((choice) => choice.hasJasminiaConfig)
       .map((choice) => path.resolve(choice.worktree, ".jasminia", "config.json")),
   ];
   const seen = new Set<string>();
@@ -1921,7 +1921,7 @@ async function openConfiguredDb(configPath: string): Promise<OpenDbHandle> {
   if (!config) {
     throw new Error(`Config not found at ${configPath}.`);
   }
-  const envEntries = readJasmin.iaEnvEntries(resolveJasmin.iaEnvFile(configPath));
+  const envEntries = readJasminiaEnvEntries(resolveJasminiaEnvFile(configPath));
   let embeddedHandle: EmbeddedPostgresHandle | null = null;
 
   try {
@@ -2110,7 +2110,7 @@ function renderMergePlan(plan: Awaited<ReturnType<typeof collectMergePlan>>["pla
   return lines.join("\n");
 }
 
-function resolveRunningEmbeddedPostgresPid(config: Jasmin.iaConfig): number | null {
+function resolveRunningEmbeddedPostgresPid(config: JasminiaConfig): number | null {
   if (config.database.mode !== "embedded-postgres") {
     return null;
   }
@@ -2462,7 +2462,7 @@ export async function worktreeListCommand(opts: WorktreeListOptions): Promise<vo
   for (const choice of choices) {
     const flags = [
       choice.isCurrent ? "current" : null,
-      choice.hasJasmin.iaConfig ? "jasminia" : "no-jasminia-config",
+      choice.hasJasminiaConfig ? "jasminia" : "no-jasminia-config",
     ].filter((value): value is string => value !== null);
     p.log.message(`${choice.branchLabel}  ${choice.worktree}  [${flags.join(", ")}]`);
   }
@@ -2524,7 +2524,7 @@ function resolveWorktreeEndpointFromSelector(
       `Could not resolve worktree "${selector}". Use a path, a listed worktree directory name, branch name, or "current".`,
     );
   }
-  if (!matched.hasJasmin.iaConfig && !matched.isCurrent) {
+  if (!matched.hasJasminiaConfig && !matched.isCurrent) {
     throw new Error(`Resolved worktree "${selector}" does not look like a Jasmin.ia worktree.`);
   }
   return resolveEndpointFromChoice(matched);
@@ -2534,7 +2534,7 @@ async function promptForSourceEndpoint(excludeWorktreePath?: string): Promise<Re
   const excluded = excludeWorktreePath ? path.resolve(excludeWorktreePath) : null;
   const currentEndpoint = resolveCurrentEndpoint();
   const choices = toMergeSourceChoices(process.cwd())
-    .filter((choice) => choice.hasJasmin.iaConfig || choice.isCurrent)
+    .filter((choice) => choice.hasJasminiaConfig || choice.isCurrent)
     .filter((choice) => path.resolve(choice.worktree) !== excluded)
     .map((choice) => ({
       value: choice.isCurrent ? "__current__" : choice.worktree,
@@ -2542,7 +2542,7 @@ async function promptForSourceEndpoint(excludeWorktreePath?: string): Promise<Re
       hint: `${choice.worktree}${choice.isCurrent ? " (current)" : ""}`,
     }));
   if (choices.length === 0) {
-    throw new Error("No Jasmin.ia worktrees were found. Run `jasminiaai worktree:list` to inspect the repo worktrees.");
+    throw new Error("No Jasmin.ia worktrees were found. Run `jasminia worktree:list` to inspect the repo worktrees.");
   }
   const selection = await p.select<string>({
     message: "Choose the source worktree to import from",
@@ -3148,14 +3148,14 @@ async function runWorktreeReseed(opts: WorktreeReseedOptions): Promise<void> {
 }
 
 export async function worktreeReseedCommand(opts: WorktreeReseedOptions): Promise<void> {
-  printJasmin.iaCliBanner();
-  p.intro(pc.bgCyan(pc.black(" jasminiaai worktree reseed ")));
+  printJasminiaCliBanner();
+  p.intro(pc.bgCyan(pc.black(" jasminia worktree reseed ")));
   await runWorktreeReseed(opts);
 }
 
 export async function worktreeRepairCommand(opts: WorktreeRepairOptions): Promise<void> {
-  printJasmin.iaCliBanner();
-  p.intro(pc.bgCyan(pc.black(" jasminiaai worktree repair ")));
+  printJasminiaCliBanner();
+  p.intro(pc.bgCyan(pc.black(" jasminia worktree repair ")));
 
   const seedMode = opts.seedMode ?? "minimal";
   if (!isWorktreeSeedMode(seedMode)) {
@@ -3182,7 +3182,7 @@ export async function worktreeRepairCommand(opts: WorktreeRepairOptions): Promis
   }
 
   const targetConfig = existsSync(target.configPath) ? readConfig(target.configPath) : null;
-  const targetEnvEntries = readJasmin.iaEnvEntries(resolveJasmin.iaEnvFile(target.configPath));
+  const targetEnvEntries = readJasminiaEnvEntries(resolveJasminiaEnvFile(target.configPath));
   const targetHasWorktreeEnv = Boolean(
     nonEmpty(targetEnvEntries.JASMINIA_HOME) && nonEmpty(targetEnvEntries.JASMINIA_INSTANCE_ID),
   );

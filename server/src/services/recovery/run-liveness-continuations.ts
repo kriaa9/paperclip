@@ -1,7 +1,7 @@
 import { and, eq, inArray } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { agentWakeupRequests, agents, heartbeatRuns, issues } from "@jasminiaai/db";
-import type { RunLivenessState } from "@jasminiaai/shared";
+import type { Db } from "@jasminia/db";
+import { agentWakeupRequests, agents, heartbeatRuns, issues } from "@jasminia/db";
+import type { RunLivenessState } from "@jasminia/shared";
 import { withRecoveryModelProfileHint } from "./model-profile-hint.js";
 import { RECOVERY_REASON_KINDS } from "./origins.js";
 

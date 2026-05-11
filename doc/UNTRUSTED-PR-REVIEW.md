@@ -55,8 +55,8 @@ OPENAI_API_KEY=... ANTHROPIC_API_KEY=... docker compose -f docker/docker-compose
 Inside the container:
 
 ```sh
-review-checkout-pr jasminiaai/jasminia 432
-cd /work/checkouts/jasminiaai-jasminia/pr-432
+review-checkout-pr jasminia/jasminia 432
+cd /work/checkouts/jasminia-jasminia/pr-432
 ```
 
 What this does:

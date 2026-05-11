@@ -9,7 +9,7 @@ import {
   heartbeatRuns,
   issueRelations,
   issues,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,
@@ -39,9 +39,9 @@ vi.mock("../telemetry.ts", () => ({
   getTelemetryClient: () => ({ track: vi.fn() }),
 }));
 
-vi.mock("@jasminiaai/shared/telemetry", async () => {
-  const actual = await vi.importActual<typeof import("@jasminiaai/shared/telemetry")>(
-    "@jasminiaai/shared/telemetry",
+vi.mock("@jasminia/shared/telemetry", async () => {
+  const actual = await vi.importActual<typeof import("@jasminia/shared/telemetry")>(
+    "@jasminia/shared/telemetry",
   );
   return {
     ...actual,

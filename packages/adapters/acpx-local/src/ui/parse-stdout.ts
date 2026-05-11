@@ -1,4 +1,4 @@
-import type { TranscriptEntry } from "@jasminiaai/adapter-utils";
+import type { TranscriptEntry } from "@jasminia/adapter-utils";
 
 function parseJson(line: string): Record<string, unknown> | null {
   try {

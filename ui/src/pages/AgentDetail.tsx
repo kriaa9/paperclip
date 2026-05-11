@@ -27,7 +27,7 @@ import { PageTabBar } from "../components/PageTabBar";
 import { adapterLabels, roleLabels, help } from "../components/agent-config-primitives";
 import { ToggleSwitch } from "@/components/ui/toggle-switch";
 import { useAdapterCapabilities } from "@/adapters/use-adapter-capabilities";
-import { redactCommandText as redactCommandSecretText } from "@jasminiaai/adapter-utils";
+import { redactCommandText as redactCommandSecretText } from "@jasminia/adapter-utils";
 import { MarkdownEditor } from "../components/MarkdownEditor";
 import { assetsApi } from "../api/assets";
 import { getUIAdapter, buildTranscript, onAdapterChange } from "../adapters";
@@ -92,8 +92,8 @@ import {
   type AgentRuntimeState,
   type LiveEvent,
   type WorkspaceOperation,
-} from "@jasminiaai/shared";
-import { redactHomePathUserSegments, redactHomePathUserSegmentsInValue } from "@jasminiaai/adapter-utils";
+} from "@jasminia/shared";
+import { redactHomePathUserSegments, redactHomePathUserSegmentsInValue } from "@jasminia/adapter-utils";
 import { agentRouteRef } from "../lib/utils";
 import {
   applyAgentSkillSnapshot,

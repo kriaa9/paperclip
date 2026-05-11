@@ -8,12 +8,12 @@ import {
   DEFAULT_REMOTE_SANDBOX_ADAPTER_TIMEOUT_SEC,
   adapterExecutionTargetSessionIdentity,
   adapterExecutionTargetToRemoteSpec,
-  adapterExecutionTargetUsesJasmin.iaBridge,
+  adapterExecutionTargetUsesJasminiaBridge,
   ensureAdapterExecutionTargetCommandResolvable,
   resolveAdapterExecutionTargetTimeoutSec,
   runAdapterExecutionTargetProcess,
   runAdapterExecutionTargetShellCommand,
-  startAdapterExecutionTargetJasmin.iaBridge,
+  startAdapterExecutionTargetJasminiaBridge,
   type AdapterSandboxExecutionTarget,
 } from "./execution-target.js";
 import { runChildProcess } from "./server-utils.js";
@@ -331,7 +331,7 @@ describe("sandbox adapter execution targets", () => {
       },
     };
 
-    expect(adapterExecutionTargetUsesJasmin.iaBridge(target)).toBe(true);
+    expect(adapterExecutionTargetUsesJasminiaBridge(target)).toBe(true);
     expect(adapterExecutionTargetSessionIdentity(target)).toEqual({
       transport: "ssh",
       host: "ssh.example.test",
@@ -414,7 +414,7 @@ describe("sandbox adapter execution targets", () => {
       timeoutMs: 30_000,
     };
 
-    const bridge = await startAdapterExecutionTargetJasmin.iaBridge({
+    const bridge = await startAdapterExecutionTargetJasminiaBridge({
       runId: "run-bridge",
       target,
       runtimeRootDir,
@@ -484,7 +484,7 @@ describe("sandbox adapter execution targets", () => {
       timeoutMs: 30_000,
     };
 
-    const bridge = await startAdapterExecutionTargetJasmin.iaBridge({
+    const bridge = await startAdapterExecutionTargetJasminiaBridge({
       runId: "run-bridge-timeout",
       target,
       runtimeRootDir,
@@ -545,7 +545,7 @@ describe("sandbox adapter execution targets", () => {
       timeoutMs: 30_000,
     };
 
-    const bridge = await startAdapterExecutionTargetJasmin.iaBridge({
+    const bridge = await startAdapterExecutionTargetJasminiaBridge({
       runId: "run-bridge-limit",
       target,
       runtimeRootDir,

@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import type { Jasmin.iaConfig } from "@jasminiaai/shared";
-import { resolveJasmin.iaConfigPath, resolveJasmin.iaEnvPath } from "./paths.js";
+import type { JasminiaConfig } from "@jasminia/shared";
+import { resolveJasminiaConfigPath, resolveJasminiaEnvPath } from "./paths.js";
 
 function nonEmpty(value: string | null | undefined): string | null {
   return typeof value === "string" && value.trim().length > 0 ? value.trim() : null;
@@ -112,8 +112,8 @@ function resolveWorktreeRuntimeContext(
 ): WorktreeRuntimeContext | null {
   if (env.JASMINIA_IN_WORKTREE !== "true") return null;
 
-  const configPath = resolveJasmin.iaConfigPath(overrideConfigPath);
-  const envPath = resolveJasmin.iaEnvPath(configPath);
+  const configPath = resolveJasminiaConfigPath(overrideConfigPath);
+  const envPath = resolveJasminiaEnvPath(configPath);
   const persistedEnv = readEnvEntries(envPath);
   const worktreeRoot = path.resolve(path.dirname(configPath), "..");
   const worktreeName =
@@ -148,7 +148,7 @@ function resolveWorktreeRuntimeContext(
   };
 }
 
-function writeConfigFile(configPath: string, config: Jasmin.iaConfig): void {
+function writeConfigFile(configPath: string, config: JasminiaConfig): void {
   fs.mkdirSync(path.dirname(configPath), { recursive: true });
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2) + "\n", { mode: 0o600 });
 }
@@ -196,7 +196,7 @@ function collectSiblingWorktreePorts(context: WorktreeRuntimeContext): {
 
   for (const siblingConfigPath of siblingConfigPaths) {
     try {
-      const siblingConfig = JSON.parse(fs.readFileSync(siblingConfigPath, "utf8")) as Jasmin.iaConfig;
+      const siblingConfig = JSON.parse(fs.readFileSync(siblingConfigPath, "utf8")) as JasminiaConfig;
       if (Number.isInteger(siblingConfig.server.port) && siblingConfig.server.port > 0) {
         serverPorts.add(siblingConfig.server.port);
       }
@@ -224,19 +224,19 @@ function findNextUnclaimedPort(preferredPort: number, claimedPorts: Set<number>)
 }
 
 function buildIsolatedWorktreeConfig(
-  config: Jasmin.iaConfig,
+  config: JasminiaConfig,
   context: WorktreeRuntimeContext,
   portOverrides?: {
     serverPort?: number;
     databasePort?: number;
   },
-): Jasmin.iaConfig {
+): JasminiaConfig {
   const serverPort = portOverrides?.serverPort ?? config.server.port;
   const databasePort =
     config.database.mode === "embedded-postgres"
       ? portOverrides?.databasePort ?? config.database.embeddedPostgresPort
       : undefined;
-  const nextConfig: Jasmin.iaConfig = {
+  const nextConfig: JasminiaConfig = {
     ...config,
     database: {
       ...config.database,
@@ -286,7 +286,7 @@ function buildIsolatedWorktreeConfig(
 }
 
 function needsWorktreeConfigRepair(
-  config: Jasmin.iaConfig,
+  config: JasminiaConfig,
   context: WorktreeRuntimeContext,
 ): boolean {
   if (config.database.mode === "embedded-postgres") {
@@ -312,14 +312,14 @@ function needsWorktreeConfigRepair(
 }
 
 export function applyRuntimePortSelectionToConfig(
-  config: Jasmin.iaConfig,
+  config: JasminiaConfig,
   input: {
     serverPort: number;
     databasePort?: number | null;
     allowServerPortWrite?: boolean;
     allowDatabasePortWrite?: boolean;
   },
-): { config: Jasmin.iaConfig; changed: boolean } {
+): { config: JasminiaConfig; changed: boolean } {
   let changed = false;
   let nextConfig = config;
 
@@ -385,7 +385,7 @@ export function maybeRepairLegacyWorktreeConfigAndEnvFiles(): {
   let repairedConfig = false;
   if (fs.existsSync(context.configPath)) {
     try {
-      const parsed = JSON.parse(fs.readFileSync(context.configPath, "utf8")) as Jasmin.iaConfig;
+      const parsed = JSON.parse(fs.readFileSync(context.configPath, "utf8")) as JasminiaConfig;
       const siblingPorts = collectSiblingWorktreePorts(context);
       const hasSiblingPortCollision =
         siblingPorts.serverPorts.has(parsed.server.port) ||
@@ -451,9 +451,9 @@ export function maybePersistWorktreeRuntimePorts(input: {
   const context = resolveWorktreeRuntimeContext(process.env);
   if (!context || !fs.existsSync(context.configPath)) return;
 
-  let fileConfig: Jasmin.iaConfig;
+  let fileConfig: JasminiaConfig;
   try {
-    fileConfig = JSON.parse(fs.readFileSync(context.configPath, "utf8")) as Jasmin.iaConfig;
+    fileConfig = JSON.parse(fs.readFileSync(context.configPath, "utf8")) as JasminiaConfig;
   } catch {
     return;
   }

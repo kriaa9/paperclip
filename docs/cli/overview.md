@@ -8,7 +8,7 @@ The Jasmin.ia CLI handles instance setup, diagnostics, and control-plane operati
 ## Usage
 
 ```sh
-pnpm jasminiaai --help
+pnpm jasminia --help
 ```
 
 ## Global Options
@@ -29,7 +29,7 @@ Company-scoped commands also accept `--company-id <id>`.
 For clean local instances, pass `--data-dir` on the command you run:
 
 ```sh
-pnpm jasminiaai run --data-dir ./tmp/jasminia-dev
+pnpm jasminia run --data-dir ./tmp/jasminia-dev
 ```
 
 ## Context Profiles
@@ -38,33 +38,33 @@ Store defaults to avoid repeating flags:
 
 ```sh
 # Set defaults
-pnpm jasminiaai context set --api-base http://localhost:3100 --company-id <id>
+pnpm jasminia context set --api-base http://localhost:3100 --company-id <id>
 
 # View current context
-pnpm jasminiaai context show
+pnpm jasminia context show
 
 # List profiles
-pnpm jasminiaai context list
+pnpm jasminia context list
 
 # Switch profile
-pnpm jasminiaai context use default
+pnpm jasminia context use default
 ```
 
 To avoid storing secrets in context, use an env var:
 
 ```sh
-pnpm jasminiaai context set --api-key-env-var-name JASMINIA_API_KEY
+pnpm jasminia context set --api-key-env-var-name JASMINIA_API_KEY
 export JASMINIA_API_KEY=...
 ```
 
-Secret operations are available under `jasminiaai secrets`:
+Secret operations are available under `jasminia secrets`:
 
 ```sh
-pnpm jasminiaai secrets declarations --company-id <company-id> --kind secret
-pnpm jasminiaai secrets create --company-id <company-id> --name anthropic-api-key --value-env ANTHROPIC_API_KEY
-pnpm jasminiaai secrets link --company-id <company-id> --name prod-stripe-key --provider aws_secrets_manager --external-ref <provider-ref>
-pnpm jasminiaai secrets doctor --company-id <company-id>
-pnpm jasminiaai secrets migrate-inline-env --company-id <company-id> --apply
+pnpm jasminia secrets declarations --company-id <company-id> --kind secret
+pnpm jasminia secrets create --company-id <company-id> --name anthropic-api-key --value-env ANTHROPIC_API_KEY
+pnpm jasminia secrets link --company-id <company-id> --name prod-stripe-key --provider aws_secrets_manager --external-ref <provider-ref>
+pnpm jasminia secrets doctor --company-id <company-id>
+pnpm jasminia secrets migrate-inline-env --company-id <company-id> --apply
 ```
 
 Context is stored at `~/.jasminia/context.json`.

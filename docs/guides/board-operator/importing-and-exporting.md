@@ -34,7 +34,7 @@ my-company/
 Export a company into a portable folder:
 
 ```sh
-jasminiaai company export <company-id> --out ./my-export
+jasminia company export <company-id> --out ./my-export
 ```
 
 ### Options
@@ -53,13 +53,13 @@ jasminiaai company export <company-id> --out ./my-export
 
 ```sh
 # Export company with agents and projects
-jasminiaai company export abc123 --out ./backup --include company,agents,projects
+jasminia company export abc123 --out ./backup --include company,agents,projects
 
 # Export everything including tasks and skills
-jasminiaai company export abc123 --out ./full-export --include company,agents,projects,tasks,skills
+jasminia company export abc123 --out ./full-export --include company,agents,projects,tasks,skills
 
 # Export only specific skills
-jasminiaai company export abc123 --out ./skills-only --include skills --skills review,deploy
+jasminia company export abc123 --out ./skills-only --include skills --skills review,deploy
 ```
 
 ### What Gets Exported
@@ -79,17 +79,17 @@ Import from a local directory, GitHub URL, or GitHub shorthand:
 
 ```sh
 # From a local folder
-jasminiaai company import ./my-export
+jasminia company import ./my-export
 
 # From a GitHub URL
-jasminiaai company import https://github.com/org/repo
+jasminia company import https://github.com/org/repo
 
 # From a GitHub subfolder
-jasminiaai company import https://github.com/org/repo/tree/main/companies/acme
+jasminia company import https://github.com/org/repo/tree/main/companies/acme
 
 # From GitHub shorthand
-jasminiaai company import org/repo
-jasminiaai company import org/repo/companies/acme
+jasminia company import org/repo
+jasminia company import org/repo/companies/acme
 ```
 
 ### Options
@@ -131,7 +131,7 @@ When running interactively (no `--yes` or `--json` flags), the import command sh
 Always preview first with `--dry-run`:
 
 ```sh
-jasminiaai company import org/repo --target existing --company-id abc123 --dry-run
+jasminia company import org/repo --target existing --company-id abc123 --dry-run
 ```
 
 The preview shows:
@@ -147,7 +147,7 @@ Imported agents always land with timer heartbeats disabled. Assignment/on-demand
 **Clone a company template from GitHub:**
 
 ```sh
-jasminiaai company import org/company-templates/engineering-team \
+jasminia company import org/company-templates/engineering-team \
   --target new \
   --new-company-name "My Engineering Team"
 ```
@@ -155,7 +155,7 @@ jasminiaai company import org/company-templates/engineering-team \
 **Add agents from a package into your existing company:**
 
 ```sh
-jasminiaai company import ./shared-agents \
+jasminia company import ./shared-agents \
   --target existing \
   --company-id abc123 \
   --include agents \
@@ -165,13 +165,13 @@ jasminiaai company import ./shared-agents \
 **Import a specific branch or tag:**
 
 ```sh
-jasminiaai company import org/repo --ref v2.0.0 --dry-run
+jasminia company import org/repo --ref v2.0.0 --dry-run
 ```
 
 **Non-interactive import (CI/scripts):**
 
 ```sh
-jasminiaai company import ./package \
+jasminia company import ./package \
   --target new \
   --yes \
   --json

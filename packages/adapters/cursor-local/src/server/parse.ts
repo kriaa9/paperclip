@@ -1,4 +1,4 @@
-import { asString, asNumber, parseObject, parseJson } from "@jasminiaai/adapter-utils/server-utils";
+import { asString, asNumber, parseObject, parseJson } from "@jasminia/adapter-utils/server-utils";
 import { normalizeCursorStreamLine } from "../shared/stream.js";
 
 function asErrorText(value: unknown): string {

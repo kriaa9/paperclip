@@ -1,4 +1,4 @@
-export interface Jasmin.iaMcpConfig {
+export interface JasminiaMcpConfig {
   apiUrl: string;
   apiKey: string;
   companyId: string | null;
@@ -19,7 +19,7 @@ export function normalizeApiUrl(apiUrl: string): string {
   return trimmed.endsWith("/api") ? trimmed : `${trimmed}/api`;
 }
 
-export function readConfigFromEnv(env: NodeJS.ProcessEnv = process.env): Jasmin.iaMcpConfig {
+export function readConfigFromEnv(env: NodeJS.ProcessEnv = process.env): JasminiaMcpConfig {
   const apiUrl = nonEmpty(env.JASMINIA_API_URL);
   if (!apiUrl) {
     throw new Error("Missing JASMINIA_API_URL");

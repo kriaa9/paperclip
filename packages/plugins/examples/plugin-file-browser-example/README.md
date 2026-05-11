@@ -38,14 +38,14 @@ This is a repo-local example plugin for development. It should not be assumed to
 From the repo root, build the plugin and install it by local path:
 
 ```bash
-pnpm --filter @jasminiaai/plugin-file-browser-example build
-pnpm jasminiaai plugin install ./packages/plugins/examples/plugin-file-browser-example
+pnpm --filter @jasminia/plugin-file-browser-example build
+pnpm jasminia plugin install ./packages/plugins/examples/plugin-file-browser-example
 ```
 
 To uninstall:
 
 ```bash
-pnpm jasminiaai plugin uninstall jasminia-file-browser-example --force
+pnpm jasminia plugin uninstall jasminia-file-browser-example --force
 ```
 
 **Local development notes:**

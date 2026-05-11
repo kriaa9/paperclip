@@ -1,4 +1,4 @@
-import type { SidebarOrderPreference, UpsertSidebarOrderPreference } from "@jasminiaai/shared";
+import type { SidebarOrderPreference, UpsertSidebarOrderPreference } from "@jasminia/shared";
 import { api } from "./client";
 
 export const sidebarPreferencesApi = {

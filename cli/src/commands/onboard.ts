@@ -16,9 +16,9 @@ import {
   type DeploymentMode,
   type SecretProvider,
   type StorageProvider,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { configExists, readConfig, resolveConfigPath, writeConfig } from "../config/store.js";
-import type { Jasmin.iaConfig } from "../config/schema.js";
+import type { JasminiaConfig } from "../config/schema.js";
 import { ensureAgentJwtSecret, resolveAgentJwtEnvFile } from "../config/env.js";
 import { ensureLocalSecretsKeyFile } from "../config/secrets-key.js";
 import { promptDatabase } from "../prompts/database.js";
@@ -34,10 +34,10 @@ import {
   resolveDefaultBackupDir,
   resolveDefaultEmbeddedPostgresDir,
   resolveDefaultLogsDir,
-  resolveJasmin.iaInstanceId,
+  resolveJasminiaInstanceId,
 } from "../config/home.js";
 import { bootstrapCeoInvite } from "./auth-bootstrap-ceo.js";
-import { printJasmin.iaCliBanner } from "../utils/banner.js";
+import { printJasminiaCliBanner } from "../utils/banner.js";
 import {
   getTelemetryClient,
   trackInstallStarted,
@@ -54,7 +54,7 @@ type OnboardOptions = {
   bind?: BindMode;
 };
 
-type OnboardDefaults = Pick<Jasmin.iaConfig, "database" | "logging" | "server" | "auth" | "storage" | "secrets">;
+type OnboardDefaults = Pick<JasminiaConfig, "database" | "logging" | "server" | "auth" | "storage" | "secrets">;
 
 const TAILNET_BIND_WARNING =
   "No Tailscale address was detected during setup. The saved config will stay on loopback until Tailscale is available or JASMINIA_TAILNET_BIND_HOST is set.";
@@ -116,7 +116,7 @@ function resolvePathFromEnv(rawValue: string | undefined): string | null {
   return path.resolve(expandHomePrefix(rawValue.trim()));
 }
 
-function describeServerBinding(server: Pick<Jasmin.iaConfig["server"], "bind" | "customBindHost" | "host" | "port">): string {
+function describeServerBinding(server: Pick<JasminiaConfig["server"], "bind" | "customBindHost" | "host" | "port">): string {
   const bind = server.bind ?? inferBindModeFromHost(server.host);
   const detail =
     bind === "custom"
@@ -133,7 +133,7 @@ function quickstartDefaultsFromEnv(opts?: { preferTrustedLocal?: boolean }): {
   ignoredEnvKeys: Array<{ key: string; reason: string }>;
 } {
   const preferTrustedLocal = opts?.preferTrustedLocal ?? false;
-  const instanceId = resolveJasmin.iaInstanceId();
+  const instanceId = resolveJasminiaInstanceId();
   const defaultStorage = defaultStorageConfig();
   const defaultSecrets = defaultSecretsConfig();
   const databaseUrl = process.env.DATABASE_URL?.trim() || undefined;
@@ -318,7 +318,7 @@ function quickstartDefaultsFromEnv(opts?: { preferTrustedLocal?: boolean }): {
   return { defaults, usedEnvKeys, ignoredEnvKeys };
 }
 
-function canCreateBootstrapInviteImmediately(config: Pick<Jasmin.iaConfig, "database" | "server">): boolean {
+function canCreateBootstrapInviteImmediately(config: Pick<JasminiaConfig, "database" | "server">): boolean {
   return config.server.deploymentMode === "authenticated" && config.database.mode !== "embedded-postgres";
 }
 
@@ -327,17 +327,17 @@ export async function onboard(opts: OnboardOptions): Promise<void> {
     throw new Error(`Unsupported bind preset for onboard: ${opts.bind}. Use loopback, lan, or tailnet.`);
   }
 
-  printJasmin.iaCliBanner();
-  p.intro(pc.bgCyan(pc.black(" jasminiaai onboard ")));
+  printJasminiaCliBanner();
+  p.intro(pc.bgCyan(pc.black(" jasminia onboard ")));
   const configPath = resolveConfigPath(opts.config);
-  const instance = describeLocalInstancePaths(resolveJasmin.iaInstanceId());
+  const instance = describeLocalInstancePaths(resolveJasminiaInstanceId());
   p.log.message(
     pc.dim(
       `Local home: ${instance.homeDir} | instance: ${instance.instanceId} | config: ${configPath}`,
     ),
   );
 
-  let existingConfig: Jasmin.iaConfig | null = null;
+  let existingConfig: JasminiaConfig | null = null;
   if (configExists(opts.config)) {
     p.log.message(pc.dim(`${configPath} exists`));
 
@@ -356,7 +356,7 @@ export async function onboard(opts: OnboardOptions): Promise<void> {
     p.log.message(
       pc.dim("Existing Jasmin.ia install detected; keeping the current configuration unchanged."),
     );
-    p.log.message(pc.dim(`Use ${pc.cyan("jasminiaai configure")} if you want to change settings.`));
+    p.log.message(pc.dim(`Use ${pc.cyan("jasminia configure")} if you want to change settings.`));
 
     const jwtSecret = ensureAgentJwtSecret(configPath);
     const envFilePath = resolveAgentJwtEnvFile(configPath);
@@ -393,9 +393,9 @@ export async function onboard(opts: OnboardOptions): Promise<void> {
 
     p.note(
       [
-        `Run: ${pc.cyan("jasminiaai run")}`,
-        `Reconfigure later: ${pc.cyan("jasminiaai configure")}`,
-        `Diagnose setup: ${pc.cyan("jasminiaai doctor")}`,
+        `Run: ${pc.cyan("jasminia run")}`,
+        `Reconfigure later: ${pc.cyan("jasminia configure")}`,
+        `Diagnose setup: ${pc.cyan("jasminia doctor")}`,
       ].join("\n"),
       "Next commands",
     );
@@ -458,7 +458,7 @@ export async function onboard(opts: OnboardOptions): Promise<void> {
   const tc = getTelemetryClient();
   if (tc) trackInstallStarted(tc);
 
-  let llm: Jasmin.iaConfig["llm"] | undefined;
+  let llm: JasminiaConfig["llm"] | undefined;
   const { defaults: derivedDefaults, usedEnvKeys, ignoredEnvKeys } = quickstartDefaultsFromEnv({
     preferTrustedLocal: opts.yes === true && !opts.bind,
   });
@@ -492,12 +492,12 @@ export async function onboard(opts: OnboardOptions): Promise<void> {
       const s = p.spinner();
       s.start("Testing database connection...");
       try {
-        const { createDb } = await import("@jasminiaai/db");
+        const { createDb } = await import("@jasminia/db");
         const db = createDb(database.connectionString);
         await db.execute("SELECT 1");
         s.stop("Database connection successful");
       } catch {
-        s.stop(pc.yellow("Could not connect to database — you can fix this later with `jasminiaai doctor`"));
+        s.stop(pc.yellow("Could not connect to database — you can fix this later with `jasminia doctor`"));
       }
     }
 
@@ -600,7 +600,7 @@ export async function onboard(opts: OnboardOptions): Promise<void> {
     p.log.info(`Using existing ${pc.cyan("JASMINIA_AGENT_JWT_SECRET")} in ${pc.dim(envFilePath)}`);
   }
 
-  const config: Jasmin.iaConfig = {
+  const config: JasminiaConfig = {
     $meta: {
       version: 1,
       updatedAt: new Date().toISOString(),
@@ -648,9 +648,9 @@ export async function onboard(opts: OnboardOptions): Promise<void> {
 
   p.note(
     [
-      `Run: ${pc.cyan("jasminiaai run")}`,
-      `Reconfigure later: ${pc.cyan("jasminiaai configure")}`,
-      `Diagnose setup: ${pc.cyan("jasminiaai doctor")}`,
+      `Run: ${pc.cyan("jasminia run")}`,
+      `Reconfigure later: ${pc.cyan("jasminia configure")}`,
+      `Diagnose setup: ${pc.cyan("jasminia doctor")}`,
     ].join("\n"),
     "Next commands",
   );
@@ -682,8 +682,8 @@ export async function onboard(opts: OnboardOptions): Promise<void> {
     p.log.info(
       [
         "Bootstrap CEO invite will be created after the server starts.",
-        `Next: ${pc.cyan("jasminiaai run")}`,
-        `Then: ${pc.cyan("jasminiaai auth bootstrap-ceo")}`,
+        `Next: ${pc.cyan("jasminia run")}`,
+        `Then: ${pc.cyan("jasminia auth bootstrap-ceo")}`,
       ].join("\n"),
     );
   }

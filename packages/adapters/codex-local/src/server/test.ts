@@ -2,12 +2,12 @@ import type {
   AdapterEnvironmentCheck,
   AdapterEnvironmentTestContext,
   AdapterEnvironmentTestResult,
-} from "@jasminiaai/adapter-utils";
+} from "@jasminia/adapter-utils";
 import {
   asString,
   parseObject,
   ensurePathInEnv,
-} from "@jasminiaai/adapter-utils/server-utils";
+} from "@jasminia/adapter-utils/server-utils";
 import {
   ensureAdapterExecutionTargetCommandResolvable,
   ensureAdapterExecutionTargetDirectory,
@@ -16,7 +16,7 @@ import {
   describeAdapterExecutionTarget,
   resolveAdapterExecutionTargetCwd,
   prepareAdapterExecutionTargetRuntime,
-} from "@jasminiaai/adapter-utils/execution-target";
+} from "@jasminia/adapter-utils/execution-target";
 import fs from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";

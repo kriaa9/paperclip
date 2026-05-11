@@ -1,112 +1,112 @@
 [
   {
     "dir": "packages/adapter-utils",
-    "name": "@jasminiaai/adapter-utils",
+    "name": "@jasminia/adapter-utils",
     "publishFromCi": true
   },
   {
     "dir": "packages/adapters/acpx-local",
-    "name": "@jasminiaai/adapter-acpx-local",
+    "name": "@jasminia/adapter-acpx-local",
     "publishFromCi": true
   },
   {
     "dir": "packages/adapters/claude-local",
-    "name": "@jasminiaai/adapter-claude-local",
+    "name": "@jasminia/adapter-claude-local",
     "publishFromCi": true
   },
   {
     "dir": "packages/adapters/codex-local",
-    "name": "@jasminiaai/adapter-codex-local",
+    "name": "@jasminia/adapter-codex-local",
     "publishFromCi": true
   },
   {
     "dir": "packages/adapters/cursor-cloud",
-    "name": "@jasminiaai/adapter-cursor-cloud",
+    "name": "@jasminia/adapter-cursor-cloud",
     "publishFromCi": false
   },
   {
     "dir": "packages/adapters/cursor-local",
-    "name": "@jasminiaai/adapter-cursor-local",
+    "name": "@jasminia/adapter-cursor-local",
     "publishFromCi": true
   },
   {
     "dir": "packages/adapters/gemini-local",
-    "name": "@jasminiaai/adapter-gemini-local",
+    "name": "@jasminia/adapter-gemini-local",
     "publishFromCi": true
   },
   {
     "dir": "packages/adapters/opencode-local",
-    "name": "@jasminiaai/adapter-opencode-local",
+    "name": "@jasminia/adapter-opencode-local",
     "publishFromCi": true
   },
   {
     "dir": "packages/adapters/pi-local",
-    "name": "@jasminiaai/adapter-pi-local",
+    "name": "@jasminia/adapter-pi-local",
     "publishFromCi": true
   },
   {
     "dir": "packages/adapters/openclaw-gateway",
-    "name": "@jasminiaai/adapter-openclaw-gateway",
+    "name": "@jasminia/adapter-openclaw-gateway",
     "publishFromCi": true
   },
   {
     "dir": "packages/shared",
-    "name": "@jasminiaai/shared",
+    "name": "@jasminia/shared",
     "publishFromCi": true
   },
   {
     "dir": "packages/db",
-    "name": "@jasminiaai/db",
+    "name": "@jasminia/db",
     "publishFromCi": true
   },
   {
     "dir": "packages/plugins/sdk",
-    "name": "@jasminiaai/plugin-sdk",
+    "name": "@jasminia/plugin-sdk",
     "publishFromCi": true
   },
   {
     "dir": "server",
-    "name": "@jasminiaai/server",
+    "name": "@jasminia/server",
     "publishFromCi": true
   },
   {
     "dir": "cli",
-    "name": "jasminiaai",
+    "name": "jasminia",
     "publishFromCi": true
   },
   {
     "dir": "packages/mcp-server",
-    "name": "@jasminiaai/mcp-server",
+    "name": "@jasminia/mcp-server",
     "publishFromCi": true
   },
   {
     "dir": "packages/plugins/create-jasminia-plugin",
-    "name": "@jasminiaai/create-jasminia-plugin",
+    "name": "@jasminia/create-jasminia-plugin",
     "publishFromCi": true
   },
   {
     "dir": "packages/plugins/sandbox-providers/cloudflare",
-    "name": "@jasminiaai/plugin-cloudflare-sandbox",
+    "name": "@jasminia/plugin-cloudflare-sandbox",
     "publishFromCi": false
   },
   {
     "dir": "packages/plugins/sandbox-providers/daytona",
-    "name": "@jasminiaai/plugin-daytona",
+    "name": "@jasminia/plugin-daytona",
     "publishFromCi": true
   },
   {
     "dir": "packages/plugins/sandbox-providers/exe-dev",
-    "name": "@jasminiaai/plugin-exe-dev",
+    "name": "@jasminia/plugin-exe-dev",
     "publishFromCi": false
   },
   {
     "dir": "packages/plugins/sandbox-providers/e2b",
-    "name": "@jasminiaai/plugin-e2b",
+    "name": "@jasminia/plugin-e2b",
     "publishFromCi": true
   },
   {
     "dir": "ui",
-    "name": "@jasminiaai/ui",
+    "name": "@jasminia/ui",
     "publishFromCi": true
   }
 ]

@@ -85,7 +85,7 @@ Adapters are the bridge between Jasmin.ia and agent runtimes. Each adapter is a 
 
 - **Server module** — `execute()` function that spawns/calls the agent, plus environment diagnostics
 - **UI module** — stdout parser for the run viewer, config form fields for agent creation
-- **CLI module** — terminal formatter for `jasminiaai run --watch`
+- **CLI module** — terminal formatter for `jasminia run --watch`
 
 Built-in adapters: `claude_local`, `codex_local`, `process`, `http`. You can create custom adapters for any runtime.
 

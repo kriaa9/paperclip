@@ -8,13 +8,13 @@ import {
   readSshEnvLabFixtureStatus,
   startSshEnvLabFixture,
   stopSshEnvLabFixture,
-} from "@jasminiaai/adapter-utils/ssh";
-import { resolveJasmin.iaInstanceId, resolveJasmin.iaInstanceRoot } from "../config/home.js";
+} from "@jasminia/adapter-utils/ssh";
+import { resolveJasminiaInstanceId, resolveJasminiaInstanceRoot } from "../config/home.js";
 
 export function resolveEnvLabSshStatePath(instanceId?: string): string {
-  const resolvedInstanceId = resolveJasmin.iaInstanceId(instanceId);
+  const resolvedInstanceId = resolveJasminiaInstanceId(instanceId);
   return path.resolve(
-    resolveJasmin.iaInstanceRoot(resolvedInstanceId),
+    resolveJasminiaInstanceRoot(resolvedInstanceId),
     "env-lab",
     "ssh-fixture",
     "state.json",
@@ -138,7 +138,7 @@ export async function envLabDoctorCommand(opts: { instance?: string; json?: bool
     p.log.message(`State: ${pc.dim(status.statePath)}`);
   }
 
-  p.log.message(`Cleanup: ${pc.dim("pnpm jasminiaai env-lab down")}`);
+  p.log.message(`Cleanup: ${pc.dim("pnpm jasminia env-lab down")}`);
 }
 
 export function registerEnvLabCommands(program: Command) {

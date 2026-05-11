@@ -31,13 +31,13 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import type {
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginLauncherDeclaration,
   PluginRecord,
   PluginUiSlotDeclaration,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { logger } from "../middleware/logger.js";
 import { pluginManifestValidator } from "./plugin-manifest-validator.js";
 import { pluginCapabilityValidator } from "./plugin-capability-validator.js";
@@ -96,7 +96,7 @@ export interface DiscoveredPlugin {
   /** Source that found this package. */
   source: PluginSource;
   /** The parsed and validated manifest if available, null if discovery-only. */
-  manifest: Jasmin.iaPluginManifestV1 | null;
+  manifest: JasminiaPluginManifestV1 | null;
 }
 
 /**
@@ -128,7 +128,7 @@ export interface PluginDiscoveryResult {
   sources: PluginSource[];
 }
 
-function getDeclaredPageRoutePaths(manifest: Jasmin.iaPluginManifestV1): string[] {
+function getDeclaredPageRoutePaths(manifest: JasminiaPluginManifestV1): string[] {
   return (manifest.ui?.slots ?? [])
     .filter((slot): slot is PluginUiSlotDeclaration => slot.type === "page" && typeof slot.routePath === "string" && slot.routePath.length > 0)
     .map((slot) => slot.routePath!);
@@ -240,7 +240,7 @@ export interface PluginRuntimeServices {
    * events.emit, config.get). Each plugin gets its own set of handlers
    * scoped to its capabilities and plugin ID.
    */
-  buildHostHandlers: (pluginId: string, manifest: Jasmin.iaPluginManifestV1) => WorkerToHostHandlers;
+  buildHostHandlers: (pluginId: string, manifest: JasminiaPluginManifestV1) => WorkerToHostHandlers;
   /**
    * Host instance information passed to the worker during initialization.
    * Includes the instance ID and host version.
@@ -363,7 +363,7 @@ export interface PluginLoader {
    *
    * @see PLUGIN_SPEC.md §10 — Package Contract
    */
-  loadManifest(packagePath: string): Promise<Jasmin.iaPluginManifestV1 | null>;
+  loadManifest(packagePath: string): Promise<JasminiaPluginManifestV1 | null>;
 
   /**
    * Install a plugin package and register it in the database.
@@ -396,8 +396,8 @@ export interface PluginLoader {
    * @see PLUGIN_SPEC.md §25.3 — Upgrade Lifecycle
    */
   upgradePlugin(pluginId: string, options: Omit<PluginInstallOptions, "installDir">): Promise<{
-    oldManifest: Jasmin.iaPluginManifestV1;
-    newManifest: Jasmin.iaPluginManifestV1;
+    oldManifest: JasminiaPluginManifestV1;
+    newManifest: JasminiaPluginManifestV1;
     discovered: DiscoveredPlugin;
   }>;
 
@@ -513,7 +513,7 @@ export interface PluginLoader {
  */
 export function isPluginPackageName(name: string): boolean {
   if (name.startsWith(NPM_PLUGIN_PACKAGE_PREFIX)) return true;
-  // Also accept scoped packages like @acme/plugin-linear or @jasminiaai/plugin-*
+  // Also accept scoped packages like @acme/plugin-linear or @jasminia/plugin-*
   if (name.includes("/")) {
     const localPart = name.split("/")[1] ?? "";
     return localPart.startsWith("plugin-");
@@ -645,8 +645,8 @@ function compareSemver(left: string, right: string): number {
   return 0;
 }
 
-function getMinimumHostVersion(manifest: Jasmin.iaPluginManifestV1): string | undefined {
-  return manifest.minimumHostVersion ?? manifest.minimumJasmin.iaVersion;
+function getMinimumHostVersion(manifest: JasminiaPluginManifestV1): string | undefined {
+  return manifest.minimumHostVersion ?? manifest.minimumJasminiaVersion;
 }
 
 /**
@@ -657,7 +657,7 @@ function getMinimumHostVersion(manifest: Jasmin.iaPluginManifestV1): string | un
  * `launchers` field and the preferred `ui.launchers` field.
  */
 export function getPluginUiContributionMetadata(
-  manifest: Jasmin.iaPluginManifestV1,
+  manifest: JasminiaPluginManifestV1,
 ): PluginUiContributionMetadata | null {
   const slots = manifest.ui?.slots ?? [];
   const launchers = [
@@ -752,7 +752,7 @@ export function pluginLoader(
   const log = logger.child({ service: "plugin-loader" });
   const hostVersion = runtimeServices?.instanceInfo.hostVersion;
 
-  async function assertPageRoutePathsAvailable(manifest: Jasmin.iaPluginManifestV1): Promise<void> {
+  async function assertPageRoutePathsAvailable(manifest: JasminiaPluginManifestV1): Promise<void> {
     const requestedRoutePaths = getDeclaredPageRoutePaths(manifest);
     if (requestedRoutePaths.length === 0) return;
 
@@ -764,7 +764,7 @@ export function pluginLoader(
     const installedPlugins = await registry.listInstalled();
     for (const plugin of installedPlugins) {
       if (plugin.pluginKey === manifest.id) continue;
-      const installedManifest = plugin.manifestJson as Jasmin.iaPluginManifestV1 | null;
+      const installedManifest = plugin.manifestJson as JasminiaPluginManifestV1 | null;
       if (!installedManifest) continue;
       const installedRoutePaths = new Set(getDeclaredPageRoutePaths(installedManifest));
       const conflictingRoute = requestedRoutePaths.find((routePath) => installedRoutePaths.has(routePath));
@@ -929,7 +929,7 @@ export function pluginLoader(
    */
   async function loadManifestFromPath(
     manifestPath: string,
-  ): Promise<Jasmin.iaPluginManifestV1> {
+  ): Promise<JasminiaPluginManifestV1> {
     let raw: unknown;
 
     try {
@@ -951,7 +951,7 @@ export function pluginLoader(
 
   async function loadManifestFromPackageRoot(
     packageRoot: string,
-  ): Promise<Jasmin.iaPluginManifestV1 | null> {
+  ): Promise<JasminiaPluginManifestV1 | null> {
     const pkgJson = await readPackageJson(packageRoot);
     if (!pkgJson) return null;
 
@@ -1009,10 +1009,10 @@ export function pluginLoader(
     const version = typeof pkgJson["version"] === "string" ? pkgJson["version"] : "0.0.0";
 
     // Determine if this is a plugin package at all
-    const hasJasmin.iaPlugin = "jasminiaPlugin" in pkgJson;
+    const hasJasminiaPlugin = "jasminiaPlugin" in pkgJson;
     const nameMatchesConvention = isPluginPackageName(packageName);
 
-    if (!hasJasmin.iaPlugin && !nameMatchesConvention) {
+    if (!hasJasminiaPlugin && !nameMatchesConvention) {
       return null;
     }
 
@@ -1282,15 +1282,15 @@ export function pluginLoader(
     // loadManifest
     // -----------------------------------------------------------------------
 
-    async loadManifest(packagePath: string): Promise<Jasmin.iaPluginManifestV1 | null> {
+    async loadManifest(packagePath: string): Promise<JasminiaPluginManifestV1 | null> {
       const pkgJson = await readPackageJson(packagePath);
       if (!pkgJson) return null;
 
-      const hasJasmin.iaPlugin = "jasminiaPlugin" in pkgJson;
+      const hasJasminiaPlugin = "jasminiaPlugin" in pkgJson;
       const packageName = typeof pkgJson["name"] === "string" ? pkgJson["name"] : "";
       const nameMatchesConvention = isPluginPackageName(packageName);
 
-      if (!hasJasmin.iaPlugin && !nameMatchesConvention) {
+      if (!hasJasminiaPlugin && !nameMatchesConvention) {
         return null;
       }
 
@@ -1371,15 +1371,15 @@ export function pluginLoader(
       pluginId: string,
       upgradeOptions: Omit<PluginInstallOptions, "installDir">,
     ): Promise<{
-      oldManifest: Jasmin.iaPluginManifestV1;
-      newManifest: Jasmin.iaPluginManifestV1;
+      oldManifest: JasminiaPluginManifestV1;
+      newManifest: JasminiaPluginManifestV1;
       discovered: DiscoveredPlugin;
     }> {
       const plugin = (await registry.getById(pluginId)) as {
         id: string;
         packageName: string;
         packagePath: string | null;
-        manifestJson: Jasmin.iaPluginManifestV1;
+        manifestJson: JasminiaPluginManifestV1;
       } | null;
       if (!plugin) throw new Error(`Plugin not found: ${pluginId}`);
 
@@ -1827,7 +1827,7 @@ export function pluginLoader(
       };
 
       // Repo-local plugin installs can resolve workspace TS sources at runtime
-      // (for example @jasminiaai/shared exports). Run those workers through
+      // (for example @jasminia/shared exports). Run those workers through
       // the tsx loader so first-party example plugins work in development.
       if (activePlugin.packagePath && existsSync(DEV_TSX_LOADER_PATH)) {
         workerOptions.execArgv = ["--import", DEV_TSX_LOADER_PATH];

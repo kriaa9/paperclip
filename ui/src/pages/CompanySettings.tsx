@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   DEFAULT_COMPANY_ATTACHMENT_MAX_BYTES,
   MAX_COMPANY_ATTACHMENT_MAX_BYTES,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { useCompany } from "../context/CompanyContext";
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import { companiesApi } from "../api/companies";
@@ -607,13 +607,13 @@ function buildAgentSnippet(input: AgentSnippetInput) {
       ? `No candidate URLs are available. Ask your user to configure a reachable hostname in Jasmin.ia, then retry.
 Suggested steps:
 - choose a hostname that resolves to the Jasmin.ia host from your runtime
-- run: pnpm jasminiaai allowed-hostname <host>
+- run: pnpm jasminia allowed-hostname <host>
 - restart Jasmin.ia
 - verify with: curl -fsS http://<host>:3100/api/health
 - regenerate this invite snippet`
       : `If none are reachable, ask your user to add a reachable hostname in Jasmin.ia, restart, and retry.
 Suggested command:
-- pnpm jasminiaai allowed-hostname <host>
+- pnpm jasminia allowed-hostname <host>
 Then verify with: curl -fsS <base-url>/api/health`;
 
   const resolutionLine = resolutionTestUrl

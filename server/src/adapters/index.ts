@@ -26,5 +26,5 @@ export type {
   UsageSummary,
   AdapterAgent,
   AdapterRuntime,
-} from "@jasminiaai/adapter-utils";
+} from "@jasminia/adapter-utils";
 export { runningProcesses } from "./utils.js";

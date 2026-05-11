@@ -64,7 +64,7 @@ function basePlugin(overrides: Record<string, unknown> = {}) {
   return {
     id: "plugin-1",
     pluginKey: "jasminia.e2b-sandbox-provider",
-    packageName: "@jasminiaai/plugin-e2b",
+    packageName: "@jasminia/plugin-e2b",
     version: "0.1.0",
     status: "error",
     categories: ["automation"],
@@ -177,8 +177,8 @@ describe("PluginSettings", () => {
   it("renders unconfigured manifest local folders with required paths", async () => {
     const declaration = wikiFolderDeclaration();
     mockPluginsApi.get.mockResolvedValue(basePlugin({
-      pluginKey: "jasminiaai.plugin-llm-wiki",
-      packageName: "@jasminiaai/plugin-llm-wiki",
+      pluginKey: "jasminia.plugin-llm-wiki",
+      packageName: "@jasminia/plugin-llm-wiki",
       status: "ready",
       manifestJson: {
         displayName: "LLM Wiki",

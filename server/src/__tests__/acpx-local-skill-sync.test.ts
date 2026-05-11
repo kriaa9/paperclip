@@ -2,11 +2,11 @@ import { describe, expect, it } from "vitest";
 import {
   listAcpxSkills,
   syncAcpxSkills,
-} from "@jasminiaai/adapter-acpx-local/server";
+} from "@jasminia/adapter-acpx-local/server";
 
 describe("acpx local skill sync", () => {
-  const jasminiaKey = "jasminiaai/jasminia/jasminia";
-  const createAgentKey = "jasminiaai/jasminia/jasminia-create-agent";
+  const jasminiaKey = "jasminia/jasminia/jasminia";
+  const createAgentKey = "jasminia/jasminia/jasminia-create-agent";
 
   it("reports ACPX Claude skills as supported runtime-mounted state", async () => {
     const snapshot = await listAcpxSkills({

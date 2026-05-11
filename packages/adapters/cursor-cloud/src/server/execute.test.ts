@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { AdapterExecutionContext } from "@jasminiaai/adapter-utils";
+import type { AdapterExecutionContext } from "@jasminia/adapter-utils";
 import { execute } from "./execute.js";
 
 type MockRunOptions = {
@@ -100,7 +100,7 @@ function createContext(
       CURSOR_API_KEY: "cursor-secret",
       EXTRA_FLAG: "1",
     },
-    repoUrl: "#
+    repoUrl: "#",
     repoStartingRef: "main",
     runtimeEnvType: "cloud",
     promptTemplate: "Do the work for {{agent.name}}",
@@ -311,7 +311,7 @@ describe("cursor_cloud execute", () => {
     expect(ctx.meta[0]?.context).toMatchObject({
       cursorCloud: {
         canReuseSession: true,
-        repoUrl: "#
+        repoUrl: "#",
       },
     });
   });

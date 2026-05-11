@@ -1,12 +1,12 @@
 import { Router, type Request } from "express";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   companySkillCreateSchema,
   companySkillFileUpdateSchema,
   companySkillImportSchema,
   companySkillProjectScanRequestSchema,
-} from "@jasminiaai/shared";
-import { trackSkillImported } from "@jasminiaai/shared/telemetry";
+} from "@jasminia/shared";
+import { trackSkillImported } from "@jasminia/shared/telemetry";
 import { validate } from "../middleware/validate.js";
 import { accessService, agentService, companySkillService, logActivity } from "../services/index.js";
 import { forbidden } from "../errors.js";

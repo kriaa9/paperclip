@@ -1,7 +1,7 @@
-import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/plugin-sdk";
+import type { JasminiaPluginManifestV1 } from "@jasminia/plugin-sdk";
 
-const manifest: Jasmin.iaPluginManifestV1 = {
-  id: "jasminiaai.plugin-orchestration-smoke-example",
+const manifest: JasminiaPluginManifestV1 = {
+  id: "jasminia.plugin-orchestration-smoke-example",
   apiVersion: 1,
   version: "0.1.0",
   displayName: "Plugin Orchestration Smoke Example",

@@ -13,7 +13,7 @@ import {
   plugins,
   projects,
   projectWorkspaces,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,

@@ -135,7 +135,7 @@ The implementation should keep a small validation checklist for these before we 
 The plugin should be named:
 
 - display name: `Kitchen Sink (Example)`
-- package: `@jasminiaai/plugin-kitchen-sink-example`
+- package: `@jasminia/plugin-kitchen-sink-example`
 - plugin id: `jasminia.kitchen-sink-example` or `jasminia-kitchen-sink-example`
 
 Recommendation: use `jasminia-kitchen-sink-example` to match current in-repo example naming style.

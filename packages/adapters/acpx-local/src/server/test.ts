@@ -6,11 +6,11 @@ import type {
   AdapterEnvironmentCheck,
   AdapterEnvironmentTestContext,
   AdapterEnvironmentTestResult,
-} from "@jasminiaai/adapter-utils";
+} from "@jasminia/adapter-utils";
 import {
   asString,
   parseObject,
-} from "@jasminiaai/adapter-utils/server-utils";
+} from "@jasminia/adapter-utils/server-utils";
 
 const require = createRequire(import.meta.url);
 const MIN_NODE_MAJOR = 22;

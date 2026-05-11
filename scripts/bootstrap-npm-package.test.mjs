@@ -4,9 +4,9 @@ import test from "node:test";
 import { parseArgs, resolveTargetPackage } from "./bootstrap-npm-package.mjs";
 
 test("parseArgs recognizes publish and skip-build flags", () => {
-  assert.deepEqual(parseArgs(["@jasminiaai/adapter-acpx-local", "--publish", "--skip-build"]), {
+  assert.deepEqual(parseArgs(["@jasminia/adapter-acpx-local", "--publish", "--skip-build"]), {
     help: false,
-    selector: "@jasminiaai/adapter-acpx-local",
+    selector: "@jasminia/adapter-acpx-local",
     publish: true,
     skipBuild: true,
     otp: null,
@@ -45,10 +45,10 @@ test("parseArgs returns help mode", () => {
 
 test("resolveTargetPackage matches by package name or dir", () => {
   const packages = [
-    { dir: "packages/a", name: "@jasminiaai/a", pkg: {} },
-    { dir: "packages/b", name: "@jasminiaai/b", pkg: {} },
+    { dir: "packages/a", name: "@jasminia/a", pkg: {} },
+    { dir: "packages/b", name: "@jasminia/b", pkg: {} },
   ];
 
-  assert.equal(resolveTargetPackage("@jasminiaai/a", packages).dir, "packages/a");
-  assert.equal(resolveTargetPackage("./packages/b", packages).name, "@jasminiaai/b");
+  assert.equal(resolveTargetPackage("@jasminia/a", packages).dir, "packages/a");
+  assert.equal(resolveTargetPackage("./packages/b", packages).name, "@jasminia/b");
 });

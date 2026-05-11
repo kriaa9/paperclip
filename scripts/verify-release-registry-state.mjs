@@ -179,7 +179,7 @@ function collectInternalDependencyProblemEntries(
 
   for (const [sectionName, deps] of sections) {
     for (const [dependencyName, dependencyVersion] of Object.entries(deps)) {
-      if (!dependencyName.startsWith("@jasminiaai/")) {
+      if (!dependencyName.startsWith("@jasminia/")) {
         continue;
       }
 
@@ -332,7 +332,7 @@ function collectInternalDependencyVersions(manifest) {
     ["peerDependencies", manifest.peerDependencies ?? {}],
   ]) {
     for (const [dependencyName, dependencyVersion] of Object.entries(deps)) {
-      if (!dependencyName.startsWith("@jasminiaai/")) {
+      if (!dependencyName.startsWith("@jasminia/")) {
         continue;
       }
 

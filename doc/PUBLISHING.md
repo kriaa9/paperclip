@@ -17,11 +17,11 @@ Jasmin.ia no longer uses release branches or Changesets for publishing.
 
 ## Why the CLI needs special packaging
 
-The CLI package, `jasminiaai`, imports code from workspace packages such as:
+The CLI package, `jasminia`, imports code from workspace packages such as:
 
-- `@jasminiaai/server`
-- `@jasminiaai/db`
-- `@jasminiaai/shared`
+- `@jasminia/server`
+- `@jasminia/db`
+- `@jasminia/shared`
 - adapter packages under `packages/adapters/`
 
 Those workspace references are valid in development but not in a publishable npm package. The release flow rewrites versions temporarily, then builds a publishable CLI bundle.
@@ -64,7 +64,7 @@ The version rewrite step now uses [`scripts/release-package-map.mjs`](../scripts
 
 Those rewrites are temporary. The working tree is restored after publish or dry-run.
 
-## `@jasminiaai/ui` packaging
+## `@jasminia/ui` packaging
 
 The UI package publishes prebuilt static assets, not the source workspace.
 
@@ -76,20 +76,20 @@ The `ui` package uses [`scripts/generate-ui-package-json.mjs`](../scripts/genera
 
 After packing or publishing, `postpack` restores the development manifest automatically.
 
-### Manual first publish for `@jasminiaai/ui`
+### Manual first publish for `@jasminia/ui`
 
 If you need to publish only the UI package once by hand, use the real package name:
 
-- `@jasminiaai/ui`
+- `@jasminia/ui`
 
 Recommended flow from the repo root:
 
 ```bash
 # optional sanity check: this 404s until the first publish exists
-npm view @jasminiaai/ui version
+npm view @jasminia/ui version
 
 # make sure the dist payload is fresh
-pnpm --filter @jasminiaai/ui build
+pnpm --filter @jasminia/ui build
 
 # confirm your local npm auth before the real publish
 npm whoami
@@ -106,12 +106,12 @@ Notes:
 
 - Publish from `ui/`, not the repo root.
 - `prepack` automatically rewrites `ui/package.json` to the lean publish manifest, and `postpack` restores the dev manifest after the command finishes.
-- If `npm view @jasminiaai/ui version` already returns the same version that is in [`ui/package.json`](../ui/package.json), do not republish. Bump the version or use the normal repo-wide release flow in [`scripts/release.sh`](../scripts/release.sh).
+- If `npm view @jasminia/ui version` already returns the same version that is in [`ui/package.json`](../ui/package.json), do not republish. Bump the version or use the normal repo-wide release flow in [`scripts/release.sh`](../scripts/release.sh).
 
 If the first real publish returns npm `E404`, check npm-side prerequisites before retrying:
 
 - `npm whoami` must succeed first. An expired or missing npm login will block the publish.
-- For an organization-scoped package like `@jasminiaai/ui`, the `jasminiaai` npm organization must exist and the publisher must be a member with permission to publish to that scope.
+- For an organization-scoped package like `@jasminia/ui`, the `jasminia` npm organization must exist and the publisher must be a member with permission to publish to that scope.
 - The initial publish must include `--access public` for a public scoped package.
 - npm also requires either account 2FA for publishing or a granular token that is allowed to bypass 2FA.
 
@@ -135,18 +135,18 @@ Canaries publish under the npm dist-tag `canary`.
 
 Example:
 
-- `jasminiaai@2026.318.1-canary.2`
+- `jasminia@2026.318.1-canary.2`
 
 This keeps the default install path unchanged while allowing explicit installs with:
 
 ```bash
-npx jasminiaai@canary onboard
+npx jasminia@canary onboard
 ```
 
 The release script now verifies two things after a canary publish:
 
 - the `canary` dist-tag resolves to the version that was just published
-- every published internal `@jasminiaai/*` dependency referenced by that manifest exists on npm
+- every published internal `@jasminia/*` dependency referenced by that manifest exists on npm
 
 It also treats `latest -> canary` as a failure by default, because npm metadata can otherwise leave the default install path pointing at an unreleased canary dependency graph. Only pass `./scripts/release.sh canary --allow-canary-latest` when that `latest` behavior is explicitly intended.
 
@@ -156,7 +156,7 @@ Stable publishes use the npm dist-tag `latest`.
 
 Example:
 
-- `jasminiaai@2026.318.0`
+- `jasminia@2026.318.0`
 
 Stable publishes do not create a release commit. Instead:
 
@@ -195,14 +195,14 @@ PR CI now checks changed release-enabled package manifests against npm. That cat
 The first publish of a brand-new package still needs one human maintainer with npm write access.
 After that, trusted publishing can take over.
 
-Example for `@jasminiaai/adapter-acpx-local` from the repo root:
+Example for `@jasminia/adapter-acpx-local` from the repo root:
 
 ```bash
 # safe preview
-pnpm run release:bootstrap-package -- @jasminiaai/adapter-acpx-local
+pnpm run release:bootstrap-package -- @jasminia/adapter-acpx-local
 
 # one-time first publish from an authenticated maintainer machine
-pnpm run release:bootstrap-package -- @jasminiaai/adapter-acpx-local --publish --otp 123456
+pnpm run release:bootstrap-package -- @jasminia/adapter-acpx-local --publish --otp 123456
 ```
 
 The helper script:
@@ -219,9 +219,9 @@ The helper now requires `--otp <code>` up front for `--publish`, so it fails bef
 
 After that first publish succeeds:
 
-1. open `https://www.npmjs.com/package/@jasminiaai/adapter-acpx-local`
+1. open `https://www.npmjs.com/package/@jasminia/adapter-acpx-local`
 2. go to `Settings` → `Trusted publishing`
-3. add repository `jasminiaai/jasminia`
+3. add repository `jasminia/jasminia`
 4. set workflow filename to `release.yml`
 5. optionally go to `Settings` → `Publishing access` and enable `Require two-factor authentication and disallow tokens`
 6. keep `publishFromCi: true` in [`scripts/release-package-manifest.json`](../scripts/release-package-manifest.json)

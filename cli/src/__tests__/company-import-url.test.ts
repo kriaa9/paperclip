@@ -37,8 +37,8 @@ describe("looksLikeRepoUrl", () => {
 
 describe("isGithubShorthand", () => {
   it("matches owner/repo/path shorthands", () => {
-    expect(isGithubShorthand("jasminiaai/companies/gstack")).toBe(true);
-    expect(isGithubShorthand("jasminiaai/companies")).toBe(true);
+    expect(isGithubShorthand("jasminia/companies/gstack")).toBe(true);
+    expect(isGithubShorthand("jasminia/companies")).toBe(true);
   });
 
   it("rejects local-looking paths", () => {
@@ -50,13 +50,13 @@ describe("isGithubShorthand", () => {
 
 describe("normalizeGithubImportSource", () => {
   it("normalizes shorthand imports to canonical GitHub sources", () => {
-    expect(normalizeGithubImportSource("jasminiaai/companies/gstack")).toBe(
+    expect(normalizeGithubImportSource("jasminia/companies/gstack")).toBe(
       "#
     );
   });
 
   it("applies --ref to shorthand imports", () => {
-    expect(normalizeGithubImportSource("jasminiaai/companies/gstack", "feature/demo")).toBe(
+    expect(normalizeGithubImportSource("jasminia/companies/gstack", "feature/demo")).toBe(
       "#
     );
   });

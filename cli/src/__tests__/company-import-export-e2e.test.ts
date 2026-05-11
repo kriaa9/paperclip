@@ -104,14 +104,14 @@ function writeTestConfig(configPath: string, tempRoot: string, port: number, con
   writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`, "utf8");
 }
 
-interface TestJasmin.iaEnv {
+interface TestJasminiaEnv {
   configPath: string;
   jasminiaHome: string;
   instanceId: string;
   shellHome?: string;
 }
 
-function createBaseJasmin.iaEnv(options: TestJasmin.iaEnv) {
+function createBaseJasminiaEnv(options: TestJasminiaEnv) {
   const env = { ...process.env };
   for (const key of Object.keys(env)) {
     if (key.startsWith("JASMINIA_")) {
@@ -135,9 +135,9 @@ function createServerEnv(
   configPath: string,
   port: number,
   connectionString: string,
-  options: Omit<TestJasmin.iaEnv, "configPath">,
+  options: Omit<TestJasminiaEnv, "configPath">,
 ) {
-  const env = createBaseJasmin.iaEnv({
+  const env = createBaseJasminiaEnv({
     configPath,
     ...options,
   });
@@ -160,8 +160,8 @@ function createServerEnv(
   return env;
 }
 
-function createCliEnv(options: TestJasmin.iaEnv) {
-  const env = createBaseJasmin.iaEnv(options);
+function createCliEnv(options: TestJasminiaEnv) {
+  const env = createBaseJasminiaEnv(options);
   delete env.DATABASE_URL;
   delete env.PORT;
   delete env.HOST;
@@ -210,10 +210,10 @@ async function api<T>(baseUrl: string, pathname: string, init?: RequestInit): Pr
 
 async function runCliJson<T>(
   args: string[],
-  opts: TestJasmin.iaEnv & { apiBase?: string; includeConfigArg?: boolean },
+  opts: TestJasminiaEnv & { apiBase?: string; includeConfigArg?: boolean },
 ) {
   const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
-  const cliArgs = ["--silent", "jasminiaai", ...args];
+  const cliArgs = ["--silent", "jasminia", ...args];
   if (opts.apiBase) {
     cliArgs.push("--api-base", opts.apiBase);
   }
@@ -247,7 +247,7 @@ async function waitForServer(
   while (Date.now() - startedAt < 30_000) {
     if (child.exitCode !== null) {
       throw new Error(
-        `jasminiaai run exited before healthcheck succeeded.\nstdout:\n${output.stdout.join("")}\nstderr:\n${output.stderr.join("")}`,
+        `jasminia run exited before healthcheck succeeded.\nstdout:\n${output.stdout.join("")}\nstderr:\n${output.stderr.join("")}`,
       );
     }
 
@@ -266,7 +266,7 @@ async function waitForServer(
   );
 }
 
-describeEmbeddedPostgres("jasminiaai company import/export e2e", () => {
+describeEmbeddedPostgres("jasminia company import/export e2e", () => {
   let tempRoot = "";
   let configPath = "";
   let exportDir = "";
@@ -297,7 +297,7 @@ describeEmbeddedPostgres("jasminiaai company import/export e2e", () => {
     const output = { stdout: [] as string[], stderr: [] as string[] };
     const child = spawn(
       "pnpm",
-      ["jasminiaai", "run", "--config", configPath],
+      ["jasminia", "run", "--config", configPath],
       {
         cwd: repoRoot,
         env: createServerEnv(configPath, port, tempDb.connectionString, {

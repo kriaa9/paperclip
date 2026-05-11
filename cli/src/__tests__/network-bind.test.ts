@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { resolveRuntimeBind, validateConfiguredBindMode } from "@jasminiaai/shared";
+import { resolveRuntimeBind, validateConfiguredBindMode } from "@jasminia/shared";
 import { buildPresetServerConfig } from "../config/server-bind.js";
 
 describe("network bind helpers", () => {

@@ -4,13 +4,13 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import pc from "picocolors";
-import { loadJasmin.iaEnvFile } from "../config/env.js";
+import { loadJasminiaEnvFile } from "../config/env.js";
 import {
     describeLocalInstancePaths,
-    resolveJasmin.iaHomeDir,
-    resolveJasmin.iaInstanceId,
+    resolveJasminiaHomeDir,
+    resolveJasminiaInstanceId,
 } from "../config/home.js";
-import type { Jasmin.iaConfig } from "../config/schema.js";
+import type { JasminiaConfig } from "../config/schema.js";
 import { configExists, readConfig, resolveConfigPath } from "../config/store.js";
 import { bootstrapCeoInvite } from "./auth-bootstrap-ceo.js";
 import { doctor } from "./doctor.js";
@@ -32,10 +32,10 @@ interface StartedServer {
 }
 
 export async function runCommand(opts: RunOptions): Promise<void> {
-  const instanceId = resolveJasmin.iaInstanceId(opts.instance);
+  const instanceId = resolveJasminiaInstanceId(opts.instance);
   process.env.JASMINIA_INSTANCE_ID = instanceId;
 
-  const homeDir = resolveJasmin.iaHomeDir();
+  const homeDir = resolveJasminiaHomeDir();
   fs.mkdirSync(homeDir, { recursive: true });
 
   const paths = describeLocalInstancePaths(instanceId);
@@ -43,7 +43,7 @@ export async function runCommand(opts: RunOptions): Promise<void> {
 
   const configPath = resolveConfigPath(opts.config);
   process.env.JASMINIA_CONFIG = configPath;
-  loadJasmin.iaEnvFile(configPath);
+  loadJasminiaEnvFile(configPath);
 
   p.intro(pc.bgCyan(pc.black(" jasminia run ")));
   p.log.message(pc.dim(`Home: ${paths.homeDir}`));
@@ -93,7 +93,7 @@ export async function runCommand(opts: RunOptions): Promise<void> {
 }
 
 function resolveBootstrapInviteBaseUrl(
-  config: Jasmin.iaConfig,
+  config: JasminiaConfig,
   startedServer: StartedServer,
 ): string {
   const explicitBaseUrl =
@@ -142,7 +142,7 @@ function getMissingModuleSpecifier(err: unknown): string | null {
 function maybeEnableUiDevMiddleware(entrypoint: string): void {
   if (process.env.JASMINIA_UI_DEV_MIDDLEWARE !== undefined) return;
   const normalized = entrypoint.replaceAll("\\", "/");
-  if (normalized.endsWith("/server/src/index.ts") || normalized.endsWith("@jasminiaai/server/src/index.ts")) {
+  if (normalized.endsWith("/server/src/index.ts") || normalized.endsWith("@jasminia/server/src/index.ts")) {
     process.env.JASMINIA_UI_DEV_MIDDLEWARE = "true";
   }
 }
@@ -202,7 +202,7 @@ async function importServerEntry(): Promise<StartedServer> {
   }
 }
 
-function shouldGenerateBootstrapInviteAfterStart(config: Jasmin.iaConfig): boolean {
+function shouldGenerateBootstrapInviteAfterStart(config: JasminiaConfig): boolean {
   return config.server.deploymentMode === "authenticated" && config.database.mode === "embedded-postgres";
 }
 

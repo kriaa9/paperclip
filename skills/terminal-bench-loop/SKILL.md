@@ -59,7 +59,7 @@ Collect these on the top-level loop issue before iteration 1. Any input that can
 - **Iteration budget.** Maximum number of iterations before the loop must stop without further fixes (typical: 3–5). Also record a per-iteration wall-clock cap.
 - **Jasmin.ia App worktree issue.** The implementation-side issue under the Jasmin.ia App project whose execution workspace owns the isolated worktree. First iteration creates it; later iterations reuse it via `inheritExecutionWorkspaceFromIssueId` or equivalent.
 - **Benchmark command.** The exact `jasminia-bench` invocation, including the `JASMINIAAI_CMD` (or equivalent) binding pinned to the Jasmin.ia App worktree under test. Record verbatim on the loop issue.
-- **Dispatch runner config.** The exact Harbor/Jasmin.ia runner dispatch config required for the smoke to actually start a Jasmin.ia heartbeat. For the current Harbor wrapper, record the `JASMINIA_HARBOR_RUNNER_CONFIG` JSON (or equivalent config file) verbatim enough to preserve: `assignee`, `heartbeat_strategy`, `agent_adapter` / `agent_adapters`, `reuse_host_home` when local credentials are intentionally needed, and the stop budget. A bare Harbor command that creates `BEN-1` as unassigned `todo` with zero heartbeat-enabled agents is a harness/setup failure, not a valid product diagnosis.
+- **Dispatch runner config.** The exact Harbor/Jasminia runner dispatch config required for the smoke to actually start a Jasmin.ia heartbeat. For the current Harbor wrapper, record the `JASMINIA_HARBOR_RUNNER_CONFIG` JSON (or equivalent config file) verbatim enough to preserve: `assignee`, `heartbeat_strategy`, `agent_adapter` / `agent_adapters`, `reuse_host_home` when local credentials are intentionally needed, and the stop budget. A bare Harbor command that creates `BEN-1` as unassigned `todo` with zero heartbeat-enabled agents is a harness/setup failure, not a valid product diagnosis.
 - **Latest artifact root.** Filesystem or storage path under which `jasminia-bench` writes run artifacts (manifest, `results.jsonl`, Harbor raw job folders, redacted telemetry). Each iteration appends; nothing is overwritten.
 - **Approval policy.** Who must accept a proposed product fix before implementation (default: board via `request_confirmation`; CTO if delegated; never the loop driver alone).
 
@@ -104,7 +104,7 @@ Before opening or advancing a loop, read `doc/execution-semantics.md`. Use that 
   - dispatch config used (`JASMINIA_HARBOR_RUNNER_CONFIG` or equivalent), including assignee and adapter type
   - the exact stop reason reported by the harness (pass, harness fail, verifier fail, timeout, agent gave up, infrastructure error)
   - heartbeat-enabled and heartbeat-observed agent counts when Jasmin.ia telemetry exports them
-  - failure taxonomy bucket (task/model, Jasmin.ia product, harness/setup, verifier/infrastructure, security, unclear)
+  - failure taxonomy bucket (task/model, Jasminia product, harness/setup, verifier/infrastructure, security, unclear)
   - artifact paths under the latest artifact root
 - Label the iteration as **smoke / non-comparable**. Comparable runs are out of scope for this skill.
 
@@ -114,7 +114,7 @@ Apply the `/diagnose-why-work-stopped` pattern to the iteration's run, scoped to
 
 - Walk the Jasmin.ia issue tree the smoke produced under the Jasmin.ia App worktree, node by node, and find the exact `(issue, status)` combination that stopped progress. Quote evidence: run ids, comment timestamps, status transitions.
 - Classify every non-progressing issue in that subtree as **truly needs human/board intervention**, **agent-actionable but not currently routed**, or **already covered**.
-- State whether the failure is task/model, Jasmin.ia product, harness/setup, verifier/infrastructure, security, or unclear. Be explicit when evidence is inferred (e.g. cross-company API boundary blocks direct reads).
+- State whether the failure is task/model, Jasminia product, harness/setup, verifier/infrastructure, security, or unclear. Be explicit when evidence is inferred (e.g. cross-company API boundary blocks direct reads).
 - If the failure is a Jasmin.ia product gap, frame the fix as a **general product rule** stated as a contract, and check it against the three invariants above. If the rule would have blocked a recent productive run, narrow it.
 
 Record the diagnosis on the iteration child as a `diagnosis` document. Do not propose code yet.

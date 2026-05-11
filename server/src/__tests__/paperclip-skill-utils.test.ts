@@ -3,9 +3,9 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import {
-  listJasmin.iaSkillEntries,
+  listJasminiaSkillEntries,
   removeMaintainerOnlySkillSymlinks,
-} from "@jasminiaai/adapter-utils/server-utils";
+} from "@jasminia/adapter-utils/server-utils";
 
 async function makeTempDir(prefix: string): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), prefix));
@@ -29,11 +29,11 @@ describe("jasminia skill utils", () => {
     await fs.mkdir(path.join(root, "skills", "jasminia-create-agent"), { recursive: true });
     await fs.mkdir(path.join(root, ".agents", "skills", "release"), { recursive: true });
 
-    const entries = await listJasmin.iaSkillEntries(moduleDir);
+    const entries = await listJasminiaSkillEntries(moduleDir);
 
     expect(entries.map((entry) => entry.key)).toEqual([
-      "jasminiaai/jasminia/jasminia",
-      "jasminiaai/jasminia/jasminia-create-agent",
+      "jasminia/jasminia/jasminia",
+      "jasminia/jasminia/jasminia-create-agent",
     ]);
     expect(entries.map((entry) => entry.runtimeName)).toEqual([
       "jasminia",
@@ -60,7 +60,7 @@ describe("jasminia skill utils", () => {
     await fs.mkdir(optionalDir, { recursive: true });
     await fs.writeFile(path.join(optionalDir, "SKILL.md"), "---\nname: jasminia-dev\nrequired: false\n---\n\n# Dev\n");
 
-    const entries = await listJasmin.iaSkillEntries(moduleDir);
+    const entries = await listJasminiaSkillEntries(moduleDir);
     entries.sort((a, b) => a.runtimeName.localeCompare(b.runtimeName));
 
     expect(entries).toHaveLength(2);

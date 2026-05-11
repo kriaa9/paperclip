@@ -32,4 +32,4 @@ export type {
   AdapterConfigSchema,
   AdapterRuntimeCommandSpec,
   ServerAdapterModule,
-} from "@jasminiaai/adapter-utils";
+} from "@jasminia/adapter-utils";

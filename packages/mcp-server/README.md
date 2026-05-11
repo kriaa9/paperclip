@@ -18,13 +18,13 @@ The server reads its configuration from environment variables:
 ## Usage
 
 ```sh
-npx -y @jasminiaai/mcp-server
+npx -y @jasminia/mcp-server
 ```
 
 Or locally in this repo:
 
 ```sh
-pnpm --filter @jasminiaai/mcp-server build
+pnpm --filter @jasminia/mcp-server build
 node packages/mcp-server/dist/stdio.js
 ```
 

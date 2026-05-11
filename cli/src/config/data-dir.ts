@@ -3,7 +3,7 @@ import {
   expandHomePrefix,
   resolveDefaultConfigPath,
   resolveDefaultContextPath,
-  resolveJasmin.iaInstanceId,
+  resolveJasminiaInstanceId,
 } from "./home.js";
 
 export interface DataDirOptionLike {
@@ -31,7 +31,7 @@ export function applyDataDirOverride(
   if (support.hasConfigOption) {
     const hasConfigOverride = Boolean(options.config?.trim()) || Boolean(process.env.JASMINIA_CONFIG?.trim());
     if (!hasConfigOverride) {
-      const instanceId = resolveJasmin.iaInstanceId(options.instance);
+      const instanceId = resolveJasminiaInstanceId(options.instance);
       process.env.JASMINIA_INSTANCE_ID = instanceId;
       process.env.JASMINIA_CONFIG = resolveDefaultConfigPath(instanceId);
     }

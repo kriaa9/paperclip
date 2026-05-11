@@ -4,7 +4,7 @@ import { execFile as execFileCallback } from "node:child_process";
 import { promisify } from "node:util";
 import { randomUUID } from "node:crypto";
 import { and, asc, desc, eq, getTableColumns, gt, inArray, isNull, lt, lte, notInArray, or, sql } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   AGENT_DEFAULT_MAX_CONCURRENT_RUNS,
   ISSUE_CONTINUATION_SUMMARY_DOCUMENT_KEY,
@@ -19,7 +19,7 @@ import {
   type IssueExecutionMonitorRecoveryPolicy,
   type ModelProfileKey,
   type RunLivenessState,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
   agents,
   agentRuntimeState,
@@ -41,7 +41,7 @@ import {
   projects,
   projectWorkspaces,
   workspaceOperations,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import { conflict, HttpError, notFound } from "../errors.js";
 import { logger } from "../middleware/logger.js";
 import { publishLiveEvent } from "./live-events.js";
@@ -57,7 +57,7 @@ import type {
 import { createLocalAgentJwt } from "../agent-auth-jwt.js";
 import { parseObject, asBoolean, asNumber, appendWithByteCap, MAX_EXCERPT_BYTES } from "../adapters/utils.js";
 import { costService } from "./costs.js";
-import { trackAgentFirstHeartbeat } from "@jasminiaai/shared/telemetry";
+import { trackAgentFirstHeartbeat } from "@jasminia/shared/telemetry";
 import { getTelemetryClient } from "../telemetry.js";
 import { companySkillService } from "./company-skills.js";
 import { budgetService, type BudgetEnforcementScope } from "./budgets.js";
@@ -154,12 +154,12 @@ import {
   hasSessionCompactionThresholds,
   resolveSessionCompactionPolicy,
   type SessionCompactionPolicy,
-} from "@jasminiaai/adapter-utils";
+} from "@jasminia/adapter-utils";
 import {
-  readJasmin.iaSkillSyncPreference,
-  writeJasmin.iaSkillSyncPreference,
-} from "@jasminiaai/adapter-utils/server-utils";
-import { extractSkillMentionIds } from "@jasminiaai/shared";
+  readJasminiaSkillSyncPreference,
+  writeJasminiaSkillSyncPreference,
+} from "@jasminia/adapter-utils/server-utils";
+import { extractSkillMentionIds } from "@jasminia/shared";
 import { environmentService } from "./environments.js";
 import { environmentRuntimeService } from "./environment-runtime.js";
 import { environmentRunOrchestrator } from "./environment-run-orchestrator.js";
@@ -408,8 +408,8 @@ export function applyRunScopedMentionedSkillKeys(
   );
   if (normalizedSkillKeys.length === 0) return config;
 
-  const existingPreference = readJasmin.iaSkillSyncPreference(config);
-  return writeJasmin.iaSkillSyncPreference(config, [
+  const existingPreference = readJasminiaSkillSyncPreference(config);
+  return writeJasminiaSkillSyncPreference(config, [
     ...existingPreference.desiredSkills,
     ...normalizedSkillKeys,
   ]);
@@ -1879,7 +1879,7 @@ export function mergeCoalescedContextSnapshot(
   return merged;
 }
 
-async function buildJasmin.iaWakePayload(input: {
+async function buildJasminiaWakePayload(input: {
   db: Db;
   companyId: string;
   contextSnapshot: Record<string, unknown>;
@@ -2081,7 +2081,7 @@ function isHeartbeatRunTerminalStatus(
   );
 }
 
-export function buildJasmin.iaTaskMarkdown(input: {
+export function buildJasminiaTaskMarkdown(input: {
   issue: {
     id: string;
     identifier: string | null;
@@ -6923,7 +6923,7 @@ export function heartbeatService(db: Db, options: HeartbeatServiceOptions = {}) 
     } else {
       delete context.jasminiaContinuationSummary;
     }
-    const jasminiaWakePayload = await buildJasmin.iaWakePayload({
+    const jasminiaWakePayload = await buildJasminiaWakePayload({
       db,
       companyId: agent.companyId,
       contextSnapshot: context,
@@ -6944,7 +6944,7 @@ export function heartbeatService(db: Db, options: HeartbeatServiceOptions = {}) 
     } else {
       delete context[JASMINIA_WAKE_PAYLOAD_KEY];
     }
-    const taskMarkdown = buildJasmin.iaTaskMarkdown({
+    const taskMarkdown = buildJasminiaTaskMarkdown({
       issue: issueRef
         ? {
             id: issueRef.id,

@@ -24,7 +24,7 @@ type BindMode = (typeof BIND_MODES)[number];
 const worktreeEnvBootstrap = bootstrapDevRunnerWorktreeEnv(repoRoot, process.env);
 if (worktreeEnvBootstrap.missingEnv) {
   console.error(
-    `[jasminia] linked git worktree at ${repoRoot} is missing ${path.relative(repoRoot, worktreeEnvBootstrap.envPath)}. Run \`jasminiaai worktree init\` in this worktree before \`pnpm dev\`.`,
+    `[jasminia] linked git worktree at ${repoRoot} is missing ${path.relative(repoRoot, worktreeEnvBootstrap.envPath)}. Run \`jasminia worktree init\` in this worktree before \`pnpm dev\`.`,
   );
   process.exit(1);
 }
@@ -421,14 +421,14 @@ async function runPnpm(args: string[], options: {
 
 async function getMigrationStatusPayload() {
   const status = await runPnpm(
-    ["--filter", "@jasminiaai/db", "exec", "tsx", "src/migration-status.ts", "--json"],
+    ["--filter", "@jasminia/db", "exec", "tsx", "src/migration-status.ts", "--json"],
     { env },
   );
   if (status.code !== 0) {
     process.stderr.write(
       status.stderr ||
         status.stdout ||
-        `[jasminia] Command failed with code ${status.code}: pnpm --filter @jasminiaai/db exec tsx src/migration-status.ts --json\n`,
+        `[jasminia] Command failed with code ${status.code}: pnpm --filter @jasminia/db exec tsx src/migration-status.ts --json\n`,
     );
     process.exit(status.code);
   }
@@ -516,7 +516,7 @@ async function maybePreflightMigrations(options: { interactive?: boolean; autoAp
 async function buildPluginSdk() {
   console.log("[jasminia] building plugin sdk...");
   const result = await runPnpm(
-    ["--filter", "@jasminiaai/plugin-sdk", "build"],
+    ["--filter", "@jasminia/plugin-sdk", "build"],
     { stdio: "inherit" },
   );
   if (result.signal) {
@@ -596,7 +596,7 @@ async function startServerChild() {
   const serverScript = mode === "watch" ? "dev:watch" : "dev";
   child = spawn(
     pnpmBin,
-    ["--filter", "@jasminiaai/server", serverScript, ...forwardedArgs],
+    ["--filter", "@jasminia/server", serverScript, ...forwardedArgs],
     { stdio: "inherit", env, shell: process.platform === "win32" },
   );
 

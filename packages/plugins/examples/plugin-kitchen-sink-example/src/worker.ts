@@ -7,7 +7,7 @@ import {
   PLUGIN_STATE_SCOPE_KINDS,
   definePlugin,
   runWorker,
-  type Jasmin.iaPlugin,
+  type JasminiaPlugin,
   type PluginContext,
   type PluginEntityQuery,
   type PluginEvent,
@@ -20,8 +20,8 @@ import {
   type ScopeKey,
   type ToolResult,
   type ToolRunContext,
-} from "@jasminiaai/plugin-sdk";
-import type { Goal, Issue } from "@jasminiaai/shared";
+} from "@jasminia/plugin-sdk";
+import type { Goal, Issue } from "@jasminia/shared";
 import {
   DEFAULT_CONFIG,
   JOB_KEYS,
@@ -946,7 +946,7 @@ async function registerJobs(ctx: PluginContext): Promise<void> {
   });
 }
 
-const plugin: Jasmin.iaPlugin = definePlugin({
+const plugin: JasminiaPlugin = definePlugin({
   async setup(ctx) {
     currentContext = ctx;
     runtimeLaunchers.set(RUNTIME_LAUNCHER.id, RUNTIME_LAUNCHER);

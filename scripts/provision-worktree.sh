@@ -43,18 +43,18 @@ run_isolated_worktree_init() {
     return 0
   fi
 
-  if command -v pnpm >/dev/null 2>&1 && pnpm jasminiaai --help >/dev/null 2>&1; then
+  if command -v pnpm >/dev/null 2>&1 && pnpm jasminia --help >/dev/null 2>&1; then
     (
       cd "$worktree_cwd"
-      pnpm jasminiaai worktree init --force --seed-mode minimal --name "$worktree_name" --from-config "$source_config_path"
+      pnpm jasminia worktree init --force --seed-mode minimal --name "$worktree_name" --from-config "$source_config_path"
     )
     return 0
   fi
 
-  if command -v jasminiaai >/dev/null 2>&1; then
+  if command -v jasminia >/dev/null 2>&1; then
     (
       cd "$worktree_cwd"
-      jasminiaai worktree init --force --seed-mode minimal --name "$worktree_name" --from-config "$source_config_path"
+      jasminia worktree init --force --seed-mode minimal --name "$worktree_name" --from-config "$source_config_path"
     )
     return 0
   fi
@@ -62,8 +62,8 @@ run_isolated_worktree_init() {
   return 127
 }
 
-jasminiaai_command_available() {
-  if command -v pnpm >/dev/null 2>&1 && pnpm jasminiaai --help >/dev/null 2>&1; then
+jasminia_command_available() {
+  if command -v pnpm >/dev/null 2>&1 && pnpm jasminia --help >/dev/null 2>&1; then
     return 0
   fi
 
@@ -73,7 +73,7 @@ jasminiaai_command_available() {
     return 0
   fi
 
-  if command -v jasminiaai >/dev/null 2>&1; then
+  if command -v jasminia >/dev/null 2>&1; then
     return 0
   fi
 
@@ -335,10 +335,10 @@ EOF
 if [[ -e "$worktree_config_path" && -e "$worktree_env_path" ]]; then
   echo "Reusing existing isolated Jasmin.ia worktree config at $worktree_config_path" >&2
 else
-  if jasminiaai_command_available; then
+  if jasminia_command_available; then
     run_isolated_worktree_init
   else
-    echo "jasminiaai CLI not available in this workspace; writing isolated fallback config without DB seeding." >&2
+    echo "jasminia CLI not available in this workspace; writing isolated fallback config without DB seeding." >&2
     write_fallback_worktree_config
   fi
 fi

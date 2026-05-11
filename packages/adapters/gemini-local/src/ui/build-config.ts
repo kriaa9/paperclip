@@ -1,4 +1,4 @@
-import type { CreateConfigValues } from "@jasminiaai/adapter-utils";
+import type { CreateConfigValues } from "@jasminia/adapter-utils";
 import { DEFAULT_GEMINI_LOCAL_MODEL } from "../index.js";
 
 function parseCommaArgs(value: string): string[] {

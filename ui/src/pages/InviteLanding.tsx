@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { AGENT_ADAPTER_TYPES } from "@jasminiaai/shared";
-import type { AgentAdapterType, JoinRequest } from "@jasminiaai/shared";
+import { AGENT_ADAPTER_TYPES } from "@jasminia/shared";
+import type { AgentAdapterType, JoinRequest } from "@jasminia/shared";
 import { Button } from "@/components/ui/button";
 import { CompanyPatternIcon } from "@/components/CompanyPatternIcon";
 import { useCompany } from "@/context/CompanyContext";

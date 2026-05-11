@@ -10,10 +10,10 @@ import {
 } from "../../../packages/plugins/sdk/src/protocol.js";
 import { definePlugin } from "../../../packages/plugins/sdk/src/define-plugin.js";
 import { startWorkerRpcHost } from "../../../packages/plugins/sdk/src/worker-rpc-host.js";
-import { pluginManifestV1Schema, type Jasmin.iaPluginManifestV1 } from "@jasminiaai/shared";
+import { pluginManifestV1Schema, type JasminiaPluginManifestV1 } from "@jasminia/shared";
 import { pluginCapabilityValidator } from "../services/plugin-capability-validator.js";
 
-const baseManifest: Jasmin.iaPluginManifestV1 = {
+const baseManifest: JasminiaPluginManifestV1 = {
   id: "test.environment-driver",
   apiVersion: 1,
   version: "1.0.0",
@@ -74,7 +74,7 @@ describe("plugin environment driver seam", () => {
     const withoutCapability = {
       ...baseManifest,
       capabilities: ["http.outbound"],
-    } satisfies Jasmin.iaPluginManifestV1;
+    } satisfies JasminiaPluginManifestV1;
 
     expect(validator.checkOperation(withoutCapability, "environment.execute")).toMatchObject({
       allowed: false,

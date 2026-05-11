@@ -1,12 +1,12 @@
-# `@jasminiaai/plugin-sdk`
+# `@jasminia/plugin-sdk`
 
 Official TypeScript SDK for Jasmin.ia plugin authors.
 
-- **Worker SDK:** `@jasminiaai/plugin-sdk` — `definePlugin`, context, lifecycle
-- **UI SDK:** `@jasminiaai/plugin-sdk/ui` — React hooks and slot props
-- **Testing:** `@jasminiaai/plugin-sdk/testing` — in-memory host harness
-- **Bundlers:** `@jasminiaai/plugin-sdk/bundlers` — esbuild/rollup presets
-- **Dev server:** `@jasminiaai/plugin-sdk/dev-server` — static UI server + SSE reload
+- **Worker SDK:** `@jasminia/plugin-sdk` — `definePlugin`, context, lifecycle
+- **UI SDK:** `@jasminia/plugin-sdk/ui` — React hooks and slot props
+- **Testing:** `@jasminia/plugin-sdk/testing` — in-memory host harness
+- **Bundlers:** `@jasminia/plugin-sdk/bundlers` — esbuild/rollup presets
+- **Dev server:** `@jasminia/plugin-sdk/dev-server` — static UI server + SSE reload
 
 Reference: `doc/plugins/PLUGIN_SPEC.md`
 
@@ -14,15 +14,15 @@ Reference: `doc/plugins/PLUGIN_SPEC.md`
 
 | Import | Purpose |
 |--------|--------|
-| `@jasminiaai/plugin-sdk` | Worker entry: `definePlugin`, `runWorker`, context types, protocol helpers |
-| `@jasminiaai/plugin-sdk/ui` | UI entry: `usePluginData`, `usePluginAction`, `usePluginStream`, `useHostContext`, `useHostNavigation`, slot prop types |
-| `@jasminiaai/plugin-sdk/ui/hooks` | Hooks only |
-| `@jasminiaai/plugin-sdk/ui/types` | UI types and slot prop interfaces |
-| `@jasminiaai/plugin-sdk/testing` | `createTestHarness` for unit/integration tests |
-| `@jasminiaai/plugin-sdk/bundlers` | `createPluginBundlerPresets` for worker/manifest/ui builds |
-| `@jasminiaai/plugin-sdk/dev-server` | `startPluginDevServer`, `getUiBuildSnapshot` |
-| `@jasminiaai/plugin-sdk/protocol` | JSON-RPC protocol types and helpers (advanced) |
-| `@jasminiaai/plugin-sdk/types` | Worker context and API types (advanced) |
+| `@jasminia/plugin-sdk` | Worker entry: `definePlugin`, `runWorker`, context types, protocol helpers |
+| `@jasminia/plugin-sdk/ui` | UI entry: `usePluginData`, `usePluginAction`, `usePluginStream`, `useHostContext`, `useHostNavigation`, slot prop types |
+| `@jasminia/plugin-sdk/ui/hooks` | Hooks only |
+| `@jasminia/plugin-sdk/ui/types` | UI types and slot prop interfaces |
+| `@jasminia/plugin-sdk/testing` | `createTestHarness` for unit/integration tests |
+| `@jasminia/plugin-sdk/bundlers` | `createPluginBundlerPresets` for worker/manifest/ui builds |
+| `@jasminia/plugin-sdk/dev-server` | `startPluginDevServer`, `getUiBuildSnapshot` |
+| `@jasminia/plugin-sdk/protocol` | JSON-RPC protocol types and helpers (advanced) |
+| `@jasminia/plugin-sdk/types` | Worker context and API types (advanced) |
 
 ## Manifest entrypoints
 
@@ -34,7 +34,7 @@ In your plugin manifest you declare:
 ## Install
 
 ```bash
-pnpm add @jasminiaai/plugin-sdk
+pnpm add @jasminia/plugin-sdk
 ```
 
 ## Current deployment caveats
@@ -47,7 +47,7 @@ The SDK is stable enough for local development and first-party examples, but the
 - For deployed plugins, publish an npm package and install that package into the Jasmin.ia instance at runtime.
 - The current host runtime expects a writable filesystem, `npm` available at runtime, and network access to the package registry used for plugin installation.
 - Dynamic plugin install is currently best suited to single-node persistent deployments. Multi-instance cloud deployments still need a shared artifact/distribution model before runtime installs are reliable across nodes.
-- The host ships a small shared React component kit through `@jasminiaai/plugin-sdk/ui`. Use it for native Jasmin.ia controls; custom React and CSS are still supported.
+- The host ships a small shared React component kit through `@jasminia/plugin-sdk/ui`. Use it for native Jasmin.ia controls; custom React and CSS are still supported.
 - `ctx.assets` is not part of the supported runtime in this build. Do not depend on asset upload/read APIs yet.
 
 If you are authoring a plugin for others to deploy, treat npm-packaged installation as the supported path and treat repo-local example installs as a development convenience.
@@ -55,7 +55,7 @@ If you are authoring a plugin for others to deploy, treat npm-packaged installat
 ## Worker quick start
 
 ```ts
-import { definePlugin, runWorker } from "@jasminiaai/plugin-sdk";
+import { definePlugin, runWorker } from "@jasminia/plugin-sdk";
 
 const plugin = definePlugin({
   async setup(ctx) {
@@ -224,7 +224,7 @@ Slot types describe where a component mounts. Most values also exist as launcher
 
 **Scope** describes whether the slot requires an entity to render. **Global** slots render without a specific entity but still receive the active `companyId` through `PluginHostContext` — use it to scope data fetches to the current company. **Entity** slots additionally require `entityId` and `entityType` (e.g. a detail tab on a specific issue).
 
-**Entity types** (for `entityTypes` on slots): `project` \| `issue` \| `agent` \| `goal` \| `run` \| `comment`. Full list: import `PLUGIN_UI_SLOT_TYPES` and `PLUGIN_UI_SLOT_ENTITY_TYPES` from `@jasminiaai/plugin-sdk`.
+**Entity types** (for `entityTypes` on slots): `project` \| `issue` \| `agent` \| `goal` \| `run` \| `comment`. Full list: import `PLUGIN_UI_SLOT_TYPES` and `PLUGIN_UI_SLOT_ENTITY_TYPES` from `@jasminia/plugin-sdk`.
 
 ### Slot component descriptions
 
@@ -359,7 +359,7 @@ Declare in `manifest.capabilities`. Grouped by scope:
 | | `ui.commentAnnotation.register` |
 | | `ui.action.register` |
 
-Full list in code: import `PLUGIN_CAPABILITIES` from `@jasminiaai/plugin-sdk`.
+Full list in code: import `PLUGIN_CAPABILITIES` from `@jasminia/plugin-sdk`.
 
 ### Restricted Database Namespace
 
@@ -534,7 +534,7 @@ Plugin-originated mutations are logged with `actorType: "plugin"` and details fi
 ## UI quick start
 
 ```tsx
-import { usePluginData, usePluginAction } from "@jasminiaai/plugin-sdk/ui";
+import { usePluginData, usePluginAction } from "@jasminia/plugin-sdk/ui";
 
 export function DashboardWidget() {
   const { data } = usePluginData<{ status: string }>("health");
@@ -556,7 +556,7 @@ export function DashboardWidget() {
 Fetches data from the worker's registered `getData` handler. Re-fetches when `params` changes. Returns `{ data, loading, error, refresh }`.
 
 ```tsx
-import { usePluginData } from "@jasminiaai/plugin-sdk/ui";
+import { usePluginData } from "@jasminia/plugin-sdk/ui";
 
 interface SyncStatus {
   lastSyncAt: string;
@@ -589,7 +589,7 @@ Returns an async function that calls the worker's `performAction` handler. Throw
 
 ```tsx
 import { useState } from "react";
-import { usePluginAction, type PluginBridgeError } from "@jasminiaai/plugin-sdk/ui";
+import { usePluginAction, type PluginBridgeError } from "@jasminia/plugin-sdk/ui";
 
 export function ResyncButton({ context }: PluginWidgetProps) {
   const resync = usePluginAction("resync");
@@ -624,8 +624,8 @@ export function ResyncButton({ context }: PluginWidgetProps) {
 Reads the active company, project, entity, and user context. Use this to scope data fetches and actions.
 
 ```tsx
-import { useHostContext, usePluginData } from "@jasminiaai/plugin-sdk/ui";
-import type { PluginDetailTabProps } from "@jasminiaai/plugin-sdk/ui";
+import { useHostContext, usePluginData } from "@jasminia/plugin-sdk/ui";
+import type { PluginDetailTabProps } from "@jasminia/plugin-sdk/ui";
 
 export function IssueLinearLink({ context }: PluginDetailTabProps) {
   const { companyId, entityId, entityType } = context;
@@ -644,7 +644,7 @@ export function IssueLinearLink({ context }: PluginDetailTabProps) {
 Routes Jasmin.ia-internal plugin links through the host router without a full document reload. Use `linkProps()` for anchors so the browser still gets a real `href` for copy-link, modifier-click, middle-click, and open-in-new-tab behavior.
 
 ```tsx
-import { useHostNavigation } from "@jasminiaai/plugin-sdk/ui";
+import { useHostNavigation } from "@jasminia/plugin-sdk/ui";
 
 export function WikiSidebarLink() {
   const hostNavigation = useHostNavigation();
@@ -661,7 +661,7 @@ Avoid raw same-origin `href`s or `window.location.assign()` for Jasmin.ia-intern
 Subscribes to a real-time event stream pushed from the plugin worker via SSE. The worker pushes events using `ctx.streams.emit(channel, event)` and the hook receives them as they arrive. Returns `{ events, lastEvent, connecting, connected, error, close }`.
 
 ```tsx
-import { usePluginStream } from "@jasminiaai/plugin-sdk/ui";
+import { usePluginStream } from "@jasminia/plugin-sdk/ui";
 
 interface ChatToken {
   text: string;
@@ -686,7 +686,7 @@ The SSE connection targets `GET /api/plugins/:pluginId/bridge/stream/:channel?co
 
 ### UI authoring note
 
-The host provides selected shared UI components through `@jasminiaai/plugin-sdk/ui`.
+The host provides selected shared UI components through `@jasminia/plugin-sdk/ui`.
 Plugins can also use normal React components, their own CSS, or small design
 primitives inside the plugin package.
 
@@ -709,7 +709,7 @@ Plugin UI can render markdown and edit markdown using the same host components
 used by Jasmin.ia issue comments and documents:
 
 ```tsx
-import { MarkdownBlock, MarkdownEditor } from "@jasminiaai/plugin-sdk/ui";
+import { MarkdownBlock, MarkdownEditor } from "@jasminia/plugin-sdk/ui";
 
 export function WikiPageEditor() {
   const [body, setBody] = useState("# Wiki page");
@@ -728,7 +728,7 @@ target URL shape:
 
 ```tsx
 <MarkdownBlock
-  content={"See [[wiki/entities/jasminia|Jasmin.ia]]."}
+  content={"See [[wiki/entities/jasminia|Jasminia]]."}
   enableWikiLinks
   wikiLinkRoot="/wiki/page"
 />
@@ -739,7 +739,7 @@ target URL shape:
 Plugin UI can render the host file tree without importing host internals:
 
 ```tsx
-import { FileTree, type FileTreeNode } from "@jasminiaai/plugin-sdk/ui";
+import { FileTree, type FileTreeNode } from "@jasminia/plugin-sdk/ui";
 
 const nodes: FileTreeNode[] = [
   { name: "AGENTS.md", path: "AGENTS.md", kind: "file", children: [] },
@@ -773,7 +773,7 @@ or configure work against Jasmin.ia entities. Both are controlled components and
 load their options from the host for the provided company.
 
 ```tsx
-import { AssigneePicker, ProjectPicker } from "@jasminiaai/plugin-sdk/ui";
+import { AssigneePicker, ProjectPicker } from "@jasminia/plugin-sdk/ui";
 
 export function AssignmentControls({ companyId }: { companyId: string }) {
   const [assignee, setAssignee] = useState("");
@@ -801,7 +801,7 @@ export function AssignmentControls({ companyId }: { companyId: string }) {
 
 ### Slot component props
 
-Each slot type receives a typed props object with `context: PluginHostContext`. Import from `@jasminiaai/plugin-sdk/ui`.
+Each slot type receives a typed props object with `context: PluginHostContext`. Import from `@jasminia/plugin-sdk/ui`.
 
 | Slot type | Props interface | `context` extras |
 |-----------|----------------|------------------|
@@ -820,8 +820,8 @@ Each slot type receives a typed props object with `context: PluginHostContext`. 
 Example detail tab with entity context:
 
 ```tsx
-import type { PluginDetailTabProps } from "@jasminiaai/plugin-sdk/ui";
-import { usePluginData } from "@jasminiaai/plugin-sdk/ui";
+import type { PluginDetailTabProps } from "@jasminia/plugin-sdk/ui";
+import { usePluginData } from "@jasminia/plugin-sdk/ui";
 
 export function AgentMetricsTab({ context }: PluginDetailTabProps) {
   const { data, loading } = usePluginData<Record<string, string>>("agent-metrics", {
@@ -913,7 +913,7 @@ Minimal React component that links to the project’s plugin tab (see project de
 import {
   useHostNavigation,
   type PluginProjectSidebarItemProps,
-} from "@jasminiaai/plugin-sdk/ui";
+} from "@jasminia/plugin-sdk/ui";
 
 export function FilesLink({ context }: PluginProjectSidebarItemProps) {
   const hostNavigation = useHostNavigation();
@@ -962,7 +962,7 @@ import { useState } from "react";
 import {
   useHostContext,
   usePluginAction,
-} from "@jasminiaai/plugin-sdk/ui";
+} from "@jasminia/plugin-sdk/ui";
 
 export function SyncToolbarButton() {
   const context = useHostContext();
@@ -1119,7 +1119,7 @@ ctx.actions.register("ask-agent", async (params) => {
 
 ```tsx
 import { useState } from "react";
-import { usePluginAction, usePluginStream } from "@jasminiaai/plugin-sdk/ui";
+import { usePluginAction, usePluginStream } from "@jasminia/plugin-sdk/ui";
 
 interface AgentEvent {
   type: "chunk" | "done" | "error";
@@ -1178,7 +1178,7 @@ Exported types: `AgentSession`, `AgentSessionEvent`, `AgentSessionSendResult`, `
 ## Testing utilities
 
 ```ts
-import { createTestHarness } from "@jasminiaai/plugin-sdk/testing";
+import { createTestHarness } from "@jasminia/plugin-sdk/testing";
 import plugin from "../src/worker.js";
 import manifest from "../src/manifest.js";
 
@@ -1190,7 +1190,7 @@ await harness.emit("issue.created", { issueId: "iss_1" }, { entityId: "iss_1", e
 ## Bundler presets
 
 ```ts
-import { createPluginBundlerPresets } from "@jasminiaai/plugin-sdk/bundlers";
+import { createPluginBundlerPresets } from "@jasminia/plugin-sdk/bundlers";
 
 const presets = createPluginBundlerPresets({ uiEntry: "src/ui/index.tsx" });
 // presets.esbuild.worker / presets.esbuild.manifest / presets.esbuild.ui
@@ -1206,7 +1206,7 @@ jasminia-plugin-dev-server --root . --ui-dir dist/ui --port 4177
 Or programmatically:
 
 ```ts
-import { startPluginDevServer } from "@jasminiaai/plugin-sdk/dev-server";
+import { startPluginDevServer } from "@jasminia/plugin-sdk/dev-server";
 const server = await startPluginDevServer({ rootDir: process.cwd() });
 ```
 

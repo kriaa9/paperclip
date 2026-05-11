@@ -1,4 +1,4 @@
-import type { CompanySearchResponse, CompanySearchScope } from "@jasminiaai/shared";
+import type { CompanySearchResponse, CompanySearchScope } from "@jasminia/shared";
 import { api } from "./client";
 
 export interface CompanySearchParams {

@@ -1,6 +1,6 @@
-import type { Environment, EnvironmentProbeResult } from "@jasminiaai/shared";
-import type { Db } from "@jasminiaai/db";
-import { ensureSshWorkspaceReady } from "@jasminiaai/adapter-utils/ssh";
+import type { Environment, EnvironmentProbeResult } from "@jasminia/shared";
+import type { Db } from "@jasminia/db";
+import { ensureSshWorkspaceReady } from "@jasminia/adapter-utils/ssh";
 import {
   resolveEnvironmentDriverConfigForRuntime,
   type ParsedEnvironmentConfig,

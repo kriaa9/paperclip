@@ -1,4 +1,4 @@
-import type { DocumentRevision, IssueDocument } from "@jasminiaai/shared";
+import type { DocumentRevision, IssueDocument } from "@jasminia/shared";
 
 type DocumentRevisionState = {
   currentRevision: DocumentRevision;

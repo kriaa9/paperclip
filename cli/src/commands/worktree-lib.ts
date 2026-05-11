@@ -1,6 +1,6 @@
 import { randomInt } from "node:crypto";
 import path from "node:path";
-import type { Jasmin.iaConfig } from "../config/schema.js";
+import type { JasminiaConfig } from "../config/schema.js";
 import { expandHomePrefix } from "../config/home.js";
 
 export const DEFAULT_WORKTREE_HOME = "~/.jasminia-worktrees";
@@ -173,12 +173,12 @@ export function rewriteLocalUrlPort(rawUrl: string | undefined, port: number): s
 }
 
 export function buildWorktreeConfig(input: {
-  sourceConfig: Jasmin.iaConfig | null;
+  sourceConfig: JasminiaConfig | null;
   paths: WorktreeLocalPaths;
   serverPort: number;
   databasePort: number;
   now?: Date;
-}): Jasmin.iaConfig {
+}): JasminiaConfig {
   const { sourceConfig, paths, serverPort, databasePort } = input;
   const nowIso = (input.now ?? new Date()).toISOString();
 

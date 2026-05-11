@@ -1,7 +1,7 @@
 import * as p from "@clack/prompts";
 import pc from "picocolors";
 import { readConfig, writeConfig, configExists, resolveConfigPath } from "../config/store.js";
-import type { Jasmin.iaConfig } from "../config/schema.js";
+import type { JasminiaConfig } from "../config/schema.js";
 import { ensureLocalSecretsKeyFile } from "../config/secrets-key.js";
 import { promptDatabase } from "../prompts/database.js";
 import { promptLlm } from "../prompts/llm.js";
@@ -13,9 +13,9 @@ import {
   resolveDefaultBackupDir,
   resolveDefaultEmbeddedPostgresDir,
   resolveDefaultLogsDir,
-  resolveJasmin.iaInstanceId,
+  resolveJasminiaInstanceId,
 } from "../config/home.js";
-import { printJasmin.iaCliBanner } from "../utils/banner.js";
+import { printJasminiaCliBanner } from "../utils/banner.js";
 
 type Section = "llm" | "database" | "logging" | "server" | "storage" | "secrets";
 
@@ -28,8 +28,8 @@ const SECTION_LABELS: Record<Section, string> = {
   secrets: "Secrets",
 };
 
-function defaultConfig(): Jasmin.iaConfig {
-  const instanceId = resolveJasmin.iaInstanceId();
+function defaultConfig(): JasminiaConfig {
+  const instanceId = resolveJasminiaInstanceId();
   return {
     $meta: {
       version: 1,
@@ -76,17 +76,17 @@ export async function configure(opts: {
   config?: string;
   section?: string;
 }): Promise<void> {
-  printJasmin.iaCliBanner();
+  printJasminiaCliBanner();
   p.intro(pc.bgCyan(pc.black(" jasminia configure ")));
   const configPath = resolveConfigPath(opts.config);
 
   if (!configExists(opts.config)) {
-    p.log.error("No config file found. Run `jasminiaai onboard` first.");
+    p.log.error("No config file found. Run `jasminia onboard` first.");
     p.outro("");
     return;
   }
 
-  let config: Jasmin.iaConfig;
+  let config: JasminiaConfig;
   try {
     config = readConfig(opts.config) ?? defaultConfig();
   } catch (err) {

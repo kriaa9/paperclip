@@ -1,9 +1,9 @@
-import type { Db } from "@jasminiaai/db";
-import type { Environment, EnvironmentLease } from "@jasminiaai/shared";
+import type { Db } from "@jasminia/db";
+import type { Environment, EnvironmentLease } from "@jasminia/shared";
 import {
   adapterExecutionTargetToRemoteSpec,
   type AdapterExecutionTarget,
-} from "@jasminiaai/adapter-utils/execution-target";
+} from "@jasminia/adapter-utils/execution-target";
 import { parseObject } from "../adapters/utils.js";
 import { resolveEnvironmentDriverConfigForRuntime } from "./environment-config.js";
 import type { EnvironmentRuntimeService } from "./environment-runtime.js";

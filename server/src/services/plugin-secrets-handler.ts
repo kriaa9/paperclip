@@ -33,7 +33,7 @@
  * @see services/secrets.ts — secretService used by agent env bindings
  */
 
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   collectSecretRefPaths,
   isUuidSecretRef,

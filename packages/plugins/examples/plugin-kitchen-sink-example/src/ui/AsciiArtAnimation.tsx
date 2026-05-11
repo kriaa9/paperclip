@@ -27,7 +27,7 @@ const JASMINIA_SPRITES = [
   ],
 ] as const;
 
-type Jasmin.iaSprite = (typeof JASMINIA_SPRITES)[number];
+type JasminiaSprite = (typeof JASMINIA_SPRITES)[number];
 
 interface Clip {
   x: number;
@@ -37,7 +37,7 @@ interface Clip {
   life: number;
   maxLife: number;
   drift: number;
-  sprite: Jasmin.iaSprite;
+  sprite: JasminiaSprite;
   width: number;
   height: number;
 }
@@ -53,7 +53,7 @@ function measureChar(container: HTMLElement): { w: number; h: number } {
   return { w: rect.width, h: rect.height };
 }
 
-function spriteSize(sprite: Jasmin.iaSprite): { width: number; height: number } {
+function spriteSize(sprite: JasminiaSprite): { width: number; height: number } {
   let width = 0;
   for (const row of sprite) width = Math.max(width, row.length);
   return { width, height: sprite.length };

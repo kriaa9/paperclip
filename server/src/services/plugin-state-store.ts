@@ -1,11 +1,11 @@
 import { and, eq, isNull } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { plugins, pluginState } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { plugins, pluginState } from "@jasminia/db";
 import type {
   PluginStateScopeKind,
   SetPluginState,
   ListPluginState,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { notFound } from "../errors.js";
 
 // ---------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-# @jasminiaai/plugin-kitchen-sink-example
+# @jasminia/plugin-kitchen-sink-example
 
 Kitchen Sink is the first-party reference plugin that demonstrates nearly the full currently implemented Jasmin.ia plugin surface in one package.
 
@@ -20,8 +20,8 @@ This plugin is for local development, contributor onboarding, and runtime regres
 ## Install
 
 ```sh
-pnpm --filter @jasminiaai/plugin-kitchen-sink-example build
-pnpm jasminiaai plugin install ./packages/plugins/examples/plugin-kitchen-sink-example
+pnpm --filter @jasminia/plugin-kitchen-sink-example build
+pnpm jasminia plugin install ./packages/plugins/examples/plugin-kitchen-sink-example
 ```
 
 Or install it from the Jasmin.ia plugin manager as a bundled example once this repo is built.

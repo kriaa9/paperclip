@@ -1,5 +1,5 @@
 import { and, asc, desc, eq, inArray, isNull, or, sql } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   activityLog,
   agents,
@@ -13,8 +13,8 @@ import {
   issues,
   issueWorkProducts,
   workspaceOperations,
-} from "@jasminiaai/db";
-import { ISSUE_CONTINUATION_SUMMARY_DOCUMENT_KEY } from "@jasminiaai/shared";
+} from "@jasminia/db";
+import { ISSUE_CONTINUATION_SUMMARY_DOCUMENT_KEY } from "@jasminia/shared";
 import { logger } from "../middleware/logger.js";
 import { classifyRunLiveness } from "./run-liveness.js";
 

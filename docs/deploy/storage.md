@@ -22,7 +22,7 @@ For production or multi-node deployments, use S3-compatible object storage (AWS 
 Configure via CLI:
 
 ```sh
-pnpm jasminiaai configure --section storage
+pnpm jasminia configure --section storage
 ```
 
 ## Configuration

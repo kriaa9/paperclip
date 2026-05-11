@@ -8,7 +8,7 @@ import {
   updateIssueSchema,
   type Issue,
   type IssueComment,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
   addCommonClientOptions,
   formatInlineRecord,

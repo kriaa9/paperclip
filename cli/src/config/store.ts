@@ -1,9 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
-import { jasminiaConfigSchema, type Jasmin.iaConfig } from "./schema.js";
+import { jasminiaConfigSchema, type JasminiaConfig } from "./schema.js";
 import {
   resolveDefaultConfigPath,
-  resolveJasmin.iaInstanceId,
+  resolveJasminiaInstanceId,
 } from "./home.js";
 
 const DEFAULT_CONFIG_BASENAME = "config.json";
@@ -29,7 +29,7 @@ function findConfigFileFromAncestors(startDir: string): string | null {
 export function resolveConfigPath(overridePath?: string): string {
   if (overridePath) return path.resolve(overridePath);
   if (process.env.JASMINIA_CONFIG) return path.resolve(process.env.JASMINIA_CONFIG);
-  return findConfigFileFromAncestors(process.cwd()) ?? resolveDefaultConfigPath(resolveJasmin.iaInstanceId());
+  return findConfigFileFromAncestors(process.cwd()) ?? resolveDefaultConfigPath(resolveJasminiaInstanceId());
 }
 
 function parseJson(filePath: string): unknown {
@@ -83,7 +83,7 @@ function formatValidationError(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
 }
 
-export function readConfig(configPath?: string): Jasmin.iaConfig | null {
+export function readConfig(configPath?: string): JasminiaConfig | null {
   const filePath = resolveConfigPath(configPath);
   if (!fs.existsSync(filePath)) return null;
   const raw = parseJson(filePath);
@@ -96,7 +96,7 @@ export function readConfig(configPath?: string): Jasmin.iaConfig | null {
 }
 
 export function writeConfig(
-  config: Jasmin.iaConfig,
+  config: JasminiaConfig,
   configPath?: string,
 ): void {
   const filePath = resolveConfigPath(configPath);

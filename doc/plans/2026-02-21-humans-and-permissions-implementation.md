@@ -455,11 +455,11 @@ Files:
 
 Commands:
 
-1. `jasminiaai auth bootstrap-ceo`
+1. `jasminia auth bootstrap-ceo`
 - create bootstrap invite
 - print one-time URL
 
-2. `jasminiaai onboard`
+2. `jasminia onboard`
 - in cloud mode with `bootstrap_pending`, print bootstrap URL and next steps
 - in local mode, skip bootstrap requirement
 

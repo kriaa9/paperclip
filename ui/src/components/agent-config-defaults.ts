@@ -1,4 +1,4 @@
-import type { CreateConfigValues } from "@jasminiaai/adapter-utils";
+import type { CreateConfigValues } from "@jasminia/adapter-utils";
 
 export const defaultCreateValues: CreateConfigValues = {
   adapterType: "claude_local",

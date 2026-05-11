@@ -15,8 +15,8 @@ import {
   pluginCompanySettings,
   pluginManagedResources,
   plugins,
-} from "@jasminiaai/db";
-import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/shared";
+} from "@jasminia/db";
+import type { JasminiaPluginManifestV1 } from "@jasminia/shared";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,
@@ -41,7 +41,7 @@ function issuePrefix(id: string) {
   return `T${id.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
 }
 
-function manifest(): Jasmin.iaPluginManifestV1 {
+function manifest(): JasminiaPluginManifestV1 {
   return {
     id: "jasminia.managed-agents-test",
     apiVersion: 1,
@@ -100,7 +100,7 @@ describeEmbeddedPostgres("plugin-managed agents", () => {
     await tempDb?.cleanup();
   });
 
-  async function seedCompanyAndPlugin(options: { requireApproval?: boolean; manifest?: Jasmin.iaPluginManifestV1 } = {}) {
+  async function seedCompanyAndPlugin(options: { requireApproval?: boolean; manifest?: JasminiaPluginManifestV1 } = {}) {
     const companyId = randomUUID();
     const pluginId = randomUUID();
     const pluginManifest = options.manifest ?? manifest();
@@ -113,7 +113,7 @@ describeEmbeddedPostgres("plugin-managed agents", () => {
     await db.insert(plugins).values({
       id: pluginId,
       pluginKey: pluginManifest.id,
-      packageName: "@jasminiaai/plugin-managed-agents-test",
+      packageName: "@jasminia/plugin-managed-agents-test",
       version: pluginManifest.version,
       apiVersion: pluginManifest.apiVersion,
       categories: pluginManifest.categories,

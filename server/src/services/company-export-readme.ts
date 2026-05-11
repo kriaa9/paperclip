@@ -1,7 +1,7 @@
 /**
  * Generates README.md with Mermaid org chart for company exports.
  */
-import type { CompanyPortabilityManifest } from "@jasminiaai/shared";
+import type { CompanyPortabilityManifest } from "@jasminia/shared";
 
 const ROLE_LABELS: Record<string, string> = {
   ceo: "CEO",
@@ -157,7 +157,7 @@ export function generateReadme(
   lines.push("## Getting Started");
   lines.push("");
   lines.push("```bash");
-  lines.push("pnpm jasminiaai company import this-github-url-or-folder");
+  lines.push("pnpm jasminia company import this-github-url-or-folder");
   lines.push("```");
   lines.push("");
   lines.push("See [Jasmin.ia](https://jasminia.com) for more information.");

@@ -2,8 +2,8 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it, vi } from "vitest";
-import type { AdapterExecutionTarget } from "@jasminiaai/adapter-utils/execution-target";
-import { runChildProcess } from "@jasminiaai/adapter-utils/server-utils";
+import type { AdapterExecutionTarget } from "@jasminia/adapter-utils/execution-target";
+import { runChildProcess } from "@jasminia/adapter-utils/server-utils";
 import { SANDBOX_INSTALL_COMMAND } from "../index.js";
 import { execute } from "./execute.js";
 
@@ -35,13 +35,13 @@ const {
   return { setPrepareCursorSandboxCommand };
 });
 
-vi.mock("@jasminiaai/adapter-utils/execution-target", async () => {
-  const actual = await vi.importActual<typeof import("@jasminiaai/adapter-utils/execution-target")>(
-    "@jasminiaai/adapter-utils/execution-target",
+vi.mock("@jasminia/adapter-utils/execution-target", async () => {
+  const actual = await vi.importActual<typeof import("@jasminia/adapter-utils/execution-target")>(
+    "@jasminia/adapter-utils/execution-target",
   );
   return {
     ...actual,
-    startAdapterExecutionTargetJasmin.iaBridge: async () => null,
+    startAdapterExecutionTargetJasminiaBridge: async () => null,
   };
 });
 

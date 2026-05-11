@@ -13,13 +13,13 @@ export function expandHomePrefix(value: string): string {
   return value;
 }
 
-export function resolveJasmin.iaHomeDir(homeOverride?: string): string {
+export function resolveJasminiaHomeDir(homeOverride?: string): string {
   const raw = homeOverride?.trim() || process.env.JASMINIA_HOME?.trim();
   if (raw) return path.resolve(expandHomePrefix(raw));
   return path.resolve(os.homedir(), ".jasminia");
 }
 
-export function resolveJasmin.iaInstanceId(instanceIdOverride?: string): string {
+export function resolveJasminiaInstanceId(instanceIdOverride?: string): string {
   const raw = instanceIdOverride?.trim() || process.env.JASMINIA_INSTANCE_ID?.trim() || DEFAULT_JASMINIA_INSTANCE_ID;
   if (!PATH_SEGMENT_RE.test(raw)) {
     throw new Error(`Invalid JASMINIA_INSTANCE_ID '${raw}'.`);
@@ -27,28 +27,28 @@ export function resolveJasmin.iaInstanceId(instanceIdOverride?: string): string 
   return raw;
 }
 
-export function resolveJasmin.iaInstanceRoot(input: {
+export function resolveJasminiaInstanceRoot(input: {
   homeDir?: string;
   instanceId?: string;
 } = {}): string {
-  return path.resolve(resolveJasmin.iaHomeDir(input.homeDir), "instances", resolveJasmin.iaInstanceId(input.instanceId));
+  return path.resolve(resolveJasminiaHomeDir(input.homeDir), "instances", resolveJasminiaInstanceId(input.instanceId));
 }
 
-export function resolveJasmin.iaInstanceConfigPath(input: {
+export function resolveJasminiaInstanceConfigPath(input: {
   homeDir?: string;
   instanceId?: string;
 } = {}): string {
-  return path.resolve(resolveJasmin.iaInstanceRoot(input), JASMINIA_CONFIG_BASENAME);
+  return path.resolve(resolveJasminiaInstanceRoot(input), JASMINIA_CONFIG_BASENAME);
 }
 
-export function resolveJasmin.iaConfigPathForInstance(input: {
+export function resolveJasminiaConfigPathForInstance(input: {
   homeDir?: string;
   instanceId?: string;
 } = {}): string {
-  return resolveJasmin.iaInstanceConfigPath(input);
+  return resolveJasminiaInstanceConfigPath(input);
 }
 
-export function resolveJasmin.iaEnvPathForConfig(configPath: string): string {
+export function resolveJasminiaEnvPathForConfig(configPath: string): string {
   return path.resolve(path.dirname(configPath), JASMINIA_ENV_FILENAME);
 }
 
@@ -56,35 +56,35 @@ export function resolveDefaultEmbeddedPostgresDir(input: {
   homeDir?: string;
   instanceId?: string;
 } = {}): string {
-  return path.resolve(resolveJasmin.iaInstanceRoot(input), "db");
+  return path.resolve(resolveJasminiaInstanceRoot(input), "db");
 }
 
 export function resolveDefaultLogsDir(input: {
   homeDir?: string;
   instanceId?: string;
 } = {}): string {
-  return path.resolve(resolveJasmin.iaInstanceRoot(input), "logs");
+  return path.resolve(resolveJasminiaInstanceRoot(input), "logs");
 }
 
 export function resolveDefaultSecretsKeyFilePath(input: {
   homeDir?: string;
   instanceId?: string;
 } = {}): string {
-  return path.resolve(resolveJasmin.iaInstanceRoot(input), "secrets", "master.key");
+  return path.resolve(resolveJasminiaInstanceRoot(input), "secrets", "master.key");
 }
 
 export function resolveDefaultStorageDir(input: {
   homeDir?: string;
   instanceId?: string;
 } = {}): string {
-  return path.resolve(resolveJasmin.iaInstanceRoot(input), "data", "storage");
+  return path.resolve(resolveJasminiaInstanceRoot(input), "data", "storage");
 }
 
 export function resolveDefaultBackupDir(input: {
   homeDir?: string;
   instanceId?: string;
 } = {}): string {
-  return path.resolve(resolveJasmin.iaInstanceRoot(input), "data", "backups");
+  return path.resolve(resolveJasminiaInstanceRoot(input), "data", "backups");
 }
 
 export function resolveHomeAwarePath(value: string): string {

@@ -1,14 +1,14 @@
 import { and, asc, eq, inArray, isNull } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { documents, issueComments, issueDocuments, issueReferenceMentions, issues } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { documents, issueComments, issueDocuments, issueReferenceMentions, issues } from "@jasminia/db";
 import type {
   IssueReferenceSource,
   IssueReferenceSourceKind,
   IssueRelatedWorkItem,
   IssueRelatedWorkSummary,
   IssueRelationIssueSummary,
-} from "@jasminiaai/shared";
-import { extractIssueReferenceMatches } from "@jasminiaai/shared";
+} from "@jasminia/shared";
+import { extractIssueReferenceMatches } from "@jasminia/shared";
 import { notFound } from "../errors.js";
 
 const SOURCE_KIND_ORDER: Record<IssueReferenceSourceKind, number> = {

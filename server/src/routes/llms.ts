@@ -1,6 +1,6 @@
 import { Router, type Request } from "express";
-import type { Db } from "@jasminiaai/db";
-import { AGENT_ICON_NAMES } from "@jasminiaai/shared";
+import type { Db } from "@jasminia/db";
+import { AGENT_ICON_NAMES } from "@jasminia/shared";
 import { forbidden } from "../errors.js";
 import { listServerAdapters } from "../adapters/index.js";
 import { agentService } from "../services/agents.js";

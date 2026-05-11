@@ -5,7 +5,7 @@ import type {
   InboxDismissal,
   Issue,
   JoinRequest,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
   applyIssueFilters,
   defaultIssueFilterState,

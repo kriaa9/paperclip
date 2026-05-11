@@ -17,7 +17,7 @@ import {
   pluginManagedResources,
   plugins,
   projects,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,
@@ -227,11 +227,11 @@ describeEmbeddedPostgres("plugin orchestration APIs", () => {
     const pluginId = randomUUID();
     await db.insert(plugins).values({
       id: pluginId,
-      pluginKey: "jasminiaai.plugin-llm-wiki",
-      packageName: "@jasminiaai/plugin-llm-wiki",
+      pluginKey: "jasminia.plugin-llm-wiki",
+      packageName: "@jasminia/plugin-llm-wiki",
       version: "0.1.0",
       manifestJson: {
-        id: "jasminiaai.plugin-llm-wiki",
+        id: "jasminia.plugin-llm-wiki",
         apiVersion: 1,
         version: "0.1.0",
         displayName: "LLM Wiki",
@@ -256,12 +256,12 @@ describeEmbeddedPostgres("plugin orchestration APIs", () => {
     const services = buildHostServices(
       db,
       pluginId,
-      "jasminiaai.plugin-llm-wiki",
+      "jasminia.plugin-llm-wiki",
       createEventBusStub(),
       undefined,
       {
         manifest: {
-          id: "jasminiaai.plugin-llm-wiki",
+          id: "jasminia.plugin-llm-wiki",
           apiVersion: 1,
           version: "0.1.0",
           displayName: "LLM Wiki",

@@ -16,7 +16,7 @@ import {
   type PluginSettingsPageProps,
   type PluginSidebarProps,
   type PluginWidgetProps,
-} from "@jasminiaai/plugin-sdk/ui";
+} from "@jasminia/plugin-sdk/ui";
 import {
   DEFAULT_CONFIG,
   JOB_KEYS,
@@ -1303,7 +1303,7 @@ function KitchenSinkSharedPickerDemo({ context }: { context: PluginPageProps["co
   return (
     <Section title="Shared Host Pickers">
       <div style={mutedTextStyle}>
-        These controls are imported from `@jasminiaai/plugin-sdk/ui` and reuse the host's assignee and project pickers from the new issue pane.
+        These controls are imported from `@jasminia/plugin-sdk/ui` and reuse the host's assignee and project pickers from the new issue pane.
       </div>
       {!context.companyId ? (
         <div style={mutedTextStyle}>Select a company to load picker options.</div>

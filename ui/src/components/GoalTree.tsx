@@ -1,4 +1,4 @@
-import type { Goal } from "@jasminiaai/shared";
+import type { Goal } from "@jasminia/shared";
 import { Link } from "@/lib/router";
 import { StatusBadge } from "./StatusBadge";
 import { ChevronRight } from "lucide-react";

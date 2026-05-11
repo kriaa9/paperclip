@@ -1,5 +1,5 @@
-import type { Db } from "@jasminiaai/db";
-import { companies, instanceSettings } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { companies, instanceSettings } from "@jasminia/db";
 import {
   DEFAULT_FEEDBACK_DATA_SHARING_PREFERENCE,
   DEFAULT_BACKUP_RETENTION,
@@ -11,7 +11,7 @@ import {
   type PatchInstanceGeneralSettings,
   type InstanceSettings,
   type PatchInstanceExperimentalSettings,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { eq } from "drizzle-orm";
 
 const DEFAULT_SINGLETON_KEY = "default";

@@ -1,4 +1,4 @@
-import { runWorker } from "@jasminiaai/plugin-sdk";
+import { runWorker } from "@jasminia/plugin-sdk";
 import plugin from "./plugin.js";
 
 export default plugin;

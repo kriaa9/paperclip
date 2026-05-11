@@ -19,7 +19,7 @@ const sdkPackageJson = JSON.parse(readFileSync(sdkPackageJsonPath, "utf8"));
 const publishConfig = packageJson.publishConfig ?? {};
 const dependencies = {
   ...(packageJson.dependencies ?? {}),
-  "@jasminiaai/plugin-sdk": sdkPackageJson.version,
+  "@jasminia/plugin-sdk": sdkPackageJson.version,
 };
 
 const publishPackageJson = {

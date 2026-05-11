@@ -1,4 +1,4 @@
-import type { QuotaWindow } from "@jasminiaai/shared";
+import type { QuotaWindow } from "@jasminia/shared";
 import { cn, quotaSourceDisplayName } from "@/lib/utils";
 
 interface CodexSubscriptionPanelProps {

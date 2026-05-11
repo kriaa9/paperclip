@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import type { Jasmin.iaConfig } from "../config/schema.js";
+import type { JasminiaConfig } from "../config/schema.js";
 import type { CheckResult } from "./index.js";
 import { resolveRuntimeLikePath } from "./path-resolver.js";
 
@@ -31,7 +31,7 @@ function decodeMasterKey(raw: string): Buffer | null {
 
 function withStrictModeNote(
   base: Pick<CheckResult, "name" | "status" | "message" | "canRepair" | "repair" | "repairHint">,
-  config: Jasmin.iaConfig,
+  config: JasminiaConfig,
 ): CheckResult {
   const strictModeDisabledInDeployedSetup =
     config.database.mode === "postgres" && config.secrets.strictMode === false;
@@ -48,7 +48,7 @@ function withStrictModeNote(
   };
 }
 
-export function secretsCheck(config: Jasmin.iaConfig, configPath?: string): CheckResult {
+export function secretsCheck(config: JasminiaConfig, configPath?: string): CheckResult {
   const provider = config.secrets.provider;
   if (provider === "aws_secrets_manager") {
     return withStrictModeNote(awsSecretsManagerCheck(), config);
@@ -59,7 +59,7 @@ export function secretsCheck(config: Jasmin.iaConfig, configPath?: string): Chec
       status: "fail",
       message: `${provider} is configured, but this build only supports local_encrypted and aws_secrets_manager`,
       canRepair: false,
-      repairHint: "Run `jasminiaai configure --section secrets` and choose local_encrypted or aws_secrets_manager",
+      repairHint: "Run `jasminia configure --section secrets` and choose local_encrypted or aws_secrets_manager",
     };
   }
 

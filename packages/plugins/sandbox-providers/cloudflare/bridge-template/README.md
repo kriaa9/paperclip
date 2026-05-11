@@ -1,6 +1,6 @@
 # Cloudflare Sandbox Bridge Template
 
-This Worker is the operator-facing bridge used by `@jasminiaai/plugin-cloudflare-sandbox`.
+This Worker is the operator-facing bridge used by `@jasminia/plugin-cloudflare-sandbox`.
 
 It exposes a small authenticated JSON API under `/api/jasminia-sandbox/v1` and translates Jasmin.ia lease and command requests into Cloudflare Sandbox SDK calls.
 

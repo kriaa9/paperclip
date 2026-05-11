@@ -31,7 +31,7 @@ async function createSkill(root: string, name: string, body = `---\nrequired: fa
   await fs.mkdir(skillDir, { recursive: true });
   await fs.writeFile(path.join(skillDir, "SKILL.md"), body, "utf8");
   return {
-    key: `jasminiaai/test/${name}`,
+    key: `jasminia/test/${name}`,
     runtimeName: name,
     source: skillDir,
     required: false,
@@ -200,8 +200,8 @@ describe("acpx_local runtime skill isolation", () => {
     await fs.writeFile(managedAuth, "{\"stale\":true}", "utf8");
 
     const previousCodexHome = process.env.CODEX_HOME;
-    const previousJasmin.iaHome = process.env.JASMINIA_HOME;
-    const previousJasmin.iaInstanceId = process.env.JASMINIA_INSTANCE_ID;
+    const previousJasminiaHome = process.env.JASMINIA_HOME;
+    const previousJasminiaInstanceId = process.env.JASMINIA_INSTANCE_ID;
     try {
       process.env.CODEX_HOME = sourceCodexHome;
       process.env.JASMINIA_HOME = jasminiaHome;
@@ -215,10 +215,10 @@ describe("acpx_local runtime skill isolation", () => {
     } finally {
       if (previousCodexHome === undefined) delete process.env.CODEX_HOME;
       else process.env.CODEX_HOME = previousCodexHome;
-      if (previousJasmin.iaHome === undefined) delete process.env.JASMINIA_HOME;
-      else process.env.JASMINIA_HOME = previousJasmin.iaHome;
-      if (previousJasmin.iaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
-      else process.env.JASMINIA_INSTANCE_ID = previousJasmin.iaInstanceId;
+      if (previousJasminiaHome === undefined) delete process.env.JASMINIA_HOME;
+      else process.env.JASMINIA_HOME = previousJasminiaHome;
+      if (previousJasminiaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
+      else process.env.JASMINIA_INSTANCE_ID = previousJasminiaInstanceId;
     }
 
     const authStat = await fs.lstat(managedAuth);
@@ -282,7 +282,7 @@ describe("acpx_local runtime skill isolation", () => {
             source: "project_primary",
             strategy: "git_worktree",
             workspaceId: "workspace-1",
-            repoUrl: "#
+            repoUrl: "#",
             repoRef: "main",
             branchName: "feature/remote-acpx",
             worktreePath: workspaceDir,

@@ -1,4 +1,4 @@
-import type { InboxDismissal } from "@jasminiaai/shared";
+import type { InboxDismissal } from "@jasminia/shared";
 import { api } from "./client";
 
 export const inboxDismissalsApi = {

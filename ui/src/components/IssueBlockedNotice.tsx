@@ -1,4 +1,4 @@
-import type { IssueBlockerAttention, IssueRelationIssueSummary, SuccessfulRunHandoffState } from "@jasminiaai/shared";
+import type { IssueBlockerAttention, IssueRelationIssueSummary, SuccessfulRunHandoffState } from "@jasminia/shared";
 import { AlertTriangle, Flag } from "lucide-react";
 import { Link } from "@/lib/router";
 import { createIssueDetailPath } from "../lib/issueDetailBreadcrumb";

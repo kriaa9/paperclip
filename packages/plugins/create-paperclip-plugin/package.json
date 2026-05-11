@@ -2,13 +2,13 @@
   "name": "@jasminia/create-jasminia-plugin",
   "version": "0.1.0",
   "license": "MIT",
-  "homepage": "#
+  "homepage": "#",
   "bugs": {
-    "url": "#
+    "url": "#"
   },
   "repository": {
     "type": "git",
-    "url": "#
+    "url": "#",
     "directory": "packages/plugins/create-jasminia-plugin"
   },
   "type": "module",

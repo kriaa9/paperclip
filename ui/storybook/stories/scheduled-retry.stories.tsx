@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import type { Issue, IssueScheduledRetry } from "@jasminiaai/shared";
+import type { Issue, IssueScheduledRetry } from "@jasminia/shared";
 import { IssueScheduledRetryCard } from "@/components/IssueScheduledRetryCard";
 import { IssueProperties } from "@/components/IssueProperties";
 import {

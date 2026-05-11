@@ -10,7 +10,7 @@ import {
   startSshEnvLabFixture,
   stopSshEnvLabFixture,
   type SshEnvironmentConfig,
-} from "@jasminiaai/adapter-utils/ssh";
+} from "@jasminia/adapter-utils/ssh";
 import {
   agents,
   companies,
@@ -20,8 +20,8 @@ import {
   environmentLeases,
   environments,
   heartbeatRuns,
-} from "@jasminiaai/db";
-import type { Environment } from "@jasminiaai/shared";
+} from "@jasminia/db";
+import type { Environment } from "@jasminia/shared";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,

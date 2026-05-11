@@ -45,11 +45,11 @@ Jasmin.ia supports three deployment configurations, from zero-friction local to 
 Set the mode during onboarding:
 
 ```sh
-pnpm jasminiaai onboard
+pnpm jasminia onboard
 ```
 
 Or update it later:
 
 ```sh
-pnpm jasminiaai configure --section server
+pnpm jasminia configure --section server
 ```

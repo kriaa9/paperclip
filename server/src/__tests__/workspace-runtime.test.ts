@@ -16,7 +16,7 @@ import {
   projectWorkspaces,
   projects,
   workspaceRuntimeServices,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import { eq } from "drizzle-orm";
 import {
   buildWorkspaceRuntimeDesiredStatePatch,
@@ -38,8 +38,8 @@ import {
   type RealizedExecutionWorkspace,
 } from "../services/workspace-runtime.ts";
 import { writeLocalServiceRegistryRecord } from "../services/local-service-supervisor.ts";
-import { resolveJasmin.iaConfigPath } from "../paths.ts";
-import type { WorkspaceOperation } from "@jasminiaai/shared";
+import { resolveJasminiaConfigPath } from "../paths.ts";
+import type { WorkspaceOperation } from "@jasminia/shared";
 import type { WorkspaceOperationRecorder } from "../services/workspace-operations.ts";
 import {
   getEmbeddedPostgresTestSupport,
@@ -197,7 +197,7 @@ describe("ensureServerWorkspaceLinksCurrent", () => {
   it("relinks stale server workspace dependencies inside the current repo root", async () => {
     const repoRoot = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-runtime-links-"));
     const staleRoot = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-runtime-links-stale-"));
-    const serverNodeModulesScopeDir = path.join(repoRoot, "server", "node_modules", "@jasminiaai");
+    const serverNodeModulesScopeDir = path.join(repoRoot, "server", "node_modules", "@jasminia");
     const expectedPackageDir = path.join(repoRoot, "packages", "db");
     const stalePackageDir = path.join(staleRoot, "db");
 
@@ -210,21 +210,21 @@ describe("ensureServerWorkspaceLinksCurrent", () => {
     await fs.writeFile(
       path.join(repoRoot, "server", "package.json"),
       JSON.stringify({
-        name: "@jasminiaai/server",
+        name: "@jasminia/server",
         dependencies: {
-          "@jasminiaai/db": "workspace:*",
+          "@jasminia/db": "workspace:*",
         },
       }),
       "utf8",
     );
     await fs.writeFile(
       path.join(expectedPackageDir, "package.json"),
-      JSON.stringify({ name: "@jasminiaai/db" }),
+      JSON.stringify({ name: "@jasminia/db" }),
       "utf8",
     );
     await fs.writeFile(
       path.join(stalePackageDir, "package.json"),
-      JSON.stringify({ name: "@jasminiaai/db" }),
+      JSON.stringify({ name: "@jasminia/db" }),
       "utf8",
     );
     await fs.symlink(stalePackageDir, path.join(serverNodeModulesScopeDir, "db"));
@@ -235,7 +235,7 @@ describe("ensureServerWorkspaceLinksCurrent", () => {
 
   it("skips relinking when server workspace dependencies already point at the repo", async () => {
     const repoRoot = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-runtime-links-current-"));
-    const serverNodeModulesScopeDir = path.join(repoRoot, "server", "node_modules", "@jasminiaai");
+    const serverNodeModulesScopeDir = path.join(repoRoot, "server", "node_modules", "@jasminia");
     const expectedPackageDir = path.join(repoRoot, "packages", "db");
 
     await fs.mkdir(path.join(repoRoot, "server"), { recursive: true });
@@ -246,16 +246,16 @@ describe("ensureServerWorkspaceLinksCurrent", () => {
     await fs.writeFile(
       path.join(repoRoot, "server", "package.json"),
       JSON.stringify({
-        name: "@jasminiaai/server",
+        name: "@jasminia/server",
         dependencies: {
-          "@jasminiaai/db": "workspace:*",
+          "@jasminia/db": "workspace:*",
         },
       }),
       "utf8",
     );
     await fs.writeFile(
       path.join(expectedPackageDir, "package.json"),
-      JSON.stringify({ name: "@jasminiaai/db" }),
+      JSON.stringify({ name: "@jasminia/db" }),
       "utf8",
     );
     await fs.symlink(expectedPackageDir, path.join(serverNodeModulesScopeDir, "db"));
@@ -266,7 +266,7 @@ describe("ensureServerWorkspaceLinksCurrent", () => {
   it("skips relinking outside linked git worktrees", async () => {
     const repoRoot = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-runtime-links-non-worktree-"));
     const staleRoot = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-runtime-links-non-worktree-stale-"));
-    const serverNodeModulesScopeDir = path.join(repoRoot, "server", "node_modules", "@jasminiaai");
+    const serverNodeModulesScopeDir = path.join(repoRoot, "server", "node_modules", "@jasminia");
     const expectedPackageDir = path.join(repoRoot, "packages", "db");
     const stalePackageDir = path.join(staleRoot, "db");
 
@@ -279,21 +279,21 @@ describe("ensureServerWorkspaceLinksCurrent", () => {
     await fs.writeFile(
       path.join(repoRoot, "server", "package.json"),
       JSON.stringify({
-        name: "@jasminiaai/server",
+        name: "@jasminia/server",
         dependencies: {
-          "@jasminiaai/db": "workspace:*",
+          "@jasminia/db": "workspace:*",
         },
       }),
       "utf8",
     );
     await fs.writeFile(
       path.join(expectedPackageDir, "package.json"),
-      JSON.stringify({ name: "@jasminiaai/db" }),
+      JSON.stringify({ name: "@jasminia/db" }),
       "utf8",
     );
     await fs.writeFile(
       path.join(stalePackageDir, "package.json"),
-      JSON.stringify({ name: "@jasminiaai/db" }),
+      JSON.stringify({ name: "@jasminia/db" }),
       "utf8",
     );
     await fs.symlink(stalePackageDir, path.join(serverNodeModulesScopeDir, "db"));
@@ -960,7 +960,7 @@ describe("realizeExecutionWorkspace", () => {
       expect(envVars.JASMINIA_WORKTREE_NAME).toBe("PAP-885-show-worktree-banner");
 
       process.chdir(workspace.cwd);
-      expect(resolveJasmin.iaConfigPath()).toBe(configPath);
+      expect(resolveJasminiaConfigPath()).toBe(configPath);
 
       const preservedPort = 39999;
       await fs.writeFile(
@@ -1194,10 +1194,10 @@ describe("realizeExecutionWorkspace", () => {
         fakePnpmPath,
         [
           "#!/bin/sh",
-          "if [ \"$1\" = \"jasminiaai\" ] && [ \"$2\" = \"--help\" ]; then",
+          "if [ \"$1\" = \"jasminia\" ] && [ \"$2\" = \"--help\" ]; then",
           "  exit 0",
           "fi",
-          "if [ \"$1\" = \"jasminiaai\" ] && [ \"$2\" = \"worktree\" ] && [ \"$3\" = \"init\" ]; then",
+          "if [ \"$1\" = \"jasminia\" ] && [ \"$2\" = \"worktree\" ] && [ \"$3\" = \"init\" ]; then",
           "  echo \"simulated init failure\" >&2",
           "  exit 42",
           "fi",
@@ -1268,7 +1268,7 @@ describe("realizeExecutionWorkspace", () => {
         fakePnpmPath,
         [
           "#!/bin/sh",
-          "if [ \"$1\" = \"jasminiaai\" ] && [ \"$2\" = \"--help\" ]; then",
+          "if [ \"$1\" = \"jasminia\" ] && [ \"$2\" = \"--help\" ]; then",
           "  exit 1",
           "fi",
           "if [ \"$1\" = \"install\" ] && [ \"$2\" = \"--frozen-lockfile\" ]; then",

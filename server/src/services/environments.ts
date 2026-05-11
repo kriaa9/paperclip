@@ -1,6 +1,6 @@
 import { and, desc, eq, sql } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { environmentLeases, environments } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { environmentLeases, environments } from "@jasminia/db";
 import {
   ENVIRONMENT_DRIVERS,
   ENVIRONMENT_LEASE_CLEANUP_STATUSES,
@@ -14,7 +14,7 @@ import {
   type EnvironmentLeasePolicy,
   type EnvironmentLeaseStatus,
   type UpdateEnvironment,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 
 type EnvironmentRow = typeof environments.$inferSelect;
 type EnvironmentLeaseRow = typeof environmentLeases.$inferSelect;
@@ -122,7 +122,7 @@ export function environmentService(db: Db) {
           status: "active",
           config: {},
           metadata: {
-            managedByJasmin.ia: true,
+            managedByJasminia: true,
             defaultForCompany: true,
           },
           createdAt: now,

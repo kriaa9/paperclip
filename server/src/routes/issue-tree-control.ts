@@ -1,11 +1,11 @@
 import { Router } from "express";
 import type { Request } from "express";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   createIssueTreeHoldSchema,
   previewIssueTreeControlSchema,
   releaseIssueTreeHoldSchema,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { validate } from "../middleware/validate.js";
 import { heartbeatService, issueService, issueTreeControlService, logActivity } from "../services/index.js";
 import { assertBoard, assertCompanyAccess, getActorInfo } from "./authz.js";

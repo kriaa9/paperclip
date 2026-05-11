@@ -1,4 +1,4 @@
-import type { AdapterModel } from "@jasminiaai/adapter-utils";
+import type { AdapterModel } from "@jasminia/adapter-utils";
 import { models as DIRECT_MODELS } from "../index.js";
 
 /** AWS Bedrock model IDs — region-qualified identifiers required by the Bedrock API. */

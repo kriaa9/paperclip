@@ -15,7 +15,7 @@ import {
   projects,
   routines,
   routineTriggers,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import {
   copyGitHooksToWorktreeGitDir,
   copySeededSecretsKey,
@@ -43,7 +43,7 @@ import {
   rewriteLocalUrlPort,
   sanitizeWorktreeInstanceId,
 } from "../commands/worktree-lib.js";
-import type { Jasmin.iaConfig } from "../config/schema.js";
+import type { JasminiaConfig } from "../config/schema.js";
 import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,
@@ -72,7 +72,7 @@ afterEach(() => {
   }
 });
 
-function buildSourceConfig(): Jasmin.iaConfig {
+function buildSourceConfig(): JasminiaConfig {
   return {
     $meta: {
       version: 1,
@@ -571,7 +571,7 @@ describe("worktree helpers", () => {
 
         const targetConfig = JSON.parse(
           fs.readFileSync(path.join(worktreeRoot, ".jasminia", "config.json"), "utf8"),
-        ) as Jasmin.iaConfig;
+        ) as JasminiaConfig;
         const { default: EmbeddedPostgres } = await import("embedded-postgres");
         const targetPg = new EmbeddedPostgres({
           databaseDir: targetConfig.database.embeddedPostgresDataDir,
@@ -689,7 +689,7 @@ describe("worktree helpers", () => {
     const repoRoot = path.join(tempRoot, "repo");
     const localConfigPath = path.join(repoRoot, ".jasminia", "config.json");
     const originalCwd = process.cwd();
-    const originalJasmin.iaConfig = process.env.JASMINIA_CONFIG;
+    const originalJasminiaConfig = process.env.JASMINIA_CONFIG;
 
     try {
       fs.mkdirSync(path.dirname(localConfigPath), { recursive: true });
@@ -700,10 +700,10 @@ describe("worktree helpers", () => {
       expect(fs.realpathSync(resolveSourceConfigPath({}))).toBe(fs.realpathSync(localConfigPath));
     } finally {
       process.chdir(originalCwd);
-      if (originalJasmin.iaConfig === undefined) {
+      if (originalJasminiaConfig === undefined) {
         delete process.env.JASMINIA_CONFIG;
       } else {
-        process.env.JASMINIA_CONFIG = originalJasmin.iaConfig;
+        process.env.JASMINIA_CONFIG = originalJasminiaConfig;
       }
       fs.rmSync(tempRoot, { recursive: true, force: true });
     }
@@ -714,7 +714,7 @@ describe("worktree helpers", () => {
     const sourceConfigPath = path.join(tempRoot, "source", "config.json");
     const targetRoot = path.join(tempRoot, "target");
     const originalCwd = process.cwd();
-    const originalJasmin.iaConfig = process.env.JASMINIA_CONFIG;
+    const originalJasminiaConfig = process.env.JASMINIA_CONFIG;
 
     try {
       fs.mkdirSync(path.dirname(sourceConfigPath), { recursive: true });
@@ -728,10 +728,10 @@ describe("worktree helpers", () => {
       );
     } finally {
       process.chdir(originalCwd);
-      if (originalJasmin.iaConfig === undefined) {
+      if (originalJasminiaConfig === undefined) {
         delete process.env.JASMINIA_CONFIG;
       } else {
-        process.env.JASMINIA_CONFIG = originalJasmin.iaConfig;
+        process.env.JASMINIA_CONFIG = originalJasminiaConfig;
       }
       fs.rmSync(tempRoot, { recursive: true, force: true });
     }
@@ -821,7 +821,7 @@ describe("worktree helpers", () => {
       instanceId: "default",
     });
     const originalCwd = process.cwd();
-    const originalJasmin.iaConfig = process.env.JASMINIA_CONFIG;
+    const originalJasminiaConfig = process.env.JASMINIA_CONFIG;
 
     try {
       fs.mkdirSync(path.dirname(currentPaths.configPath), { recursive: true });
@@ -875,10 +875,10 @@ describe("worktree helpers", () => {
       expect(rewrittenEnv).toContain("JASMINIA_WORKTREE_COLOR=\"#112233\"");
     } finally {
       process.chdir(originalCwd);
-      if (originalJasmin.iaConfig === undefined) {
+      if (originalJasminiaConfig === undefined) {
         delete process.env.JASMINIA_CONFIG;
       } else {
-        process.env.JASMINIA_CONFIG = originalJasmin.iaConfig;
+        process.env.JASMINIA_CONFIG = originalJasminiaConfig;
       }
       fs.rmSync(tempRoot, { recursive: true, force: true });
     }
@@ -901,7 +901,7 @@ describe("worktree helpers", () => {
       instanceId: "default",
     });
     const originalCwd = process.cwd();
-    const originalJasmin.iaConfig = process.env.JASMINIA_CONFIG;
+    const originalJasminiaConfig = process.env.JASMINIA_CONFIG;
 
     try {
       fs.mkdirSync(path.dirname(currentPaths.configPath), { recursive: true });
@@ -930,7 +930,7 @@ describe("worktree helpers", () => {
             keyFilePath: sourcePaths.secretsKeyFilePath,
           },
         },
-      } as Jasmin.iaConfig;
+      } as JasminiaConfig;
 
       fs.writeFileSync(currentPaths.configPath, JSON.stringify(currentConfig, null, 2), "utf8");
       fs.writeFileSync(currentPaths.envPath, `JASMINIA_HOME=${homeDir}\nJASMINIA_INSTANCE_ID=${currentInstanceId}\n`, "utf8");
@@ -956,10 +956,10 @@ describe("worktree helpers", () => {
       expect(restoredMarker).toBe("keep me");
     } finally {
       process.chdir(originalCwd);
-      if (originalJasmin.iaConfig === undefined) {
+      if (originalJasminiaConfig === undefined) {
         delete process.env.JASMINIA_CONFIG;
       } else {
-        process.env.JASMINIA_CONFIG = originalJasmin.iaConfig;
+        process.env.JASMINIA_CONFIG = originalJasminiaConfig;
       }
       fs.rmSync(tempRoot, { recursive: true, force: true });
     }

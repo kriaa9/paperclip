@@ -2,16 +2,16 @@ import type {
   AdapterExecutionContext,
   AdapterExecutionResult,
   AdapterRuntimeServiceReport,
-} from "@jasminiaai/adapter-utils";
+} from "@jasminia/adapter-utils";
 import {
   asNumber,
   asString,
-  buildJasmin.iaEnv,
+  buildJasminiaEnv,
   parseObject,
-  readJasmin.iaIssueWorkModeFromContext,
-  renderJasmin.iaWakePrompt,
-  stringifyJasmin.iaWakePayload,
-} from "@jasminiaai/adapter-utils/server-utils";
+  readJasminiaIssueWorkModeFromContext,
+  renderJasminiaWakePrompt,
+  stringifyJasminiaWakePayload,
+} from "@jasminia/adapter-utils/server-utils";
 import crypto, { randomUUID } from "node:crypto";
 import { WebSocket } from "ws";
 
@@ -319,7 +319,7 @@ function buildWakePayload(ctx: AdapterExecutionContext): WakePayload {
   };
 }
 
-function resolveJasmin.iaApiUrlOverride(value: unknown): string | null {
+function resolveJasminiaApiUrlOverride(value: unknown): string | null {
   const raw = nonEmpty(value);
   if (!raw) return null;
   try {
@@ -337,10 +337,10 @@ function resolveClaimedApiKeyPath(value: unknown): string {
   return nonEmpty(value) ?? DEFAULT_CLAIMED_API_KEY_PATH;
 }
 
-function buildJasmin.iaEnvForWake(ctx: AdapterExecutionContext, wakePayload: WakePayload): Record<string, string> {
-  const jasminiaApiUrlOverride = resolveJasmin.iaApiUrlOverride(ctx.config.jasminiaApiUrl);
+function buildJasminiaEnvForWake(ctx: AdapterExecutionContext, wakePayload: WakePayload): Record<string, string> {
+  const jasminiaApiUrlOverride = resolveJasminiaApiUrlOverride(ctx.config.jasminiaApiUrl);
   const jasminiaEnv: Record<string, string> = {
-    ...buildJasmin.iaEnv(ctx.agent),
+    ...buildJasminiaEnv(ctx.agent),
     JASMINIA_RUN_ID: ctx.runId,
   };
 
@@ -348,7 +348,7 @@ function buildJasmin.iaEnvForWake(ctx: AdapterExecutionContext, wakePayload: Wak
     jasminiaEnv.JASMINIA_API_URL = jasminiaApiUrlOverride;
   }
   if (wakePayload.taskId) jasminiaEnv.JASMINIA_TASK_ID = wakePayload.taskId;
-  const issueWorkMode = readJasmin.iaIssueWorkModeFromContext(ctx.context);
+  const issueWorkMode = readJasminiaIssueWorkModeFromContext(ctx.context);
   if (issueWorkMode) jasminiaEnv.JASMINIA_ISSUE_WORK_MODE = issueWorkMode;
   if (wakePayload.wakeReason) jasminiaEnv.JASMINIA_WAKE_REASON = wakePayload.wakeReason;
   if (wakePayload.wakeCommentId) jasminiaEnv.JASMINIA_WAKE_COMMENT_ID = wakePayload.wakeCommentId;
@@ -466,13 +466,13 @@ function joinWakePayloadSections(structuredWakePrompt: string, structuredWakeJso
   return sections.join("\n");
 }
 
-function buildStandardJasmin.iaPayload(
+function buildStandardJasminiaPayload(
   ctx: AdapterExecutionContext,
   wakePayload: WakePayload,
   jasminiaEnv: Record<string, string>,
   payloadTemplate: Record<string, unknown>,
 ): Record<string, unknown> {
-  const templateJasmin.ia = parseObject(payloadTemplate.jasminia);
+  const templateJasminia = parseObject(payloadTemplate.jasminia);
   const workspace = asRecord(ctx.context.jasminiaWorkspace);
   const workspaces = Array.isArray(ctx.context.jasminiaWorkspaces)
     ? ctx.context.jasminiaWorkspaces.filter((entry): entry is Record<string, unknown> => Boolean(asRecord(entry)))
@@ -484,7 +484,7 @@ function buildStandardJasmin.iaPayload(
       )
     : [];
 
-  const standardJasmin.ia: Record<string, unknown> = {
+  const standardJasminia: Record<string, unknown> = {
     runId: ctx.runId,
     companyId: ctx.agent.companyId,
     agentId: ctx.agent.id,
@@ -500,25 +500,25 @@ function buildStandardJasmin.iaPayload(
   };
   const structuredWake = parseObject(ctx.context.jasminiaWake);
   if (Object.keys(structuredWake).length > 0) {
-    standardJasmin.ia.wake = structuredWake;
+    standardJasminia.wake = structuredWake;
   }
 
   if (workspace) {
-    standardJasmin.ia.workspace = workspace;
+    standardJasminia.workspace = workspace;
   }
   if (workspaces.length > 0) {
-    standardJasmin.ia.workspaces = workspaces;
+    standardJasminia.workspaces = workspaces;
   }
   if (runtimeServiceIntents.length > 0 || Object.keys(configuredWorkspaceRuntime).length > 0) {
-    standardJasmin.ia.workspaceRuntime = {
+    standardJasminia.workspaceRuntime = {
       ...configuredWorkspaceRuntime,
       ...(runtimeServiceIntents.length > 0 ? { services: runtimeServiceIntents } : {}),
     };
   }
 
   return {
-    ...templateJasmin.ia,
-    ...standardJasmin.ia,
+    ...templateJasminia,
+    ...standardJasminia,
   };
 }
 
@@ -1107,9 +1107,9 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
   const disableDeviceAuth = parseBoolean(ctx.config.disableDeviceAuth, false);
 
   const wakePayload = buildWakePayload(ctx);
-  const jasminiaEnv = buildJasmin.iaEnvForWake(ctx, wakePayload);
-  const structuredWakePrompt = renderJasmin.iaWakePrompt(ctx.context.jasminiaWake);
-  const structuredWakeJson = stringifyJasmin.iaWakePayload(ctx.context.jasminiaWake);
+  const jasminiaEnv = buildJasminiaEnvForWake(ctx, wakePayload);
+  const structuredWakePrompt = renderJasminiaWakePrompt(ctx.context.jasminiaWake);
+  const structuredWakeJson = stringifyJasminiaWakePayload(ctx.context.jasminiaWake);
   const wakeText = buildWakeText(
     wakePayload,
     jasminiaEnv,
@@ -1130,7 +1130,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
 
   const templateMessage = nonEmpty(payloadTemplate.message) ?? nonEmpty(payloadTemplate.text);
   const message = templateMessage ? appendWakeText(templateMessage, wakeText) : wakeText;
-  const jasminiaPayload = buildStandardJasmin.iaPayload(ctx, wakePayload, jasminiaEnv, payloadTemplate);
+  const jasminiaPayload = buildStandardJasminiaPayload(ctx, wakePayload, jasminiaEnv, payloadTemplate);
 
   const agentParams: Record<string, unknown> = {
     ...payloadTemplate,

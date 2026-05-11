@@ -1,13 +1,13 @@
 /**
- * `@jasminiaai/plugin-sdk` — Jasmin.ia plugin worker-side SDK.
+ * `@jasminia/plugin-sdk` — Jasmin.ia plugin worker-side SDK.
  *
  * This is the main entrypoint for plugin worker code.  For plugin UI bundles,
- * import from `@jasminiaai/plugin-sdk/ui` instead.
+ * import from `@jasminia/plugin-sdk/ui` instead.
  *
  * @example
  * ```ts
  * // Plugin worker entrypoint (dist/worker.ts)
- * import { definePlugin, runWorker, z } from "@jasminiaai/plugin-sdk";
+ * import { definePlugin, runWorker, z } from "@jasminia/plugin-sdk";
  *
  * const plugin = definePlugin({
  *   async setup(ctx) {
@@ -91,7 +91,7 @@ export {
 // Plugin definition and lifecycle types
 export type {
   PluginDefinition,
-  Jasmin.iaPlugin,
+  JasminiaPlugin,
   PluginHealthDiagnostics,
   PluginConfigValidationResult,
   PluginWebhookInput,
@@ -254,11 +254,11 @@ export type {
   PluginDatabaseClient,
 } from "./types.js";
 
-// Manifest and constant types re-exported from @jasminiaai/shared
+// Manifest and constant types re-exported from @jasminia/shared
 // Plugin authors import manifest types from here so they have a single
-// dependency (@jasminiaai/plugin-sdk) for all plugin authoring needs.
+// dependency (@jasminia/plugin-sdk) for all plugin authoring needs.
 export type {
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginJobDeclaration,
   PluginWebhookDeclaration,
   PluginToolDeclaration,
@@ -330,7 +330,7 @@ export type {
  *
  * @example
  * ```ts
- * import { z } from "@jasminiaai/plugin-sdk";
+ * import { z } from "@jasminia/plugin-sdk";
  *
  * const configSchema = z.object({
  *   apiKey: z.string().describe("Your API key"),
@@ -358,4 +358,4 @@ export {
   PLUGIN_WEBHOOK_DELIVERY_STATUSES,
   PLUGIN_EVENT_TYPES,
   PLUGIN_BRIDGE_ERROR_CODES,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";

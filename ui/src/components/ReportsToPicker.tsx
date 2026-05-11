@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Agent } from "@jasminiaai/shared";
+import type { Agent } from "@jasminia/shared";
 import {
   Popover,
   PopoverContent,

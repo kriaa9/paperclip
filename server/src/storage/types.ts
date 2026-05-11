@@ -1,4 +1,4 @@
-import type { StorageProvider as StorageProviderId } from "@jasminiaai/shared";
+import type { StorageProvider as StorageProviderId } from "@jasminia/shared";
 import type { Readable } from "node:stream";
 
 export interface PutObjectInput {

@@ -1,7 +1,7 @@
-import type { Jasmin.iaConfig } from "../config/schema.js";
+import type { JasminiaConfig } from "../config/schema.js";
 import type { CheckResult } from "./index.js";
 
-export async function llmCheck(config: Jasmin.iaConfig): Promise<CheckResult> {
+export async function llmCheck(config: JasminiaConfig): Promise<CheckResult> {
   if (!config.llm) {
     return {
       name: "LLM provider",
@@ -42,7 +42,7 @@ export async function llmCheck(config: Jasmin.iaConfig): Promise<CheckResult> {
           status: "fail",
           message: "Claude API key is invalid (401)",
           canRepair: false,
-          repairHint: "Run `jasminiaai configure --section llm`",
+          repairHint: "Run `jasminia configure --section llm`",
         };
       }
       return {
@@ -63,7 +63,7 @@ export async function llmCheck(config: Jasmin.iaConfig): Promise<CheckResult> {
           status: "fail",
           message: "NVIDIA NIM API key is invalid (401)",
           canRepair: false,
-          repairHint: "Run `jasminiaai configure --section llm`",
+          repairHint: "Run `jasminia configure --section llm`",
         };
       }
       return {

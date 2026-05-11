@@ -132,7 +132,7 @@ export function CliAuthPage() {
           </div>
           <div>
             <div className="text-muted-foreground">Client</div>
-            <div className="text-foreground">{challenge.clientName ?? "jasminiaai cli"}</div>
+            <div className="text-foreground">{challenge.clientName ?? "jasminia cli"}</div>
           </div>
           <div>
             <div className="text-muted-foreground">Requested access</div>

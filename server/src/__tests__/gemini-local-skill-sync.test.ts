@@ -5,14 +5,14 @@ import { afterEach, describe, expect, it } from "vitest";
 import {
   listGeminiSkills,
   syncGeminiSkills,
-} from "@jasminiaai/adapter-gemini-local/server";
+} from "@jasminia/adapter-gemini-local/server";
 
 async function makeTempDir(prefix: string): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), prefix));
 }
 
 describe("gemini local skill sync", () => {
-  const jasminiaKey = "jasminiaai/jasminia/jasminia";
+  const jasminiaKey = "jasminia/jasminia/jasminia";
   const cleanupDirs = new Set<string>();
 
   afterEach(async () => {

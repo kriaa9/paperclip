@@ -54,7 +54,7 @@ pnpm storybook
 pnpm build-storybook
 ```
 
-These run the `@jasminiaai/ui` Storybook on port `6006` and build the static output to `ui/storybook-static/`.
+These run the `@jasminia/ui` Storybook on port `6006` and build the static output to `ui/storybook-static/`.
 
 Inspect or stop the current repo's managed dev runner:
 
@@ -89,7 +89,7 @@ pnpm dev --authenticated-private
 Allow additional private hostnames (for example custom Tailscale hostnames):
 
 ```sh
-pnpm jasminiaai allowed-hostname dotta-macbook-pro
+pnpm jasminia allowed-hostname dotta-macbook-pro
 ```
 
 ## Test Commands
@@ -122,13 +122,13 @@ For normal issue work, start with the smallest targeted check that proves the ch
 For a first-time local install, you can bootstrap and run in one command:
 
 ```sh
-pnpm jasminiaai run
+pnpm jasminia run
 ```
 
-`jasminiaai run` does:
+`jasminia run` does:
 
 1. auto-onboard if config is missing
-2. `jasminiaai doctor` with repair enabled
+2. `jasminia doctor` with repair enabled
 3. starts the server when checks pass
 
 ## Docker Quickstart (No local Node install)
@@ -176,7 +176,7 @@ Every local install keeps runtime state directly under the selected instance roo
   companies/<company-id>/codex-home/             # per-company codex_local home
 ```
 
-`JASMINIA_HOME` and `JASMINIA_INSTANCE_ID` override the home root and instance id respectively. `jasminiaai onboard` echoes the resolved values in its banner (`Local home: <home> | instance: <id> | config: <path>`) so you can confirm where state will land before continuing.
+`JASMINIA_HOME` and `JASMINIA_INSTANCE_ID` override the home root and instance id respectively. `jasminia onboard` echoes the resolved values in its banner (`Local home: <home> | instance: <id> | config: <path>`) so you can confirm where state will land before continuing.
 
 ## Database in Dev (Auto-Handled)
 
@@ -188,7 +188,7 @@ The server will automatically use embedded PostgreSQL and persist data at:
 Override home or instance:
 
 ```sh
-JASMINIA_HOME=/custom/path JASMINIA_INSTANCE_ID=dev pnpm jasminiaai run
+JASMINIA_HOME=/custom/path JASMINIA_INSTANCE_ID=dev pnpm jasminia run
 ```
 
 No Docker or external database is required for this mode.
@@ -202,7 +202,7 @@ For local development, the default storage provider is `local_disk`, which persi
 Configure storage provider/settings:
 
 ```sh
-pnpm jasminiaai configure --section storage
+pnpm jasminia configure --section storage
 ```
 
 ## Default Agent Workspaces
@@ -228,9 +228,9 @@ When developing from multiple git worktrees, do not point two Jasmin.ia servers 
 Instead, create a repo-local Jasmin.ia config plus an isolated instance for the worktree:
 
 ```sh
-jasminiaai worktree init
+jasminia worktree init
 # or create the git worktree and initialize it in one step:
-pnpm jasminiaai worktree:make jasminia-pr-432
+pnpm jasminia worktree:make jasminia-pr-432
 ```
 
 This command:
@@ -249,9 +249,9 @@ Seed modes:
 
 Seeded worktree instances quarantine copied live execution by default for both `minimal` and `full` seeds. During restore, Jasmin.ia disables copied agent timer heartbeats, resets copied `running` agents to `idle`, blocks and unassigns copied agent-owned `in_progress` issues, and unassigns copied agent-owned `todo`/`in_review` issues. This keeps a freshly booted worktree from starting agents for work already owned by the source instance. Pass `--preserve-live-work` only when you intentionally want the isolated worktree to resume copied assignments.
 
-After `worktree init`, both the server and the CLI auto-load the repo-local `.jasminia/.env` when run inside that worktree, so normal commands like `pnpm dev`, `jasminiaai doctor`, and `jasminiaai db:backup` stay scoped to the worktree instance.
+After `worktree init`, both the server and the CLI auto-load the repo-local `.jasminia/.env` when run inside that worktree, so normal commands like `pnpm dev`, `jasminia doctor`, and `jasminia db:backup` stay scoped to the worktree instance.
 
-`pnpm dev` now fails fast in a linked git worktree when `.jasminia/.env` is missing, instead of silently booting against the default instance/port. If that happens, run `jasminiaai worktree init` in the worktree first.
+`pnpm dev` now fails fast in a linked git worktree when `.jasminia/.env` is missing, instead of silently booting against the default instance/port. If that happens, run `jasminia worktree init` in the worktree first.
 
 Provisioned git worktrees also pause seeded routines that still have enabled schedule triggers in the isolated worktree database by default. This prevents copied daily/cron routines from firing unexpectedly inside the new workspace instance during development without disabling webhook/API-only routines.
 
@@ -268,14 +268,14 @@ Browser cookies are shared by host rather than port, so this prevents logging in
 Print shell exports explicitly when needed:
 
 ```sh
-jasminiaai worktree env
+jasminia worktree env
 # or:
-eval "$(jasminiaai worktree env)"
+eval "$(jasminia worktree env)"
 ```
 
 ### Worktree CLI Reference
 
-**`pnpm jasminiaai worktree init [options]`** — Create repo-local config/env and an isolated instance for the current worktree.
+**`pnpm jasminia worktree init [options]`** — Create repo-local config/env and an isolated instance for the current worktree.
 
 | Option | Description |
 |---|---|
@@ -294,18 +294,18 @@ eval "$(jasminiaai worktree env)"
 Examples:
 
 ```sh
-jasminiaai worktree init --no-seed
-jasminiaai worktree init --seed-mode full
-jasminiaai worktree init --from-instance default
-jasminiaai worktree init --from-data-dir ~/.jasminia
-jasminiaai worktree init --force
+jasminia worktree init --no-seed
+jasminia worktree init --seed-mode full
+jasminia worktree init --from-instance default
+jasminia worktree init --from-data-dir ~/.jasminia
+jasminia worktree init --force
 ```
 
 Repair an already-created repo-managed worktree and reseed its isolated instance from the main default install. Point `--from-config` at the instance config:
 
 ```sh
 cd /path/to/jasminia/.jasminia/worktrees/PAP-884-ai-commits-component
-pnpm jasminiaai worktree init --force --seed-mode minimal \
+pnpm jasminia worktree init --force --seed-mode minimal \
   --name PAP-884-ai-commits-component \
   --from-config ~/.jasminia/instances/default/config.json
 ```
@@ -314,7 +314,7 @@ That rewrites the worktree-local `.jasminia/config.json` + `.jasminia/.env`, rec
 
 For an already-created worktree where you want the CLI to decide whether to rebuild missing worktree metadata or just reseed the isolated DB, use `worktree repair`.
 
-**`pnpm jasminiaai worktree repair [options]`** — Repair the current linked worktree by default, or create/repair a named linked worktree under `.jasminia/worktrees/` when `--branch` is provided. The command never targets the primary checkout unless you explicitly pass `--branch`.
+**`pnpm jasminia worktree repair [options]`** — Repair the current linked worktree by default, or create/repair a named linked worktree under `.jasminia/worktrees/` when `--branch` is provided. The command never targets the primary checkout unless you explicitly pass `--branch`.
 
 | Option | Description |
 |---|---|
@@ -332,16 +332,16 @@ Examples:
 ```sh
 # From inside a linked worktree, rebuild missing .jasminia metadata and reseed it from the default instance.
 cd /path/to/jasminia/.jasminia/worktrees/PAP-1132-assistant-ui-pap-1131-make-issues-comments-be-like-a-chat
-pnpm jasminiaai worktree repair
+pnpm jasminia worktree repair
 
 # From the primary checkout, create or repair a linked worktree for a branch under .jasminia/worktrees/.
 cd /path/to/jasminia
-pnpm jasminiaai worktree repair --branch PAP-1132-assistant-ui-pap-1131-make-issues-comments-be-like-a-chat
+pnpm jasminia worktree repair --branch PAP-1132-assistant-ui-pap-1131-make-issues-comments-be-like-a-chat
 ```
 
 For an already-created worktree where you want to keep the existing repo-local config/env and only overwrite the isolated database, use `worktree reseed` instead. Stop the target worktree's Jasmin.ia server first so the command can replace the DB safely.
 
-**`pnpm jasminiaai worktree reseed [options]`** — Re-seed an existing worktree-local instance from another Jasmin.ia instance or worktree while preserving the target worktree's current config, ports, and instance identity.
+**`pnpm jasminia worktree reseed [options]`** — Re-seed an existing worktree-local instance from another Jasmin.ia instance or worktree while preserving the target worktree's current config, ports, and instance identity.
 
 | Option | Description |
 |---|---|
@@ -359,7 +359,7 @@ Examples:
 ```sh
 # From the main repo, reseed a worktree from the current default/master instance.
 cd /path/to/jasminia
-pnpm jasminiaai worktree reseed \
+pnpm jasminia worktree reseed \
   --from current \
   --to PAP-1132-assistant-ui-pap-1131-make-issues-comments-be-like-a-chat \
   --seed-mode full \
@@ -367,12 +367,12 @@ pnpm jasminiaai worktree reseed \
 
 # From inside a worktree, reseed it from the default instance config.
 cd /path/to/jasminia/.jasminia/worktrees/PAP-1132-assistant-ui-pap-1131-make-issues-comments-be-like-a-chat
-pnpm jasminiaai worktree reseed \
+pnpm jasminia worktree reseed \
   --from-instance default \
   --seed-mode full
 ```
 
-**`pnpm jasminiaai worktree:make <name> [options]`** — Create `~/NAME` as a git worktree, then initialize an isolated Jasmin.ia instance inside it. This combines `git worktree add` with `worktree init` in a single step.
+**`pnpm jasminia worktree:make <name> [options]`** — Create `~/NAME` as a git worktree, then initialize an isolated Jasmin.ia instance inside it. This combines `git worktree add` with `worktree init` in a single step.
 
 | Option | Description |
 |---|---|
@@ -391,12 +391,12 @@ pnpm jasminiaai worktree reseed \
 Examples:
 
 ```sh
-pnpm jasminiaai worktree:make jasminia-pr-432
-pnpm jasminiaai worktree:make my-feature --start-point origin/main
-pnpm jasminiaai worktree:make experiment --no-seed
+pnpm jasminia worktree:make jasminia-pr-432
+pnpm jasminia worktree:make my-feature --start-point origin/main
+pnpm jasminia worktree:make experiment --no-seed
 ```
 
-**`pnpm jasminiaai worktree env [options]`** — Print shell exports for the current worktree-local Jasmin.ia instance.
+**`pnpm jasminia worktree env [options]`** — Print shell exports for the current worktree-local Jasmin.ia instance.
 
 | Option | Description |
 |---|---|
@@ -406,9 +406,9 @@ pnpm jasminiaai worktree:make experiment --no-seed
 Examples:
 
 ```sh
-pnpm jasminiaai worktree env
-pnpm jasminiaai worktree env --json
-eval "$(pnpm jasminiaai worktree env)"
+pnpm jasminia worktree env
+pnpm jasminia worktree env --json
+eval "$(pnpm jasminia worktree env)"
 ```
 
 For project execution worktrees, Jasmin.ia can also run a project-defined provision command after it creates or reuses an isolated git worktree. Configure this on the project's execution workspace policy (`workspaceStrategy.provisionCommand`). The command runs inside the derived worktree and receives `JASMINIA_WORKSPACE_*`, `JASMINIA_PROJECT_ID`, `JASMINIA_AGENT_ID`, and `JASMINIA_ISSUE_*` environment variables so each repo can bootstrap itself however it wants.
@@ -454,13 +454,13 @@ schemas. Defaults:
 Configure these in:
 
 ```sh
-pnpm jasminiaai configure --section database
+pnpm jasminia configure --section database
 ```
 
 Run a one-off backup manually:
 
 ```sh
-pnpm jasminiaai db:backup
+pnpm jasminia db:backup
 # or:
 pnpm db:backup
 ```
@@ -496,9 +496,9 @@ Authenticated deployments default strict mode on unless explicitly overridden.
 
 CLI configuration support:
 
-- `pnpm jasminiaai onboard` writes a default `secrets` config section (`local_encrypted`, strict mode off, key file path set) and creates a local key file when needed.
-- `pnpm jasminiaai configure --section secrets` lets you update provider/strict mode/key path and creates the local key file when needed.
-- `pnpm jasminiaai doctor` validates secrets adapter configuration, can create a missing local key file with `--repair`, and reports missing AWS Secrets Manager bootstrap env when that provider is selected.
+- `pnpm jasminia onboard` writes a default `secrets` config section (`local_encrypted`, strict mode off, key file path set) and creates a local key file when needed.
+- `pnpm jasminia configure --section secrets` lets you update provider/strict mode/key path and creates the local key file when needed.
+- `pnpm jasminia doctor` validates secrets adapter configuration, can create a missing local key file with `--repair`, and reports missing AWS Secrets Manager bootstrap env when that provider is selected.
 - Provider health is available at `GET /api/companies/:companyId/secret-providers/health` and reports local key permission warnings plus backup guidance.
 
 Per-company provider vaults are configured in the board UI under
@@ -534,22 +534,22 @@ Jasmin.ia CLI now includes client-side control-plane commands in addition to set
 Quick examples:
 
 ```sh
-pnpm jasminiaai issue list --company-id <company-id>
-pnpm jasminiaai issue create --company-id <company-id> --title "Investigate checkout conflict"
-pnpm jasminiaai issue update <issue-id> --status in_progress --comment "Started triage"
+pnpm jasminia issue list --company-id <company-id>
+pnpm jasminia issue create --company-id <company-id> --title "Investigate checkout conflict"
+pnpm jasminia issue update <issue-id> --status in_progress --comment "Started triage"
 ```
 
 Set defaults once with context profiles:
 
 ```sh
-pnpm jasminiaai context set --api-base http://localhost:3100 --company-id <company-id>
+pnpm jasminia context set --api-base http://localhost:3100 --company-id <company-id>
 ```
 
 Then run commands without repeating flags:
 
 ```sh
-pnpm jasminiaai issue list
-pnpm jasminiaai dashboard get
+pnpm jasminia issue list
+pnpm jasminia dashboard get
 ```
 
 See full command reference in `doc/CLI.md`.
@@ -617,4 +617,4 @@ Networking behavior for this smoke script:
 
 - auto-detects and prints a Jasmin.ia host URL reachable from inside OpenClaw Docker
 - default container-side host alias is `host.docker.internal` (override with `JASMINIA_HOST_FROM_CONTAINER` / `JASMINIA_HOST_PORT`)
-- if Jasmin.ia rejects container hostnames in authenticated/private mode, allow `host.docker.internal` via `pnpm jasminiaai allowed-hostname host.docker.internal` and restart Jasmin.ia
+- if Jasmin.ia rejects container hostnames in authenticated/private mode, allow `host.docker.internal` via `pnpm jasminia allowed-hostname host.docker.internal` and restart Jasmin.ia

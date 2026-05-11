@@ -5,14 +5,14 @@ import { afterEach, describe, expect, it } from "vitest";
 import {
   listPiSkills,
   syncPiSkills,
-} from "@jasminiaai/adapter-pi-local/server";
+} from "@jasminia/adapter-pi-local/server";
 
 async function makeTempDir(prefix: string): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), prefix));
 }
 
 describe("pi local skill sync", () => {
-  const jasminiaKey = "jasminiaai/jasminia/jasminia";
+  const jasminiaKey = "jasminia/jasminia/jasminia";
   const cleanupDirs = new Set<string>();
 
   afterEach(async () => {

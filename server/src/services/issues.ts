@@ -1,6 +1,6 @@
 import { Buffer } from "node:buffer";
 import { and, asc, desc, eq, gt, inArray, isNull, like, lt, ne, notInArray, or, sql } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   activityLog,
   agentWakeupRequests,
@@ -26,7 +26,7 @@ import {
   labels,
   projectWorkspaces,
   projects,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import type {
   IssueCommentAuthorType,
   IssueCommentMetadata,
@@ -35,7 +35,7 @@ import type {
   IssueProductivityReview,
   IssueProductivityReviewTrigger,
   IssueRelationIssueSummary,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
   clampIssueRequestDepth,
   extractAgentMentionIds,
@@ -45,7 +45,7 @@ import {
   issueCommentPresentationSchema,
   isUuidLike,
   normalizeIssueIdentifier as normalizeIssueReferenceIdentifier,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { conflict, notFound, unprocessable } from "../errors.js";
 import { parseObject } from "../adapters/utils.js";
 import {

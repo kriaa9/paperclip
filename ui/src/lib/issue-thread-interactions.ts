@@ -20,7 +20,7 @@ export type {
   SuggestTasksPayload,
   SuggestTasksResult,
   SuggestTasksResultCreatedTask,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import type {
   AskUserQuestionsAnswer,
   AskUserQuestionsInteraction,
@@ -30,7 +30,7 @@ import type {
   SuggestedTaskDraft,
   SuggestTasksInteraction,
   SuggestTasksResultCreatedTask,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 
 export interface SuggestedTaskTreeNode {
   task: SuggestedTaskDraft;

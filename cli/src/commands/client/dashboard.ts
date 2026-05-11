@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import type { DashboardSummary } from "@jasminiaai/shared";
+import type { DashboardSummary } from "@jasminia/shared";
 import {
   addCommonClientOptions,
   handleCommandError,

@@ -4,20 +4,20 @@ import type {
   AdapterSkillContext,
   AdapterSkillEntry,
   AdapterSkillSnapshot,
-} from "@jasminiaai/adapter-utils";
+} from "@jasminia/adapter-utils";
 import {
-  readJasmin.iaRuntimeSkillEntries,
-  resolveJasmin.iaDesiredSkillNames,
-} from "@jasminiaai/adapter-utils/server-utils";
+  readJasminiaRuntimeSkillEntries,
+  resolveJasminiaDesiredSkillNames,
+} from "@jasminia/adapter-utils/server-utils";
 
 const __moduleDir = path.dirname(fileURLToPath(import.meta.url));
 
 async function buildCodexSkillSnapshot(
   config: Record<string, unknown>,
 ): Promise<AdapterSkillSnapshot> {
-  const availableEntries = await readJasmin.iaRuntimeSkillEntries(config, __moduleDir);
+  const availableEntries = await readJasminiaRuntimeSkillEntries(config, __moduleDir);
   const availableByKey = new Map(availableEntries.map((entry) => [entry.key, entry]));
-  const desiredSkills = resolveJasmin.iaDesiredSkillNames(config, availableEntries);
+  const desiredSkills = resolveJasminiaDesiredSkillNames(config, availableEntries);
   const desiredSet = new Set(desiredSkills);
   const entries: AdapterSkillEntry[] = availableEntries.map((entry) => ({
     key: entry.key,
@@ -83,5 +83,5 @@ export function resolveCodexDesiredSkillNames(
   config: Record<string, unknown>,
   availableEntries: Array<{ key: string; required?: boolean }>,
 ) {
-  return resolveJasmin.iaDesiredSkillNames(config, availableEntries);
+  return resolveJasminiaDesiredSkillNames(config, availableEntries);
 }

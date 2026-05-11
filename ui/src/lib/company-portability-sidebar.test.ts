@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Agent, Project } from "@jasminiaai/shared";
+import type { Agent, Project } from "@jasminia/shared";
 import {
   buildPortableAgentSlugMap,
   buildPortableProjectSlugMap,

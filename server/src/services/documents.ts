@@ -1,7 +1,7 @@
 import { and, asc, desc, eq } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { documentRevisions, documents, issueDocuments, issues } from "@jasminiaai/db";
-import { isSystemIssueDocumentKey, issueDocumentKeySchema } from "@jasminiaai/shared";
+import type { Db } from "@jasminia/db";
+import { documentRevisions, documents, issueDocuments, issues } from "@jasminia/db";
+import { isSystemIssueDocumentKey, issueDocumentKeySchema } from "@jasminia/shared";
 import { conflict, notFound, unprocessable } from "../errors.js";
 
 function normalizeDocumentKey(key: string) {

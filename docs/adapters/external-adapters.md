@@ -54,7 +54,7 @@ my-adapter/
     "build": "tsc"
   },
   "dependencies": {
-    "@jasminiaai/adapter-utils": "^2026.325.0",
+    "@jasminia/adapter-utils": "^2026.325.0",
     "picocolors": "^1.1.0"
   },
   "devDependencies": {
@@ -118,7 +118,7 @@ export { createServerAdapter } from "./server/index.js";
 ### src/server/index.ts
 
 ```ts
-import type { ServerAdapterModule } from "@jasminiaai/adapter-utils";
+import type { ServerAdapterModule } from "@jasminia/adapter-utils";
 import { type, models, agentConfigurationDoc } from "../index.js";
 import { execute } from "./execute.js";
 import { testEnvironment } from "./test.js";
@@ -142,13 +142,13 @@ The core execution function. Receives an `AdapterExecutionContext` and returns a
 import type {
   AdapterExecutionContext,
   AdapterExecutionResult,
-} from "@jasminiaai/adapter-utils";
+} from "@jasminia/adapter-utils";
 
 import {
   runChildProcess,
-  buildJasmin.iaEnv,
+  buildJasminiaEnv,
   renderTemplate,
-} from "@jasminiaai/adapter-utils/server-utils";
+} from "@jasminia/adapter-utils/server-utils";
 
 export async function execute(
   ctx: AdapterExecutionContext,
@@ -161,7 +161,7 @@ export async function execute(
   const timeoutSec = Number(config.timeoutSec ?? 300);
 
   // 2. Build environment with Jasmin.ia vars injected
-  const env = buildJasmin.iaEnv(agent);
+  const env = buildJasminiaEnv(agent);
 
   // 3. Render prompt template
   const prompt = config.promptTemplate
@@ -196,12 +196,12 @@ export async function execute(
 }
 ```
 
-#### Available Helpers from `@jasminiaai/adapter-utils`
+#### Available Helpers from `@jasminia/adapter-utils`
 
 | Helper | Purpose |
 |--------|---------|
 | `runChildProcess(command, opts)` | Spawn a child process with timeout, grace period, and streaming callbacks |
-| `buildJasmin.iaEnv(agent)` | Inject `JASMINIA_*` environment variables |
+| `buildJasminiaEnv(agent)` | Inject `JASMINIA_*` environment variables |
 | `renderTemplate(template, data)` | `{{variable}}` substitution in prompt templates |
 | `asString(v)`, `asNumber(v)`, `asBoolean(v)` | Safe config value extraction |
 
@@ -213,7 +213,7 @@ Validates the adapter configuration before running. Returns structured diagnosti
 import type {
   AdapterEnvironmentTestContext,
   AdapterEnvironmentTestResult,
-} from "@jasminiaai/adapter-utils";
+} from "@jasminia/adapter-utils";
 
 export async function testEnvironment(
   ctx: AdapterEnvironmentTestContext,
@@ -301,7 +301,7 @@ For development, you can also edit `~/.jasminia/adapter-plugins.json` directly:
 If your agent runtime supports sessions (conversation continuity across heartbeats), implement a session codec:
 
 ```ts
-import type { AdapterSessionCodec } from "@jasminiaai/adapter-utils";
+import type { AdapterSessionCodec } from "@jasminia/adapter-utils";
 
 export const sessionCodec: AdapterSessionCodec = {
   deserialize(raw) {

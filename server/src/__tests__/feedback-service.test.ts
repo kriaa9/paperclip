@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { eq } from "drizzle-orm";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
-import { writeJasmin.iaSkillSyncPreference } from "@jasminiaai/adapter-utils/server-utils";
+import { writeJasminiaSkillSyncPreference } from "@jasminia/adapter-utils/server-utils";
 import {
   agents,
   companies,
@@ -20,7 +20,7 @@ import {
   issueComments,
   issueDocuments,
   issues,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import { feedbackService } from "../services/feedback.ts";
 import { startEmbeddedPostgresTestDatabase } from "./helpers/embedded-postgres.ts";
 
@@ -144,7 +144,7 @@ describe("feedbackService.saveIssueVote", () => {
       {
         id: randomUUID(),
         companyId,
-        key: "jasminiaai/jasminia/jasminia",
+        key: "jasminia/jasminia/jasminia",
         slug: "jasminia",
         name: "Jasmin.ia",
         markdown: "# Jasmin.ia",
@@ -174,7 +174,7 @@ describe("feedbackService.saveIssueVote", () => {
       role: "engineer",
       status: "active",
       adapterType: "codex_local",
-      adapterConfig: writeJasmin.iaSkillSyncPreference(
+      adapterConfig: writeJasminiaSkillSyncPreference(
         {
           model: "gpt-5.4",
           instructionsBundleMode: "external",
@@ -182,7 +182,7 @@ describe("feedbackService.saveIssueVote", () => {
           instructionsEntryFile: "AGENTS.md",
           instructionsFilePath: instructionsPath,
         },
-        ["jasminiaai/jasminia/jasminia", "octo/research/public-skill"],
+        ["jasminia/jasminia/jasminia", "octo/research/public-skill"],
       ),
       runtimeConfig: {
         heartbeat: {

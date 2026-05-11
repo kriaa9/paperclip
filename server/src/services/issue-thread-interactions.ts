@@ -1,6 +1,6 @@
 import { isDeepStrictEqual } from "node:util";
 import { and, asc, eq, inArray } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   documents,
   heartbeatRuns,
@@ -8,7 +8,7 @@ import {
   issueDocuments,
   issueThreadInteractions,
   issues,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import type {
   AcceptIssueThreadInteraction,
   AskUserQuestionsAnswer,
@@ -22,7 +22,7 @@ import type {
   RespondIssueThreadInteraction,
   SuggestTasksInteraction,
   SuggestTasksResultCreatedTask,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
   acceptIssueThreadInteractionSchema,
   askUserQuestionsPayloadSchema,
@@ -34,7 +34,7 @@ import {
   requestConfirmationResultSchema,
   suggestTasksPayloadSchema,
   suggestTasksResultSchema,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { conflict, notFound, unprocessable } from "../errors.js";
 import { issueService } from "./issues.js";
 

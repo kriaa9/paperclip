@@ -1,6 +1,6 @@
 # OpenClaw Gateway Adapter
 
-This document describes how `@jasminiaai/adapter-openclaw-gateway` invokes OpenClaw over the Gateway protocol.
+This document describes how `@jasminia/adapter-openclaw-gateway` invokes OpenClaw over the Gateway protocol.
 
 ## Transport
 

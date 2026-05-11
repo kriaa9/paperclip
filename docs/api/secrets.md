@@ -59,7 +59,7 @@ credentials must not be stored in Jasmin.ia `company_secrets`.
 The equivalent CLI check is:
 
 ```sh
-pnpm jasminiaai secrets doctor --company-id {companyId}
+pnpm jasminia secrets doctor --company-id {companyId}
 ```
 
 ## Provider Vaults
@@ -406,7 +406,7 @@ as declarations in the package manifest. Exports omit secret values, secret IDs,
 provider references, and encrypted provider material. Use:
 
 ```sh
-pnpm jasminiaai secrets declarations --company-id {companyId}
+pnpm jasminia secrets declarations --company-id {companyId}
 ```
 
 to inspect the declarations that an export would emit before moving a package.

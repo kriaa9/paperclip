@@ -1,4 +1,4 @@
-import type { CompanySearchHighlight } from "@jasminiaai/shared";
+import type { CompanySearchHighlight } from "@jasminia/shared";
 import { cn } from "@/lib/utils";
 
 export interface HighlightedTextProps {

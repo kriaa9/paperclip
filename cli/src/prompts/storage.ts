@@ -1,9 +1,9 @@
 import * as p from "@clack/prompts";
 import type { StorageConfig } from "../config/schema.js";
-import { resolveDefaultStorageDir, resolveJasmin.iaInstanceId } from "../config/home.js";
+import { resolveDefaultStorageDir, resolveJasminiaInstanceId } from "../config/home.js";
 
 function defaultStorageBaseDir(): string {
-  return resolveDefaultStorageDir(resolveJasmin.iaInstanceId());
+  return resolveDefaultStorageDir(resolveJasminiaInstanceId());
 }
 
 export function defaultStorageConfig(): StorageConfig {

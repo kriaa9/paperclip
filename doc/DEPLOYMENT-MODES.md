@@ -66,7 +66,7 @@ Jasmin.ia now treats **bind** as a separate concern from auth:
 Default onboarding remains interactive and flagless:
 
 ```sh
-pnpm jasminiaai onboard
+pnpm jasminia onboard
 ```
 
 Server prompt behavior:
@@ -83,9 +83,9 @@ Server prompt behavior:
 Examples:
 
 ```sh
-pnpm jasminiaai onboard --yes
-pnpm jasminiaai onboard --yes --bind lan
-pnpm jasminiaai run --bind tailnet
+pnpm jasminia onboard --yes
+pnpm jasminia onboard --yes --bind lan
+pnpm jasminia run --bind tailnet
 ```
 
 `configure --section server` follows the same interactive behavior.
@@ -95,7 +95,7 @@ pnpm jasminiaai run --bind tailnet
 Default doctor remains flagless:
 
 ```sh
-pnpm jasminiaai doctor
+pnpm jasminia doctor
 ```
 
 Doctor reads configured mode/exposure and applies mode-aware checks. Optional override flags are secondary.

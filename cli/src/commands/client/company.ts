@@ -11,7 +11,7 @@ import type {
   CompanyPortabilityInclude,
   CompanyPortabilityPreviewResult,
   CompanyPortabilityImportResult,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { getTelemetryClient, trackCompanyImported } from "../../telemetry.js";
 import { ApiRequestError } from "../../client/http.js";
 import { openUrl } from "../../client/board-auth.js";
@@ -201,9 +201,9 @@ function normalizePortablePath(filePath: string): string {
 function shouldIncludePortableFile(filePath: string): boolean {
   const baseName = path.basename(filePath);
   const isMarkdown = baseName.endsWith(".md");
-  const isJasmin.iaYaml = baseName === ".jasminia.yaml" || baseName === ".jasminia.yml";
+  const isJasminiaYaml = baseName === ".jasminia.yaml" || baseName === ".jasminia.yml";
   const contentType = binaryContentTypeByExtension[path.extname(baseName).toLowerCase()];
-  return isMarkdown || isJasmin.iaYaml || Boolean(contentType);
+  return isMarkdown || isJasminiaYaml || Boolean(contentType);
 }
 
 function findPortableExtensionPath(files: Record<string, CompanyPortabilityFileEntry>): string | null {

@@ -1,4 +1,4 @@
-import type { Goal } from "@jasminiaai/shared";
+import type { Goal } from "@jasminia/shared";
 import { api } from "./client";
 
 export const goalsApi = {

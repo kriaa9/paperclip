@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jasminiaai/jasminia/master/doc/assets/header.png" alt="Jasmin.ia — runs your business" width="720" />
+  <img src="https://raw.githubusercontent.com/jasminia/jasminia/master/doc/assets/header.png" alt="Jasmin.ia — runs your business" width="720" />
 </p>
 
 <p align="center">
@@ -12,7 +12,7 @@
 
 <p align="center">
   <a href="# src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License" /></a>
-  <a href="# src="https://img.shields.io/github/stars/jasminiaai/jasminia?style=flat" alt="Stars" /></a>
+  <a href="# src="https://img.shields.io/github/stars/jasminia/jasminia?style=flat" alt="Stars" /></a>
   <a href="https://discord.gg/m4HZY7xNG3"><img src="https://img.shields.io/discord/000000000?label=discord" alt="Discord" /></a>
 </p>
 
@@ -52,12 +52,12 @@ It looks like a task manager — but under the hood it has org charts, budgets, 
 <table>
   <tr>
     <td align="center"><strong>Works<br/>with</strong></td>
-    <td align="center"><img src="https://raw.githubusercontent.com/jasminiaai/jasminia/master/doc/assets/logos/openclaw.svg" width="32" alt="OpenClaw" /><br/><sub>OpenClaw</sub></td>
-    <td align="center"><img src="https://raw.githubusercontent.com/jasminiaai/jasminia/master/doc/assets/logos/claude.svg" width="32" alt="Claude" /><br/><sub>Claude Code</sub></td>
-    <td align="center"><img src="https://raw.githubusercontent.com/jasminiaai/jasminia/master/doc/assets/logos/codex.svg" width="32" alt="Codex" /><br/><sub>Codex</sub></td>
-    <td align="center"><img src="https://raw.githubusercontent.com/jasminiaai/jasminia/master/doc/assets/logos/cursor.svg" width="32" alt="Cursor" /><br/><sub>Cursor</sub></td>
-    <td align="center"><img src="https://raw.githubusercontent.com/jasminiaai/jasminia/master/doc/assets/logos/bash.svg" width="32" alt="Bash" /><br/><sub>Bash</sub></td>
-    <td align="center"><img src="https://raw.githubusercontent.com/jasminiaai/jasminia/master/doc/assets/logos/http.svg" width="32" alt="HTTP" /><br/><sub>HTTP</sub></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/jasminia/jasminia/master/doc/assets/logos/openclaw.svg" width="32" alt="OpenClaw" /><br/><sub>OpenClaw</sub></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/jasminia/jasminia/master/doc/assets/logos/claude.svg" width="32" alt="Claude" /><br/><sub>Claude Code</sub></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/jasminia/jasminia/master/doc/assets/logos/codex.svg" width="32" alt="Codex" /><br/><sub>Codex</sub></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/jasminia/jasminia/master/doc/assets/logos/cursor.svg" width="32" alt="Cursor" /><br/><sub>Cursor</sub></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/jasminia/jasminia/master/doc/assets/logos/bash.svg" width="32" alt="Bash" /><br/><sub>Bash</sub></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/jasminia/jasminia/master/doc/assets/logos/http.svg" width="32" alt="HTTP" /><br/><sub>HTTP</sub></td>
   </tr>
 </table>
 
@@ -67,7 +67,7 @@ It looks like a task manager — but under the hood it has org charts, budgets, 
 
 <br/>
 
-## Jasmin.ia is right for you if
+## Jasminia is right for you if
 
 - ✅ You want to build **autonomous AI companies**
 - ✅ You **coordinate many different agents** (OpenClaw, Codex, Claude, Cursor) toward a common goal
@@ -175,18 +175,18 @@ Jasmin.ia handles the hard orchestration details correctly.
 Open source. Self-hosted. No Jasmin.ia account required.
 
 ```bash
-npx jasminiaai onboard --yes
+npx jasminia onboard --yes
 ```
 
 That quickstart path now defaults to trusted local loopback mode for the fastest first run. To start in authenticated/private mode instead, choose a bind preset explicitly:
 
 ```bash
-npx jasminiaai onboard --yes --bind lan
+npx jasminia onboard --yes --bind lan
 # or:
-npx jasminiaai onboard --yes --bind tailnet
+npx jasminia onboard --yes --bind tailnet
 ```
 
-If you already have Jasmin.ia configured, rerunning `onboard` keeps the existing config in place. Use `jasminiaai configure` to edit settings.
+If you already have Jasmin.ia configured, rerunning `onboard` keeps the existing config in place. Use `jasminia configure` to edit settings.
 
 Or manually:
 
@@ -291,14 +291,14 @@ MIT &copy; 2026 Jasmin.ia
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/image?repos=jasminiaai/jasminia&type=date&legend=top-left)](https://www.star-history.com/?repos=jasminiaai%2Fjasminia&type=date&legend=top-left)
+[![Star History Chart](https://api.star-history.com/image?repos=jasminia/jasminia&type=date&legend=top-left)](https://www.star-history.com/?repos=jasminia%2Fjasminia&type=date&legend=top-left)
 
 <br/>
 
 ---
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jasminiaai/jasminia/master/doc/assets/footer.jpg" alt="" width="720" />
+  <img src="https://raw.githubusercontent.com/jasminia/jasminia/master/doc/assets/footer.jpg" alt="" width="720" />
 </p>
 
 <p align="center">

@@ -11,7 +11,7 @@ import {
   heartbeatRuns,
   issueComments,
   issues,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import { heartbeatService } from "../services/heartbeat.ts";
 import { SUCCESSFUL_RUN_HANDOFF_REQUIRED_NOTICE_BODY } from "../services/recovery/index.ts";
 import { startEmbeddedPostgresTestDatabase } from "./helpers/embedded-postgres.ts";

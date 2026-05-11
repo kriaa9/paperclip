@@ -1,6 +1,6 @@
 import * as p from "@clack/prompts";
 import pc from "picocolors";
-import type { Jasmin.iaConfig } from "../config/schema.js";
+import type { JasminiaConfig } from "../config/schema.js";
 import { configExists, readConfig, resolveConfigPath } from "../config/store.js";
 import {
   readAgentJwtSecretFromEnv,
@@ -10,7 +10,7 @@ import {
 import {
   resolveDefaultSecretsKeyFilePath,
   resolveDefaultStorageDir,
-  resolveJasmin.iaInstanceId,
+  resolveJasminiaInstanceId,
 } from "../config/home.js";
 
 type EnvSource = "env" | "config" | "file" | "default" | "missing";
@@ -30,17 +30,17 @@ const DEFAULT_HEARTBEAT_SCHEDULER_INTERVAL_MS = "30000";
 const DEFAULT_SECRETS_PROVIDER = "local_encrypted";
 const DEFAULT_STORAGE_PROVIDER = "local_disk";
 function defaultSecretsKeyFilePath(): string {
-  return resolveDefaultSecretsKeyFilePath(resolveJasmin.iaInstanceId());
+  return resolveDefaultSecretsKeyFilePath(resolveJasminiaInstanceId());
 }
 function defaultStorageBaseDir(): string {
-  return resolveDefaultStorageDir(resolveJasmin.iaInstanceId());
+  return resolveDefaultStorageDir(resolveJasminiaInstanceId());
 }
 
 export async function envCommand(opts: { config?: string }): Promise<void> {
   p.intro(pc.bgCyan(pc.black(" jasminia env ")));
 
   const configPath = resolveConfigPath(opts.config);
-  let config: Jasmin.iaConfig | null = null;
+  let config: JasminiaConfig | null = null;
   let configReadError: string | null = null;
 
   if (configExists(opts.config)) {
@@ -109,7 +109,7 @@ export async function envCommand(opts: { config?: string }): Promise<void> {
   p.outro("Done");
 }
 
-function collectDeploymentEnvRows(config: Jasmin.iaConfig | null, configPath: string): EnvVarRow[] {
+function collectDeploymentEnvRows(config: JasminiaConfig | null, configPath: string): EnvVarRow[] {
   const agentJwtEnvFile = resolveAgentJwtEnvFile(configPath);
   const jwtEnv = readAgentJwtSecretFromEnv(configPath);
   const jwtFile = jwtEnv ? null : readAgentJwtSecretFromEnvFile(agentJwtEnvFile);

@@ -10,7 +10,7 @@ import {
   buildProjectMentionHref,
   buildSkillMentionHref,
   buildUserMentionHref,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { ThemeProvider } from "../context/ThemeContext";
 import { MarkdownBody } from "./MarkdownBody";
 import { queryKeys } from "../lib/queryKeys";
@@ -292,7 +292,7 @@ describe("MarkdownBody", () => {
 
   it("renders wiki links with a custom resolver when enabled", () => {
     const html = renderMarkdown(
-      "See [[wiki/entities/jasminia|Jasmin.ia]] and [[wiki/entities/dotta-b]].",
+      "See [[wiki/entities/jasminia|Jasminia]] and [[wiki/entities/dotta-b]].",
       [],
       {
         enableWikiLinks: true,
@@ -401,7 +401,7 @@ describe("MarkdownBody", () => {
     // The icon and first character "h" must sit in a no-wrap span so the
     // icon can never be orphaned on the previous line from the URL text.
     expect(html).toMatch(/<span style="white-space:nowrap">.*lucide-github.*?<\/svg>h<\/span>/);
-    expect(html).toContain("ttps://github.com/jasminiaai/jasminia/pull/4099");
+    expect(html).toContain("ttps://github.com/jasminia/jasminia/pull/4099");
     expect(html).not.toContain("lucide-external-link");
   });
 

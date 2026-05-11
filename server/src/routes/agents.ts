@@ -1,8 +1,8 @@
 import { Router, type Request, type Response } from "express";
 import { generateKeyPairSync, randomUUID } from "node:crypto";
 import path from "node:path";
-import type { Db } from "@jasminiaai/db";
-import { agents as agentsTable, companies, heartbeatRuns, issues as issuesTable } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { agents as agentsTable, companies, heartbeatRuns, issues as issuesTable } from "@jasminia/db";
 import { and, desc, eq, inArray, not, sql } from "drizzle-orm";
 import {
   agentSkillSyncSchema,
@@ -25,12 +25,12 @@ import {
   wakeAgentSchema,
   updateAgentSchema,
   supportedEnvironmentDriversForAdapter,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
-  readJasmin.iaSkillSyncPreference,
-  writeJasmin.iaSkillSyncPreference,
-} from "@jasminiaai/adapter-utils/server-utils";
-import { trackAgentCreated } from "@jasminiaai/shared/telemetry";
+  readJasminiaSkillSyncPreference,
+  writeJasminiaSkillSyncPreference,
+} from "@jasminia/adapter-utils/server-utils";
+import { trackAgentCreated } from "@jasminia/shared/telemetry";
 import { validate } from "../middleware/validate.js";
 import {
   agentService,
@@ -57,11 +57,11 @@ import type { PluginWorkerManager } from "../services/plugin-worker-manager.js";
 import { environmentService } from "../services/environments.js";
 import { resolveEnvironmentExecutionTarget } from "../services/environment-execution-target.js";
 import { environmentRuntimeService } from "../services/environment-runtime.js";
-import type { AdapterExecutionTarget } from "@jasminiaai/adapter-utils/execution-target";
+import type { AdapterExecutionTarget } from "@jasminia/adapter-utils/execution-target";
 import type {
   AdapterEnvironmentCheck,
   AdapterEnvironmentTestResult,
-} from "@jasminiaai/adapter-utils";
+} from "@jasminia/adapter-utils";
 import { secretService } from "../services/secrets.js";
 import {
   detectAdapterModel,
@@ -76,21 +76,21 @@ import { redactEventPayload } from "../redaction.js";
 import { redactCurrentUserValue } from "../log-redaction.js";
 import { renderOrgChartSvg, renderOrgChartPng, type OrgNode, type OrgChartStyle, ORG_CHART_STYLES } from "./org-chart-svg.js";
 import { instanceSettingsService } from "../services/instance-settings.js";
-import { runClaudeLogin } from "@jasminiaai/adapter-claude-local/server";
+import { runClaudeLogin } from "@jasminia/adapter-claude-local/server";
 import {
   DEFAULT_ACPX_LOCAL_AGENT,
   DEFAULT_ACPX_LOCAL_MODE,
   DEFAULT_ACPX_LOCAL_NON_INTERACTIVE_PERMISSIONS,
   DEFAULT_ACPX_LOCAL_PERMISSION_MODE,
-} from "@jasminiaai/adapter-acpx-local";
+} from "@jasminia/adapter-acpx-local";
 import {
   DEFAULT_CODEX_LOCAL_BYPASS_APPROVALS_AND_SANDBOX,
   DEFAULT_CODEX_LOCAL_MODEL,
-} from "@jasminiaai/adapter-codex-local";
-import { DEFAULT_CURSOR_LOCAL_MODEL } from "@jasminiaai/adapter-cursor-local";
-import { DEFAULT_GEMINI_LOCAL_MODEL } from "@jasminiaai/adapter-gemini-local";
-import { DEFAULT_OPENCODE_LOCAL_MODEL } from "@jasminiaai/adapter-opencode-local";
-import { requireOpenCodeModelId } from "@jasminiaai/adapter-opencode-local/server";
+} from "@jasminia/adapter-codex-local";
+import { DEFAULT_CURSOR_LOCAL_MODEL } from "@jasminia/adapter-cursor-local";
+import { DEFAULT_GEMINI_LOCAL_MODEL } from "@jasminia/adapter-gemini-local";
+import { DEFAULT_OPENCODE_LOCAL_MODEL } from "@jasminia/adapter-opencode-local";
+import { requireOpenCodeModelId } from "@jasminia/adapter-opencode-local/server";
 import {
   loadDefaultAgentInstructionsBundle,
   resolveDefaultAgentInstructionsBundleRole,
@@ -1263,7 +1263,7 @@ export function agentRoutes(
     const desiredSkills = Array.from(new Set([...requiredSkills, ...resolvedRequestedSkills]));
 
     return {
-      adapterConfig: writeJasmin.iaSkillSyncPreference(adapterConfig, desiredSkills),
+      adapterConfig: writeJasminiaSkillSyncPreference(adapterConfig, desiredSkills),
       desiredSkills,
       runtimeSkillEntries,
     };
@@ -1476,7 +1476,7 @@ export function agentRoutes(
 
     const adapter = findActiveServerAdapter(agent.adapterType);
     if (!adapter?.listSkills) {
-      const preference = readJasmin.iaSkillSyncPreference(
+      const preference = readJasminiaSkillSyncPreference(
         agent.adapterConfig as Record<string, unknown>,
       );
       const runtimeSkillEntries = await companySkills.listRuntimeSkillEntries(agent.companyId, {

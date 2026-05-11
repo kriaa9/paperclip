@@ -35,7 +35,7 @@ import type {
   SecretProviderConfigStatus,
   SecretProviderDescriptor,
   SecretStatus,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { useCompany } from "../context/CompanyContext";
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import { useToastActions } from "../context/ToastContext";

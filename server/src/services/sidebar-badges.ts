@@ -1,7 +1,7 @@
 import { and, desc, eq, inArray, not } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { agents, approvals, heartbeatRuns } from "@jasminiaai/db";
-import type { SidebarBadges } from "@jasminiaai/shared";
+import type { Db } from "@jasminia/db";
+import { agents, approvals, heartbeatRuns } from "@jasminia/db";
+import type { SidebarBadges } from "@jasminia/shared";
 
 const ACTIONABLE_APPROVAL_STATUSES = ["pending", "revision_requested"];
 const FAILED_HEARTBEAT_STATUSES = ["failed", "timed_out"];

@@ -22,7 +22,7 @@ import type {
   RemoteSecretImportPreviewResult,
   RemoteSecretImportResult,
   RemoteSecretImportRowResult,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { ApiError } from "../../api/client";
 import {
   secretsApi,

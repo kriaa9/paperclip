@@ -13,7 +13,7 @@ import {
   companySecrets,
   createDb,
   secretAccessEvents,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import { getEmbeddedPostgresTestSupport, startEmbeddedPostgresTestDatabase } from "./helpers/embedded-postgres.js";
 import { awsSecretsManagerProvider } from "../secrets/aws-secrets-manager-provider.js";
 import { localEncryptedProvider } from "../secrets/local-encrypted-provider.js";
@@ -1068,7 +1068,7 @@ describeEmbeddedPostgres("secretService", () => {
       config: { region: "us-east-1", namespace: "prod-use1" },
     });
     const rawProviderMessage =
-      "AccessDeniedException: User: arn:aws:sts::123456789012:assumed-role/prod/Jasmin.ia is not authorized to perform secretsmanager:ListSecrets";
+      "AccessDeniedException: User: arn:aws:sts::123456789012:assumed-role/prod/Jasminia is not authorized to perform secretsmanager:ListSecrets";
 
     vi.spyOn(awsSecretsManagerProvider, "listRemoteSecrets").mockRejectedValueOnce(
       new SecretProviderClientError({
@@ -1179,7 +1179,7 @@ describeEmbeddedPostgres("secretService", () => {
       config: { region: "us-east-1", namespace: "prod-use1" },
     });
     const rawProviderMessage =
-      "AccessDeniedException: User: arn:aws:sts::123456789012:assumed-role/prod/Jasmin.ia is not authorized to perform secretsmanager:DescribeSecret on arn:aws:secretsmanager:us-east-1:123456789012:secret:prod/openai";
+      "AccessDeniedException: User: arn:aws:sts::123456789012:assumed-role/prod/Jasminia is not authorized to perform secretsmanager:DescribeSecret on arn:aws:secretsmanager:us-east-1:123456789012:secret:prod/openai";
     vi.spyOn(awsSecretsManagerProvider, "linkExternalSecret").mockRejectedValueOnce(
       new SecretProviderClientError({
         code: "access_denied",
@@ -1277,7 +1277,7 @@ describeEmbeddedPostgres("secretService", () => {
       errorCount: 1,
       results: [expect.objectContaining({ status: "error" })],
     });
-    expect(result.results[0]?.reason).toMatch(/Jasmin.ia-managed namespace/i);
+    expect(result.results[0]?.reason).toMatch(/Jasminia-managed namespace/i);
     const imported = await db.select().from(companySecrets).where(eq(companySecrets.key, "foreign-managed-secret"));
     expect(imported).toHaveLength(0);
   });

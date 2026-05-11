@@ -1,7 +1,7 @@
 /**
  * Shared UI component declarations for plugin frontends.
  *
- * These components are exported from `@jasminiaai/plugin-sdk/ui` and are
+ * These components are exported from `@jasminia/plugin-sdk/ui` and are
  * provided by the host at runtime.  They match the host's design tokens and
  * visual language, reducing the boilerplate needed to build consistent plugin UIs.
  *
@@ -13,7 +13,7 @@
  * only the type declarations; the runtime implementations are injected via the
  * host module registry.
  *
- * @see PLUGIN_SPEC.md §19.6 — Shared Components In `@jasminiaai/plugin-sdk/ui`
+ * @see PLUGIN_SPEC.md §19.6 — Shared Components In `@jasminia/plugin-sdk/ui`
  */
 
 import type React from "react";
@@ -466,7 +466,7 @@ export interface ManagedRoutinesListProps {
  * @see PLUGIN_SPEC.md §19.6 — Shared Components
  */
 function createSdkUiComponent<TProps>(name: string): React.ComponentType<TProps> {
-  return function Jasmin.iaSdkUiComponent(props: TProps) {
+  return function JasminiaSdkUiComponent(props: TProps) {
     return renderSdkUiComponent(name, props) as React.ReactNode;
   };
 }
@@ -556,7 +556,7 @@ export const ErrorBoundary = createSdkUiComponent<ErrorBoundaryProps>("ErrorBoun
  *
  * @example
  * ```tsx
- * import { FileTree, type FileTreeNode } from "@jasminiaai/plugin-sdk/ui";
+ * import { FileTree, type FileTreeNode } from "@jasminia/plugin-sdk/ui";
  *
  * const nodes: FileTreeNode[] = [
  *   { name: "README.md", path: "README.md", kind: "file", children: [] },

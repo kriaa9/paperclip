@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { eq } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { authUsers } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { authUsers } from "@jasminia/db";
 import {
   authSessionSchema,
   currentUserProfileSchema,
   updateCurrentUserProfileSchema,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { unauthorized } from "../errors.js";
 import { validate } from "../middleware/validate.js";
 

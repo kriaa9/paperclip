@@ -1,4 +1,4 @@
-import type { ProjectWorkspaceRuntimeConfig } from "@jasminiaai/shared";
+import type { ProjectWorkspaceRuntimeConfig } from "@jasminia/shared";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);

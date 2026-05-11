@@ -40,7 +40,7 @@ const mockIssueThreadInteractionService = vi.hoisted(() => ({
 }));
 
 function registerModuleMocks() {
-  vi.doMock("@jasminiaai/shared/telemetry", () => ({
+  vi.doMock("@jasminia/shared/telemetry", () => ({
     trackAgentTaskCompleted: vi.fn(),
     trackErrorHandlerCrash: vi.fn(),
   }));
@@ -165,7 +165,7 @@ function makeComment(overrides: Record<string, unknown> = {}) {
 describe.sequential("issue comment cancel routes", () => {
   beforeEach(() => {
     vi.resetModules();
-    vi.doUnmock("@jasminiaai/shared/telemetry");
+    vi.doUnmock("@jasminia/shared/telemetry");
     vi.doUnmock("../telemetry.js");
     vi.doUnmock("../services/access.js");
     vi.doUnmock("../services/activity-log.js");

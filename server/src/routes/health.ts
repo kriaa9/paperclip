@@ -1,9 +1,9 @@
 import { timingSafeEqual } from "node:crypto";
 import { Router } from "express";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import { and, count, eq, gt, inArray, isNull, sql } from "drizzle-orm";
-import { heartbeatRuns, instanceUserRoles, invites } from "@jasminiaai/db";
-import type { DeploymentExposure, DeploymentMode } from "@jasminiaai/shared";
+import { heartbeatRuns, instanceUserRoles, invites } from "@jasminia/db";
+import type { DeploymentExposure, DeploymentMode } from "@jasminia/shared";
 import { readPersistedDevServerStatus, toDevServerHealthStatus } from "../dev-server-status.js";
 import { logger } from "../middleware/logger.js";
 import { instanceSettingsService } from "../services/instance-settings.js";

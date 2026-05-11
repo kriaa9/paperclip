@@ -31,14 +31,14 @@
  */
 
 import { and, desc, eq } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { plugins, pluginJobs, pluginJobRuns } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { plugins, pluginJobs, pluginJobRuns } from "@jasminia/db";
 import type {
   PluginJobDeclaration,
   PluginJobRunStatus,
   PluginJobRunTrigger,
   PluginJobRecord,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { notFound } from "../errors.js";
 
 /**

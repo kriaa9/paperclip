@@ -71,7 +71,7 @@ const mockIssueTreeControlService = vi.hoisted(() => ({
   getActivePauseHoldGate: vi.fn(async () => null),
 }));
 
-vi.mock("@jasminiaai/shared/telemetry", () => ({
+vi.mock("@jasminia/shared/telemetry", () => ({
   trackAgentTaskCompleted: vi.fn(),
   trackErrorHandlerCrash: vi.fn(),
 }));

@@ -85,7 +85,7 @@ That tradeoff is probably acceptable for Jasmin.ia, but it should be explicit:
 - release notes become the compatibility signal
 - downstream users should prefer exact pins or deliberate upgrades
 
-This is especially relevant for public library packages like `@jasminiaai/shared`, `@jasminiaai/db`, and the adapter packages.
+This is especially relevant for public library packages like `@jasminia/shared`, `@jasminia/db`, and the adapter packages.
 
 ### 3. Drop release branches for normal publishing
 
@@ -109,8 +109,8 @@ This is the most important mechanical constraint.
 
 npm can move dist-tags, but it does not let you rename an already-published version. That means:
 
-- you can move `latest` to `jasminiaai@1.2.3`
-- you cannot turn `jasminiaai@2026.317.0-canary.8` into `jasminiaai@2026.317.0`
+- you can move `latest` to `jasminia@1.2.3`
+- you cannot turn `jasminia@2026.317.0-canary.8` into `jasminia@2026.317.0`
 
 So "promote canary to stable" really means:
 

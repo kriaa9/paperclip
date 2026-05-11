@@ -20,10 +20,10 @@
  */
 
 import type {
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginToolDeclaration,
-} from "@jasminiaai/shared";
-import type { ToolRunContext, ToolResult, ExecuteToolParams } from "@jasminiaai/plugin-sdk";
+} from "@jasminia/shared";
+import type { ToolRunContext, ToolResult, ExecuteToolParams } from "@jasminia/plugin-sdk";
 import type { PluginWorkerManager } from "./plugin-worker-manager.js";
 import { logger } from "../middleware/logger.js";
 
@@ -112,7 +112,7 @@ export interface PluginToolRegistry {
    * @param pluginDbId - The plugin's database UUID, used for worker routing
    *   and availability checks. If omitted, `pluginId` is used (backwards-compat).
    */
-  registerPlugin(pluginId: string, manifest: Jasmin.iaPluginManifestV1, pluginDbId?: string): void;
+  registerPlugin(pluginId: string, manifest: JasminiaPluginManifestV1, pluginDbId?: string): void;
 
   /**
    * Remove all tool registrations for a plugin.
@@ -295,7 +295,7 @@ export function createPluginToolRegistry(
   // -----------------------------------------------------------------------
 
   return {
-    registerPlugin(pluginId: string, manifest: Jasmin.iaPluginManifestV1, pluginDbId?: string): void {
+    registerPlugin(pluginId: string, manifest: JasminiaPluginManifestV1, pluginDbId?: string): void {
       const dbId = pluginDbId ?? pluginId;
 
       // Remove any previously registered tools for this plugin (idempotent)

@@ -10,7 +10,7 @@ import type {
   PluginDatabaseMigrationStatus,
   PluginDatabaseNamespaceMode,
   PluginDatabaseNamespaceStatus,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { plugins } from "./plugins.js";
 
 /**

@@ -18,13 +18,13 @@ test("isCanaryVersion matches release canaries", () => {
 test("collectInternalDependencyProblems flags missing internal versions", () => {
   const manifest = {
     dependencies: {
-      "@jasminiaai/plugin-sdk": "2026.425.0-canary.5",
+      "@jasminia/plugin-sdk": "2026.425.0-canary.5",
       e2b: "^2.19.0",
     },
   };
   const packageDocsByName = new Map([
     [
-      "@jasminiaai/plugin-sdk",
+      "@jasminia/plugin-sdk",
       {
         versions: {
           "2026.427.0-canary.3": {},
@@ -35,19 +35,19 @@ test("collectInternalDependencyProblems flags missing internal versions", () => 
 
   assert.deepEqual(
     collectInternalDependencyProblems(manifest, packageDocsByName),
-    ["dependencies requires @jasminiaai/plugin-sdk@2026.425.0-canary.5, but npm does not expose that version"],
+    ["dependencies requires @jasminia/plugin-sdk@2026.425.0-canary.5, but npm does not expose that version"],
   );
 });
 
 test("collectInternalDependencyProblems accepts version-specific manifests when the root document is stale", () => {
   const manifest = {
     dependencies: {
-      "@jasminiaai/plugin-sdk": "2026.425.0-canary.5",
+      "@jasminia/plugin-sdk": "2026.425.0-canary.5",
     },
   };
   const packageDocsByName = new Map([
     [
-      "@jasminiaai/plugin-sdk",
+      "@jasminia/plugin-sdk",
       {
         versions: {},
       },
@@ -55,8 +55,8 @@ test("collectInternalDependencyProblems accepts version-specific manifests when 
   ]);
   const packageManifestsByKey = new Map([
     [
-      createManifestLookupKey("@jasminiaai/plugin-sdk", "2026.425.0-canary.5"),
-      { name: "@jasminiaai/plugin-sdk", version: "2026.425.0-canary.5" },
+      createManifestLookupKey("@jasminia/plugin-sdk", "2026.425.0-canary.5"),
+      { name: "@jasminia/plugin-sdk", version: "2026.425.0-canary.5" },
     ],
   ]);
 
@@ -69,7 +69,7 @@ test("collectInternalDependencyProblems accepts version-specific manifests when 
 test("collectInternalDependencyProblems ignores peer dependency range specifiers", () => {
   const manifest = {
     peerDependencies: {
-      "@jasminiaai/server": "^2026.430.0-canary.0",
+      "@jasminia/server": "^2026.430.0-canary.0",
     },
   };
 
@@ -82,14 +82,14 @@ test("collectInternalDependencyProblems ignores peer dependency range specifiers
 test("collectInternalDependencyProblems reports unfetched transitive dependency metadata neutrally", () => {
   const manifest = {
     optionalDependencies: {
-      "@jasminiaai/browser": "2026.430.0-canary.0",
+      "@jasminia/browser": "2026.430.0-canary.0",
     },
   };
 
   assert.deepEqual(
     collectInternalDependencyProblems(manifest, new Map()),
     [
-      "optionalDependencies requires @jasminiaai/browser@2026.430.0-canary.0, but npm publication metadata was not fetched for that dependency",
+      "optionalDependencies requires @jasminia/browser@2026.430.0-canary.0, but npm publication metadata was not fetched for that dependency",
     ],
   );
 });
@@ -97,7 +97,7 @@ test("collectInternalDependencyProblems reports unfetched transitive dependency 
 test("verifyPackageRegistryState tolerates a stale root versions map when dist-tags and direct manifests are correct", () => {
   const packageDocsByName = new Map([
     [
-      "@jasminiaai/ui",
+      "@jasminia/ui",
       {
         "dist-tags": {
           canary: "2026.430.0-canary.0",
@@ -107,7 +107,7 @@ test("verifyPackageRegistryState tolerates a stale root versions map when dist-t
       },
     ],
     [
-      "@jasminiaai/shared",
+      "@jasminia/shared",
       {
         versions: {},
       },
@@ -115,19 +115,19 @@ test("verifyPackageRegistryState tolerates a stale root versions map when dist-t
   ]);
   const packageManifestsByKey = new Map([
     [
-      createManifestLookupKey("@jasminiaai/ui", "2026.430.0-canary.0"),
+      createManifestLookupKey("@jasminia/ui", "2026.430.0-canary.0"),
       {
-        name: "@jasminiaai/ui",
+        name: "@jasminia/ui",
         version: "2026.430.0-canary.0",
         dependencies: {
-          "@jasminiaai/shared": "2026.430.0-canary.0",
+          "@jasminia/shared": "2026.430.0-canary.0",
         },
       },
     ],
     [
-      createManifestLookupKey("@jasminiaai/shared", "2026.430.0-canary.0"),
+      createManifestLookupKey("@jasminia/shared", "2026.430.0-canary.0"),
       {
-        name: "@jasminiaai/shared",
+        name: "@jasminia/shared",
         version: "2026.430.0-canary.0",
       },
     ],
@@ -135,8 +135,8 @@ test("verifyPackageRegistryState tolerates a stale root versions map when dist-t
 
   assert.deepEqual(
     verifyPackageRegistryState({
-      packageName: "@jasminiaai/ui",
-      packageDoc: packageDocsByName.get("@jasminiaai/ui"),
+      packageName: "@jasminia/ui",
+      packageDoc: packageDocsByName.get("@jasminia/ui"),
       packageDocsByName,
       packageManifestsByKey,
       channel: "canary",
@@ -151,7 +151,7 @@ test("verifyPackageRegistryState tolerates a stale root versions map when dist-t
 test("verifyPackageRegistryState fails when canary latest is left in place by default", () => {
   const packageDocsByName = new Map([
     [
-      "@jasminiaai/plugin-e2b",
+      "@jasminia/plugin-e2b",
       {
         "dist-tags": {
           latest: "2026.425.0-canary.5",
@@ -160,19 +160,19 @@ test("verifyPackageRegistryState fails when canary latest is left in place by de
         versions: {
           "2026.425.0-canary.5": {
             dependencies: {
-              "@jasminiaai/plugin-sdk": "2026.425.0-canary.5",
+              "@jasminia/plugin-sdk": "2026.425.0-canary.5",
             },
           },
           "2026.427.0-canary.3": {
             dependencies: {
-              "@jasminiaai/plugin-sdk": "2026.427.0-canary.3",
+              "@jasminia/plugin-sdk": "2026.427.0-canary.3",
             },
           },
         },
       },
     ],
     [
-      "@jasminiaai/plugin-sdk",
+      "@jasminia/plugin-sdk",
       {
         versions: {
           "2026.427.0-canary.3": {},
@@ -183,8 +183,8 @@ test("verifyPackageRegistryState fails when canary latest is left in place by de
 
   assert.deepEqual(
     verifyPackageRegistryState({
-      packageName: "@jasminiaai/plugin-e2b",
-      packageDoc: packageDocsByName.get("@jasminiaai/plugin-e2b"),
+      packageName: "@jasminia/plugin-e2b",
+      packageDoc: packageDocsByName.get("@jasminia/plugin-e2b"),
       packageDocsByName,
       channel: "canary",
       distTag: "canary",
@@ -192,8 +192,8 @@ test("verifyPackageRegistryState fails when canary latest is left in place by de
       allowCanaryLatest: false,
     }),
     [
-      "@jasminiaai/plugin-e2b: latest dist-tag still resolves to canary 2026.425.0-canary.5; if that state is intentional, rerun the verification script directly with --allow-canary-latest",
-      "@jasminiaai/plugin-e2b@2026.425.0-canary.5 via latest: dependencies requires @jasminiaai/plugin-sdk@2026.425.0-canary.5, but npm does not expose that version",
+      "@jasminia/plugin-e2b: latest dist-tag still resolves to canary 2026.425.0-canary.5; if that state is intentional, rerun the verification script directly with --allow-canary-latest",
+      "@jasminia/plugin-e2b@2026.425.0-canary.5 via latest: dependencies requires @jasminia/plugin-sdk@2026.425.0-canary.5, but npm does not expose that version",
     ],
   );
 });
@@ -201,7 +201,7 @@ test("verifyPackageRegistryState fails when canary latest is left in place by de
 test("verifyPackageRegistryProblems marks canary latest drift as non-retriable", () => {
   const packageDocsByName = new Map([
     [
-      "@jasminiaai/plugin-e2b",
+      "@jasminia/plugin-e2b",
       {
         "dist-tags": {
           latest: "2026.425.0-canary.5",
@@ -215,8 +215,8 @@ test("verifyPackageRegistryProblems marks canary latest drift as non-retriable",
   ]);
 
   const problems = verifyPackageRegistryProblems({
-    packageName: "@jasminiaai/plugin-e2b",
-    packageDoc: packageDocsByName.get("@jasminiaai/plugin-e2b"),
+    packageName: "@jasminia/plugin-e2b",
+    packageDoc: packageDocsByName.get("@jasminia/plugin-e2b"),
     packageDocsByName,
     channel: "canary",
     distTag: "canary",
@@ -231,7 +231,7 @@ test("verifyPackageRegistryProblems marks canary latest drift as non-retriable",
 test("verifyPackageRegistryState allows intentional canary latest but still checks dependencies", () => {
   const packageDocsByName = new Map([
     [
-      "jasminiaai",
+      "jasminia",
       {
         "dist-tags": {
           latest: "2026.427.0-canary.3",
@@ -240,14 +240,14 @@ test("verifyPackageRegistryState allows intentional canary latest but still chec
         versions: {
           "2026.427.0-canary.3": {
             dependencies: {
-              "@jasminiaai/server": "2026.427.0-canary.3",
+              "@jasminia/server": "2026.427.0-canary.3",
             },
           },
         },
       },
     ],
     [
-      "@jasminiaai/server",
+      "@jasminia/server",
       {
         versions: {
           "2026.427.0-canary.3": {},
@@ -258,8 +258,8 @@ test("verifyPackageRegistryState allows intentional canary latest but still chec
 
   assert.deepEqual(
     verifyPackageRegistryState({
-      packageName: "jasminiaai",
-      packageDoc: packageDocsByName.get("jasminiaai"),
+      packageName: "jasminia",
+      packageDoc: packageDocsByName.get("jasminia"),
       packageDocsByName,
       channel: "canary",
       distTag: "canary",
@@ -273,7 +273,7 @@ test("verifyPackageRegistryState allows intentional canary latest but still chec
 test("verifyPackageRegistryState still fails when the dist-tag is stale", () => {
   const packageDocsByName = new Map([
     [
-      "@jasminiaai/ui",
+      "@jasminia/ui",
       {
         "dist-tags": {
           canary: "2026.429.0-canary.2",
@@ -284,9 +284,9 @@ test("verifyPackageRegistryState still fails when the dist-tag is stale", () => 
   ]);
   const packageManifestsByKey = new Map([
     [
-      createManifestLookupKey("@jasminiaai/ui", "2026.430.0-canary.0"),
+      createManifestLookupKey("@jasminia/ui", "2026.430.0-canary.0"),
       {
-        name: "@jasminiaai/ui",
+        name: "@jasminia/ui",
         version: "2026.430.0-canary.0",
       },
     ],
@@ -294,8 +294,8 @@ test("verifyPackageRegistryState still fails when the dist-tag is stale", () => 
 
   assert.deepEqual(
     verifyPackageRegistryState({
-      packageName: "@jasminiaai/ui",
-      packageDoc: packageDocsByName.get("@jasminiaai/ui"),
+      packageName: "@jasminia/ui",
+      packageDoc: packageDocsByName.get("@jasminia/ui"),
       packageDocsByName,
       packageManifestsByKey,
       channel: "canary",
@@ -303,14 +303,14 @@ test("verifyPackageRegistryState still fails when the dist-tag is stale", () => 
       targetVersion: "2026.430.0-canary.0",
       allowCanaryLatest: false,
     }),
-    ["@jasminiaai/ui: dist-tag canary resolves to 2026.429.0-canary.2, expected 2026.430.0-canary.0"],
+    ["@jasminia/ui: dist-tag canary resolves to 2026.429.0-canary.2, expected 2026.430.0-canary.0"],
   );
 });
 
 test("verifyPackageRegistryState ignores internal peer dependency ranges", () => {
   const packageDocsByName = new Map([
     [
-      "@jasminiaai/plugin-sdk",
+      "@jasminia/plugin-sdk",
       {
         "dist-tags": {
           canary: "2026.430.0-canary.0",
@@ -318,7 +318,7 @@ test("verifyPackageRegistryState ignores internal peer dependency ranges", () =>
         versions: {
           "2026.430.0-canary.0": {
             peerDependencies: {
-              "@jasminiaai/server": "^2026.430.0-canary.0",
+              "@jasminia/server": "^2026.430.0-canary.0",
             },
           },
         },
@@ -328,8 +328,8 @@ test("verifyPackageRegistryState ignores internal peer dependency ranges", () =>
 
   assert.deepEqual(
     verifyPackageRegistryState({
-      packageName: "@jasminiaai/plugin-sdk",
-      packageDoc: packageDocsByName.get("@jasminiaai/plugin-sdk"),
+      packageName: "@jasminia/plugin-sdk",
+      packageDoc: packageDocsByName.get("@jasminia/plugin-sdk"),
       packageDocsByName,
       channel: "canary",
       distTag: "canary",
@@ -354,7 +354,7 @@ test("fetchRegistryJson times out hung requests", async () => {
 
   try {
     await assert.rejects(
-      fetchRegistryJson(new URL("https://registry.npmjs.org/@jasminiaai%2Fui"), { timeoutMs: 1 }),
+      fetchRegistryJson(new URL("https://registry.npmjs.org/@jasminia%2Fui"), { timeoutMs: 1 }),
       /timed out/,
     );
   } finally {

@@ -1,11 +1,11 @@
 import { createHash } from "node:crypto";
 import os from "node:os";
-import type { AdapterModel } from "@jasminiaai/adapter-utils";
+import type { AdapterModel } from "@jasminia/adapter-utils";
 import {
   asString,
   ensurePathInEnv,
   runChildProcess,
-} from "@jasminiaai/adapter-utils/server-utils";
+} from "@jasminia/adapter-utils/server-utils";
 import { isValidOpenCodeModelId } from "../index.js";
 
 const MODELS_CACHE_TTL_MS = 60_000;

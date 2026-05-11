@@ -61,7 +61,7 @@ Secrets are encrypted with a local master key stored at:
 
 This key is auto-created during onboarding. The key never leaves your machine.
 Jasmin.ia best-effort enforces `0600` permissions when it creates or loads the
-key file. `jasminiaai doctor` and the provider health API warn when the file is
+key file. `jasminia doctor` and the provider health API warn when the file is
 readable by group or other users.
 
 Back up the key file together with database backups. A database backup without
@@ -75,20 +75,20 @@ metadata is not enough to restore named secret versions.
 Onboarding writes default secrets config:
 
 ```sh
-pnpm jasminiaai onboard
+pnpm jasminia onboard
 ```
 
 Update secrets settings:
 
 ```sh
-pnpm jasminiaai configure --section secrets
+pnpm jasminia configure --section secrets
 ```
 
 Validate secrets config:
 
 ```sh
-pnpm jasminiaai doctor
-pnpm jasminiaai secrets doctor --company-id <company-id>
+pnpm jasminia doctor
+pnpm jasminia secrets doctor --company-id <company-id>
 ```
 
 ### Environment Overrides
@@ -263,7 +263,7 @@ Operator flow in the board UI:
 3. In the `Secrets` tab, choose `Import from vault`.
 4. Select an AWS vault, search the remote inventory, and load more pages as
    needed.
-5. Check the rows to import, review/edit the Jasmin.ia name and key, then
+5. Check the rows to import, review/edit the Jasminia name and key, then
    submit.
 6. Review the result summary for created, skipped, and failed rows.
 
@@ -355,8 +355,8 @@ store.
 If you have existing agents with inline API keys in their config, migrate them to encrypted secret refs:
 
 ```sh
-pnpm jasminiaai secrets migrate-inline-env --company-id <company-id>
-pnpm jasminiaai secrets migrate-inline-env --company-id <company-id> --apply
+pnpm jasminia secrets migrate-inline-env --company-id <company-id>
+pnpm jasminia secrets migrate-inline-env --company-id <company-id> --apply
 
 # low-level script for direct database maintenance
 pnpm secrets:migrate-inline-env         # dry run
@@ -373,7 +373,7 @@ Company exports include only environment declarations. They do not include
 secret IDs, provider references, encrypted material, or plaintext values.
 
 ```sh
-pnpm jasminiaai secrets declarations --company-id <company-id> --kind secret
+pnpm jasminia secrets declarations --company-id <company-id> --kind secret
 ```
 
 Before importing a package into another instance, use those declarations to

@@ -1,4 +1,4 @@
-import type { Issue, IssueStatus } from "@jasminiaai/shared";
+import type { Issue, IssueStatus } from "@jasminia/shared";
 import { workflowSort } from "./workflow-sort";
 
 export type SubIssueProgressTargetKind = "next" | "blocked";

@@ -1,5 +1,5 @@
-import type { Db } from "@jasminiaai/db";
-import { workspaceRuntimeServices } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { workspaceRuntimeServices } from "@jasminia/db";
 import { and, desc, eq, inArray } from "drizzle-orm";
 
 type WorkspaceRuntimeServiceRow = typeof workspaceRuntimeServices.$inferSelect;

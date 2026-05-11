@@ -1,5 +1,5 @@
 import { and, eq } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   agents,
   pluginManagedResources,
@@ -7,7 +7,7 @@ import {
   projects,
   routines,
   routineTriggers,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import type {
   CreateRoutineTrigger,
   PluginManagedResourceRef,
@@ -16,8 +16,8 @@ import type {
   Routine,
   RoutineManagedByPlugin,
   RoutineStatus,
-} from "@jasminiaai/shared";
-import { ROUTINE_STATUSES } from "@jasminiaai/shared";
+} from "@jasminia/shared";
+import { ROUTINE_STATUSES } from "@jasminia/shared";
 import { notFound, unprocessable } from "../errors.js";
 import { logActivity } from "./activity-log.js";
 import { routineService } from "./routines.js";
@@ -28,7 +28,7 @@ const MANAGED_ROUTINE_RESOURCE_KIND = "routine";
 interface PluginManagedRoutineServiceOptions {
   pluginId: string;
   pluginKey: string;
-  manifest?: import("@jasminiaai/shared").Jasmin.iaPluginManifestV1 | null;
+  manifest?: import("@jasminia/shared").JasminiaPluginManifestV1 | null;
   pluginWorkerManager?: PluginWorkerManager;
 }
 

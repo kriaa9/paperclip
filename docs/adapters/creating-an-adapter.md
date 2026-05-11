@@ -74,8 +74,8 @@ export { createServerAdapter } from "./server/index.js";
 
 Key responsibilities:
 
-1. Read config using safe helpers (`asString`, `asNumber`, etc.) from `@jasminiaai/adapter-utils/server-utils`
-2. Build environment with `buildJasmin.iaEnv(agent)` plus context vars
+1. Read config using safe helpers (`asString`, `asNumber`, etc.) from `@jasminia/adapter-utils/server-utils`
+2. Build environment with `buildJasminiaEnv(agent)` plus context vars
 3. Resolve session state from `runtime.sessionParams`
 4. Render prompt with `renderTemplate(template, data)`
 5. Spawn the process with `runChildProcess()` or call via `fetch()`
@@ -86,11 +86,11 @@ Key responsibilities:
 
 | Helper | Source | Purpose |
 |--------|--------|---------|
-| `runChildProcess(cmd, opts)` | `@jasminiaai/adapter-utils/server-utils` | Spawn with timeout, grace, streaming |
-| `buildJasmin.iaEnv(agent)` | `@jasminiaai/adapter-utils/server-utils` | Inject `JASMINIA_*` env vars |
-| `renderTemplate(tpl, data)` | `@jasminiaai/adapter-utils/server-utils` | `{{variable}}` substitution |
-| `asString(v)` | `@jasminiaai/adapter-utils` | Safe config value extraction |
-| `asNumber(v)` | `@jasminiaai/adapter-utils` | Safe number extraction |
+| `runChildProcess(cmd, opts)` | `@jasminia/adapter-utils/server-utils` | Spawn with timeout, grace, streaming |
+| `buildJasminiaEnv(agent)` | `@jasminia/adapter-utils/server-utils` | Inject `JASMINIA_*` env vars |
+| `renderTemplate(tpl, data)` | `@jasminia/adapter-utils/server-utils` | `{{variable}}` substitution |
+| `asString(v)` | `@jasminia/adapter-utils` | Safe config value extraction |
+| `asNumber(v)` | `@jasminia/adapter-utils` | Safe number extraction |
 
 ### AdapterExecutionContext
 
@@ -165,7 +165,7 @@ For external adapters, use a self-contained `ui-parser.ts` instead. See the [UI 
 
 ## Step 5: CLI Module
 
-`format-event.ts` — pretty-prints stdout for `jasminiaai run --watch` using `picocolors`.
+`format-event.ts` — pretty-prints stdout for `jasminia run --watch` using `picocolors`.
 
 ```ts
 export function formatStdoutEvent(line: string, debug: boolean): void {

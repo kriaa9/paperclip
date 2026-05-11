@@ -23,12 +23,12 @@ function findConfigFileFromAncestors(startDir: string): string | null {
   return null;
 }
 
-export function resolveJasmin.iaConfigPath(overridePath?: string): string {
+export function resolveJasminiaConfigPath(overridePath?: string): string {
   if (overridePath) return path.resolve(overridePath);
   if (process.env.JASMINIA_CONFIG) return path.resolve(process.env.JASMINIA_CONFIG);
   return findConfigFileFromAncestors(process.cwd()) ?? resolveDefaultConfigPath();
 }
 
-export function resolveJasmin.iaEnvPath(overrideConfigPath?: string): string {
-  return path.resolve(path.dirname(resolveJasmin.iaConfigPath(overrideConfigPath)), JASMINIA_ENV_FILENAME);
+export function resolveJasminiaEnvPath(overrideConfigPath?: string): string {
+  return path.resolve(path.dirname(resolveJasminiaConfigPath(overrideConfigPath)), JASMINIA_ENV_FILENAME);
 }

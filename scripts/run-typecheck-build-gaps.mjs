@@ -86,7 +86,7 @@ if (buildGapPackages.length === 0) {
   process.exit(0);
 }
 
-run("pnpm", ["--filter", "@jasminiaai/plugin-sdk", "build"]);
+run("pnpm", ["--filter", "@jasminia/plugin-sdk", "build"]);
 
 for (const workspacePkg of buildGapPackages) {
   run("pnpm", ["--filter", workspacePkg.name, "typecheck"]);

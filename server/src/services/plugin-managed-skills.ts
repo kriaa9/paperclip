@@ -1,15 +1,15 @@
 import { and, eq } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   pluginManagedResources,
-} from "@jasminiaai/db";
-import { normalizeAgentUrlKey } from "@jasminiaai/shared";
+} from "@jasminia/db";
+import { normalizeAgentUrlKey } from "@jasminia/shared";
 import type {
   CompanySkill,
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginManagedSkillDeclaration,
   PluginManagedSkillResolution,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { notFound } from "../errors.js";
 import { logActivity } from "./activity-log.js";
 import { companySkillService } from "./company-skills.js";
@@ -19,7 +19,7 @@ const MANAGED_SKILL_RESOURCE_KIND = "skill";
 interface PluginManagedSkillServiceOptions {
   pluginId: string;
   pluginKey: string;
-  manifest?: Jasmin.iaPluginManifestV1 | null;
+  manifest?: JasminiaPluginManifestV1 | null;
 }
 
 function pluginKeySlug(pluginKey: string) {

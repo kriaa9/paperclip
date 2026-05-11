@@ -1,8 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { AdapterExecutionContext, AdapterExecutionResult } from "@jasminiaai/adapter-utils";
-import type { RunProcessResult } from "@jasminiaai/adapter-utils/server-utils";
+import type { AdapterExecutionContext, AdapterExecutionResult } from "@jasminia/adapter-utils";
+import type { RunProcessResult } from "@jasminia/adapter-utils/server-utils";
 import {
   adapterExecutionTargetIsRemote,
   adapterExecutionTargetRemoteCwd,
@@ -10,7 +10,7 @@ import {
   adapterExecutionTargetSessionIdentity,
   adapterExecutionTargetSessionMatches,
   adapterExecutionTargetUsesManagedHome,
-  adapterExecutionTargetUsesJasmin.iaBridge,
+  adapterExecutionTargetUsesJasminiaBridge,
   describeAdapterExecutionTarget,
   ensureAdapterExecutionTargetCommandResolvable,
   ensureAdapterExecutionTargetRuntimeCommandInstalled,
@@ -20,8 +20,8 @@ import {
   resolveAdapterExecutionTargetCommandForLogs,
   runAdapterExecutionTargetProcess,
   runAdapterExecutionTargetShellCommand,
-  startAdapterExecutionTargetJasmin.iaBridge,
-} from "@jasminiaai/adapter-utils/execution-target";
+  startAdapterExecutionTargetJasminiaBridge,
+} from "@jasminia/adapter-utils/execution-target";
 import {
   asString,
   asNumber,
@@ -29,23 +29,23 @@ import {
   asStringArray,
   parseObject,
   parseJson,
-  applyJasmin.iaWorkspaceEnv,
-  buildJasmin.iaEnv,
-  readJasmin.iaRuntimeSkillEntries,
-  readJasmin.iaIssueWorkModeFromContext,
+  applyJasminiaWorkspaceEnv,
+  buildJasminiaEnv,
+  readJasminiaRuntimeSkillEntries,
+  readJasminiaIssueWorkModeFromContext,
   joinPromptSections,
   buildInvocationEnvForLogs,
   ensureAbsoluteDirectory,
   ensurePathInEnv,
-  refreshJasmin.iaWorkspaceEnvForExecution,
+  refreshJasminiaWorkspaceEnvForExecution,
   renderTemplate,
-  renderJasmin.iaWakePrompt,
+  renderJasminiaWakePrompt,
   rewriteWorkspaceCwdEnvVarsForExecution,
-  shapeJasmin.iaWorkspaceEnvForExecution,
-  stringifyJasmin.iaWakePayload,
+  shapeJasminiaWorkspaceEnvForExecution,
+  stringifyJasminiaWakePayload,
   DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE,
-} from "@jasminiaai/adapter-utils/server-utils";
-import { shellQuote } from "@jasminiaai/adapter-utils/ssh";
+} from "@jasminia/adapter-utils/server-utils";
+import { shellQuote } from "@jasminia/adapter-utils/ssh";
 import {
   parseClaudeStreamJson,
   describeClaudeFailure,
@@ -158,7 +158,7 @@ async function buildClaudeRuntimeConfig(input: ClaudeExecutionInput): Promise<Cl
   const cwd = effectiveWorkspaceCwd || configuredCwd || process.cwd();
   const executionTargetIsRemote = adapterExecutionTargetIsRemote(executionTarget);
   let effectiveExecutionCwd = adapterExecutionTargetRemoteCwd(executionTarget, cwd);
-  const shapedWorkspaceEnv = shapeJasmin.iaWorkspaceEnvForExecution({
+  const shapedWorkspaceEnv = shapeJasminiaWorkspaceEnvForExecution({
     workspaceCwd: effectiveWorkspaceCwd,
     workspaceWorktreePath,
     workspaceHints,
@@ -170,7 +170,7 @@ async function buildClaudeRuntimeConfig(input: ClaudeExecutionInput): Promise<Cl
   const envConfig = parseObject(config.env);
   const hasExplicitApiKey =
     typeof envConfig.JASMINIA_API_KEY === "string" && envConfig.JASMINIA_API_KEY.trim().length > 0;
-  const env: Record<string, string> = { ...buildJasmin.iaEnv(agent) };
+  const env: Record<string, string> = { ...buildJasminiaEnv(agent) };
   env.JASMINIA_RUN_ID = runId;
 
   const wakeTaskId =
@@ -196,8 +196,8 @@ async function buildClaudeRuntimeConfig(input: ClaudeExecutionInput): Promise<Cl
   const linkedIssueIds = Array.isArray(context.issueIds)
     ? context.issueIds.filter((value): value is string => typeof value === "string" && value.trim().length > 0)
     : [];
-  const wakePayloadJson = stringifyJasmin.iaWakePayload(context.jasminiaWake);
-  const issueWorkMode = readJasmin.iaIssueWorkModeFromContext(context);
+  const wakePayloadJson = stringifyJasminiaWakePayload(context.jasminiaWake);
+  const issueWorkMode = readJasminiaIssueWorkModeFromContext(context);
 
   if (wakeTaskId) {
     env.JASMINIA_TASK_ID = wakeTaskId;
@@ -223,7 +223,7 @@ async function buildClaudeRuntimeConfig(input: ClaudeExecutionInput): Promise<Cl
   if (wakePayloadJson) {
     env.JASMINIA_WAKE_PAYLOAD_JSON = wakePayloadJson;
   }
-  applyJasmin.iaWorkspaceEnv(env, {
+  applyJasminiaWorkspaceEnv(env, {
     workspaceCwd: shapedWorkspaceEnv.workspaceCwd,
     workspaceSource,
     workspaceStrategy,
@@ -423,7 +423,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
     ),
   );
   const billingType = resolveClaudeBillingType(effectiveEnv);
-  const claudeSkillEntries = await readJasmin.iaRuntimeSkillEntries(config, __moduleDir);
+  const claudeSkillEntries = await readJasminiaRuntimeSkillEntries(config, __moduleDir);
   const desiredSkillNames = new Set(resolveClaudeDesiredSkillNames(config, claudeSkillEntries));
   // When instructionsFilePath is configured, build a stable content-addressed
   // file that includes both the file content and the path directive, so we only
@@ -494,7 +494,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
     effectiveExecutionCwd = preparedExecutionTargetRuntime.workspaceRemoteDir;
   }
   const runtimeExecutionTarget = overrideAdapterExecutionTargetRemoteCwd(executionTarget, effectiveExecutionCwd);
-  refreshJasmin.iaWorkspaceEnvForExecution({
+  refreshJasminiaWorkspaceEnvForExecution({
     env,
     envConfig: configEnv,
     workspaceCwd: effectiveWorkspaceCwd,
@@ -556,9 +556,9 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
       },
     );
   }
-  let jasminiaBridge: Awaited<ReturnType<typeof startAdapterExecutionTargetJasmin.iaBridge>> = null;
-  if (executionTargetIsRemote && adapterExecutionTargetUsesJasmin.iaBridge(runtimeExecutionTarget)) {
-    jasminiaBridge = await startAdapterExecutionTargetJasmin.iaBridge({
+  let jasminiaBridge: Awaited<ReturnType<typeof startAdapterExecutionTargetJasminiaBridge>> = null;
+  if (executionTargetIsRemote && adapterExecutionTargetUsesJasminiaBridge(runtimeExecutionTarget)) {
+    jasminiaBridge = await startAdapterExecutionTargetJasminiaBridge({
       runId,
       target: runtimeExecutionTarget,
       runtimeRootDir: preparedExecutionTargetRuntime?.runtimeRootDir,
@@ -638,7 +638,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
     !sessionId && bootstrapPromptTemplate.trim().length > 0
       ? renderTemplate(bootstrapPromptTemplate, templateData).trim()
       : "";
-  const wakePrompt = renderJasmin.iaWakePrompt(context.jasminiaWake, { resumedSession: Boolean(sessionId) });
+  const wakePrompt = renderJasminiaWakePrompt(context.jasminiaWake, { resumedSession: Boolean(sessionId) });
   const shouldUseResumeDeltaPrompt = Boolean(sessionId) && wakePrompt.length > 0;
   const renderedPrompt = shouldUseResumeDeltaPrompt ? "" : renderTemplate(promptTemplate, templateData);
   const sessionHandoffNote = asString(context.jasminiaSessionHandoffMarkdown, "").trim();

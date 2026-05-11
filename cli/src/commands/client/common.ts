@@ -4,7 +4,7 @@ import { getStoredBoardCredential, loginBoardCli } from "../../client/board-auth
 import { buildCliCommandLabel } from "../../client/command-label.js";
 import { readConfig } from "../../config/store.js";
 import { readContext, resolveProfile, type ClientContextProfile } from "../../client/context.js";
-import { ApiRequestError, Jasmin.iaApiClient } from "../../client/http.js";
+import { ApiRequestError, JasminiaApiClient } from "../../client/http.js";
 
 export interface BaseClientOptions {
   config?: string;
@@ -18,7 +18,7 @@ export interface BaseClientOptions {
 }
 
 export interface ResolvedClientContext {
-  api: Jasmin.iaApiClient;
+  api: JasminiaApiClient;
   companyId?: string;
   profileName: string;
   profile: ClientContextProfile;
@@ -69,11 +69,11 @@ export function resolveCommandContext(
 
   if (opts?.requireCompany && !companyId) {
     throw new Error(
-      "Company ID is required. Pass --company-id, set JASMINIA_COMPANY_ID, or set context profile companyId via `jasminiaai context set`.",
+      "Company ID is required. Pass --company-id, set JASMINIA_COMPANY_ID, or set context profile companyId via `jasminia context set`.",
     );
   }
 
-  const api = new Jasmin.iaApiClient({
+  const api = new JasminiaApiClient({
     apiBase,
     apiKey,
     recoverAuth: explicitApiKey || !canAttemptInteractiveBoardAuth()

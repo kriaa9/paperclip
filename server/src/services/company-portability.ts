@@ -3,7 +3,7 @@ import { promises as fs } from "node:fs";
 import { execFile } from "node:child_process";
 import path from "node:path";
 import { promisify } from "node:util";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import type {
   CompanyPortabilityAgentManifestEntry,
   CompanyPortabilityCollisionStrategy,
@@ -30,7 +30,7 @@ import type {
   CompanySkill,
   AgentEnvConfig,
   RoutineVariable,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
   AGENT_DEFAULT_MAX_CONCURRENT_RUNS,
   ISSUE_PRIORITIES,
@@ -47,12 +47,12 @@ import {
   issueCommentMetadataSchema,
   issueCommentPresentationSchema,
   normalizeAgentUrlKey,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import {
-  readJasmin.iaSkillSyncPreference,
-  writeJasmin.iaSkillSyncPreference,
-} from "@jasminiaai/adapter-utils/server-utils";
-import { requireOpenCodeModelId } from "@jasminiaai/adapter-opencode-local/server";
+  readJasminiaSkillSyncPreference,
+  writeJasminiaSkillSyncPreference,
+} from "@jasminia/adapter-utils/server-utils";
+import { requireOpenCodeModelId } from "@jasminia/adapter-opencode-local/server";
 import { findServerAdapter } from "../adapters/index.js";
 import { forbidden, notFound, unprocessable } from "../errors.js";
 import { ghFetch, gitHubApiBase, resolveRawGitHubUrl } from "./github-fetch.js";
@@ -194,7 +194,7 @@ function deriveManifestSkillKey(
     return `${owner}/${repo}/${slug}`;
   }
   if (sourceKind === "jasminia_bundled") {
-    return `jasminiaai/jasminia/${slug}`;
+    return `jasminia/jasminia/${slug}`;
   }
   if (sourceType === "url" || sourceKind === "url") {
     try {
@@ -495,7 +495,7 @@ type CompanyPackageIncludeEntry = {
   path: string;
 };
 
-type Jasmin.iaExtensionDoc = {
+type JasminiaExtensionDoc = {
   schema?: string;
   company?: Record<string, unknown> | null;
   agents?: Record<string, Record<string, unknown>> | null;
@@ -1674,7 +1674,7 @@ function filterExportFiles(
   return filtered;
 }
 
-function findJasmin.iaExtensionPath(files: Record<string, CompanyPortabilityFileEntry>) {
+function findJasminiaExtensionPath(files: Record<string, CompanyPortabilityFileEntry>) {
   if (typeof files[".jasminia.yaml"] === "string") return ".jasminia.yaml";
   if (typeof files[".jasminia.yml"] === "string") return ".jasminia.yml";
   return Object.keys(files).find((entry) => entry.endsWith("/.jasminia.yaml") || entry.endsWith("/.jasminia.yml")) ?? null;
@@ -2058,7 +2058,7 @@ async function buildSkillSourceEntry(skill: CompanySkill) {
     const commit = await resolveBundledSkillsCommit();
     return {
       kind: "github-dir",
-      repo: "jasminiaai/jasminia",
+      repo: "jasminia/jasminia",
       path: `skills/${skill.slug}`,
       commit,
       trackingRef: "master",
@@ -2456,7 +2456,7 @@ function buildManifestFromPackageFiles(
   }
   const companyDoc = parseFrontmatterMarkdown(companyMarkdown);
   const companyFrontmatter = companyDoc.frontmatter;
-  const jasminiaExtensionPath = findJasmin.iaExtensionPath(normalizedFiles);
+  const jasminiaExtensionPath = findJasminiaExtensionPath(normalizedFiles);
   const jasminiaExtension = jasminiaExtensionPath
     ? parseYamlFile(readPortableTextFile(normalizedFiles, jasminiaExtensionPath) ?? "")
     : {};
@@ -2899,7 +2899,7 @@ export function companyPortabilityService(db: Db, storage?: StorageService) {
     if (mode === "agent_safe" && IMPORT_FORBIDDEN_ADAPTER_TYPES.has(effectiveAdapterType)) {
       throw forbidden(`Adapter type "${effectiveAdapterType}" is not allowed in safe imports`);
     }
-    const nextAdapterConfig = writeJasmin.iaSkillSyncPreference(
+    const nextAdapterConfig = writeJasminiaSkillSyncPreference(
       applyImportAdapterRunDefaults(effectiveAdapterType, adapterConfig),
       desiredSkills,
     );
@@ -3367,7 +3367,7 @@ export function companyPortabilityService(db: Db, storage?: StorageService) {
             .filter((inputValue) => inputValue.agentSlug === slug),
         );
         const reportsToSlug = agent.reportsTo ? (idToSlug.get(agent.reportsTo) ?? null) : null;
-        const desiredSkills = readJasmin.iaSkillSyncPreference(
+        const desiredSkills = readJasminiaSkillSyncPreference(
           (agent.adapterConfig as Record<string, unknown>) ?? {},
         ).desiredSkills;
 

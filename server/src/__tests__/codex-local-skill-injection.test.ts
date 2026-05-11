@@ -2,13 +2,13 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { ensureCodexSkillsInjected } from "@jasminiaai/adapter-codex-local/server";
+import { ensureCodexSkillsInjected } from "@jasminia/adapter-codex-local/server";
 
 async function makeTempDir(prefix: string): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), prefix));
 }
 
-async function createJasmin.iaRepoSkill(root: string, skillName: string) {
+async function createJasminiaRepoSkill(root: string, skillName: string) {
   await fs.mkdir(path.join(root, "server"), { recursive: true });
   await fs.mkdir(path.join(root, "packages", "adapter-utils"), { recursive: true });
   await fs.mkdir(path.join(root, "skills", skillName), { recursive: true });
@@ -31,8 +31,8 @@ async function createCustomSkill(root: string, skillName: string) {
 }
 
 describe("codex local adapter skill injection", () => {
-  const jasminiaKey = "jasminiaai/jasminia/jasminia";
-  const createAgentKey = "jasminiaai/jasminia/jasminia-create-agent";
+  const jasminiaKey = "jasminia/jasminia/jasminia";
+  const createAgentKey = "jasminia/jasminia/jasminia-create-agent";
   const cleanupDirs = new Set<string>();
 
   afterEach(async () => {
@@ -48,9 +48,9 @@ describe("codex local adapter skill injection", () => {
     cleanupDirs.add(oldRepo);
     cleanupDirs.add(skillsHome);
 
-    await createJasmin.iaRepoSkill(currentRepo, "jasminia");
-    await createJasmin.iaRepoSkill(currentRepo, "jasminia-create-agent");
-    await createJasmin.iaRepoSkill(oldRepo, "jasminia");
+    await createJasminiaRepoSkill(currentRepo, "jasminia");
+    await createJasminiaRepoSkill(currentRepo, "jasminia-create-agent");
+    await createJasminiaRepoSkill(oldRepo, "jasminia");
     await fs.symlink(path.join(oldRepo, "skills", "jasminia"), path.join(skillsHome, "jasminia"));
 
     const logs: Array<{ stream: "stdout" | "stderr"; chunk: string }> = [];
@@ -103,7 +103,7 @@ describe("codex local adapter skill injection", () => {
     cleanupDirs.add(customRoot);
     cleanupDirs.add(skillsHome);
 
-    await createJasmin.iaRepoSkill(currentRepo, "jasminia");
+    await createJasminiaRepoSkill(currentRepo, "jasminia");
     await createCustomSkill(customRoot, "jasminia");
     await fs.symlink(path.join(customRoot, "custom", "jasminia"), path.join(skillsHome, "jasminia"));
 
@@ -129,8 +129,8 @@ describe("codex local adapter skill injection", () => {
     cleanupDirs.add(oldRepo);
     cleanupDirs.add(skillsHome);
 
-    await createJasmin.iaRepoSkill(currentRepo, "jasminia");
-    await createJasmin.iaRepoSkill(oldRepo, "agent-browser");
+    await createJasminiaRepoSkill(currentRepo, "jasminia");
+    await createJasminiaRepoSkill(oldRepo, "agent-browser");
     const staleTarget = path.join(oldRepo, "skills", "agent-browser");
     await fs.symlink(staleTarget, path.join(skillsHome, "agent-browser"));
     await fs.rm(staleTarget, { recursive: true, force: true });
@@ -167,8 +167,8 @@ describe("codex local adapter skill injection", () => {
     cleanupDirs.add(currentRepo);
     cleanupDirs.add(skillsHome);
 
-    await createJasmin.iaRepoSkill(currentRepo, "jasminia");
-    await createJasmin.iaRepoSkill(currentRepo, "agent-browser");
+    await createJasminiaRepoSkill(currentRepo, "jasminia");
+    await createJasminiaRepoSkill(currentRepo, "agent-browser");
     await fs.symlink(
       path.join(currentRepo, "skills", "agent-browser"),
       path.join(skillsHome, "agent-browser"),

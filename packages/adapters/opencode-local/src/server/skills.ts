@@ -5,14 +5,14 @@ import { fileURLToPath } from "node:url";
 import type {
   AdapterSkillContext,
   AdapterSkillSnapshot,
-} from "@jasminiaai/adapter-utils";
+} from "@jasminia/adapter-utils";
 import {
   buildPersistentSkillSnapshot,
-  ensureJasmin.iaSkillSymlink,
-  readJasmin.iaRuntimeSkillEntries,
+  ensureJasminiaSkillSymlink,
+  readJasminiaRuntimeSkillEntries,
   readInstalledSkillTargets,
-  resolveJasmin.iaDesiredSkillNames,
-} from "@jasminiaai/adapter-utils/server-utils";
+  resolveJasminiaDesiredSkillNames,
+} from "@jasminia/adapter-utils/server-utils";
 
 const __moduleDir = path.dirname(fileURLToPath(import.meta.url));
 
@@ -31,8 +31,8 @@ function resolveOpenCodeSkillsHome(config: Record<string, unknown>) {
 }
 
 async function buildOpenCodeSkillSnapshot(config: Record<string, unknown>): Promise<AdapterSkillSnapshot> {
-  const availableEntries = await readJasmin.iaRuntimeSkillEntries(config, __moduleDir);
-  const desiredSkills = resolveJasmin.iaDesiredSkillNames(config, availableEntries);
+  const availableEntries = await readJasminiaRuntimeSkillEntries(config, __moduleDir);
+  const desiredSkills = resolveJasminiaDesiredSkillNames(config, availableEntries);
   const skillsHome = resolveOpenCodeSkillsHome(config);
   const installed = await readInstalledSkillTargets(skillsHome);
   return buildPersistentSkillSnapshot({
@@ -60,7 +60,7 @@ export async function syncOpenCodeSkills(
   ctx: AdapterSkillContext,
   desiredSkills: string[],
 ): Promise<AdapterSkillSnapshot> {
-  const availableEntries = await readJasmin.iaRuntimeSkillEntries(ctx.config, __moduleDir);
+  const availableEntries = await readJasminiaRuntimeSkillEntries(ctx.config, __moduleDir);
   const desiredSet = new Set([
     ...desiredSkills,
     ...availableEntries.filter((entry) => entry.required).map((entry) => entry.key),
@@ -73,7 +73,7 @@ export async function syncOpenCodeSkills(
   for (const available of availableEntries) {
     if (!desiredSet.has(available.key)) continue;
     const target = path.join(skillsHome, available.runtimeName);
-    await ensureJasmin.iaSkillSymlink(available.source, target);
+    await ensureJasminiaSkillSymlink(available.source, target);
   }
 
   for (const [name, installedEntry] of installed.entries()) {
@@ -91,5 +91,5 @@ export function resolveOpenCodeDesiredSkillNames(
   config: Record<string, unknown>,
   availableEntries: Array<{ key: string; required?: boolean }>,
 ) {
-  return resolveJasmin.iaDesiredSkillNames(config, availableEntries);
+  return resolveJasminiaDesiredSkillNames(config, availableEntries);
 }

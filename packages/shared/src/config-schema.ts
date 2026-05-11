@@ -183,7 +183,7 @@ export const jasminiaConfigSchema = z
     }
   });
 
-export type Jasmin.iaConfig = z.infer<typeof jasminiaConfigSchema>;
+export type JasminiaConfig = z.infer<typeof jasminiaConfigSchema>;
 export type LlmConfig = z.infer<typeof llmConfigSchema>;
 export type DatabaseConfig = z.infer<typeof databaseConfigSchema>;
 export type LoggingConfig = z.infer<typeof loggingConfigSchema>;

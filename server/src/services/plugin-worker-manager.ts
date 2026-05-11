@@ -21,7 +21,7 @@
 import { fork, type ChildProcess } from "node:child_process";
 import { EventEmitter } from "node:events";
 import { createInterface, type Interface as ReadlineInterface } from "node:readline";
-import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/shared";
+import type { JasminiaPluginManifestV1 } from "@jasminia/shared";
 import {
   JSONRPC_VERSION,
   JSONRPC_ERROR_CODES,
@@ -36,7 +36,7 @@ import {
   isJsonRpcSuccessResponse,
   JsonRpcParseError,
   JsonRpcCallError,
-} from "@jasminiaai/plugin-sdk";
+} from "@jasminia/plugin-sdk";
 import type {
   JsonRpcId,
   JsonRpcResponse,
@@ -47,7 +47,7 @@ import type {
   WorkerToHostMethodName,
   WorkerToHostMethods,
   InitializeParams,
-} from "@jasminiaai/plugin-sdk";
+} from "@jasminia/plugin-sdk";
 import { logger } from "../middleware/logger.js";
 
 // ---------------------------------------------------------------------------
@@ -156,7 +156,7 @@ export interface WorkerStartOptions {
   /** Absolute path to the plugin worker entrypoint (CJS bundle). */
   entrypointPath: string;
   /** Plugin manifest. */
-  manifest: Jasmin.iaPluginManifestV1;
+  manifest: JasminiaPluginManifestV1;
   /** Resolved plugin configuration. */
   config: Record<string, unknown>;
   /** Host instance information for the initialize call. */

@@ -1,4 +1,4 @@
-import type { IssueExecutionPolicy, IssueExecutionStageParticipant, IssueExecutionStagePrincipal } from "@jasminiaai/shared";
+import type { IssueExecutionPolicy, IssueExecutionStageParticipant, IssueExecutionStagePrincipal } from "@jasminia/shared";
 import { parseAssigneeValue } from "./assignees";
 
 type StageType = "review" | "approval";

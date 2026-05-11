@@ -14,10 +14,10 @@ pnpm test
 ## Install Into Jasmin.ia
 
 ```bash
-pnpm jasminiaai plugin install ./
+pnpm jasminia plugin install ./
 ```
 
 ## Build Options
 
-- `pnpm build` uses esbuild presets from `@jasminiaai/plugin-sdk/bundlers`.
+- `pnpm build` uses esbuild presets from `@jasminia/plugin-sdk/bundlers`.
 - `pnpm build:rollup` uses rollup presets from the same SDK.

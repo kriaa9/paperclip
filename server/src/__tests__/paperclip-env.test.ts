@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from "vitest";
-import { buildJasmin.iaEnv } from "../adapters/utils.js";
+import { buildJasminiaEnv } from "../adapters/utils.js";
 
 const ORIGINAL_JASMINIA_RUNTIME_API_URL = process.env.JASMINIA_RUNTIME_API_URL;
 const ORIGINAL_JASMINIA_API_URL = process.env.JASMINIA_API_URL;
@@ -28,14 +28,14 @@ afterEach(() => {
   else process.env.PORT = ORIGINAL_PORT;
 });
 
-describe("buildJasmin.iaEnv", () => {
+describe("buildJasminiaEnv", () => {
   it("prefers an explicit JASMINIA_RUNTIME_API_URL", () => {
     process.env.JASMINIA_RUNTIME_API_URL = "http://203.0.113.42:3102";
     process.env.JASMINIA_API_URL = "http://localhost:4100";
     process.env.JASMINIA_LISTEN_HOST = "127.0.0.1";
     process.env.JASMINIA_LISTEN_PORT = "3101";
 
-    const env = buildJasmin.iaEnv({ id: "agent-1", companyId: "company-1" });
+    const env = buildJasminiaEnv({ id: "agent-1", companyId: "company-1" });
 
     expect(env.JASMINIA_API_URL).toBe("http://203.0.113.42:3102");
   });
@@ -46,7 +46,7 @@ describe("buildJasmin.iaEnv", () => {
     process.env.JASMINIA_LISTEN_HOST = "127.0.0.1";
     process.env.JASMINIA_LISTEN_PORT = "3101";
 
-    const env = buildJasmin.iaEnv({ id: "agent-1", companyId: "company-1" });
+    const env = buildJasminiaEnv({ id: "agent-1", companyId: "company-1" });
 
     expect(env.JASMINIA_API_URL).toBe("http://localhost:4100");
   });
@@ -58,7 +58,7 @@ describe("buildJasmin.iaEnv", () => {
     process.env.JASMINIA_LISTEN_PORT = "3101";
     process.env.PORT = "3100";
 
-    const env = buildJasmin.iaEnv({ id: "agent-1", companyId: "company-1" });
+    const env = buildJasminiaEnv({ id: "agent-1", companyId: "company-1" });
 
     expect(env.JASMINIA_API_URL).toBe("http://localhost:3101");
   });
@@ -69,7 +69,7 @@ describe("buildJasmin.iaEnv", () => {
     process.env.JASMINIA_LISTEN_HOST = "::1";
     process.env.JASMINIA_LISTEN_PORT = "3101";
 
-    const env = buildJasmin.iaEnv({ id: "agent-1", companyId: "company-1" });
+    const env = buildJasminiaEnv({ id: "agent-1", companyId: "company-1" });
 
     expect(env.JASMINIA_API_URL).toBe("http://[::1]:3101");
   });

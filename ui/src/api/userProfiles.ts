@@ -1,4 +1,4 @@
-import type { UserProfileResponse } from "@jasminiaai/shared";
+import type { UserProfileResponse } from "@jasminia/shared";
 import { api } from "./client";
 
 export const userProfilesApi = {

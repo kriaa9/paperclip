@@ -1,4 +1,4 @@
-import type { PluginLauncherRegistration } from "@jasminiaai/plugin-sdk";
+import type { PluginLauncherRegistration } from "@jasminia/plugin-sdk";
 
 export const PLUGIN_ID = "jasminia-kitchen-sink-example";
 export const PLUGIN_VERSION = "0.1.0";

@@ -1,9 +1,9 @@
 import * as p from "@clack/prompts";
 import type { LoggingConfig } from "../config/schema.js";
-import { resolveDefaultLogsDir, resolveJasmin.iaInstanceId } from "../config/home.js";
+import { resolveDefaultLogsDir, resolveJasminiaInstanceId } from "../config/home.js";
 
 export async function promptLogging(): Promise<LoggingConfig> {
-  const defaultLogDir = resolveDefaultLogsDir(resolveJasmin.iaInstanceId());
+  const defaultLogDir = resolveDefaultLogsDir(resolveJasminiaInstanceId());
   const mode = await p.select({
     message: "Logging mode",
     options: [

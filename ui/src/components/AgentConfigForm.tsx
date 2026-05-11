@@ -6,8 +6,8 @@ import type {
   CompanySecret,
   EnvBinding,
   Environment,
-} from "@jasminiaai/shared";
-import { AGENT_DEFAULT_MAX_CONCURRENT_RUNS, supportedEnvironmentDriversForAdapter } from "@jasminiaai/shared";
+} from "@jasminia/shared";
+import { AGENT_DEFAULT_MAX_CONCURRENT_RUNS, supportedEnvironmentDriversForAdapter } from "@jasminia/shared";
 import type { AdapterModel } from "../api/agents";
 import { agentsApi } from "../api/agents";
 import { environmentsApi } from "../api/environments";
@@ -17,10 +17,10 @@ import { assetsApi } from "../api/assets";
 import {
   DEFAULT_CODEX_LOCAL_BYPASS_APPROVALS_AND_SANDBOX,
   DEFAULT_CODEX_LOCAL_MODEL,
-} from "@jasminiaai/adapter-codex-local";
-import { DEFAULT_CURSOR_LOCAL_MODEL } from "@jasminiaai/adapter-cursor-local";
-import { DEFAULT_GEMINI_LOCAL_MODEL } from "@jasminiaai/adapter-gemini-local";
-import { DEFAULT_OPENCODE_LOCAL_MODEL } from "@jasminiaai/adapter-opencode-local";
+} from "@jasminia/adapter-codex-local";
+import { DEFAULT_CURSOR_LOCAL_MODEL } from "@jasminia/adapter-cursor-local";
+import { DEFAULT_GEMINI_LOCAL_MODEL } from "@jasminia/adapter-gemini-local";
+import { DEFAULT_OPENCODE_LOCAL_MODEL } from "@jasminia/adapter-opencode-local";
 import {
   Popover,
   PopoverContent,
@@ -61,10 +61,10 @@ import { filterAcpxModelsByAgent } from "../lib/acpx-model-filter";
 
 /* ---- Create mode values ---- */
 
-// Canonical type lives in @jasminiaai/adapter-utils; re-exported here
+// Canonical type lives in @jasminia/adapter-utils; re-exported here
 // so existing imports from this file keep working.
-export type { CreateConfigValues } from "@jasminiaai/adapter-utils";
-import type { CreateConfigValues } from "@jasminiaai/adapter-utils";
+export type { CreateConfigValues } from "@jasminia/adapter-utils";
+import type { CreateConfigValues } from "@jasminia/adapter-utils";
 
 /* ---- Props ---- */
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
-import type { Db } from "@jasminiaai/db";
-import { createGoalSchema, updateGoalSchema } from "@jasminiaai/shared";
-import { trackGoalCreated } from "@jasminiaai/shared/telemetry";
+import type { Db } from "@jasminia/db";
+import { createGoalSchema, updateGoalSchema } from "@jasminia/shared";
+import { trackGoalCreated } from "@jasminia/shared/telemetry";
 import { validate } from "../middleware/validate.js";
 import { goalService, logActivity } from "../services/index.js";
 import { assertCompanyAccess, getActorInfo } from "./authz.js";

@@ -9,8 +9,8 @@ import type {
   IssueExecutionStagePrincipal,
   IssueExecutionState,
   IssueMonitorScheduledBy,
-} from "@jasminiaai/shared";
-import { issueExecutionPolicySchema, issueExecutionStateSchema } from "@jasminiaai/shared";
+} from "@jasminia/shared";
+import { issueExecutionPolicySchema, issueExecutionStateSchema } from "@jasminia/shared";
 import { unprocessable } from "../errors.js";
 
 type AssigneeLike = {

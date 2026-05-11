@@ -5,15 +5,15 @@ import { afterEach, describe, expect, it } from "vitest";
 import {
   listCodexSkills,
   syncCodexSkills,
-} from "@jasminiaai/adapter-codex-local/server";
+} from "@jasminia/adapter-codex-local/server";
 
 async function makeTempDir(prefix: string): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), prefix));
 }
 
 describe("codex local skill sync", () => {
-  const jasminiaKey = "jasminiaai/jasminia/jasminia";
-  const createAgentKey = "jasminiaai/jasminia/jasminia-create-agent";
+  const jasminiaKey = "jasminia/jasminia/jasminia";
+  const createAgentKey = "jasminia/jasminia/jasminia-create-agent";
   const cleanupDirs = new Set<string>();
 
   afterEach(async () => {

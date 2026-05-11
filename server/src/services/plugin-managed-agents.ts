@@ -1,17 +1,17 @@
 import { and, eq, ne } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
 import {
   agents,
   companies,
   pluginEntities,
   pluginManagedResources,
-} from "@jasminiaai/db";
+} from "@jasminia/db";
 import type {
   Agent,
-  Jasmin.iaPluginManifestV1,
+  JasminiaPluginManifestV1,
   PluginManagedAgentDeclaration,
   PluginManagedAgentResolution,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import { notFound } from "../errors.js";
 import { agentService } from "./agents.js";
 import { approvalService } from "./approvals.js";
@@ -24,7 +24,7 @@ const DEFAULT_MANAGED_AGENT_ADAPTER_TYPE = "process";
 interface PluginManagedAgentServiceOptions {
   pluginId: string;
   pluginKey: string;
-  manifest?: Jasmin.iaPluginManifestV1 | null;
+  manifest?: JasminiaPluginManifestV1 | null;
   instructionTemplateVariables?: (companyId: string) => Promise<Record<string, string | null | undefined>>;
 }
 

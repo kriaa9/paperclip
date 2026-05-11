@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import type { Jasmin.iaConfig } from "./schema.js";
+import type { JasminiaConfig } from "./schema.js";
 import { resolveRuntimeLikePath } from "../utils/path-resolver.js";
 
 export type EnsureSecretsKeyResult =
@@ -11,7 +11,7 @@ export type EnsureSecretsKeyResult =
   | { status: "skipped_provider"; path: null };
 
 export function ensureLocalSecretsKeyFile(
-  config: Pick<Jasmin.iaConfig, "secrets">,
+  config: Pick<JasminiaConfig, "secrets">,
   configPath?: string,
 ): EnsureSecretsKeyResult {
   if (config.secrets.provider !== "local_encrypted") {

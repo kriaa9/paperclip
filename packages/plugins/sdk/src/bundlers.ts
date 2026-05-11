@@ -60,8 +60,8 @@ export interface PluginBundlerPresets {
  */
 export function createPluginBundlerPresets(input: PluginBundlerPresetInput = {}): PluginBundlerPresets {
   const uiExternal = [
-    "@jasminiaai/plugin-sdk/ui",
-    "@jasminiaai/plugin-sdk/ui/hooks",
+    "@jasminia/plugin-sdk/ui",
+    "@jasminia/plugin-sdk/ui/hooks",
     "react",
     "react-dom",
     "react/jsx-runtime",
@@ -94,7 +94,7 @@ export function createPluginBundlerPresets(input: PluginBundlerPresetInput = {})
     platform: "node",
     target: "node20",
     sourcemap,
-    external: ["@jasminiaai/plugin-sdk"],
+    external: ["@jasminia/plugin-sdk"],
   };
 
   const esbuildUi = uiEntry
@@ -130,7 +130,7 @@ export function createPluginBundlerPresets(input: PluginBundlerPresetInput = {})
       sourcemap,
       entryFileNames: "manifest.js",
     },
-    external: ["@jasminiaai/plugin-sdk"],
+    external: ["@jasminia/plugin-sdk"],
   };
 
   const rollupUi = uiEntry

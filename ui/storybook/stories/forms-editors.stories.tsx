@@ -1,6 +1,6 @@
 import { useMemo, useState, type ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import type { Agent, CompanySecret, EnvBinding, Project, RoutineVariable } from "@jasminiaai/shared";
+import type { Agent, CompanySecret, EnvBinding, Project, RoutineVariable } from "@jasminia/shared";
 import { Code2, FileText, ListPlus, RotateCcw, Table2 } from "lucide-react";
 import { EnvVarEditor } from "@/components/EnvVarEditor";
 import { ExecutionParticipantPicker } from "@/components/ExecutionParticipantPicker";
@@ -181,7 +181,7 @@ const validAdapterValues = {
   concurrency: 2,
   dryRun: true,
   notes: "Use the project worktree and post a concise task update before handoff.",
-  allowedCommands: ["pnpm --filter @jasminiaai/ui typecheck", "pnpm build-storybook"],
+  allowedCommands: ["pnpm --filter @jasminia/ui typecheck", "pnpm build-storybook"],
   advanced: { timeoutSeconds: 900, requireApproval: false },
 };
 
@@ -253,7 +253,7 @@ const routineVariables: RoutineVariable[] = [
     name: "repo",
     label: "Repository",
     type: "text",
-    defaultValue: "jasminiaai/jasminia",
+    defaultValue: "jasminia/jasminia",
     required: true,
     options: [],
   },
@@ -302,7 +302,7 @@ const storybookProject: Project = {
   executionWorkspacePolicy: null,
   codebase: {
     workspaceId: "workspace-board-ui",
-    repoUrl: "#
+    repoUrl: "#",
     repoRef: "master",
     defaultRef: "master",
     repoName: "jasminia",

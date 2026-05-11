@@ -1,5 +1,5 @@
-import { PERMISSION_KEYS } from "@jasminiaai/shared";
-import type { HumanCompanyMembershipRole } from "@jasminiaai/shared";
+import { PERMISSION_KEYS } from "@jasminia/shared";
+import type { HumanCompanyMembershipRole } from "@jasminia/shared";
 import { grantsForHumanRole } from "./company-member-roles.js";
 
 export function grantsFromDefaults(

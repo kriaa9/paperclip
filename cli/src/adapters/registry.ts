@@ -1,13 +1,13 @@
-import type { CLIAdapterModule } from "@jasminiaai/adapter-utils";
-import { printAcpxStreamEvent } from "@jasminiaai/adapter-acpx-local/cli";
-import { printClaudeStreamEvent } from "@jasminiaai/adapter-claude-local/cli";
-import { printCodexStreamEvent } from "@jasminiaai/adapter-codex-local/cli";
-import { printCursorStreamEvent } from "@jasminiaai/adapter-cursor-local/cli";
-import { printCursorCloudEvent } from "@jasminiaai/adapter-cursor-cloud/cli";
-import { printGeminiStreamEvent } from "@jasminiaai/adapter-gemini-local/cli";
-import { printOpenCodeStreamEvent } from "@jasminiaai/adapter-opencode-local/cli";
-import { printPiStreamEvent } from "@jasminiaai/adapter-pi-local/cli";
-import { printOpenClawGatewayStreamEvent } from "@jasminiaai/adapter-openclaw-gateway/cli";
+import type { CLIAdapterModule } from "@jasminia/adapter-utils";
+import { printAcpxStreamEvent } from "@jasminia/adapter-acpx-local/cli";
+import { printClaudeStreamEvent } from "@jasminia/adapter-claude-local/cli";
+import { printCodexStreamEvent } from "@jasminia/adapter-codex-local/cli";
+import { printCursorStreamEvent } from "@jasminia/adapter-cursor-local/cli";
+import { printCursorCloudEvent } from "@jasminia/adapter-cursor-cloud/cli";
+import { printGeminiStreamEvent } from "@jasminia/adapter-gemini-local/cli";
+import { printOpenCodeStreamEvent } from "@jasminia/adapter-opencode-local/cli";
+import { printPiStreamEvent } from "@jasminia/adapter-pi-local/cli";
+import { printOpenClawGatewayStreamEvent } from "@jasminia/adapter-openclaw-gateway/cli";
 import { processCLIAdapter } from "./process/index.js";
 import { httpCLIAdapter } from "./http/index.js";
 

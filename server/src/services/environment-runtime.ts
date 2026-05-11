@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { and, eq, inArray } from "drizzle-orm";
-import type { Db } from "@jasminiaai/db";
-import { environmentLeases } from "@jasminiaai/db";
+import type { Db } from "@jasminia/db";
+import { environmentLeases } from "@jasminia/db";
 import type {
   Environment,
   EnvironmentLease,
@@ -9,13 +9,13 @@ import type {
   ExecutionWorkspace,
   PluginEnvironmentConfig,
   SandboxEnvironmentConfig,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import type {
   PluginEnvironmentExecuteResult,
   PluginEnvironmentLease,
   PluginEnvironmentRealizeWorkspaceResult,
-} from "@jasminiaai/plugin-sdk";
-import { ensureSshWorkspaceReady } from "@jasminiaai/adapter-utils/ssh";
+} from "@jasminia/plugin-sdk";
+import { ensureSshWorkspaceReady } from "@jasminia/adapter-utils/ssh";
 import { environmentService } from "./environments.js";
 import {
   parseEnvironmentDriverConfig,

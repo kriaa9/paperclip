@@ -1,4 +1,4 @@
-import type { IssueCommentAuthorType, IssueCommentMetadata, IssueCommentPresentation } from "@jasminiaai/shared";
+import type { IssueCommentAuthorType, IssueCommentMetadata, IssueCommentPresentation } from "@jasminia/shared";
 import { pgTable, uuid, text, timestamp, index, jsonb } from "drizzle-orm/pg-core";
 import { companies } from "./companies.js";
 import { issues } from "./issues.js";

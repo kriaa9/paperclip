@@ -7,8 +7,8 @@ import type {
   FeedbackVoteValue,
   Issue,
   IssueDocument,
-} from "@jasminiaai/shared";
-import { isSystemIssueDocumentKey } from "@jasminiaai/shared";
+} from "@jasminia/shared";
+import { isSystemIssueDocumentKey } from "@jasminia/shared";
 import { useLocation } from "@/lib/router";
 import { ApiError } from "../api/client";
 import { issuesApi } from "../api/issues";

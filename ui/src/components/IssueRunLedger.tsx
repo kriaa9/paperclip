@@ -1,5 +1,5 @@
 import { useMemo, useState, type ReactNode } from "react";
-import type { ActivityEvent, Issue, Agent } from "@jasminiaai/shared";
+import type { ActivityEvent, Issue, Agent } from "@jasminia/shared";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@/lib/router";
 import { accessApi, type CurrentBoardAccess } from "../api/access";

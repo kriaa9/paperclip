@@ -13,7 +13,7 @@ export {
   storageS3ConfigSchema,
   secretsConfigSchema,
   secretsLocalEncryptedConfigSchema,
-  type Jasmin.iaConfig,
+  type JasminiaConfig,
   type LlmConfig,
   type DatabaseBackupConfig,
   type DatabaseConfig,

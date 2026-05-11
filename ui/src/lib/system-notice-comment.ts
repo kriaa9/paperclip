@@ -2,7 +2,7 @@ import type {
   IssueCommentMetadata,
   IssueCommentMetadataRow,
   IssueCommentPresentation,
-} from "@jasminiaai/shared";
+} from "@jasminia/shared";
 import type {
   SystemNoticeMetadataRow,
   SystemNoticeMetadataSection,

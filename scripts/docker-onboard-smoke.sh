@@ -93,7 +93,7 @@ generate_bootstrap_invite_url() {
       -e JASMINIA_PUBLIC_URL="$JASMINIA_PUBLIC_URL" \
       -e JASMINIA_HOME="/jasminia" \
       "$CONTAINER_NAME" bash -lc \
-      'timeout 20s npx --yes "jasminiaai@${JASMINIAAI_VERSION}" auth bootstrap-ceo --data-dir "$JASMINIA_HOME" --base-url "$JASMINIA_PUBLIC_URL"' \
+      'timeout 20s npx --yes "jasminia@${JASMINIAAI_VERSION}" auth bootstrap-ceo --data-dir "$JASMINIA_HOME" --base-url "$JASMINIA_PUBLIC_URL"' \
       2>&1
   )"; then
     bootstrap_status=0

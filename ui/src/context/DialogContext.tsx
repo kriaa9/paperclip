@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
-import type { IssueWorkMode } from "@jasminiaai/shared";
+import type { IssueWorkMode } from "@jasminia/shared";
 
 interface NewIssueDefaults {
   status?: string;

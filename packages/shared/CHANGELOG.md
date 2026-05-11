@@ -1,4 +1,4 @@
-# @jasminiaai/shared
+# @jasminia/shared
 
 ## 0.3.1
 

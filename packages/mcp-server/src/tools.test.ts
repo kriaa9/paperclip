@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { Jasmin.iaApiClient } from "./client.js";
+import { JasminiaApiClient } from "./client.js";
 import { createToolDefinitions } from "./tools.js";
 
 function makeClient() {
-  return new Jasmin.iaApiClient({
+  return new JasminiaApiClient({
     apiUrl: "http://localhost:3100/api",
     apiKey: "token-123",
     companyId: "11111111-1111-1111-1111-111111111111",
