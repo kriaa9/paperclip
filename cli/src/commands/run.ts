@@ -4,13 +4,13 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import pc from "picocolors";
-import { loadPaperclipEnvFile } from "../config/env.js";
+import { loadJasmin.iaEnvFile } from "../config/env.js";
 import {
     describeLocalInstancePaths,
-    resolvePaperclipHomeDir,
-    resolvePaperclipInstanceId,
+    resolveJasmin.iaHomeDir,
+    resolveJasmin.iaInstanceId,
 } from "../config/home.js";
-import type { PaperclipConfig } from "../config/schema.js";
+import type { Jasmin.iaConfig } from "../config/schema.js";
 import { configExists, readConfig, resolveConfigPath } from "../config/store.js";
 import { bootstrapCeoInvite } from "./auth-bootstrap-ceo.js";
 import { doctor } from "./doctor.js";
@@ -32,18 +32,18 @@ interface StartedServer {
 }
 
 export async function runCommand(opts: RunOptions): Promise<void> {
-  const instanceId = resolvePaperclipInstanceId(opts.instance);
-  process.env.PAPERCLIP_INSTANCE_ID = instanceId;
+  const instanceId = resolveJasmin.iaInstanceId(opts.instance);
+  process.env.JASMINIA_INSTANCE_ID = instanceId;
 
-  const homeDir = resolvePaperclipHomeDir();
+  const homeDir = resolveJasmin.iaHomeDir();
   fs.mkdirSync(homeDir, { recursive: true });
 
   const paths = describeLocalInstancePaths(instanceId);
   fs.mkdirSync(paths.instanceRoot, { recursive: true });
 
   const configPath = resolveConfigPath(opts.config);
-  process.env.PAPERCLIP_CONFIG = configPath;
-  loadPaperclipEnvFile(configPath);
+  process.env.JASMINIA_CONFIG = configPath;
+  loadJasmin.iaEnvFile(configPath);
 
   p.intro(pc.bgCyan(pc.black(" jasminia run ")));
   p.log.message(pc.dim(`Home: ${paths.homeDir}`));
@@ -79,7 +79,7 @@ export async function runCommand(opts: RunOptions): Promise<void> {
     process.exit(1);
   }
 
-  p.log.step("Starting Paperclip server...");
+  p.log.step("Starting Jasmin.ia server...");
   const startedServer = await importServerEntry();
 
   if (shouldGenerateBootstrapInviteAfterStart(config)) {
@@ -93,12 +93,12 @@ export async function runCommand(opts: RunOptions): Promise<void> {
 }
 
 function resolveBootstrapInviteBaseUrl(
-  config: PaperclipConfig,
+  config: Jasmin.iaConfig,
   startedServer: StartedServer,
 ): string {
   const explicitBaseUrl =
-    process.env.PAPERCLIP_PUBLIC_URL ??
-    process.env.PAPERCLIP_AUTH_PUBLIC_BASE_URL ??
+    process.env.JASMINIA_PUBLIC_URL ??
+    process.env.JASMINIA_AUTH_PUBLIC_BASE_URL ??
     process.env.BETTER_AUTH_URL ??
     process.env.BETTER_AUTH_BASE_URL ??
     (config.auth.baseUrlMode === "explicit" ? config.auth.publicBaseUrl : undefined);
@@ -140,10 +140,10 @@ function getMissingModuleSpecifier(err: unknown): string | null {
 }
 
 function maybeEnableUiDevMiddleware(entrypoint: string): void {
-  if (process.env.PAPERCLIP_UI_DEV_MIDDLEWARE !== undefined) return;
+  if (process.env.JASMINIA_UI_DEV_MIDDLEWARE !== undefined) return;
   const normalized = entrypoint.replaceAll("\\", "/");
-  if (normalized.endsWith("/server/src/index.ts") || normalized.endsWith("@paperclipai/server/src/index.ts")) {
-    process.env.PAPERCLIP_UI_DEV_MIDDLEWARE = "true";
+  if (normalized.endsWith("/server/src/index.ts") || normalized.endsWith("@jasminiaai/server/src/index.ts")) {
+    process.env.JASMINIA_UI_DEV_MIDDLEWARE = "true";
   }
 }
 
@@ -159,13 +159,13 @@ function ensureDevWorkspaceBuildDeps(projectRoot: string): void {
 
   if (result.error) {
     throw new Error(
-      `Failed to prepare workspace build artifacts before starting the Paperclip dev server.\n${formatError(result.error)}`,
+      `Failed to prepare workspace build artifacts before starting the Jasmin.ia dev server.\n${formatError(result.error)}`,
     );
   }
 
   if ((result.status ?? 1) !== 0) {
     throw new Error(
-      "Failed to prepare workspace build artifacts before starting the Paperclip dev server.",
+      "Failed to prepare workspace build artifacts before starting the Jasmin.ia dev server.",
     );
   }
 }
@@ -202,7 +202,7 @@ async function importServerEntry(): Promise<StartedServer> {
   }
 }
 
-function shouldGenerateBootstrapInviteAfterStart(config: PaperclipConfig): boolean {
+function shouldGenerateBootstrapInviteAfterStart(config: Jasmin.iaConfig): boolean {
   return config.server.deploymentMode === "authenticated" && config.database.mode === "embedded-postgres";
 }
 

@@ -12,12 +12,12 @@ import type {
   HeartbeatRun,
   Approval,
   AgentConfigRevision,
-} from "@paperclipai/shared";
+} from "@jasminiaai/shared";
 import type {
   AdapterModelProfileDefinition,
   AdapterModelProfileKey,
-} from "@paperclipai/adapter-utils";
-import { isUuidLike, normalizeAgentUrlKey } from "@paperclipai/shared";
+} from "@jasminiaai/adapter-utils";
+import { isUuidLike, normalizeAgentUrlKey } from "@jasminiaai/shared";
 import { ApiError, api } from "./client";
 
 export interface AgentKey {
@@ -229,5 +229,5 @@ export const agentsApi = {
 export interface AvailableSkill {
   name: string;
   description: string;
-  isPaperclipManaged: boolean;
+  isJasmin.iaManaged: boolean;
 }

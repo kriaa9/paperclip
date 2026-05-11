@@ -6,7 +6,7 @@ import { ResizableSidebarPane } from "./ResizableSidebarPane";
 const PROPERTIES_PANEL_DEFAULT = 320;
 const PROPERTIES_PANEL_MIN = 320;
 const PROPERTIES_PANEL_MAX = 640;
-const PROPERTIES_PANEL_STORAGE_KEY = "paperclip.properties.width";
+const PROPERTIES_PANEL_STORAGE_KEY = "jasminia.properties.width";
 
 export function PropertiesPanel() {
   const { panelContent, panelLayout, panelVisible, setPanelVisible } = usePanel();

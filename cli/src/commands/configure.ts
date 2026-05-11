@@ -1,7 +1,7 @@
 import * as p from "@clack/prompts";
 import pc from "picocolors";
 import { readConfig, writeConfig, configExists, resolveConfigPath } from "../config/store.js";
-import type { PaperclipConfig } from "../config/schema.js";
+import type { Jasmin.iaConfig } from "../config/schema.js";
 import { ensureLocalSecretsKeyFile } from "../config/secrets-key.js";
 import { promptDatabase } from "../prompts/database.js";
 import { promptLlm } from "../prompts/llm.js";
@@ -13,9 +13,9 @@ import {
   resolveDefaultBackupDir,
   resolveDefaultEmbeddedPostgresDir,
   resolveDefaultLogsDir,
-  resolvePaperclipInstanceId,
+  resolveJasmin.iaInstanceId,
 } from "../config/home.js";
-import { printPaperclipCliBanner } from "../utils/banner.js";
+import { printJasmin.iaCliBanner } from "../utils/banner.js";
 
 type Section = "llm" | "database" | "logging" | "server" | "storage" | "secrets";
 
@@ -28,8 +28,8 @@ const SECTION_LABELS: Record<Section, string> = {
   secrets: "Secrets",
 };
 
-function defaultConfig(): PaperclipConfig {
-  const instanceId = resolvePaperclipInstanceId();
+function defaultConfig(): Jasmin.iaConfig {
+  const instanceId = resolveJasmin.iaInstanceId();
   return {
     $meta: {
       version: 1,
@@ -76,17 +76,17 @@ export async function configure(opts: {
   config?: string;
   section?: string;
 }): Promise<void> {
-  printPaperclipCliBanner();
-  p.intro(pc.bgCyan(pc.black(" paperclip configure ")));
+  printJasmin.iaCliBanner();
+  p.intro(pc.bgCyan(pc.black(" jasminia configure ")));
   const configPath = resolveConfigPath(opts.config);
 
   if (!configExists(opts.config)) {
-    p.log.error("No config file found. Run `paperclipai onboard` first.");
+    p.log.error("No config file found. Run `jasminiaai onboard` first.");
     p.outro("");
     return;
   }
 
-  let config: PaperclipConfig;
+  let config: Jasmin.iaConfig;
   try {
     config = readConfig(opts.config) ?? defaultConfig();
   } catch (err) {
@@ -168,7 +168,7 @@ export async function configure(opts: {
           } else if (keyResult.status === "skipped_provider") {
             p.log.message(pc.dim("Skipping local key file management for non-local provider"));
           } else {
-            p.log.message(pc.dim("Skipping local key file management because PAPERCLIP_SECRETS_MASTER_KEY is set"));
+            p.log.message(pc.dim("Skipping local key file management because JASMINIA_SECRETS_MASTER_KEY is set"));
           }
         }
         break;

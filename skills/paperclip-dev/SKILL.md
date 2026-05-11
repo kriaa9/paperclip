@@ -1,20 +1,20 @@
 ---
-name: paperclip-dev
+name: jasminia-dev
 required: false
 description: >
-  Develop and operate a local Paperclip instance — start and stop servers,
+  Develop and operate a local Jasmin.ia instance — start and stop servers,
   pull updates from master, run builds and tests, manage worktrees, back up
   databases, and diagnose problems. Use whenever you need to work on the
-  Paperclip codebase itself or keep a running instance healthy.
+  Jasmin.ia codebase itself or keep a running instance healthy.
 ---
 
-# Paperclip Dev
+# Jasmin.ia Dev
 
-This skill covers the day-to-day workflows for developing and operating a local Paperclip instance. It assumes you are working inside the Paperclip repo checkout with `origin` pointing to `git@github.com:paperclipai/paperclip.git`.
+This skill covers the day-to-day workflows for developing and operating a local Jasmin.ia instance. It assumes you are working inside the Jasmin.ia repo checkout with `origin` pointing to `git@github.com:jasminiaai/jasminia.git`.
 
 > **OPEN SOURCE HYGIENE:** This repository is public-facing. Treat anything you push to `origin` as publishable. Never commit or push secrets, API keys, tokens, private logs, PII, customer data, or machine-local configuration that should stay private. Keep git history tidy as well: avoid pushing throwaway branches, noisy checkpoint commits, or speculative work that does not need to be shared upstream.
 
-> **MANDATORY:** Before running any CLI command, building, testing, or managing worktrees, you MUST read `doc/DEVELOPING.md` in the Paperclip repo. It is the canonical reference for all `paperclipai` CLI commands, their options, build/test workflows, database operations, worktree management, and diagnostics. Do NOT guess at flags or options — read the doc first.
+> **MANDATORY:** Before running any CLI command, building, testing, or managing worktrees, you MUST read `doc/DEVELOPING.md` in the Jasmin.ia repo. It is the canonical reference for all `jasminiaai` CLI commands, their options, build/test workflows, database operations, worktree management, and diagnostics. Do NOT guess at flags or options — read the doc first.
 
 ## Quick Command Reference
 
@@ -22,7 +22,7 @@ These are the most common commands. For full option tables and details, see `doc
 
 | Task | Command |
 |------|---------|
-| Start server (first time or normal) | `npx paperclipai run` |
+| Start server (first time or normal) | `npx jasminiaai run` |
 | Dev mode with hot reload | `pnpm dev` |
 | Stop dev server | `pnpm dev:stop` |
 | Build | `pnpm build` |
@@ -30,11 +30,11 @@ These are the most common commands. For full option tables and details, see `doc
 | Run tests | `pnpm test` |
 | Run migrations | `pnpm db:migrate` |
 | Regenerate Drizzle client | `pnpm db:generate` |
-| Back up database | `npx paperclipai db:backup` |
-| Health check | `npx paperclipai doctor --repair` |
-| Print env vars | `npx paperclipai env` |
-| Trigger agent heartbeat | `npx paperclipai heartbeat run --agent-id <id>` |
-| Install agent skills locally | `npx paperclipai agent local-cli <agent> --company-id <id>` |
+| Back up database | `npx jasminiaai db:backup` |
+| Health check | `npx jasminiaai doctor --repair` |
+| Print env vars | `npx jasminiaai env` |
+| Trigger agent heartbeat | `npx jasminiaai heartbeat run --agent-id <id>` |
+| Install agent skills locally | `npx jasminiaai agent local-cli <agent> --company-id <id>` |
 
 ## Pulling from Master
 
@@ -47,15 +47,15 @@ If schema changes landed, also run `pnpm db:generate && pnpm db:migrate`.
 
 ## Worktrees
 
-Paperclip worktrees combine git worktrees with isolated Paperclip instances — each gets its own database, server port, and environment seeded from the primary instance.
+Jasmin.ia worktrees combine git worktrees with isolated Jasmin.ia instances — each gets its own database, server port, and environment seeded from the primary instance.
 
 > **MANDATORY:** Before creating or managing worktrees, you MUST read the "Worktree-local Instances" and "Worktree CLI Reference" sections in `doc/DEVELOPING.md`. That is the canonical reference for all worktree commands, their options, seed modes, and environment variables.
 
 ### When to Use Worktrees
 
-- Starting a feature branch that needs its own Paperclip environment
+- Starting a feature branch that needs its own Jasmin.ia environment
 - Running parallel agent work without cross-contaminating the primary instance
-- Testing Paperclip changes in isolation before merging
+- Testing Jasmin.ia changes in isolation before merging
 
 ### Command Overview
 
@@ -64,7 +64,7 @@ The CLI has two tiers (see `doc/DEVELOPING.md` for full option tables):
 | Command | Purpose |
 |---------|---------|
 | `worktree:make <name>` | Create worktree + isolated instance in one step |
-| `worktree:list` | List worktrees and their Paperclip status |
+| `worktree:list` | List worktrees and their Jasmin.ia status |
 | `worktree:merge-history` | Preview/import issue history between worktrees |
 | `worktree:cleanup <name>` | Remove worktree, branch, and instance data |
 | `worktree init` | Bootstrap instance inside existing worktree |
@@ -76,37 +76,37 @@ The CLI has two tiers (see `doc/DEVELOPING.md` for full option tables):
 
 ```bash
 # 1. Create a worktree for a feature
-npx paperclipai worktree:make my-feature --start-point origin/main
+npx jasminiaai worktree:make my-feature --start-point origin/main
 
 # 2. Move into the worktree (path printed by worktree:make) and source the environment
 cd <worktree-path>
-eval "$(npx paperclipai worktree env)"
+eval "$(npx jasminiaai worktree env)"
 
-# 3. Start the isolated Paperclip server
-npx paperclipai run
+# 3. Start the isolated Jasmin.ia server
+npx jasminiaai run
 
 # 4. Do your work
 
 # 5. When done, merge history back if needed
-npx paperclipai worktree:merge-history --from paperclip-my-feature --to current --apply
+npx jasminiaai worktree:merge-history --from jasminia-my-feature --to current --apply
 
 # 6. Clean up
-npx paperclipai worktree:cleanup my-feature
+npx jasminiaai worktree:cleanup my-feature
 ```
 
 ## Forks — Prefer Pushing to a User Fork
 
-If the user has a personal fork of `paperclipai/paperclip` configured as a git remote, push your feature branches to **that fork** instead of creating branches on the main repo. This keeps the upstream branch list clean and matches the standard open-source contribution flow.
+If the user has a personal fork of `jasminiaai/jasminia` configured as a git remote, push your feature branches to **that fork** instead of creating branches on the main repo. This keeps the upstream branch list clean and matches the standard open-source contribution flow.
 
 ### Detect a fork remote
 
-Before pushing or creating a PR, list remotes and check for one that points at a non-`paperclipai` GitHub fork:
+Before pushing or creating a PR, list remotes and check for one that points at a non-`jasminiaai` GitHub fork:
 
 ```bash
 git remote -v
 ```
 
-Treat any remote whose URL points to `github.com:<user>/paperclip` (or `github.com/<user>/paperclip.git`) as the user's fork. Common names are `fork`, `<username>`, or `myfork`. The remote named `origin` or `upstream` that points at `paperclipai/paperclip` is the canonical upstream — do not push feature branches there if a fork exists.
+Treat any remote whose URL points to `github.com:<user>/jasminia` (or `github.com/<user>/jasminia.git`) as the user's fork. Common names are `fork`, `<username>`, or `myfork`. The remote named `origin` or `upstream` that points at `jasminiaai/jasminia` is the canonical upstream — do not push feature branches there if a fork exists.
 
 ### Pushing to the fork
 
@@ -118,21 +118,21 @@ git push -u <fork-remote> HEAD
 Then create the PR from the fork branch:
 
 ```bash
-gh pr create --repo paperclipai/paperclip --head <fork-owner>:<branch-name> ...
+gh pr create --repo jasminiaai/jasminia --head <fork-owner>:<branch-name> ...
 ```
 
 `gh pr create` usually figures out the head ref automatically when run from a branch tracking the fork; the explicit `--head <owner>:<branch>` form is the reliable fallback when it does not.
 
 ### When no fork exists
 
-If `git remote -v` shows only `paperclipai/paperclip` remotes (no user fork), fall back to pushing branches to `origin` as before. Do NOT create a fork on the user's behalf — ask first.
+If `git remote -v` shows only `jasminiaai/jasminia` remotes (no user fork), fall back to pushing branches to `origin` as before. Do NOT create a fork on the user's behalf — ask first.
 
 ### Keeping the fork up to date
 
-The canonical remote that points at `paperclipai/paperclip` may be named `origin` **or** `upstream` depending on how the user set up the repo. Detect it the same way as in the "Detect a fork remote" step, then fetch and push from/with that remote so the sync works under either convention:
+The canonical remote that points at `jasminiaai/jasminia` may be named `origin` **or** `upstream` depending on how the user set up the repo. Detect it the same way as in the "Detect a fork remote" step, then fetch and push from/with that remote so the sync works under either convention:
 
 ```bash
-UPSTREAM_REMOTE=$(git remote -v | awk '/paperclipai\/paperclip.*\(fetch\)/{print $1; exit}')
+UPSTREAM_REMOTE=$(git remote -v | awk '/jasminiaai\/jasminia.*\(fetch\)/{print $1; exit}')
 git fetch "$UPSTREAM_REMOTE"
 git push <fork-remote> "${UPSTREAM_REMOTE}/master:master"
 ```
@@ -170,17 +170,17 @@ Only after completing Steps 1 and 2, run `gh pr create`. Use the template conten
 
 These rules exist because agents have caused real damage by improvising around CLI failures. Follow them exactly.
 
-1. **CLI is the only interface to worktrees and databases.** All worktree and database operations MUST go through `npx paperclipai` / `pnpm paperclipai` commands. You MUST NOT:
+1. **CLI is the only interface to worktrees and databases.** All worktree and database operations MUST go through `npx jasminiaai` / `pnpm jasminiaai` commands. You MUST NOT:
    - Run `pg_dump`, `pg_restore`, `psql`, `createdb`, `dropdb`, or any raw postgres commands
    - Manually set `DATABASE_URL` to point a worktree server at another instance's database
-   - Run `rm -rf` on any `.paperclip/`, `.paperclip-worktrees/`, or `db/` directory
+   - Run `rm -rf` on any `.jasminia/`, `.jasminia-worktrees/`, or `db/` directory
    - Directly manipulate embedded postgres data directories
    - Kill postgres processes by PID
 
-2. **If a CLI command fails, stop and report.** Do NOT attempt workarounds. If `worktree:make`, `worktree reseed`, `worktree init`, `worktree:cleanup`, or any other `paperclipai` command fails:
+2. **If a CLI command fails, stop and report.** Do NOT attempt workarounds. If `worktree:make`, `worktree reseed`, `worktree init`, `worktree:cleanup`, or any other `jasminiaai` command fails:
    - Report the exact error message in your task comment
    - Set the task to `blocked`
-   - Suggest running `npx paperclipai doctor --repair` or recreating the worktree from scratch
+   - Suggest running `npx jasminiaai doctor --repair` or recreating the worktree from scratch
    - Do NOT try to manually replicate what the CLI does
 
 3. **Never share databases between instances.** Each worktree instance gets its own isolated database. Never override `DATABASE_URL` to point one instance at another's database. This destroys isolation and can corrupt production data.
@@ -189,16 +189,16 @@ These rules exist because agents have caused real damage by improvising around C
    ```bash
    # If the worktree already exists but has no running instance:
    cd <worktree-path>
-   eval "$(npx paperclipai worktree env)"
+   eval "$(npx jasminiaai worktree env)"
    pnpm install && pnpm build
-   npx paperclipai run          # or pnpm dev
+   npx jasminiaai run          # or pnpm dev
 
    # If the worktree needs a fresh database:
-   npx paperclipai worktree reseed --seed-mode full
+   npx jasminiaai worktree reseed --seed-mode full
 
    # If the worktree is broken beyond repair:
-   npx paperclipai worktree:cleanup <name>
-   npx paperclipai worktree:make <name> --seed-mode full
+   npx jasminiaai worktree:cleanup <name>
+   npx jasminiaai worktree:make <name> --seed-mode full
    ```
    If any step fails, follow rule 2 — stop and report.
 
@@ -213,7 +213,7 @@ When an agent needs to start a dev server that outlives the current heartbeat �
 ```bash
 # 1. cd into the worktree (or main repo) and source the environment
 cd <worktree-path>
-eval "$(npx paperclipai worktree env)"   # skip if using the primary instance
+eval "$(npx jasminiaai worktree env)"   # skip if using the primary instance
 
 # 2. Start the dev server in a named, detached tmux session
 tmux new-session -d -s <session-name> 'pnpm dev'
@@ -254,14 +254,14 @@ lsof -nP -iTCP:<port> -sTCP:LISTEN
 
 | Mistake | Fix |
 |---------|-----|
-| Server won't start | Run `npx paperclipai doctor --repair` to diagnose and auto-fix |
-| Forgetting to source worktree env | Run `eval "$(npx paperclipai worktree env)"` after cd-ing into the worktree |
+| Server won't start | Run `npx jasminiaai doctor --repair` to diagnose and auto-fix |
+| Forgetting to source worktree env | Run `eval "$(npx jasminiaai worktree env)"` after cd-ing into the worktree |
 | Stale dependencies after pull | Run `pnpm install && pnpm build` after pulling |
 | Schema out of date after pull | Run `pnpm db:generate && pnpm db:migrate` |
 | Reseeding while target DB is running | Stop the target server first, or use `--allow-live-target` |
 | Cleaning up with unmerged commits | Merge or push first, or use `--force` if intentionally discarding |
-| Running agents against wrong instance | Verify `PAPERCLIP_API_URL` points to the correct port |
+| Running agents against wrong instance | Verify `JASMINIA_API_URL` points to the correct port |
 | CLI command fails | Do NOT work around it — report the error and block (see Hard Rules above) |
 | Agent tries manual postgres operations | NEVER do this — all DB ops go through the CLI (see Hard Rules above) |
 | Dev server dies between heartbeats | Launch in a detached `tmux` session — see "Persistent Dev Servers" above |
-| Pushed feature branch to `paperclipai/paperclip` when a fork exists | Push to the user's fork remote instead — see "Forks" above |
+| Pushed feature branch to `jasminiaai/jasminia` when a fork exists | Push to the user's fork remote instead — see "Forks" above |

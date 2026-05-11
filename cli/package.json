@@ -1,7 +1,7 @@
 {
   "name": "@jasminia/cli",
   "version": "0.3.1",
-  "description": "Paperclip CLI — orchestrate AI agent teams to run a business",
+  "description": "Jasmin.ia CLI — orchestrate AI agent teams to run a business",
   "type": "module",
   "bin": {
     "jasminia": "./dist/index.js"
@@ -16,12 +16,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jasminia/jasminia",
+    "url": "#
     "directory": "cli"
   },
-  "homepage": "https://github.com/paperclipai/paperclip",
+  "homepage": "#
   "bugs": {
-    "url": "https://github.com/paperclipai/paperclip/issues"
+    "url": "#
   },
   "files": [
     "dist"

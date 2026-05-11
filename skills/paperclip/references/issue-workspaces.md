@@ -7,8 +7,8 @@ Use this reference when an issue has an isolated execution workspace and you nee
 Start from the issue, not from memory:
 
 ```sh
-curl -sS -H "Authorization: Bearer $PAPERCLIP_API_KEY" \
-  "$PAPERCLIP_API_URL/api/issues/$PAPERCLIP_TASK_ID/heartbeat-context"
+curl -sS -H "Authorization: Bearer $JASMINIA_API_KEY" \
+  "$JASMINIA_API_URL/api/issues/$JASMINIA_TASK_ID/heartbeat-context"
 ```
 
 Read `currentExecutionWorkspace`:
@@ -18,35 +18,35 @@ Read `currentExecutionWorkspace`:
 - `status` / `closedAt` — whether the workspace is usable
 - `runtimeServices[]` — current services, including `serviceName`, `status`, `healthStatus`, `url`, `port`, and `runtimeServiceId`
 
-If `currentExecutionWorkspace` is `null`, the issue does not currently have a realized execution workspace. For child/follow-up work, create the child with `parentId` or use `inheritExecutionWorkspaceFromIssueId` so Paperclip preserves workspace continuity.
+If `currentExecutionWorkspace` is `null`, the issue does not currently have a realized execution workspace. For child/follow-up work, create the child with `parentId` or use `inheritExecutionWorkspaceFromIssueId` so Jasmin.ia preserves workspace continuity.
 
 ## Control Services
 
-Prefer Paperclip-managed runtime service controls over manual `pnpm dev &` or ad-hoc background processes. These endpoints keep service state, URLs, logs, and ownership visible to other agents and the board.
+Prefer Jasmin.ia-managed runtime service controls over manual `pnpm dev &` or ad-hoc background processes. These endpoints keep service state, URLs, logs, and ownership visible to other agents and the board.
 
 ```sh
 # Start all configured services; waits for configured readiness checks.
 curl -sS -X POST \
-  -H "Authorization: Bearer $PAPERCLIP_API_KEY" \
-  -H "X-Paperclip-Run-Id: $PAPERCLIP_RUN_ID" \
+  -H "Authorization: Bearer $JASMINIA_API_KEY" \
+  -H "X-Jasmin.ia-Run-Id: $JASMINIA_RUN_ID" \
   -H "Content-Type: application/json" \
-  "$PAPERCLIP_API_URL/api/execution-workspaces/<workspace-id>/runtime-services/start" \
+  "$JASMINIA_API_URL/api/execution-workspaces/<workspace-id>/runtime-services/start" \
   -d '{}'
 
 # Restart all configured services.
 curl -sS -X POST \
-  -H "Authorization: Bearer $PAPERCLIP_API_KEY" \
-  -H "X-Paperclip-Run-Id: $PAPERCLIP_RUN_ID" \
+  -H "Authorization: Bearer $JASMINIA_API_KEY" \
+  -H "X-Jasmin.ia-Run-Id: $JASMINIA_RUN_ID" \
   -H "Content-Type: application/json" \
-  "$PAPERCLIP_API_URL/api/execution-workspaces/<workspace-id>/runtime-services/restart" \
+  "$JASMINIA_API_URL/api/execution-workspaces/<workspace-id>/runtime-services/restart" \
   -d '{}'
 
 # Stop all running services.
 curl -sS -X POST \
-  -H "Authorization: Bearer $PAPERCLIP_API_KEY" \
-  -H "X-Paperclip-Run-Id: $PAPERCLIP_RUN_ID" \
+  -H "Authorization: Bearer $JASMINIA_API_KEY" \
+  -H "X-Jasmin.ia-Run-Id: $JASMINIA_RUN_ID" \
   -H "Content-Type: application/json" \
-  "$PAPERCLIP_API_URL/api/execution-workspaces/<workspace-id>/runtime-services/stop" \
+  "$JASMINIA_API_URL/api/execution-workspaces/<workspace-id>/runtime-services/stop" \
   -d '{}'
 ```
 
@@ -71,10 +71,10 @@ For QA/browser checks, use the service whose `status` is `running` and whose `he
 
 ## MCP Tools
 
-When the Paperclip MCP tools are available, prefer these issue-scoped tools:
+When the Jasmin.ia MCP tools are available, prefer these issue-scoped tools:
 
-- `paperclipGetIssueWorkspaceRuntime` — reads `currentExecutionWorkspace` and service URLs for an issue.
-- `paperclipControlIssueWorkspaceServices` — starts, stops, or restarts the current issue workspace services.
-- `paperclipWaitForIssueWorkspaceService` — waits until a selected service is running and returns its URL when exposed.
+- `jasminiaGetIssueWorkspaceRuntime` — reads `currentExecutionWorkspace` and service URLs for an issue.
+- `jasminiaControlIssueWorkspaceServices` — starts, stops, or restarts the current issue workspace services.
+- `jasminiaWaitForIssueWorkspaceService` — waits until a selected service is running and returns its URL when exposed.
 
 These tools resolve the issue's workspace id for you, so QA agents do not need to know the lower-level execution workspace endpoint first.

@@ -3,8 +3,8 @@ import { Router, type Request, type Response } from "express";
 import multer from "multer";
 import { z } from "zod";
 import { and, desc, eq, inArray } from "drizzle-orm";
-import type { Db } from "@paperclipai/db";
-import { activityLog, executionWorkspaces, issueExecutionDecisions, projectWorkspaces } from "@paperclipai/db";
+import type { Db } from "@jasminiaai/db";
+import { activityLog, executionWorkspaces, issueExecutionDecisions, projectWorkspaces } from "@jasminiaai/db";
 import {
   addIssueCommentSchema,
   acceptIssueThreadInteractionSchema,
@@ -38,8 +38,8 @@ import {
   type CompanySearchResponse,
   type ExecutionWorkspace,
   type SuccessfulRunHandoffState,
-} from "@paperclipai/shared";
-import { trackAgentTaskCompleted } from "@paperclipai/shared/telemetry";
+} from "@jasminiaai/shared";
+import { trackAgentTaskCompleted } from "@jasminiaai/shared/telemetry";
 import { getTelemetryClient } from "../telemetry.js";
 import type { StorageService } from "../storage/types.js";
 import { validate } from "../middleware/validate.js";

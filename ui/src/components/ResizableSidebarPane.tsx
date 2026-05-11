@@ -70,7 +70,7 @@ export function ResizableSidebarPane({
   children,
   open,
   resizable = false,
-  storageKey = "paperclip.sidebar.width",
+  storageKey = "jasminia.sidebar.width",
   className,
   side = "left",
   defaultWidth = DEFAULT_SIDEBAR_WIDTH,

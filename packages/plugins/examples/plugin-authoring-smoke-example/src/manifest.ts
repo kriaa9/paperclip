@@ -1,11 +1,11 @@
-import type { PaperclipPluginManifestV1 } from "@paperclipai/plugin-sdk";
+import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/plugin-sdk";
 
-const manifest: PaperclipPluginManifestV1 = {
-  id: "paperclipai.plugin-authoring-smoke-example",
+const manifest: Jasmin.iaPluginManifestV1 = {
+  id: "jasminiaai.plugin-authoring-smoke-example",
   apiVersion: 1,
   version: "0.1.0",
   displayName: "Plugin Authoring Smoke Example",
-  description: "A Paperclip plugin",
+  description: "A Jasmin.ia plugin",
   author: "Plugin Author",
   categories: ["connector"],
   capabilities: [

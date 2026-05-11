@@ -1,12 +1,12 @@
-import type { PaperclipPluginManifestV1 } from "@paperclipai/plugin-sdk";
+import type { Jasmin.iaPluginManifestV1 } from "@jasminiaai/plugin-sdk";
 
-const manifest: PaperclipPluginManifestV1 = {
-  id: "paperclipai.plugin-orchestration-smoke-example",
+const manifest: Jasmin.iaPluginManifestV1 = {
+  id: "jasminiaai.plugin-orchestration-smoke-example",
   apiVersion: 1,
   version: "0.1.0",
   displayName: "Plugin Orchestration Smoke Example",
-  description: "First-party smoke plugin that exercises Paperclip orchestration-grade plugin APIs.",
-  author: "Paperclip",
+  description: "First-party smoke plugin that exercises Jasmin.ia orchestration-grade plugin APIs.",
+  author: "Jasmin.ia",
   categories: ["automation", "ui"],
   capabilities: [
     "api.routes.register",

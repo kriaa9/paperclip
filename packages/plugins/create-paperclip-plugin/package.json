@@ -1,19 +1,19 @@
 {
-  "name": "@jasminia/create-paperclip-plugin",
+  "name": "@jasminia/create-jasminia-plugin",
   "version": "0.1.0",
   "license": "MIT",
-  "homepage": "https://github.com/paperclipai/paperclip",
+  "homepage": "#
   "bugs": {
-    "url": "https://github.com/paperclipai/paperclip/issues"
+    "url": "#
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/paperclipai/paperclip",
-    "directory": "packages/plugins/create-paperclip-plugin"
+    "url": "#
+    "directory": "packages/plugins/create-jasminia-plugin"
   },
   "type": "module",
   "bin": {
-    "create-paperclip-plugin": "./dist/index.js"
+    "create-jasminia-plugin": "./dist/index.js"
   },
   "exports": {
     ".": "./src/index.ts"
@@ -21,7 +21,7 @@
   "publishConfig": {
     "access": "public",
     "bin": {
-      "create-paperclip-plugin": "./dist/index.js"
+      "create-jasminia-plugin": "./dist/index.js"
     },
     "exports": {
       ".": {

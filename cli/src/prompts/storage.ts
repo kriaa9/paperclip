@@ -1,9 +1,9 @@
 import * as p from "@clack/prompts";
 import type { StorageConfig } from "../config/schema.js";
-import { resolveDefaultStorageDir, resolvePaperclipInstanceId } from "../config/home.js";
+import { resolveDefaultStorageDir, resolveJasmin.iaInstanceId } from "../config/home.js";
 
 function defaultStorageBaseDir(): string {
-  return resolveDefaultStorageDir(resolvePaperclipInstanceId());
+  return resolveDefaultStorageDir(resolveJasmin.iaInstanceId());
 }
 
 export function defaultStorageConfig(): StorageConfig {
@@ -13,7 +13,7 @@ export function defaultStorageConfig(): StorageConfig {
       baseDir: defaultStorageBaseDir(),
     },
     s3: {
-      bucket: "paperclip",
+      bucket: "jasminia",
       region: "us-east-1",
       endpoint: undefined,
       prefix: "",
@@ -73,8 +73,8 @@ export async function promptStorage(current?: StorageConfig): Promise<StorageCon
 
   const bucket = await p.text({
     message: "S3 bucket",
-    defaultValue: base.s3.bucket || "paperclip",
-    placeholder: "paperclip",
+    defaultValue: base.s3.bucket || "jasminia",
+    placeholder: "jasminia",
     validate: (value) => {
       if (!value || value.trim().length === 0) return "Bucket is required";
     },
@@ -113,7 +113,7 @@ export async function promptStorage(current?: StorageConfig): Promise<StorageCon
   const prefix = await p.text({
     message: "Object key prefix (optional)",
     defaultValue: base.s3.prefix ?? "",
-    placeholder: "paperclip/",
+    placeholder: "jasminia/",
   });
 
   if (p.isCancel(prefix)) {

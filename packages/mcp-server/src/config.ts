@@ -1,4 +1,4 @@
-export interface PaperclipMcpConfig {
+export interface Jasmin.iaMcpConfig {
   apiUrl: string;
   apiKey: string;
   companyId: string | null;
@@ -19,21 +19,21 @@ export function normalizeApiUrl(apiUrl: string): string {
   return trimmed.endsWith("/api") ? trimmed : `${trimmed}/api`;
 }
 
-export function readConfigFromEnv(env: NodeJS.ProcessEnv = process.env): PaperclipMcpConfig {
-  const apiUrl = nonEmpty(env.PAPERCLIP_API_URL);
+export function readConfigFromEnv(env: NodeJS.ProcessEnv = process.env): Jasmin.iaMcpConfig {
+  const apiUrl = nonEmpty(env.JASMINIA_API_URL);
   if (!apiUrl) {
-    throw new Error("Missing PAPERCLIP_API_URL");
+    throw new Error("Missing JASMINIA_API_URL");
   }
-  const apiKey = nonEmpty(env.PAPERCLIP_API_KEY);
+  const apiKey = nonEmpty(env.JASMINIA_API_KEY);
   if (!apiKey) {
-    throw new Error("Missing PAPERCLIP_API_KEY");
+    throw new Error("Missing JASMINIA_API_KEY");
   }
 
   return {
     apiUrl: normalizeApiUrl(apiUrl),
     apiKey,
-    companyId: nonEmpty(env.PAPERCLIP_COMPANY_ID),
-    agentId: nonEmpty(env.PAPERCLIP_AGENT_ID),
-    runId: nonEmpty(env.PAPERCLIP_RUN_ID),
+    companyId: nonEmpty(env.JASMINIA_COMPANY_ID),
+    agentId: nonEmpty(env.JASMINIA_AGENT_ID),
+    runId: nonEmpty(env.JASMINIA_RUN_ID),
   };
 }

@@ -106,7 +106,7 @@ function boardActor(overrides: Record<string, unknown> = {}) {
 function readyPlugin() {
   mockRegistry.getById.mockResolvedValue({
     id: pluginId,
-    pluginKey: "paperclip.example",
+    pluginKey: "jasminia.example",
     version: "1.0.0",
     status: "ready",
   });
@@ -128,7 +128,7 @@ describe.sequential("plugin install and upgrade authz", () => {
 
     const res = await request(app)
       .post("/api/plugins/install")
-      .send({ packageName: "paperclip-plugin-example" });
+      .send({ packageName: "jasminia-plugin-example" });
 
     expect(res.status).toBe(403);
     expect(loader.installPlugin).not.toHaveBeenCalled();
@@ -136,7 +136,7 @@ describe.sequential("plugin install and upgrade authz", () => {
 
   it("allows instance admins to install plugins", async () => {
     const pluginId = "11111111-1111-4111-8111-111111111111";
-    const pluginKey = "paperclip.example";
+    const pluginKey = "jasminia.example";
     const discovered = {
       manifest: {
         id: pluginKey,
@@ -146,13 +146,13 @@ describe.sequential("plugin install and upgrade authz", () => {
     mockRegistry.getByKey.mockResolvedValue({
       id: pluginId,
       pluginKey,
-      packageName: "paperclip-plugin-example",
+      packageName: "jasminia-plugin-example",
       version: "1.0.0",
     });
     mockRegistry.getById.mockResolvedValue({
       id: pluginId,
       pluginKey,
-      packageName: "paperclip-plugin-example",
+      packageName: "jasminia-plugin-example",
       version: "1.0.0",
     });
     mockLifecycle.load.mockResolvedValue(undefined);
@@ -170,11 +170,11 @@ describe.sequential("plugin install and upgrade authz", () => {
 
     const res = await request(app)
       .post("/api/plugins/install")
-      .send({ packageName: "paperclip-plugin-example" });
+      .send({ packageName: "jasminia-plugin-example" });
 
     expect(res.status).toBe(200);
     expect(loader.installPlugin).toHaveBeenCalledWith({
-      packageName: "paperclip-plugin-example",
+      packageName: "jasminia-plugin-example",
       version: undefined,
     });
     expect(mockLifecycle.load).toHaveBeenCalledWith(pluginId);
@@ -252,7 +252,7 @@ describe.sequential("plugin install and upgrade authz", () => {
     const pluginId = "11111111-1111-4111-8111-111111111111";
     mockRegistry.getById.mockResolvedValue({
       id: pluginId,
-      pluginKey: "paperclip.example",
+      pluginKey: "jasminia.example",
       version: "1.0.0",
     });
     mockLifecycle.upgrade.mockResolvedValue({
@@ -293,11 +293,11 @@ describe.sequential("scoped plugin API routes", () => {
     mockRegistry.getById.mockResolvedValue(null);
     mockRegistry.getByKey.mockResolvedValue({
       id: pluginId,
-      pluginKey: "paperclip.example",
+      pluginKey: "jasminia.example",
       version: "1.0.0",
       status: "ready",
       manifestJson: {
-        id: "paperclip.example",
+        id: "jasminia.example",
         capabilities: ["api.routes.register"],
         apiRoutes: [
           {
@@ -325,7 +325,7 @@ describe.sequential("scoped plugin API routes", () => {
     );
 
     const res = await request(app)
-      .get("/api/plugins/paperclip.example/api/smoke")
+      .get("/api/plugins/jasminia.example/api/smoke")
       .query({ companyId: "company-1" });
 
     expect(res.status).toBe(202);
@@ -352,11 +352,11 @@ describe.sequential("plugin local folder routes", () => {
   function readyLocalFolderPlugin() {
     mockRegistry.getById.mockResolvedValue({
       id: pluginId,
-      pluginKey: "paperclip.example",
+      pluginKey: "jasminia.example",
       version: "1.0.0",
       status: "ready",
       manifestJson: {
-        id: "paperclip.example",
+        id: "jasminia.example",
         capabilities: ["local.folders"],
         localFolders: [
           {
@@ -419,7 +419,7 @@ describe.sequential("plugin tool and bridge authz", () => {
     const res = await request(app)
       .post("/api/plugins/tools/execute")
       .send({
-        tool: "paperclip.example:search",
+        tool: "jasminia.example:search",
         parameters: {},
         runContext: {
           agentId: agentA,
@@ -473,7 +473,7 @@ describe.sequential("plugin tool and bridge authz", () => {
         toolDeps: {
           toolDispatcher: {
             listToolsForAgent: vi.fn(),
-            getTool: vi.fn(() => ({ name: "paperclip.example:search" })),
+            getTool: vi.fn(() => ({ name: "jasminia.example:search" })),
             executeTool,
           },
         },
@@ -482,7 +482,7 @@ describe.sequential("plugin tool and bridge authz", () => {
       const res = await request(app)
         .post("/api/plugins/tools/execute")
         .send({
-          tool: "paperclip.example:search",
+          tool: "jasminia.example:search",
           parameters: {},
           runContext: {
             agentId: agentA,
@@ -508,7 +508,7 @@ describe.sequential("plugin tool and bridge authz", () => {
       toolDeps: {
         toolDispatcher: {
           listToolsForAgent: vi.fn(),
-          getTool: vi.fn(() => ({ name: "paperclip.example:search" })),
+          getTool: vi.fn(() => ({ name: "jasminia.example:search" })),
           executeTool,
         },
       },
@@ -517,7 +517,7 @@ describe.sequential("plugin tool and bridge authz", () => {
     const res = await request(app)
       .post("/api/plugins/tools/execute")
       .send({
-        tool: "paperclip.example:search",
+        tool: "jasminia.example:search",
         parameters: { q: "test" },
         runContext: {
           agentId: agentA,
@@ -529,7 +529,7 @@ describe.sequential("plugin tool and bridge authz", () => {
 
     expect(res.status).toBe(200);
     expect(executeTool).toHaveBeenCalledWith(
-      "paperclip.example:search",
+      "jasminia.example:search",
       { q: "test" },
       {
         agentId: agentA,

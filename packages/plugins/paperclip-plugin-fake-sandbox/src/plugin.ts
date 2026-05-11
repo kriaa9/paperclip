@@ -3,7 +3,7 @@ import { mkdir, mkdtemp, rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { spawn } from "node:child_process";
-import { definePlugin } from "@paperclipai/plugin-sdk";
+import { definePlugin } from "@jasminiaai/plugin-sdk";
 import type {
   PluginEnvironmentAcquireLeaseParams,
   PluginEnvironmentDestroyLeaseParams,
@@ -18,7 +18,7 @@ import type {
   PluginEnvironmentResumeLeaseParams,
   PluginEnvironmentValidateConfigParams,
   PluginEnvironmentValidationResult,
-} from "@paperclipai/plugin-sdk";
+} from "@jasminiaai/plugin-sdk";
 
 interface FakeDriverConfig {
   image: string;
@@ -51,7 +51,7 @@ async function createLeaseState(input: {
   image: string;
   reuseLease: boolean;
 }): Promise<FakeLeaseState> {
-  const rootDir = await mkdtemp(path.join(os.tmpdir(), "paperclip-fake-sandbox-"));
+  const rootDir = await mkdtemp(path.join(os.tmpdir(), "jasminia-fake-sandbox-"));
   const remoteCwd = path.join(rootDir, "workspace");
   await mkdir(remoteCwd, { recursive: true });
   const state = {
@@ -258,7 +258,7 @@ const plugin = definePlugin({
       (typeof params.lease.metadata?.remoteCwd === "string" ? params.lease.metadata.remoteCwd : null) ??
       params.workspace.remotePath ??
       params.workspace.localPath ??
-      path.join(os.tmpdir(), "paperclip-fake-sandbox-workspace");
+      path.join(os.tmpdir(), "jasminia-fake-sandbox-workspace");
 
     await mkdir(remoteCwd, { recursive: true });
 

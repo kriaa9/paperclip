@@ -1,15 +1,15 @@
 {
   "name": "@jasminia/plugin-e2b",
   "version": "0.1.0",
-  "description": "E2B sandbox provider plugin for Paperclip environments",
+  "description": "E2B sandbox provider plugin for Jasmin.ia environments",
   "license": "MIT",
-  "homepage": "https://github.com/paperclipai/paperclip",
+  "homepage": "#
   "bugs": {
-    "url": "https://github.com/paperclipai/paperclip/issues"
+    "url": "#
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/paperclipai/paperclip",
+    "url": "#
     "directory": "packages/plugins/sandbox-providers/e2b"
   },
   "type": "module",
@@ -30,12 +30,12 @@
   "files": [
     "dist"
   ],
-  "paperclipPlugin": {
+  "jasminiaPlugin": {
     "manifest": "./dist/manifest.js",
     "worker": "./dist/worker.js"
   },
   "keywords": [
-    "paperclip",
+    "jasminia",
     "plugin",
     "sandbox",
     "e2b"

@@ -167,8 +167,8 @@
     touch-action: manipulation;
   }
   /* Let font-mono (utilities layer) override for monospace editors */
-  .paperclip-mdxeditor [class*="_placeholder_"],
-  .paperclip-mdxeditor-content {
+  .jasminia-mdxeditor [class*="_placeholder_"],
+  .jasminia-mdxeditor-content {
     font-family: inherit;
   }
 }
@@ -366,8 +366,8 @@
 }
 
 /* MDXEditor theme integration */
-.paperclip-mdxeditor-scope,
-.paperclip-mdxeditor {
+.jasminia-mdxeditor-scope,
+.jasminia-mdxeditor {
   --baseBase: var(--background);
   --baseBg: transparent;
   --baseBgSubtle: color-mix(in oklab, var(--accent) 35%, transparent);
@@ -399,83 +399,83 @@
 }
 
 @media (min-width: 768px) {
-  .paperclip-mdxeditor-scope,
-  .paperclip-mdxeditor {
+  .jasminia-mdxeditor-scope,
+  .jasminia-mdxeditor {
     font-size: 0.875rem;
   }
 }
 
-.paperclip-mdxeditor-scope [class*="_iconButton_"],
-.paperclip-mdxeditor [class*="_iconButton_"] {
+.jasminia-mdxeditor-scope [class*="_iconButton_"],
+.jasminia-mdxeditor [class*="_iconButton_"] {
   color: var(--baseText);
 }
 
-.paperclip-mdxeditor-scope [class*="_iconButton_"]:hover,
-.paperclip-mdxeditor [class*="_iconButton_"]:hover {
+.jasminia-mdxeditor-scope [class*="_iconButton_"]:hover,
+.jasminia-mdxeditor [class*="_iconButton_"]:hover {
   color: var(--baseTextContrast);
 }
 
-.paperclip-mdxeditor .mdxeditor-root-contenteditable {
+.jasminia-mdxeditor .mdxeditor-root-contenteditable {
   min-height: 2.5rem;
   padding: 0;
   line-height: 1.5;
 }
 
-.paperclip-mdxeditor [class*="_contentEditable_"] {
+.jasminia-mdxeditor [class*="_contentEditable_"] {
   padding: 0.375rem 0.625rem !important;
 }
 
-.paperclip-mdxeditor--borderless [class*="_contentEditable_"] {
+.jasminia-mdxeditor--borderless [class*="_contentEditable_"] {
   padding: 0 !important;
 }
 
-.paperclip-mdxeditor [class*="_placeholder_"] {
+.jasminia-mdxeditor [class*="_placeholder_"] {
   font-size: inherit;
   line-height: 1.5;
   color: var(--muted-foreground);
 }
 
-.paperclip-mdxeditor-content {
+.jasminia-mdxeditor-content {
   font-size: inherit;
   line-height: inherit;
   color: inherit;
 }
 
-.paperclip-edit-in-place-content {
+.jasminia-edit-in-place-content {
   font-size: 0.9375rem;
   line-height: 1.75rem;
 }
 
-.paperclip-mdxeditor-content > *:first-child {
+.jasminia-mdxeditor-content > *:first-child {
   margin-top: 0;
 }
 
-.paperclip-mdxeditor-content > *:last-child {
+.jasminia-mdxeditor-content > *:last-child {
   margin-bottom: 0;
 }
 
-.paperclip-mdxeditor-content p {
+.jasminia-mdxeditor-content p {
   margin: 0;
   line-height: inherit;
 }
 
-.paperclip-mdxeditor-content p + p {
+.jasminia-mdxeditor-content p + p {
   margin-top: 1.1em;
 }
 
-.paperclip-mdxeditor-content a:not(.paperclip-mention-chip):not(.paperclip-project-mention-chip) {
+.jasminia-mdxeditor-content a:not(.jasminia-mention-chip):not(.jasminia-project-mention-chip) {
   color: color-mix(in oklab, var(--foreground) 76%, #0969da 24%);
   text-decoration: underline;
   text-underline-offset: 0.15em;
   cursor: pointer;
 }
 
-.dark .paperclip-mdxeditor-content a:not(.paperclip-mention-chip):not(.paperclip-project-mention-chip) {
+.dark .jasminia-mdxeditor-content a:not(.jasminia-mention-chip):not(.jasminia-project-mention-chip) {
   color: color-mix(in oklab, var(--foreground) 80%, #58a6ff 20%);
 }
 
-.paperclip-mdxeditor-content a.paperclip-mention-chip,
-.paperclip-mdxeditor-content a.paperclip-project-mention-chip {
+.jasminia-mdxeditor-content a.jasminia-mention-chip,
+.jasminia-mdxeditor-content a.jasminia-project-mention-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
@@ -495,35 +495,35 @@
 
 /* Strip the MDXEditor's default inline-code styling from the text inside chips
    (the link label otherwise picks up a monospace font + gray tint). */
-.paperclip-mdxeditor-content a.paperclip-mention-chip code,
-.paperclip-mdxeditor-content a.paperclip-project-mention-chip code {
+.jasminia-mdxeditor-content a.jasminia-mention-chip code,
+.jasminia-mdxeditor-content a.jasminia-project-mention-chip code {
   font-family: inherit;
   background: none;
   color: inherit;
   padding: 0;
 }
 
-.paperclip-mdxeditor-content a.paperclip-mention-chip::before,
-a.paperclip-mention-chip::before {
+.jasminia-mdxeditor-content a.jasminia-mention-chip::before,
+a.jasminia-mention-chip::before {
   content: "";
   flex: none;
 }
 
-.paperclip-mdxeditor-content a.paperclip-mention-chip[data-mention-kind="project"]::before,
-a.paperclip-mention-chip[data-mention-kind="project"]::before {
+.jasminia-mdxeditor-content a.jasminia-mention-chip[data-mention-kind="project"]::before,
+a.jasminia-mention-chip[data-mention-kind="project"]::before {
   width: 0.45rem;
   height: 0.45rem;
   border-radius: 999px;
-  background-color: var(--paperclip-mention-project-color, currentColor);
+  background-color: var(--jasminia-mention-project-color, currentColor);
 }
 
-.paperclip-mdxeditor-content a.paperclip-mention-chip[data-mention-kind="agent"]::before,
-a.paperclip-mention-chip[data-mention-kind="agent"]::before {
+.jasminia-mdxeditor-content a.jasminia-mention-chip[data-mention-kind="agent"]::before,
+a.jasminia-mention-chip[data-mention-kind="agent"]::before {
   width: 0.75rem;
   height: 0.75rem;
   background-color: currentColor;
-  -webkit-mask-image: var(--paperclip-mention-icon-mask);
-  mask-image: var(--paperclip-mention-icon-mask);
+  -webkit-mask-image: var(--jasminia-mention-icon-mask);
+  mask-image: var(--jasminia-mention-icon-mask);
   -webkit-mask-position: center;
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
@@ -532,57 +532,57 @@ a.paperclip-mention-chip[data-mention-kind="agent"]::before {
   mask-size: contain;
 }
 
-.paperclip-mdxeditor-content ul,
-.paperclip-mdxeditor-content ol {
+.jasminia-mdxeditor-content ul,
+.jasminia-mdxeditor-content ol {
   margin: 1.1em 0;
   padding-left: 1.6em;
 }
 
-.paperclip-mdxeditor-content ul {
+.jasminia-mdxeditor-content ul {
   list-style: disc;
 }
 
-.paperclip-mdxeditor-content ol {
+.jasminia-mdxeditor-content ol {
   list-style: decimal;
 }
 
-.paperclip-mdxeditor-content li {
+.jasminia-mdxeditor-content li {
   display: list-item;
   margin: 0.3em 0;
   line-height: inherit;
 }
 
-.paperclip-mdxeditor-content li::marker {
+.jasminia-mdxeditor-content li::marker {
   color: var(--muted-foreground);
 }
 
-.paperclip-mdxeditor-content h1 {
+.jasminia-mdxeditor-content h1 {
   margin: 1.4em 0 0.9em;
   font-size: 1.75em;
   font-weight: 700;
   line-height: 1.2;
 }
 
-.paperclip-mdxeditor-content h2 {
+.jasminia-mdxeditor-content h2 {
   margin: 1.3em 0 0.85em;
   font-size: 1.35em;
   font-weight: 700;
   line-height: 1.3;
 }
 
-.paperclip-mdxeditor-content h3 {
+.jasminia-mdxeditor-content h3 {
   margin: 1.2em 0 0.8em;
   font-size: 1.15em;
   font-weight: 600;
   line-height: 1.35;
 }
 
-.paperclip-mdxeditor-content img {
+.jasminia-mdxeditor-content img {
   max-height: 18rem;
   border-radius: calc(var(--radius) - 2px);
 }
 
-.paperclip-mdxeditor-content blockquote {
+.jasminia-mdxeditor-content blockquote {
   margin: 1.2em 0;
   padding-left: 1em;
   border-left: 3px solid var(--border);
@@ -590,12 +590,12 @@ a.paperclip-mention-chip[data-mention-kind="agent"]::before {
   line-height: inherit;
 }
 
-.paperclip-mdxeditor-content code {
+.jasminia-mdxeditor-content code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 1em;
 }
 
-.paperclip-mdxeditor-content pre {
+.jasminia-mdxeditor-content pre {
   margin: 0.4rem 0;
   padding: 0;
   border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
@@ -607,50 +607,50 @@ a.paperclip-mention-chip[data-mention-kind="agent"]::before {
 
 /* Dark theme for CodeMirror code blocks inside the MDXEditor.
    Overrides the default cm6-theme-basic-light that MDXEditor bundles. */
-.paperclip-mdxeditor .cm-editor {
+.jasminia-mdxeditor .cm-editor {
   background-color: #1e1e2e !important;
   color: #cdd6f4 !important;
   font-size: 1em;
 }
 
-.paperclip-mdxeditor .cm-gutters {
+.jasminia-mdxeditor .cm-gutters {
   background-color: #181825 !important;
   color: #585b70 !important;
   border-right: 1px solid #313244 !important;
 }
 
-.paperclip-mdxeditor .cm-activeLineGutter {
+.jasminia-mdxeditor .cm-activeLineGutter {
   background-color: #1e1e2e !important;
 }
 
-.paperclip-mdxeditor .cm-activeLine {
+.jasminia-mdxeditor .cm-activeLine {
   background-color: color-mix(in oklab, #cdd6f4 5%, transparent) !important;
 }
 
-.paperclip-mdxeditor .cm-cursor,
-.paperclip-mdxeditor .cm-dropCursor {
+.jasminia-mdxeditor .cm-cursor,
+.jasminia-mdxeditor .cm-dropCursor {
   border-left-color: #cdd6f4 !important;
 }
 
-.paperclip-mdxeditor .cm-selectionBackground {
+.jasminia-mdxeditor .cm-selectionBackground {
   background-color: color-mix(in oklab, #89b4fa 25%, transparent) !important;
 }
 
-.paperclip-mdxeditor .cm-focused .cm-selectionBackground {
+.jasminia-mdxeditor .cm-focused .cm-selectionBackground {
   background-color: color-mix(in oklab, #89b4fa 30%, transparent) !important;
 }
 
-.paperclip-mdxeditor .cm-content {
+.jasminia-mdxeditor .cm-content {
   caret-color: #cdd6f4;
 }
 
 /* MDXEditor code block language selector – show on hover only */
-.paperclip-mdxeditor-content [class*="_codeMirrorWrapper_"] {
+.jasminia-mdxeditor-content [class*="_codeMirrorWrapper_"] {
   position: relative;
 }
 
-.paperclip-mdxeditor-content [class*="_codeMirrorToolbar_"],
-.paperclip-mdxeditor-content [class*="_codeBlockToolbar_"] {
+.jasminia-mdxeditor-content [class*="_codeMirrorToolbar_"],
+.jasminia-mdxeditor-content [class*="_codeBlockToolbar_"] {
   position: absolute;
   top: 0.25rem;
   right: 0.25rem;
@@ -659,31 +659,31 @@ a.paperclip-mention-chip[data-mention-kind="agent"]::before {
   transition: opacity 150ms ease;
 }
 
-.paperclip-mdxeditor-content [class*="_codeMirrorToolbar_"] select,
-.paperclip-mdxeditor-content [class*="_codeBlockToolbar_"] select {
+.jasminia-mdxeditor-content [class*="_codeMirrorToolbar_"] select,
+.jasminia-mdxeditor-content [class*="_codeBlockToolbar_"] select {
   background-color: #313244;
   color: #cdd6f4;
   border-color: #45475a;
 }
 
-.paperclip-mdxeditor-content [class*="_codeMirrorWrapper_"]:hover [class*="_codeMirrorToolbar_"],
-.paperclip-mdxeditor-content [class*="_codeMirrorWrapper_"]:hover [class*="_codeBlockToolbar_"],
-.paperclip-mdxeditor-content [class*="_codeMirrorWrapper_"]:focus-within [class*="_codeMirrorToolbar_"],
-.paperclip-mdxeditor-content [class*="_codeMirrorWrapper_"]:focus-within [class*="_codeBlockToolbar_"] {
+.jasminia-mdxeditor-content [class*="_codeMirrorWrapper_"]:hover [class*="_codeMirrorToolbar_"],
+.jasminia-mdxeditor-content [class*="_codeMirrorWrapper_"]:hover [class*="_codeBlockToolbar_"],
+.jasminia-mdxeditor-content [class*="_codeMirrorWrapper_"]:focus-within [class*="_codeMirrorToolbar_"],
+.jasminia-mdxeditor-content [class*="_codeMirrorWrapper_"]:focus-within [class*="_codeBlockToolbar_"] {
   opacity: 1;
 }
 
 /* Rendered markdown code blocks & inline code (prose/MarkdownBody context).
    Dark theme code blocks with compact sizing.
    Override prose CSS variables so prose-invert can't revert to defaults. */
-.paperclip-markdown {
+.jasminia-markdown {
   --tw-prose-pre-bg: #1e1e2e;
   --tw-prose-pre-code: #cdd6f4;
   --tw-prose-invert-pre-bg: #1e1e2e;
   --tw-prose-invert-pre-code: #cdd6f4;
 }
 
-.paperclip-markdown pre {
+.jasminia-markdown pre {
   border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent) !important;
   border-radius: calc(var(--radius) - 3px) !important;
   background-color: #1e1e2e !important;
@@ -695,23 +695,23 @@ a.paperclip-mention-chip[data-mention-kind="agent"]::before {
   white-space: pre;
 }
 
-.paperclip-markdown code {
+.jasminia-markdown code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 1em;
 }
 
-.paperclip-markdown pre code {
+.jasminia-markdown pre code {
   font-size: inherit;
   color: inherit;
   background: none;
 }
 
 /* Copy-to-clipboard button on fenced code blocks */
-.paperclip-markdown-codeblock {
+.jasminia-markdown-codeblock {
   position: relative;
 }
 
-.paperclip-markdown-codeblock-copy {
+.jasminia-markdown-codeblock-copy {
   position: absolute;
   top: 0.4rem;
   right: 0.4rem;
@@ -730,26 +730,26 @@ a.paperclip-mention-chip[data-mention-kind="agent"]::before {
   transition: opacity 0.12s ease, background-color 0.12s ease, color 0.12s ease;
 }
 
-.paperclip-markdown-codeblock:hover .paperclip-markdown-codeblock-copy,
-.paperclip-markdown-codeblock-copy:focus-visible,
-.paperclip-markdown-codeblock-copy[data-copied] {
+.jasminia-markdown-codeblock:hover .jasminia-markdown-codeblock-copy,
+.jasminia-markdown-codeblock-copy:focus-visible,
+.jasminia-markdown-codeblock-copy[data-copied] {
   opacity: 1;
 }
 
-.paperclip-markdown-codeblock-copy:hover {
+.jasminia-markdown-codeblock-copy:hover {
   background-color: var(--accent);
   color: var(--accent-foreground);
 }
 
-.paperclip-markdown-codeblock-copy[data-copied] {
+.jasminia-markdown-codeblock-copy[data-copied] {
   color: var(--primary);
 }
 
-.paperclip-markdown-codeblock-copy[data-failed] {
+.jasminia-markdown-codeblock-copy[data-failed] {
   color: var(--destructive);
 }
 
-.paperclip-markdown-codeblock-copy-label {
+.jasminia-markdown-codeblock-copy-label {
   font-weight: 500;
 }
 
@@ -771,55 +771,55 @@ a.paperclip-mention-chip[data-mention-kind="agent"]::before {
   background-color: #ffffff0f;
 }
 
-.paperclip-markdown {
+.jasminia-markdown {
   color: var(--foreground);
   font-size: 0.9375rem;
   line-height: 1.6;
 }
 
-.paperclip-markdown > :first-child {
+.jasminia-markdown > :first-child {
   margin-top: 0;
 }
 
-.paperclip-markdown > :last-child {
+.jasminia-markdown > :last-child {
   margin-bottom: 0;
 }
 
-.paperclip-markdown :where(p, ul, ol, blockquote, pre, .paperclip-markdown-table-scroll) {
+.jasminia-markdown :where(p, ul, ol, blockquote, pre, .jasminia-markdown-table-scroll) {
   margin-top: 0.7rem;
   margin-bottom: 0.7rem;
 }
 
-.paperclip-markdown :where(ul, ol) {
+.jasminia-markdown :where(ul, ol) {
   padding-left: 1.15rem;
 }
 
-.paperclip-markdown ul {
+.jasminia-markdown ul {
   list-style-type: disc;
 }
 
-.paperclip-markdown ol {
+.jasminia-markdown ol {
   list-style-type: decimal;
 }
 
-.paperclip-markdown li {
+.jasminia-markdown li {
   margin: 0.14rem 0;
   padding-left: 0.2rem;
 }
 
-.paperclip-markdown li > :where(p, ul, ol) {
+.jasminia-markdown li > :where(p, ul, ol) {
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
 }
 
-.paperclip-markdown li::marker {
+.jasminia-markdown li::marker {
   color: var(--muted-foreground);
 }
 
-.paperclip-markdown h1,
-.paperclip-markdown h2,
-.paperclip-markdown h3,
-.paperclip-markdown h4 {
+.jasminia-markdown h1,
+.jasminia-markdown h2,
+.jasminia-markdown h3,
+.jasminia-markdown h4 {
   margin-top: 1.75rem;
   margin-bottom: 0.45rem;
   color: var(--foreground);
@@ -828,101 +828,101 @@ a.paperclip-mention-chip[data-mention-kind="agent"]::before {
   line-height: 1.3;
 }
 
-.paperclip-markdown h1 {
+.jasminia-markdown h1 {
   font-size: 1.5rem;
 }
 
-.paperclip-markdown h2 {
+.jasminia-markdown h2 {
   font-size: 1.25rem;
 }
 
-.paperclip-markdown h3 {
+.jasminia-markdown h3 {
   font-size: 1.05rem;
 }
 
-.paperclip-markdown h4 {
+.jasminia-markdown h4 {
   font-size: 0.95rem;
 }
 
-.paperclip-markdown :where(strong, b) {
+.jasminia-markdown :where(strong, b) {
   color: var(--foreground);
   font-weight: 600;
 }
 
-.paperclip-markdown a {
+.jasminia-markdown a {
   color: color-mix(in oklab, var(--foreground) 76%, #0969da 24%);
   text-decoration: underline;
   text-underline-offset: 0.15em;
   cursor: pointer;
 }
 
-.paperclip-markdown a.paperclip-mention-chip {
+.jasminia-markdown a.jasminia-mention-chip {
   text-decoration: none;
 }
 
-.paperclip-markdown a.paperclip-mention-chip[data-mention-kind="issue"] {
+.jasminia-markdown a.jasminia-mention-chip[data-mention-kind="issue"] {
   border-color: color-mix(in oklab, var(--foreground) 14%, var(--border) 86%);
   background: color-mix(in oklab, var(--accent) 42%, transparent);
 }
 
 /* Inline issue references in markdown: no pill chrome, just a status icon
    beside the link label — keeps the pair from splitting across lines. */
-.paperclip-markdown-issue-ref {
+.jasminia-markdown-issue-ref {
   display: inline;
   white-space: nowrap;
 }
 
-.dark .paperclip-markdown a {
+.dark .jasminia-markdown a {
   color: color-mix(in oklab, var(--foreground) 80%, #58a6ff 20%);
 }
 
-.paperclip-markdown blockquote {
+.jasminia-markdown blockquote {
   margin-left: 0;
   padding-left: 0.95rem;
   border-left: 0.24rem solid color-mix(in oklab, var(--border) 84%, var(--muted-foreground) 16%);
   color: var(--muted-foreground);
 }
 
-.paperclip-markdown hr {
+.jasminia-markdown hr {
   margin: 1.25rem 0;
   border-color: var(--border);
 }
 
-.paperclip-markdown img {
+.jasminia-markdown img {
   border-radius: calc(var(--radius) + 2px);
   box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--foreground) 10%, transparent);
 }
 
-.paperclip-markdown-table-scroll {
+.jasminia-markdown-table-scroll {
   max-width: 100%;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
 }
 
-.paperclip-markdown-table-scroll:focus-visible {
+.jasminia-markdown-table-scroll:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
-.paperclip-markdown-table-scroll table {
+.jasminia-markdown-table-scroll table {
   width: max-content;
   min-width: 100%;
   margin: 0;
 }
 
-.paperclip-markdown-table-scroll :where(th, td) {
+.jasminia-markdown-table-scroll :where(th, td) {
   min-width: 8rem;
   max-width: 18rem;
   vertical-align: top;
 }
 
-.paperclip-markdown th {
+.jasminia-markdown th {
   font-weight: 600;
   text-align: left;
 }
 
-.paperclip-mermaid {
+.jasminia-mermaid {
   margin: 0.5rem 0;
   padding: 0.45rem 0.55rem;
   border: 1px solid var(--border);
@@ -931,7 +931,7 @@ a.paperclip-mention-chip[data-mention-kind="agent"]::before {
   overflow-x: auto;
 }
 
-.paperclip-mermaid svg {
+.jasminia-mermaid svg {
   display: block;
   width: max-content;
   max-width: none;
@@ -939,17 +939,17 @@ a.paperclip-mention-chip[data-mention-kind="agent"]::before {
   height: auto;
 }
 
-.paperclip-mermaid-status {
+.jasminia-mermaid-status {
   margin: 0 0 0.45rem;
   font-size: 0.75rem;
   color: var(--muted-foreground);
 }
 
-.paperclip-mermaid-status-error {
+.jasminia-mermaid-status-error {
   color: var(--destructive);
 }
 
-.paperclip-mermaid-source {
+.jasminia-mermaid-source {
   margin: 0;
   padding: 0;
   border: 0;
@@ -957,10 +957,10 @@ a.paperclip-mention-chip[data-mention-kind="agent"]::before {
 }
 
 /* Mention chips rendered inline in prose (MarkdownBody or inline anchors) */
-a.paperclip-mention-chip,
-a.paperclip-project-mention-chip,
-span.paperclip-mention-chip,
-span.paperclip-project-mention-chip {
+a.jasminia-mention-chip,
+a.jasminia-project-mention-chip,
+span.jasminia-mention-chip,
+span.jasminia-project-mention-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
@@ -983,10 +983,10 @@ span.paperclip-project-mention-chip {
 
 /* When the identifier inside a chip is backtick-wrapped in markdown, strip the
    inline-code monospace/gray styling so the pill label reads cleanly. */
-.paperclip-markdown a.paperclip-mention-chip code,
-.paperclip-markdown a.paperclip-project-mention-chip code,
-.paperclip-markdown span.paperclip-mention-chip code,
-.paperclip-markdown span.paperclip-project-mention-chip code {
+.jasminia-markdown a.jasminia-mention-chip code,
+.jasminia-markdown a.jasminia-project-mention-chip code,
+.jasminia-markdown span.jasminia-mention-chip code,
+.jasminia-markdown span.jasminia-project-mention-chip code {
   font-family: inherit;
   background: none;
   color: inherit;

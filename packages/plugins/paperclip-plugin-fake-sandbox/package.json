@@ -1,13 +1,13 @@
 {
   "name": "@jasminia/plugin-fake-sandbox",
   "version": "0.1.0",
-  "description": "First-party deterministic fake sandbox provider plugin for Paperclip environments",
+  "description": "First-party deterministic fake sandbox provider plugin for Jasmin.ia environments",
   "type": "module",
   "private": true,
   "exports": {
     ".": "./src/index.ts"
   },
-  "paperclipPlugin": {
+  "jasminiaPlugin": {
     "manifest": "./dist/manifest.js",
     "worker": "./dist/worker.js"
   },

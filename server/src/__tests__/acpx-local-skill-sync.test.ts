@@ -2,11 +2,11 @@ import { describe, expect, it } from "vitest";
 import {
   listAcpxSkills,
   syncAcpxSkills,
-} from "@paperclipai/adapter-acpx-local/server";
+} from "@jasminiaai/adapter-acpx-local/server";
 
 describe("acpx local skill sync", () => {
-  const paperclipKey = "paperclipai/paperclip/paperclip";
-  const createAgentKey = "paperclipai/paperclip/paperclip-create-agent";
+  const jasminiaKey = "jasminiaai/jasminia/jasminia";
+  const createAgentKey = "jasminiaai/jasminia/jasminia-create-agent";
 
   it("reports ACPX Claude skills as supported runtime-mounted state", async () => {
     const snapshot = await listAcpxSkills({
@@ -15,8 +15,8 @@ describe("acpx local skill sync", () => {
       adapterType: "acpx_local",
       config: {
         agent: "claude",
-        paperclipSkillSync: {
-          desiredSkills: [paperclipKey],
+        jasminiaSkillSync: {
+          desiredSkills: [jasminiaKey],
         },
       },
     });
@@ -24,10 +24,10 @@ describe("acpx local skill sync", () => {
     expect(snapshot.adapterType).toBe("acpx_local");
     expect(snapshot.supported).toBe(true);
     expect(snapshot.mode).toBe("ephemeral");
-    expect(snapshot.desiredSkills).toContain(paperclipKey);
+    expect(snapshot.desiredSkills).toContain(jasminiaKey);
     expect(snapshot.desiredSkills).toContain(createAgentKey);
-    expect(snapshot.entries.find((entry) => entry.key === paperclipKey)?.state).toBe("configured");
-    expect(snapshot.entries.find((entry) => entry.key === paperclipKey)?.detail).toContain("ACPX Claude session");
+    expect(snapshot.entries.find((entry) => entry.key === jasminiaKey)?.state).toBe("configured");
+    expect(snapshot.entries.find((entry) => entry.key === jasminiaKey)?.detail).toContain("ACPX Claude session");
     expect(snapshot.warnings).toEqual([]);
   });
 
@@ -38,18 +38,18 @@ describe("acpx local skill sync", () => {
       adapterType: "acpx_local",
       config: {
         agent: "codex",
-        paperclipSkillSync: {
-          desiredSkills: ["paperclip"],
+        jasminiaSkillSync: {
+          desiredSkills: ["jasminia"],
         },
       },
-    }, ["paperclip"]);
+    }, ["jasminia"]);
 
     expect(snapshot.supported).toBe(true);
     expect(snapshot.mode).toBe("ephemeral");
-    expect(snapshot.desiredSkills).toContain(paperclipKey);
-    expect(snapshot.desiredSkills).not.toContain("paperclip");
-    expect(snapshot.entries.find((entry) => entry.key === paperclipKey)?.state).toBe("configured");
-    expect(snapshot.entries.find((entry) => entry.key === paperclipKey)?.detail).toContain("CODEX_HOME/skills/");
+    expect(snapshot.desiredSkills).toContain(jasminiaKey);
+    expect(snapshot.desiredSkills).not.toContain("jasminia");
+    expect(snapshot.entries.find((entry) => entry.key === jasminiaKey)?.state).toBe("configured");
+    expect(snapshot.entries.find((entry) => entry.key === jasminiaKey)?.detail).toContain("CODEX_HOME/skills/");
     expect(snapshot.warnings).toEqual([]);
   });
 
@@ -60,19 +60,19 @@ describe("acpx local skill sync", () => {
       adapterType: "acpx_local",
       config: {
         agent: "custom",
-        paperclipSkillSync: {
-          desiredSkills: [paperclipKey],
+        jasminiaSkillSync: {
+          desiredSkills: [jasminiaKey],
         },
       },
     });
 
     expect(snapshot.supported).toBe(false);
     expect(snapshot.mode).toBe("unsupported");
-    expect(snapshot.desiredSkills).toContain(paperclipKey);
-    expect(snapshot.entries.find((entry) => entry.key === paperclipKey)?.desired).toBe(true);
-    expect(snapshot.entries.find((entry) => entry.key === paperclipKey)?.detail).toContain("stored in Paperclip only");
+    expect(snapshot.desiredSkills).toContain(jasminiaKey);
+    expect(snapshot.entries.find((entry) => entry.key === jasminiaKey)?.desired).toBe(true);
+    expect(snapshot.entries.find((entry) => entry.key === jasminiaKey)?.detail).toContain("stored in Jasmin.ia only");
     expect(snapshot.warnings).toContain(
-      "Custom ACP commands do not expose a Paperclip skill integration contract yet; selected skills are tracked only.",
+      "Custom ACP commands do not expose a Jasmin.ia skill integration contract yet; selected skills are tracked only.",
     );
   });
 });

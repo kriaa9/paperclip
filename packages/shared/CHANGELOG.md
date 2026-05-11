@@ -1,4 +1,4 @@
-# @paperclipai/shared
+# @jasminiaai/shared
 
 ## 0.3.1
 

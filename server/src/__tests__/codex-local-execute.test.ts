@@ -2,24 +2,24 @@ import { describe, expect, it, vi } from "vitest";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { runChildProcess } from "@paperclipai/adapter-utils/server-utils";
-import { execute } from "@paperclipai/adapter-codex-local/server";
+import { runChildProcess } from "@jasminiaai/adapter-utils/server-utils";
+import { execute } from "@jasminiaai/adapter-codex-local/server";
 
 async function writeFakeCodexCommand(commandPath: string): Promise<void> {
   const script = `#!/usr/bin/env node
 const fs = require("node:fs");
 
-const capturePath = process.env.PAPERCLIP_TEST_CAPTURE_PATH;
+const capturePath = process.env.JASMINIA_TEST_CAPTURE_PATH;
 const payload = {
   argv: process.argv.slice(2),
   prompt: fs.readFileSync(0, "utf8"),
   codexHome: process.env.CODEX_HOME || null,
-  paperclipWakePayloadJson: process.env.PAPERCLIP_WAKE_PAYLOAD_JSON || null,
-  paperclipApiUrl: process.env.PAPERCLIP_API_URL || null,
-  paperclipApiKey: process.env.PAPERCLIP_API_KEY || null,
-  paperclipApiBridgeMode: process.env.PAPERCLIP_API_BRIDGE_MODE || null,
-  paperclipEnvKeys: Object.keys(process.env)
-    .filter((key) => key.startsWith("PAPERCLIP_"))
+  jasminiaWakePayloadJson: process.env.JASMINIA_WAKE_PAYLOAD_JSON || null,
+  jasminiaApiUrl: process.env.JASMINIA_API_URL || null,
+  jasminiaApiKey: process.env.JASMINIA_API_KEY || null,
+  jasminiaApiBridgeMode: process.env.JASMINIA_API_BRIDGE_MODE || null,
+  jasminiaEnvKeys: Object.keys(process.env)
+    .filter((key) => key.startsWith("JASMINIA_"))
     .sort(),
 };
 if (capturePath) {
@@ -46,11 +46,11 @@ type CapturePayload = {
   argv: string[];
   prompt: string;
   codexHome: string | null;
-  paperclipWakePayloadJson: string | null;
-  paperclipApiUrl?: string | null;
-  paperclipApiKey?: string | null;
-  paperclipApiBridgeMode?: string | null;
-  paperclipEnvKeys: string[];
+  jasminiaWakePayloadJson: string | null;
+  jasminiaApiUrl?: string | null;
+  jasminiaApiKey?: string | null;
+  jasminiaApiBridgeMode?: string | null;
+  jasminiaEnvKeys: string[];
 };
 
 type LogEntry = {
@@ -93,15 +93,15 @@ function createLocalSandboxRunner() {
 }
 
 describe("codex execute", () => {
-  it("uses a Paperclip-managed CODEX_HOME outside worktree mode while preserving shared auth and config", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-default-"));
+  it("uses a Jasmin.ia-managed CODEX_HOME outside worktree mode while preserving shared auth and config", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-default-"));
     const workspace = path.join(root, "workspace");
     const commandPath = path.join(root, "codex");
     const capturePath = path.join(root, "capture.json");
     const sharedCodexHome = path.join(root, "shared-codex-home");
-    const paperclipHome = path.join(root, "paperclip-home");
+    const jasminiaHome = path.join(root, "jasminia-home");
     const managedCodexHome = path.join(
-      paperclipHome,
+      jasminiaHome,
       "instances",
       "default",
       "companies",
@@ -115,14 +115,14 @@ describe("codex execute", () => {
     await writeFakeCodexCommand(commandPath);
 
     const previousHome = process.env.HOME;
-    const previousPaperclipHome = process.env.PAPERCLIP_HOME;
-    const previousPaperclipInstanceId = process.env.PAPERCLIP_INSTANCE_ID;
-    const previousPaperclipInWorktree = process.env.PAPERCLIP_IN_WORKTREE;
+    const previousJasmin.iaHome = process.env.JASMINIA_HOME;
+    const previousJasmin.iaInstanceId = process.env.JASMINIA_INSTANCE_ID;
+    const previousJasmin.iaInWorktree = process.env.JASMINIA_IN_WORKTREE;
     const previousCodexHome = process.env.CODEX_HOME;
     process.env.HOME = root;
-    process.env.PAPERCLIP_HOME = paperclipHome;
-    delete process.env.PAPERCLIP_INSTANCE_ID;
-    delete process.env.PAPERCLIP_IN_WORKTREE;
+    process.env.JASMINIA_HOME = jasminiaHome;
+    delete process.env.JASMINIA_INSTANCE_ID;
+    delete process.env.JASMINIA_IN_WORKTREE;
     process.env.CODEX_HOME = sharedCodexHome;
 
     try {
@@ -146,9 +146,9 @@ describe("codex execute", () => {
           command: commandPath,
           cwd: workspace,
           env: {
-            PAPERCLIP_TEST_CAPTURE_PATH: capturePath,
+            JASMINIA_TEST_CAPTURE_PATH: capturePath,
           },
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {},
         authToken: "run-jwt-token",
@@ -173,18 +173,18 @@ describe("codex execute", () => {
       expect(logs).toContainEqual(
         expect.objectContaining({
           stream: "stdout",
-          chunk: expect.stringContaining("Using Paperclip-managed Codex home"),
+          chunk: expect.stringContaining("Using Jasmin.ia-managed Codex home"),
         }),
       );
     } finally {
       if (previousHome === undefined) delete process.env.HOME;
       else process.env.HOME = previousHome;
-      if (previousPaperclipHome === undefined) delete process.env.PAPERCLIP_HOME;
-      else process.env.PAPERCLIP_HOME = previousPaperclipHome;
-      if (previousPaperclipInstanceId === undefined) delete process.env.PAPERCLIP_INSTANCE_ID;
-      else process.env.PAPERCLIP_INSTANCE_ID = previousPaperclipInstanceId;
-      if (previousPaperclipInWorktree === undefined) delete process.env.PAPERCLIP_IN_WORKTREE;
-      else process.env.PAPERCLIP_IN_WORKTREE = previousPaperclipInWorktree;
+      if (previousJasmin.iaHome === undefined) delete process.env.JASMINIA_HOME;
+      else process.env.JASMINIA_HOME = previousJasmin.iaHome;
+      if (previousJasmin.iaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
+      else process.env.JASMINIA_INSTANCE_ID = previousJasmin.iaInstanceId;
+      if (previousJasmin.iaInWorktree === undefined) delete process.env.JASMINIA_IN_WORKTREE;
+      else process.env.JASMINIA_IN_WORKTREE = previousJasmin.iaInWorktree;
       if (previousCodexHome === undefined) delete process.env.CODEX_HOME;
       else process.env.CODEX_HOME = previousCodexHome;
       await fs.rm(root, { recursive: true, force: true });
@@ -192,7 +192,7 @@ describe("codex execute", () => {
   });
 
   it("emits a command note that Codex auto-applies repo-scoped AGENTS.md files", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-notes-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-notes-"));
     const workspace = path.join(root, "workspace");
     const commandPath = path.join(root, "codex");
     const capturePath = path.join(root, "capture.json");
@@ -223,9 +223,9 @@ describe("codex execute", () => {
           command: commandPath,
           cwd: workspace,
           env: {
-            PAPERCLIP_TEST_CAPTURE_PATH: capturePath,
+            JASMINIA_TEST_CAPTURE_PATH: capturePath,
           },
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {},
         authToken: "run-jwt-token",
@@ -238,7 +238,7 @@ describe("codex execute", () => {
       expect(result.exitCode).toBe(0);
       expect(result.errorMessage).toBeNull();
       expect(commandNotes).toContain(
-        "Codex exec automatically applies repo-scoped AGENTS.md instructions from the current workspace; Paperclip does not currently suppress that discovery.",
+        "Codex exec automatically applies repo-scoped AGENTS.md instructions from the current workspace; Jasmin.ia does not currently suppress that discovery.",
       );
     } finally {
       if (previousHome === undefined) delete process.env.HOME;
@@ -248,7 +248,7 @@ describe("codex execute", () => {
   });
 
   it("logs HOME and the resolved executable path in invocation metadata", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-meta-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-meta-"));
     const workspace = path.join(root, "workspace");
     const binDir = path.join(root, "bin");
     const commandPath = path.join(binDir, "codex");
@@ -284,9 +284,9 @@ describe("codex execute", () => {
           command: "codex",
           cwd: workspace,
           env: {
-            PAPERCLIP_TEST_CAPTURE_PATH: capturePath,
+            JASMINIA_TEST_CAPTURE_PATH: capturePath,
           },
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {},
         authToken: "run-jwt-token",
@@ -301,7 +301,7 @@ describe("codex execute", () => {
       expect(result.errorMessage).toBeNull();
       expect(loggedCommand).toBe(commandPath);
       expect(loggedEnv.HOME).toBe(root);
-      expect(loggedEnv.PAPERCLIP_RESOLVED_COMMAND).toBe(commandPath);
+      expect(loggedEnv.JASMINIA_RESOLVED_COMMAND).toBe(commandPath);
     } finally {
       if (previousHome === undefined) delete process.env.HOME;
       else process.env.HOME = previousHome;
@@ -312,7 +312,7 @@ describe("codex execute", () => {
   });
 
   it("injects bridge env into sandbox-managed remote runs", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-sandbox-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-sandbox-"));
     const localWorkspace = path.join(root, "workspace");
     const remoteWorkspace = path.join(root, "sandbox");
     const binDir = path.join(root, "bin");
@@ -349,9 +349,9 @@ describe("codex execute", () => {
           command: commandPath,
           cwd: localWorkspace,
           env: {
-            PAPERCLIP_TEST_CAPTURE_PATH: capturePath,
+            JASMINIA_TEST_CAPTURE_PATH: capturePath,
           },
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {},
         executionTarget: {
@@ -372,10 +372,10 @@ describe("codex execute", () => {
       expect(result.errorMessage).toBeNull();
 
       const capture = JSON.parse(await fs.readFile(capturePath, "utf8")) as CapturePayload;
-      expect(capture.codexHome).toBe(path.join(remoteWorkspace, ".paperclip-runtime", "codex", "home"));
-      expect(capture.paperclipApiUrl).toMatch(/^http:\/\/127\.0\.0\.1:\d+$/);
-      expect(capture.paperclipApiKey).not.toBe("run-jwt-token");
-      expect(capture.paperclipApiBridgeMode).toBe("queue_v1");
+      expect(capture.codexHome).toBe(path.join(remoteWorkspace, ".jasminia-runtime", "codex", "home"));
+      expect(capture.jasminiaApiUrl).toMatch(/^http:\/\/127\.0\.0\.1:\d+$/);
+      expect(capture.jasminiaApiKey).not.toBe("run-jwt-token");
+      expect(capture.jasminiaApiBridgeMode).toBe("queue_v1");
     } finally {
       if (previousHome === undefined) delete process.env.HOME;
       else process.env.HOME = previousHome;
@@ -385,8 +385,8 @@ describe("codex execute", () => {
     }
   });
 
-  it("injects structured Paperclip wake payloads into env and prompt", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-wake-"));
+  it("injects structured Jasmin.ia wake payloads into env and prompt", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-wake-"));
     const workspace = path.join(root, "workspace");
     const commandPath = path.join(root, "codex");
     const capturePath = path.join(root, "capture.json");
@@ -416,16 +416,16 @@ describe("codex execute", () => {
           command: commandPath,
           cwd: workspace,
           env: {
-            PAPERCLIP_TEST_CAPTURE_PATH: capturePath,
+            JASMINIA_TEST_CAPTURE_PATH: capturePath,
           },
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {
           issueId: "issue-1",
           taskId: "issue-1",
           wakeReason: "issue_commented",
           wakeCommentId: "comment-2",
-          paperclipWake: {
+          jasminiaWake: {
             reason: "issue_commented",
             issue: {
               id: "issue-1",
@@ -471,14 +471,14 @@ describe("codex execute", () => {
       expect(result.errorMessage).toBeNull();
 
       const capture = JSON.parse(await fs.readFile(capturePath, "utf8")) as CapturePayload;
-      expect(capture.paperclipEnvKeys).toContain("PAPERCLIP_WAKE_PAYLOAD_JSON");
-      expect(capture.paperclipWakePayloadJson).not.toBeNull();
-      expect(JSON.parse(capture.paperclipWakePayloadJson ?? "{}")).toMatchObject({
+      expect(capture.jasminiaEnvKeys).toContain("JASMINIA_WAKE_PAYLOAD_JSON");
+      expect(capture.jasminiaWakePayloadJson).not.toBeNull();
+      expect(JSON.parse(capture.jasminiaWakePayloadJson ?? "{}")).toMatchObject({
         reason: "issue_commented",
         latestCommentId: "comment-2",
         commentIds: ["comment-1", "comment-2"],
       });
-      expect(capture.prompt).toContain("## Paperclip Wake Payload");
+      expect(capture.prompt).toContain("## Jasmin.ia Wake Payload");
       expect(capture.prompt).toContain("Treat this wake payload as the highest-priority change for the current heartbeat.");
       expect(capture.prompt).toContain("Do not switch to another issue until you have handled this wake.");
       expect(capture.prompt).toContain(
@@ -494,7 +494,7 @@ describe("codex execute", () => {
   });
 
   it("classifies remote-compaction high-demand failures as retryable transient upstream errors", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-transient-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-transient-"));
     const workspace = path.join(root, "workspace");
     const commandPath = path.join(root, "codex");
     await fs.mkdir(workspace, { recursive: true });
@@ -525,7 +525,7 @@ describe("codex execute", () => {
         config: {
           command: commandPath,
           cwd: workspace,
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {},
         authToken: "run-jwt-token",
@@ -544,7 +544,7 @@ describe("codex execute", () => {
   });
 
   it("persists retry-not-before metadata for codex usage-limit failures", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-usage-limit-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-usage-limit-"));
     const workspace = path.join(root, "workspace");
     const commandPath = path.join(root, "codex");
     await fs.mkdir(workspace, { recursive: true });
@@ -581,7 +581,7 @@ describe("codex execute", () => {
           command: commandPath,
           cwd: workspace,
           model: "gpt-5.3-codex-spark",
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {},
         authToken: "run-jwt-token",
@@ -606,7 +606,7 @@ describe("codex execute", () => {
   });
 
   it("uses safer invocation settings and a fresh-session handoff for codex transient fallback retries", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-fallback-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-fallback-"));
     const workspace = path.join(root, "workspace");
     const commandPath = path.join(root, "codex");
     const capturePath = path.join(root, "capture.json");
@@ -642,13 +642,13 @@ describe("codex execute", () => {
           fastMode: true,
           model: "gpt-5.4",
           env: {
-            PAPERCLIP_TEST_CAPTURE_PATH: capturePath,
+            JASMINIA_TEST_CAPTURE_PATH: capturePath,
           },
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {
           codexTransientFallbackMode: "fresh_session_safer_invocation",
-          paperclipContinuationSummary: {
+          jasminiaContinuationSummary: {
             key: "continuation-summary",
             title: "Continuation Summary",
             body: "Issue continuation summary for the next fresh session.",
@@ -670,7 +670,7 @@ describe("codex execute", () => {
       expect(capture.argv).not.toContain("resume");
       expect(capture.argv).not.toContain('service_tier="fast"');
       expect(capture.argv).not.toContain("features.fast_mode=true");
-      expect(capture.prompt).toContain("Paperclip session handoff:");
+      expect(capture.prompt).toContain("Jasmin.ia session handoff:");
       expect(capture.prompt).toContain("Issue continuation summary for the next fresh session.");
       expect(commandNotes).toContain("Codex transient fallback requested safer invocation settings for this retry.");
       expect(commandNotes).toContain("Codex transient fallback forced a fresh session with a continuation handoff.");
@@ -682,7 +682,7 @@ describe("codex execute", () => {
   });
 
   it("renders execution-stage wake instructions for reviewer and executor roles", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-stage-wake-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-stage-wake-"));
     const workspace = path.join(root, "workspace");
     const commandPath = path.join(root, "codex");
     const capturePath = path.join(root, "capture.json");
@@ -712,15 +712,15 @@ describe("codex execute", () => {
           command: commandPath,
           cwd: workspace,
           env: {
-            PAPERCLIP_TEST_CAPTURE_PATH: capturePath,
+            JASMINIA_TEST_CAPTURE_PATH: capturePath,
           },
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {
           issueId: "issue-1",
           taskId: "issue-1",
           wakeReason: "execution_review_requested",
-          paperclipWake: {
+          jasminiaWake: {
             reason: "execution_review_requested",
             issue: {
               id: "issue-1",
@@ -781,15 +781,15 @@ describe("codex execute", () => {
           command: commandPath,
           cwd: workspace,
           env: {
-            PAPERCLIP_TEST_CAPTURE_PATH: executorCapturePath,
+            JASMINIA_TEST_CAPTURE_PATH: executorCapturePath,
           },
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {
           issueId: "issue-1",
           taskId: "issue-1",
           wakeReason: "execution_changes_requested",
-          paperclipWake: {
+          jasminiaWake: {
             reason: "execution_changes_requested",
             issue: {
               id: "issue-1",
@@ -836,7 +836,7 @@ describe("codex execute", () => {
   });
 
   it("renders an issue-scoped wake prompt even when the wake has no comments yet", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-issue-wake-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-issue-wake-"));
     const workspace = path.join(root, "workspace");
     const commandPath = path.join(root, "codex");
     const capturePath = path.join(root, "capture.json");
@@ -866,15 +866,15 @@ describe("codex execute", () => {
           command: commandPath,
           cwd: workspace,
           env: {
-            PAPERCLIP_TEST_CAPTURE_PATH: capturePath,
+            JASMINIA_TEST_CAPTURE_PATH: capturePath,
           },
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {
           issueId: "issue-1",
           taskId: "issue-1",
           wakeReason: "issue_assigned",
-          paperclipWake: {
+          jasminiaWake: {
             reason: "issue_assigned",
             issue: {
               id: "issue-1",
@@ -904,9 +904,9 @@ describe("codex execute", () => {
       expect(result.errorMessage).toBeNull();
 
       const capture = JSON.parse(await fs.readFile(capturePath, "utf8")) as CapturePayload;
-      expect(capture.paperclipEnvKeys).toContain("PAPERCLIP_WAKE_PAYLOAD_JSON");
-      expect(capture.paperclipWakePayloadJson).not.toBeNull();
-      expect(JSON.parse(capture.paperclipWakePayloadJson ?? "{}")).toMatchObject({
+      expect(capture.jasminiaEnvKeys).toContain("JASMINIA_WAKE_PAYLOAD_JSON");
+      expect(capture.jasminiaWakePayloadJson).not.toBeNull();
+      expect(JSON.parse(capture.jasminiaWakePayloadJson ?? "{}")).toMatchObject({
         reason: "issue_assigned",
         issue: {
           identifier: "PAP-1201",
@@ -917,7 +917,7 @@ describe("codex execute", () => {
         checkedOutByHarness: true,
         commentIds: [],
       });
-      expect(capture.prompt).toContain("## Paperclip Wake Payload");
+      expect(capture.prompt).toContain("## Jasmin.ia Wake Payload");
       expect(capture.prompt).toContain("Do not switch to another issue until you have handled this wake.");
       expect(capture.prompt).toContain("- issue: PAP-1201 Fix gallery opening for inline images");
       expect(capture.prompt).toContain("- pending comments: 0/0");
@@ -932,7 +932,7 @@ describe("codex execute", () => {
   });
 
   it("uses a compact wake delta instead of the full heartbeat prompt when resuming a session", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-resume-wake-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-resume-wake-"));
     const workspace = path.join(root, "workspace");
     const commandPath = path.join(root, "codex");
     const capturePath = path.join(root, "capture.json");
@@ -971,16 +971,16 @@ describe("codex execute", () => {
           cwd: workspace,
           instructionsFilePath: instructionsPath,
           env: {
-            PAPERCLIP_TEST_CAPTURE_PATH: capturePath,
+            JASMINIA_TEST_CAPTURE_PATH: capturePath,
           },
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {
           issueId: "issue-1",
           taskId: "issue-1",
           wakeReason: "issue_commented",
           wakeCommentId: "comment-2",
-          paperclipWake: {
+          jasminiaWake: {
             reason: "issue_commented",
             issue: {
               id: "issue-1",
@@ -1024,12 +1024,12 @@ describe("codex execute", () => {
 
       const capture = JSON.parse(await fs.readFile(capturePath, "utf8")) as CapturePayload;
       expect(capture.argv).toEqual(expect.arrayContaining(["resume", "codex-session-1", "-"]));
-      expect(capture.prompt).toContain("## Paperclip Resume Delta");
+      expect(capture.prompt).toContain("## Jasmin.ia Resume Delta");
       expect(capture.prompt).toContain("Do not switch to another issue until you have handled this wake.");
       expect(capture.prompt).toContain("Second comment");
-      expect(capture.prompt).not.toContain("Follow the paperclip heartbeat.");
+      expect(capture.prompt).not.toContain("Follow the jasminia heartbeat.");
       expect(capture.prompt).not.toContain("You are managed instructions.");
-      expect(invocationPrompt).toContain("## Paperclip Resume Delta");
+      expect(invocationPrompt).toContain("## Jasmin.ia Resume Delta");
       expect(invocationNotes).toContain(
         "Skipped stdin instruction reinjection because an existing Codex session is being resumed with a wake delta.",
       );
@@ -1042,21 +1042,21 @@ describe("codex execute", () => {
     }
   });
   it("uses a worktree-isolated CODEX_HOME while preserving shared auth and config", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-"));
     const workspace = path.join(root, "workspace");
     const commandPath = path.join(root, "codex");
     const capturePath = path.join(root, "capture.json");
     const sharedCodexHome = path.join(root, "shared-codex-home");
-    const paperclipHome = path.join(root, "paperclip-home");
+    const jasminiaHome = path.join(root, "jasminia-home");
     const isolatedCodexHome = path.join(
-      paperclipHome,
+      jasminiaHome,
       "instances",
       "worktree-1",
       "companies",
       "company-1",
       "codex-home",
     );
-    const homeSkill = path.join(isolatedCodexHome, "skills", "paperclip");
+    const homeSkill = path.join(isolatedCodexHome, "skills", "jasminia");
     await fs.mkdir(workspace, { recursive: true });
     await fs.mkdir(sharedCodexHome, { recursive: true });
     await fs.writeFile(path.join(sharedCodexHome, "auth.json"), '{"token":"shared"}\n', "utf8");
@@ -1064,14 +1064,14 @@ describe("codex execute", () => {
     await writeFakeCodexCommand(commandPath);
 
     const previousHome = process.env.HOME;
-    const previousPaperclipHome = process.env.PAPERCLIP_HOME;
-    const previousPaperclipInstanceId = process.env.PAPERCLIP_INSTANCE_ID;
-    const previousPaperclipInWorktree = process.env.PAPERCLIP_IN_WORKTREE;
+    const previousJasmin.iaHome = process.env.JASMINIA_HOME;
+    const previousJasmin.iaInstanceId = process.env.JASMINIA_INSTANCE_ID;
+    const previousJasmin.iaInWorktree = process.env.JASMINIA_IN_WORKTREE;
     const previousCodexHome = process.env.CODEX_HOME;
     process.env.HOME = root;
-    process.env.PAPERCLIP_HOME = paperclipHome;
-    process.env.PAPERCLIP_INSTANCE_ID = "worktree-1";
-    process.env.PAPERCLIP_IN_WORKTREE = "true";
+    process.env.JASMINIA_HOME = jasminiaHome;
+    process.env.JASMINIA_INSTANCE_ID = "worktree-1";
+    process.env.JASMINIA_IN_WORKTREE = "true";
     process.env.CODEX_HOME = sharedCodexHome;
 
     try {
@@ -1095,9 +1095,9 @@ describe("codex execute", () => {
           command: commandPath,
           cwd: workspace,
           env: {
-            PAPERCLIP_TEST_CAPTURE_PATH: capturePath,
+            JASMINIA_TEST_CAPTURE_PATH: capturePath,
           },
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {},
         authToken: "run-jwt-token",
@@ -1112,14 +1112,14 @@ describe("codex execute", () => {
       const capture = JSON.parse(await fs.readFile(capturePath, "utf8")) as CapturePayload;
       expect(capture.codexHome).toBe(isolatedCodexHome);
       expect(capture.argv).toEqual(expect.arrayContaining(["exec", "--json", "-"]));
-      expect(capture.prompt).toContain("Follow the paperclip heartbeat.");
-      expect(capture.paperclipEnvKeys).toEqual(
+      expect(capture.prompt).toContain("Follow the jasminia heartbeat.");
+      expect(capture.jasminiaEnvKeys).toEqual(
         expect.arrayContaining([
-          "PAPERCLIP_AGENT_ID",
-          "PAPERCLIP_API_KEY",
-          "PAPERCLIP_API_URL",
-          "PAPERCLIP_COMPANY_ID",
-          "PAPERCLIP_RUN_ID",
+          "JASMINIA_AGENT_ID",
+          "JASMINIA_API_KEY",
+          "JASMINIA_API_URL",
+          "JASMINIA_COMPANY_ID",
+          "JASMINIA_RUN_ID",
         ]),
       );
 
@@ -1140,18 +1140,18 @@ describe("codex execute", () => {
       expect(logs).toContainEqual(
         expect.objectContaining({
           stream: "stdout",
-          chunk: expect.stringContaining('Injected Codex skill "paperclip"'),
+          chunk: expect.stringContaining('Injected Codex skill "jasminia"'),
         }),
       );
     } finally {
       if (previousHome === undefined) delete process.env.HOME;
       else process.env.HOME = previousHome;
-      if (previousPaperclipHome === undefined) delete process.env.PAPERCLIP_HOME;
-      else process.env.PAPERCLIP_HOME = previousPaperclipHome;
-      if (previousPaperclipInstanceId === undefined) delete process.env.PAPERCLIP_INSTANCE_ID;
-      else process.env.PAPERCLIP_INSTANCE_ID = previousPaperclipInstanceId;
-      if (previousPaperclipInWorktree === undefined) delete process.env.PAPERCLIP_IN_WORKTREE;
-      else process.env.PAPERCLIP_IN_WORKTREE = previousPaperclipInWorktree;
+      if (previousJasmin.iaHome === undefined) delete process.env.JASMINIA_HOME;
+      else process.env.JASMINIA_HOME = previousJasmin.iaHome;
+      if (previousJasmin.iaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
+      else process.env.JASMINIA_INSTANCE_ID = previousJasmin.iaInstanceId;
+      if (previousJasmin.iaInWorktree === undefined) delete process.env.JASMINIA_IN_WORKTREE;
+      else process.env.JASMINIA_IN_WORKTREE = previousJasmin.iaInWorktree;
       if (previousCodexHome === undefined) delete process.env.CODEX_HOME;
       else process.env.CODEX_HOME = previousCodexHome;
       await fs.rm(root, { recursive: true, force: true });
@@ -1159,27 +1159,27 @@ describe("codex execute", () => {
   });
 
   it("respects an explicit CODEX_HOME config override even in worktree mode", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-explicit-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-codex-execute-explicit-"));
     const workspace = path.join(root, "workspace");
     const commandPath = path.join(root, "codex");
     const capturePath = path.join(root, "capture.json");
     const sharedCodexHome = path.join(root, "shared-codex-home");
     const explicitCodexHome = path.join(root, "explicit-codex-home");
-    const paperclipHome = path.join(root, "paperclip-home");
+    const jasminiaHome = path.join(root, "jasminia-home");
     await fs.mkdir(workspace, { recursive: true });
     await fs.mkdir(sharedCodexHome, { recursive: true });
     await fs.writeFile(path.join(sharedCodexHome, "auth.json"), '{"token":"shared"}\n', "utf8");
     await writeFakeCodexCommand(commandPath);
 
     const previousHome = process.env.HOME;
-    const previousPaperclipHome = process.env.PAPERCLIP_HOME;
-    const previousPaperclipInstanceId = process.env.PAPERCLIP_INSTANCE_ID;
-    const previousPaperclipInWorktree = process.env.PAPERCLIP_IN_WORKTREE;
+    const previousJasmin.iaHome = process.env.JASMINIA_HOME;
+    const previousJasmin.iaInstanceId = process.env.JASMINIA_INSTANCE_ID;
+    const previousJasmin.iaInWorktree = process.env.JASMINIA_IN_WORKTREE;
     const previousCodexHome = process.env.CODEX_HOME;
     process.env.HOME = root;
-    process.env.PAPERCLIP_HOME = paperclipHome;
-    process.env.PAPERCLIP_INSTANCE_ID = "worktree-1";
-    process.env.PAPERCLIP_IN_WORKTREE = "true";
+    process.env.JASMINIA_HOME = jasminiaHome;
+    process.env.JASMINIA_INSTANCE_ID = "worktree-1";
+    process.env.JASMINIA_IN_WORKTREE = "true";
     process.env.CODEX_HOME = sharedCodexHome;
 
     try {
@@ -1202,10 +1202,10 @@ describe("codex execute", () => {
           command: commandPath,
           cwd: workspace,
           env: {
-            PAPERCLIP_TEST_CAPTURE_PATH: capturePath,
+            JASMINIA_TEST_CAPTURE_PATH: capturePath,
             CODEX_HOME: explicitCodexHome,
           },
-          promptTemplate: "Follow the paperclip heartbeat.",
+          promptTemplate: "Follow the jasminia heartbeat.",
         },
         context: {},
         authToken: "run-jwt-token",
@@ -1217,17 +1217,17 @@ describe("codex execute", () => {
 
       const capture = JSON.parse(await fs.readFile(capturePath, "utf8")) as CapturePayload;
       expect(capture.codexHome).toBe(explicitCodexHome);
-      expect((await fs.lstat(path.join(explicitCodexHome, "skills", "paperclip"))).isSymbolicLink()).toBe(true);
-      await expect(fs.lstat(path.join(paperclipHome, "instances", "worktree-1", "codex-home"))).rejects.toThrow();
+      expect((await fs.lstat(path.join(explicitCodexHome, "skills", "jasminia"))).isSymbolicLink()).toBe(true);
+      await expect(fs.lstat(path.join(jasminiaHome, "instances", "worktree-1", "codex-home"))).rejects.toThrow();
     } finally {
       if (previousHome === undefined) delete process.env.HOME;
       else process.env.HOME = previousHome;
-      if (previousPaperclipHome === undefined) delete process.env.PAPERCLIP_HOME;
-      else process.env.PAPERCLIP_HOME = previousPaperclipHome;
-      if (previousPaperclipInstanceId === undefined) delete process.env.PAPERCLIP_INSTANCE_ID;
-      else process.env.PAPERCLIP_INSTANCE_ID = previousPaperclipInstanceId;
-      if (previousPaperclipInWorktree === undefined) delete process.env.PAPERCLIP_IN_WORKTREE;
-      else process.env.PAPERCLIP_IN_WORKTREE = previousPaperclipInWorktree;
+      if (previousJasmin.iaHome === undefined) delete process.env.JASMINIA_HOME;
+      else process.env.JASMINIA_HOME = previousJasmin.iaHome;
+      if (previousJasmin.iaInstanceId === undefined) delete process.env.JASMINIA_INSTANCE_ID;
+      else process.env.JASMINIA_INSTANCE_ID = previousJasmin.iaInstanceId;
+      if (previousJasmin.iaInWorktree === undefined) delete process.env.JASMINIA_IN_WORKTREE;
+      else process.env.JASMINIA_IN_WORKTREE = previousJasmin.iaInWorktree;
       if (previousCodexHome === undefined) delete process.env.CODEX_HOME;
       else process.env.CODEX_HOME = previousCodexHome;
       await fs.rm(root, { recursive: true, force: true });

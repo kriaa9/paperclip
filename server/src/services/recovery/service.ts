@@ -1,12 +1,12 @@
 import { and, asc, desc, eq, gt, inArray, isNull, notInArray, sql } from "drizzle-orm";
-import type { Db } from "@paperclipai/db";
+import type { Db } from "@jasminiaai/db";
 import {
   DEFAULT_ISSUE_GRAPH_LIVENESS_AUTO_RECOVERY_LOOKBACK_HOURS,
   MAX_ISSUE_GRAPH_LIVENESS_AUTO_RECOVERY_LOOKBACK_HOURS,
   MIN_ISSUE_GRAPH_LIVENESS_AUTO_RECOVERY_LOOKBACK_HOURS,
   type IssueGraphLivenessAutoRecoveryPreview,
   type IssueGraphLivenessAutoRecoveryPreviewItem,
-} from "@paperclipai/shared";
+} from "@jasminiaai/shared";
 import {
   agents,
   agentWakeupRequests,
@@ -19,7 +19,7 @@ import {
   issueRelations,
   issueThreadInteractions,
   issues,
-} from "@paperclipai/db";
+} from "@jasminiaai/db";
 import { parseObject, asBoolean, asNumber } from "../../adapters/utils.js";
 import { runningProcesses } from "../../adapters/index.js";
 import { forbidden, notFound } from "../../errors.js";
@@ -63,7 +63,7 @@ export const ACTIVE_RUN_OUTPUT_CONTINUE_REARM_MS = 30 * 60 * 1000;
 const ACTIVE_RUN_OUTPUT_EVIDENCE_TAIL_BYTES = 8 * 1024;
 const STRANDED_ISSUE_RECOVERY_ORIGIN_KIND = RECOVERY_ORIGIN_KINDS.strandedIssueRecovery;
 const STALE_ACTIVE_RUN_EVALUATION_ORIGIN_KIND = RECOVERY_ORIGIN_KINDS.staleActiveRunEvaluation;
-const DEFERRED_WAKE_CONTEXT_KEY = "_paperclipWakeContext";
+const DEFERRED_WAKE_CONTEXT_KEY = "_jasminiaWakeContext";
 
 type RecoveryWakeupOptions = {
   source?: "timer" | "assignment" | "on_demand" | "automation";
@@ -345,7 +345,7 @@ function buildLivenessEscalationDescription(finding: IssueLivenessFinding) {
   const selectedOwner = finding.recommendedOwnerAgentId ?? "none";
 
   return [
-    "Paperclip detected a harness-level issue graph liveness incident.",
+    "Jasmin.ia detected a harness-level issue graph liveness incident.",
     "",
     "## Source",
     "",
@@ -371,7 +371,7 @@ function buildLivenessEscalationDescription(finding: IssueLivenessFinding) {
 
 function buildLivenessOriginalIssueComment(finding: IssueLivenessFinding, escalation: typeof issues.$inferSelect) {
   return [
-    "Paperclip detected a harness-level liveness incident in this issue's dependency graph.",
+    "Jasmin.ia detected a harness-level liveness incident in this issue's dependency graph.",
     "",
     `- Escalation issue: ${escalation.identifier ?? escalation.id}`,
     `- Incident key: \`${finding.incidentKey}\``,
@@ -603,7 +603,7 @@ export function recoveryService(db: Db, deps: { enqueueWakeup: RecoveryWakeup })
         [
           "## Assigned Orphan Blocker",
           "",
-          `Paperclip found this issue is blocking ${blockingLinks} but had no assignee, so no heartbeat could pick it up.`,
+          `Jasmin.ia found this issue is blocking ${blockingLinks} but had no assignee, so no heartbeat could pick it up.`,
           "",
           "- Assigned it back to the agent that created the blocker.",
           "- Next action: resolve this blocker or reassign it to the right owner.",
@@ -915,7 +915,7 @@ export function recoveryService(db: Db, deps: { enqueueWakeup: RecoveryWakeup })
       ).join("\n")
       : "- none detected";
     return [
-      `Paperclip detected ${input.level} output silence on an active heartbeat run.`,
+      `Jasmin.ia detected ${input.level} output silence on an active heartbeat run.`,
       "",
       "## Run",
       "",
@@ -993,7 +993,7 @@ export function recoveryService(db: Db, deps: { enqueueWakeup: RecoveryWakeup })
       blockedByIssueIds: nextBlockerIds,
     });
     await issuesSvc.addComment(input.sourceIssue.id, [
-      "Paperclip detected critical output silence on this issue's active run.",
+      "Jasmin.ia detected critical output silence on this issue's active run.",
       "",
       `- Evaluation issue: ${input.evaluationIssue.identifier ?? input.evaluationIssue.id}`,
       `- Run: \`${input.run.id}\``,
@@ -1428,7 +1428,7 @@ export function recoveryService(db: Db, deps: { enqueueWakeup: RecoveryWakeup })
         : "unknown";
       const missingDisposition = input.successfulRunHandoffEvidence?.missingDisposition ?? "clear_next_step";
       return [
-        "Paperclip exhausted the bounded corrective handoff for a successful run that still has no valid issue disposition.",
+        "Jasmin.ia exhausted the bounded corrective handoff for a successful run that still has no valid issue disposition.",
         "",
         "This is not a runtime/adapter crash report. The source run succeeded; the remaining problem is the missing `done`, `in_review`, `blocked`, delegated follow-up, or explicit continuation path.",
         "",
@@ -1456,7 +1456,7 @@ export function recoveryService(db: Db, deps: { enqueueWakeup: RecoveryWakeup })
     const failureSummary = summarizeRunFailureForIssueComment(input.latestRun);
 
     return [
-      "Paperclip exhausted automatic recovery for an assigned issue and created this explicit recovery task.",
+      "Jasmin.ia exhausted automatic recovery for an assigned issue and created this explicit recovery task.",
       "",
       "## Source",
       "",
@@ -1579,7 +1579,7 @@ export function recoveryService(db: Db, deps: { enqueueWakeup: RecoveryWakeup })
     const failureSummary = summarizeRunFailureForIssueComment(input.latestRun);
 
     return [
-      "Paperclip stopped automatic stranded-work recovery for this recovery issue.",
+      "Jasmin.ia stopped automatic stranded-work recovery for this recovery issue.",
       "",
       `- Recovery issue: ${issueUiLink({ identifier: input.issue.identifier, id: input.issue.id }, input.prefix)}`,
       `- Previous status: \`${input.previousStatus}\``,
@@ -1735,7 +1735,7 @@ export function recoveryService(db: Db, deps: { enqueueWakeup: RecoveryWakeup })
     } else {
       recoveryLine = [
         "",
-        "- Recovery issue: none created because Paperclip could not find an invokable manager, creator, or executive owner with budget available.",
+        "- Recovery issue: none created because Jasmin.ia could not find an invokable manager, creator, or executive owner with budget available.",
         "- Next action: a board operator should assign an invokable recovery owner, fix the agent/runtime state, or record an intentional manual resolution.",
       ].join("\n");
     }
@@ -1879,7 +1879,7 @@ export function recoveryService(db: Db, deps: { enqueueWakeup: RecoveryWakeup })
             previousStatus: "todo",
             latestRun,
             comment:
-              "Paperclip automatically retried dispatch for this assigned `todo` issue after a lost wake/run, " +
+              "Jasmin.ia automatically retried dispatch for this assigned `todo` issue after a lost wake/run, " +
               `but it still has no live execution path.${failureSummary ?? ""} ` +
               "Moving it to `blocked` so it is visible for intervention.",
           });
@@ -1955,7 +1955,7 @@ export function recoveryService(db: Db, deps: { enqueueWakeup: RecoveryWakeup })
             previousStatus: "in_progress",
             latestRun: successfulRun,
             comment:
-              "Paperclip automatically retried continuation for this assigned `in_progress` issue and the retry " +
+              "Jasmin.ia automatically retried continuation for this assigned `in_progress` issue and the retry " +
               "made progress, but it still has no live execution path. Moving it to `blocked` so it is visible for intervention.",
           });
           if (updated) {
@@ -1995,7 +1995,7 @@ export function recoveryService(db: Db, deps: { enqueueWakeup: RecoveryWakeup })
           previousStatus: "in_progress",
           latestRun,
           comment:
-            "Paperclip automatically retried continuation for this assigned `in_progress` issue after its live " +
+            "Jasmin.ia automatically retried continuation for this assigned `in_progress` issue after its live " +
             `execution disappeared, but it still has no live execution path.${failureSummary ?? ""} ` +
             "Moving it to `blocked` so it is visible for intervention.",
         });

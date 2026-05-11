@@ -6,9 +6,9 @@ export const agentConfigurationDoc = `# cursor_cloud agent configuration
 Adapter: cursor_cloud
 
 Use when:
-- You want Paperclip to run Cursor Cloud Agents through the official Cursor SDK
-- You want durable remote Cursor agent sessions across Paperclip heartbeats
-- You want Paperclip to keep task state while Cursor handles remote code execution
+- You want Jasmin.ia to run Cursor Cloud Agents through the official Cursor SDK
+- You want durable remote Cursor agent sessions across Jasmin.ia heartbeats
+- You want Jasmin.ia to keep task state while Cursor handles remote code execution
 
 Core fields:
 - repoUrl (string, required): Git repository URL Cursor should open
@@ -27,8 +27,8 @@ Core fields:
 - env.* (optional): additional env vars injected into the cloud agent shell
 
 Notes:
-- Paperclip reuses the durable Cursor agent across heartbeats when the repo/runtime identity still matches.
-- Each Paperclip heartbeat maps to a Cursor run on that durable agent.
-- Paperclip injects PAPERCLIP_* runtime env vars into the cloud agent shell through Cursor SDK cloud envVars.
-- Paperclip remains the source of truth for issue/task state; Cursor provides the remote execution surface.
+- Jasmin.ia reuses the durable Cursor agent across heartbeats when the repo/runtime identity still matches.
+- Each Jasmin.ia heartbeat maps to a Cursor run on that durable agent.
+- Jasmin.ia injects JASMINIA_* runtime env vars into the cloud agent shell through Cursor SDK cloud envVars.
+- Jasmin.ia remains the source of truth for issue/task state; Cursor provides the remote execution surface.
 `;

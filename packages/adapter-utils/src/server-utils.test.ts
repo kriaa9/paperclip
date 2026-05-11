@@ -4,19 +4,19 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {
-  applyPaperclipWorkspaceEnv,
+  applyJasmin.iaWorkspaceEnv,
   appendWithByteCap,
   buildInvocationEnvForLogs,
-  DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE,
-  materializePaperclipSkillCopy,
-  refreshPaperclipWorkspaceEnvForExecution,
-  renderPaperclipWakePrompt,
+  DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE,
+  materializeJasmin.iaSkillCopy,
+  refreshJasmin.iaWorkspaceEnvForExecution,
+  renderJasmin.iaWakePrompt,
   runningProcesses,
   runChildProcess,
   sanitizeSshRemoteEnv,
-  shapePaperclipWorkspaceEnvForExecution,
+  shapeJasmin.iaWorkspaceEnvForExecution,
   rewriteWorkspaceCwdEnvVarsForExecution,
-  stringifyPaperclipWakePayload,
+  stringifyJasmin.iaWakePayload,
 } from "./server-utils.js";
 
 function isPidAlive(pid: number) {
@@ -58,7 +58,7 @@ describe("buildInvocationEnvForLogs", () => {
     );
 
     expect(loggedEnv.SAFE_VALUE).toBe("visible");
-    expect(loggedEnv.PAPERCLIP_RESOLVED_COMMAND).toBe(
+    expect(loggedEnv.JASMINIA_RESOLVED_COMMAND).toBe(
       "env OPENAI_API_KEY=***REDACTED*** custom-acp --token ***REDACTED***",
     );
   });
@@ -144,15 +144,15 @@ describe("sanitizeSshRemoteEnv", () => {
   });
 });
 
-describe("materializePaperclipSkillCopy", () => {
+describe("materializeJasmin.iaSkillCopy", () => {
   it("refuses to materialize into an ancestor of the source", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-skill-copy-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-skill-copy-"));
     try {
       const source = path.join(root, "parent", "skill");
       await fs.mkdir(source, { recursive: true });
       await fs.writeFile(path.join(source, "SKILL.md"), "# skill\n", "utf8");
 
-      await expect(materializePaperclipSkillCopy(source, path.join(root, "parent"))).rejects.toThrow(
+      await expect(materializeJasmin.iaSkillCopy(source, path.join(root, "parent"))).rejects.toThrow(
         /ancestor/,
       );
       await expect(fs.readFile(path.join(source, "SKILL.md"), "utf8")).resolves.toBe("# skill\n");
@@ -162,18 +162,18 @@ describe("materializePaperclipSkillCopy", () => {
   });
 
   it("does not delete and recopy an unchanged materialized skill target", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-skill-copy-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-skill-copy-"));
     try {
       const source = path.join(root, "source");
       const target = path.join(root, "target");
       await fs.mkdir(source, { recursive: true });
       await fs.writeFile(path.join(source, "SKILL.md"), "# skill\n", "utf8");
 
-      const first = await materializePaperclipSkillCopy(source, target);
+      const first = await materializeJasmin.iaSkillCopy(source, target);
       expect(first.copiedFiles).toBe(1);
       await fs.writeFile(path.join(target, "local-marker.txt"), "keep\n", "utf8");
 
-      const second = await materializePaperclipSkillCopy(source, target);
+      const second = await materializeJasmin.iaSkillCopy(source, target);
       expect(second.copiedFiles).toBe(0);
       await expect(fs.readFile(path.join(target, "local-marker.txt"), "utf8")).resolves.toBe("keep\n");
     } finally {
@@ -182,7 +182,7 @@ describe("materializePaperclipSkillCopy", () => {
   });
 
   it("breaks stale materialization locks left by dead processes", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-skill-copy-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "jasminia-skill-copy-"));
     try {
       const source = path.join(root, "source");
       const target = path.join(root, "target");
@@ -196,7 +196,7 @@ describe("materializePaperclipSkillCopy", () => {
         "utf8",
       );
 
-      await expect(materializePaperclipSkillCopy(source, target)).resolves.toMatchObject({ copiedFiles: 1 });
+      await expect(materializeJasmin.iaSkillCopy(source, target)).resolves.toMatchObject({ copiedFiles: 1 });
       await expect(fs.readFile(path.join(target, "SKILL.md"), "utf8")).resolves.toBe("# skill\n");
     } finally {
       await fs.rm(root, { recursive: true, force: true });
@@ -416,28 +416,28 @@ describe("runChildProcess", () => {
   });
 });
 
-describe("renderPaperclipWakePrompt", () => {
+describe("renderJasmin.iaWakePrompt", () => {
   it("keeps the default local-agent prompt action-oriented", () => {
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("Start actionable work in this heartbeat");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("do not stop at a plan");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("clear final disposition");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("evidence, not valid liveness paths by themselves");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("keep `in_progress` only when a live continuation path exists");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("Prefer the smallest verification that proves the change");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("Use child issues");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("instead of polling agents, sessions, or processes");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("Create child issues directly when you know what needs to be done");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("POST /api/issues/{issueId}/interactions");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("kind suggest_tasks, ask_user_questions, or request_confirmation");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("confirmation:{issueId}:plan:{revisionId}");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain("Wait for acceptance before creating implementation subtasks");
-    expect(DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE).toContain(
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("Start actionable work in this heartbeat");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("do not stop at a plan");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("clear final disposition");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("evidence, not valid liveness paths by themselves");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("keep `in_progress` only when a live continuation path exists");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("Prefer the smallest verification that proves the change");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("Use child issues");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("instead of polling agents, sessions, or processes");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("Create child issues directly when you know what needs to be done");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("POST /api/issues/{issueId}/interactions");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("kind suggest_tasks, ask_user_questions, or request_confirmation");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("confirmation:{issueId}:plan:{revisionId}");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain("Wait for acceptance before creating implementation subtasks");
+    expect(DEFAULT_JASMINIA_AGENT_PROMPT_TEMPLATE).toContain(
       "Respect budget, pause/cancel, approval gates, and company boundaries",
     );
   });
 
   it("adds the execution contract to scoped wake prompts", () => {
-    const prompt = renderPaperclipWakePrompt({
+    const prompt = renderJasmin.iaWakePrompt({
       reason: "issue_assigned",
       issue: {
         id: "issue-1",
@@ -454,7 +454,7 @@ describe("renderPaperclipWakePrompt", () => {
       fallbackFetchNeeded: false,
     });
 
-    expect(prompt).toContain("## Paperclip Wake Payload");
+    expect(prompt).toContain("## Jasmin.ia Wake Payload");
     expect(prompt).toContain("Execution contract: take concrete action in this heartbeat");
     expect(prompt).toContain("clear final disposition");
     expect(prompt).toContain("evidence, not valid liveness paths by themselves");
@@ -463,7 +463,7 @@ describe("renderPaperclipWakePrompt", () => {
   });
 
   it("renders planning-mode directives for assignment and comment wakes", () => {
-    const assignmentPrompt = renderPaperclipWakePrompt({
+    const assignmentPrompt = renderJasmin.iaWakePrompt({
       reason: "issue_assigned",
       issue: {
         id: "issue-1",
@@ -480,7 +480,7 @@ describe("renderPaperclipWakePrompt", () => {
     expect(assignmentPrompt).toContain("- issue work mode: planning");
     expect(assignmentPrompt).toContain("Make the plan only. Do not write code or perform implementation work.");
 
-    const commentPrompt = renderPaperclipWakePrompt({
+    const commentPrompt = renderJasmin.iaWakePrompt({
       reason: "issue_commented",
       issue: {
         id: "issue-1",
@@ -500,7 +500,7 @@ describe("renderPaperclipWakePrompt", () => {
   });
 
   it("does not render stale accepted-plan continuation guidance for later planning comment wakes", () => {
-    const prompt = renderPaperclipWakePrompt({
+    const prompt = renderJasmin.iaWakePrompt({
       reason: "issue_commented",
       issue: {
         id: "issue-1",
@@ -524,7 +524,7 @@ describe("renderPaperclipWakePrompt", () => {
   });
 
   it("renders accepted-plan continuation guidance for planning issues", () => {
-    const prompt = renderPaperclipWakePrompt({
+    const prompt = renderJasmin.iaWakePrompt({
       reason: "issue_commented",
       issue: {
         id: "issue-1",
@@ -547,7 +547,7 @@ describe("renderPaperclipWakePrompt", () => {
   });
 
   it("keeps accepted-plan guidance when stale comment ids have no loaded comments", () => {
-    const prompt = renderPaperclipWakePrompt({
+    const prompt = renderJasmin.iaWakePrompt({
       reason: "issue_commented",
       issue: {
         id: "issue-1",
@@ -571,7 +571,7 @@ describe("renderPaperclipWakePrompt", () => {
   });
 
   it("renders dependency-blocked interaction guidance", () => {
-    const prompt = renderPaperclipWakePrompt({
+    const prompt = renderJasmin.iaWakePrompt({
       reason: "issue_commented",
       issue: {
         id: "issue-1",
@@ -607,7 +607,7 @@ describe("renderPaperclipWakePrompt", () => {
   });
 
   it("renders loose review request instructions for execution handoffs", () => {
-    const prompt = renderPaperclipWakePrompt({
+    const prompt = renderJasmin.iaWakePrompt({
       reason: "execution_review_requested",
       issue: {
         id: "issue-1",
@@ -670,7 +670,7 @@ describe("renderPaperclipWakePrompt", () => {
       ],
     };
 
-    expect(JSON.parse(stringifyPaperclipWakePayload(payload) ?? "{}")).toMatchObject({
+    expect(JSON.parse(stringifyJasmin.iaWakePayload(payload) ?? "{}")).toMatchObject({
       continuationSummary: {
         body: expect.stringContaining("Continuation Summary"),
       },
@@ -689,7 +689,7 @@ describe("renderPaperclipWakePrompt", () => {
       ],
     });
 
-    const prompt = renderPaperclipWakePrompt(payload);
+    const prompt = renderJasmin.iaWakePrompt(payload);
     expect(prompt).toContain("Issue continuation summary:");
     expect(prompt).toContain("Integrate child outputs.");
     expect(prompt).toContain("Run liveness continuation:");
@@ -704,16 +704,16 @@ describe("renderPaperclipWakePrompt", () => {
   });
 });
 
-describe("applyPaperclipWorkspaceEnv", () => {
+describe("applyJasmin.iaWorkspaceEnv", () => {
   it("adds shared workspace env vars including AGENT_HOME", () => {
-    const env = applyPaperclipWorkspaceEnv(
+    const env = applyJasmin.iaWorkspaceEnv(
       {},
       {
         workspaceCwd: "/tmp/workspace",
         workspaceSource: "project_primary",
         workspaceStrategy: "git_worktree",
         workspaceId: "workspace-1",
-        workspaceRepoUrl: "https://github.com/paperclipai/paperclip.git",
+        workspaceRepoUrl: "#
         workspaceRepoRef: "main",
         workspaceBranch: "feature/test",
         workspaceWorktreePath: "/tmp/worktree",
@@ -722,20 +722,20 @@ describe("applyPaperclipWorkspaceEnv", () => {
     );
 
     expect(env).toEqual({
-      PAPERCLIP_WORKSPACE_CWD: "/tmp/workspace",
-      PAPERCLIP_WORKSPACE_SOURCE: "project_primary",
-      PAPERCLIP_WORKSPACE_STRATEGY: "git_worktree",
-      PAPERCLIP_WORKSPACE_ID: "workspace-1",
-      PAPERCLIP_WORKSPACE_REPO_URL: "https://github.com/paperclipai/paperclip.git",
-      PAPERCLIP_WORKSPACE_REPO_REF: "main",
-      PAPERCLIP_WORKSPACE_BRANCH: "feature/test",
-      PAPERCLIP_WORKSPACE_WORKTREE_PATH: "/tmp/worktree",
+      JASMINIA_WORKSPACE_CWD: "/tmp/workspace",
+      JASMINIA_WORKSPACE_SOURCE: "project_primary",
+      JASMINIA_WORKSPACE_STRATEGY: "git_worktree",
+      JASMINIA_WORKSPACE_ID: "workspace-1",
+      JASMINIA_WORKSPACE_REPO_URL: "#
+      JASMINIA_WORKSPACE_REPO_REF: "main",
+      JASMINIA_WORKSPACE_BRANCH: "feature/test",
+      JASMINIA_WORKSPACE_WORKTREE_PATH: "/tmp/worktree",
       AGENT_HOME: "/tmp/agent-home",
     });
   });
 
   it("skips empty workspace env values", () => {
-    const env = applyPaperclipWorkspaceEnv(
+    const env = applyJasmin.iaWorkspaceEnv(
       {},
       {
         workspaceCwd: "",
@@ -748,25 +748,25 @@ describe("applyPaperclipWorkspaceEnv", () => {
   });
 });
 
-describe("shapePaperclipWorkspaceEnvForExecution", () => {
+describe("shapeJasmin.iaWorkspaceEnvForExecution", () => {
   it("rewrites workspace env paths for remote execution", () => {
-    const shaped = shapePaperclipWorkspaceEnvForExecution({
+    const shaped = shapeJasmin.iaWorkspaceEnvForExecution({
       workspaceCwd: "/tmp/workspace",
       workspaceWorktreePath: "/tmp/worktree",
       workspaceHints: [
         {
           workspaceId: "workspace-1",
           cwd: "/tmp/workspace",
-          repoUrl: "https://github.com/paperclipai/paperclip.git",
+          repoUrl: "#
         },
         {
           workspaceId: "workspace-2",
           cwd: "/tmp/other-workspace",
-          repoUrl: "https://github.com/paperclipai/paperclip.git",
+          repoUrl: "#
         },
         {
           workspaceId: "workspace-3",
-          repoUrl: "https://github.com/paperclipai/paperclip.git",
+          repoUrl: "#
         },
       ],
       executionTargetIsRemote: true,
@@ -780,15 +780,15 @@ describe("shapePaperclipWorkspaceEnvForExecution", () => {
         {
           workspaceId: "workspace-1",
           cwd: "/remote/workspace",
-          repoUrl: "https://github.com/paperclipai/paperclip.git",
+          repoUrl: "#
         },
         {
           workspaceId: "workspace-2",
-          repoUrl: "https://github.com/paperclipai/paperclip.git",
+          repoUrl: "#
         },
         {
           workspaceId: "workspace-3",
-          repoUrl: "https://github.com/paperclipai/paperclip.git",
+          repoUrl: "#
         },
       ],
     });
@@ -796,7 +796,7 @@ describe("shapePaperclipWorkspaceEnvForExecution", () => {
 
   it("leaves local execution workspace paths unchanged", () => {
     const workspaceHints = [{ workspaceId: "workspace-1", cwd: "/tmp/workspace" }];
-    const shaped = shapePaperclipWorkspaceEnvForExecution({
+    const shaped = shapeJasmin.iaWorkspaceEnvForExecution({
       workspaceCwd: "/tmp/workspace",
       workspaceWorktreePath: "/tmp/worktree",
       workspaceHints,
@@ -870,19 +870,19 @@ describe("rewriteWorkspaceCwdEnvVarsForExecution", () => {
   });
 });
 
-describe("refreshPaperclipWorkspaceEnvForExecution", () => {
-  it("rewrites Paperclip workspace env to the prepared remote runtime cwd", () => {
+describe("refreshJasmin.iaWorkspaceEnvForExecution", () => {
+  it("rewrites Jasmin.ia workspace env to the prepared remote runtime cwd", () => {
     const env: Record<string, string> = {
-      PAPERCLIP_WORKSPACE_CWD: "/remote/workspace",
-      PAPERCLIP_WORKSPACE_WORKTREE_PATH: "/host/worktree",
-      PAPERCLIP_WORKSPACES_JSON: JSON.stringify([
+      JASMINIA_WORKSPACE_CWD: "/remote/workspace",
+      JASMINIA_WORKSPACE_WORKTREE_PATH: "/host/worktree",
+      JASMINIA_WORKSPACES_JSON: JSON.stringify([
         { workspaceId: "workspace-1", cwd: "/remote/workspace" },
         { workspaceId: "workspace-2", cwd: "/tmp/other" },
       ]),
       QA_PROJECT_WORKSPACE_CWD: "/remote/workspace",
     };
 
-    const shaped = refreshPaperclipWorkspaceEnvForExecution({
+    const shaped = refreshJasmin.iaWorkspaceEnvForExecution({
       env,
       envConfig: {
         QA_PROJECT_WORKSPACE_CWD: "/host/workspace",
@@ -894,29 +894,29 @@ describe("refreshPaperclipWorkspaceEnvForExecution", () => {
         { workspaceId: "workspace-2", cwd: "/tmp/other" },
       ],
       executionTargetIsRemote: true,
-      executionCwd: "/remote/workspace/.paperclip-runtime/runs/run-1/workspace",
+      executionCwd: "/remote/workspace/.jasminia-runtime/runs/run-1/workspace",
     });
 
     expect(shaped).toEqual({
-      workspaceCwd: "/remote/workspace/.paperclip-runtime/runs/run-1/workspace",
+      workspaceCwd: "/remote/workspace/.jasminia-runtime/runs/run-1/workspace",
       workspaceWorktreePath: null,
       workspaceHints: [
         {
           workspaceId: "workspace-1",
-          cwd: "/remote/workspace/.paperclip-runtime/runs/run-1/workspace",
+          cwd: "/remote/workspace/.jasminia-runtime/runs/run-1/workspace",
         },
         {
           workspaceId: "workspace-2",
         },
       ],
     });
-    expect(env.PAPERCLIP_WORKSPACE_CWD).toBe("/remote/workspace/.paperclip-runtime/runs/run-1/workspace");
-    expect(env.PAPERCLIP_WORKSPACE_WORKTREE_PATH).toBeUndefined();
-    expect(env.QA_PROJECT_WORKSPACE_CWD).toBe("/remote/workspace/.paperclip-runtime/runs/run-1/workspace");
-    expect(JSON.parse(env.PAPERCLIP_WORKSPACES_JSON ?? "[]")).toEqual([
+    expect(env.JASMINIA_WORKSPACE_CWD).toBe("/remote/workspace/.jasminia-runtime/runs/run-1/workspace");
+    expect(env.JASMINIA_WORKSPACE_WORKTREE_PATH).toBeUndefined();
+    expect(env.QA_PROJECT_WORKSPACE_CWD).toBe("/remote/workspace/.jasminia-runtime/runs/run-1/workspace");
+    expect(JSON.parse(env.JASMINIA_WORKSPACES_JSON ?? "[]")).toEqual([
       {
         workspaceId: "workspace-1",
-        cwd: "/remote/workspace/.paperclip-runtime/runs/run-1/workspace",
+        cwd: "/remote/workspace/.jasminia-runtime/runs/run-1/workspace",
       },
       {
         workspaceId: "workspace-2",

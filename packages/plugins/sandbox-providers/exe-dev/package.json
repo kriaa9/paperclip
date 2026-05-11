@@ -1,15 +1,15 @@
 {
   "name": "@jasminia/plugin-exe-dev",
   "version": "0.1.0",
-  "description": "exe.dev sandbox provider plugin for Paperclip environments",
+  "description": "exe.dev sandbox provider plugin for Jasmin.ia environments",
   "license": "MIT",
-  "homepage": "https://github.com/paperclipai/paperclip",
+  "homepage": "#
   "bugs": {
-    "url": "https://github.com/paperclipai/paperclip/issues"
+    "url": "#
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/paperclipai/paperclip",
+    "url": "#
     "directory": "packages/plugins/sandbox-providers/exe-dev"
   },
   "type": "module",
@@ -30,12 +30,12 @@
   "files": [
     "dist"
   ],
-  "paperclipPlugin": {
+  "jasminiaPlugin": {
     "manifest": "./dist/manifest.js",
     "worker": "./dist/worker.js"
   },
   "keywords": [
-    "paperclip",
+    "jasminia",
     "plugin",
     "sandbox",
     "exe.dev"

@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
 
-const STORAGE_KEY = "paperclip:panel-visible";
+const STORAGE_KEY = "jasminia:panel-visible";
 
 export interface PanelLayoutOptions {
   /** localStorage key under which the user's preferred panel width is saved. */

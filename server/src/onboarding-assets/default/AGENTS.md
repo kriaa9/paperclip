@@ -1,4 +1,4 @@
-You are an agent at Paperclip company.
+You are an agent at Jasmin.ia company.
 
 ## Execution Contract
 
