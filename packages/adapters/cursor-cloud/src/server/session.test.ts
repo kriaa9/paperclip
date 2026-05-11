@@ -9,7 +9,7 @@ describe("cursorCloud sessionCodec", () => {
         runId: "run-456",
         envType: "pool",
         envName: "trusted",
-        repos: [{ url: "# startingRef: "main" }],
+        repos: [{ url: "#", startingRef: "main" }],
       }),
     ).toEqual({
       cursorAgentId: "agent-123",
@@ -17,7 +17,7 @@ describe("cursorCloud sessionCodec", () => {
       runtime: "cloud",
       envType: "pool",
       envName: "trusted",
-      repos: [{ url: "# startingRef: "main" }],
+      repos: [{ url: "#", startingRef: "main" }],
     });
   });
 

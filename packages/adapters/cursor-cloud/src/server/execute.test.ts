@@ -169,7 +169,7 @@ describe("cursor_cloud execute", () => {
       model: { id: "gpt-5.4" },
       cloud: {
         env: { type: "cloud" },
-        repos: [{ url: "# startingRef: "main" }],
+        repos: [{ url: "#", startingRef: "main" }],
       },
     });
     expect(createMock.mock.calls[0]?.[0]?.cloud?.envVars).toMatchObject({
@@ -219,7 +219,7 @@ describe("cursor_cloud execute", () => {
           latestRunId: "run-previous",
           runtime: "cloud",
           envType: "cloud",
-          repos: [{ url: "# startingRef: "main" }],
+          repos: [{ url: "#", startingRef: "main" }],
         },
       },
     });
@@ -279,7 +279,7 @@ describe("cursor_cloud execute", () => {
           latestRunId: "run-attached",
           runtime: "cloud",
           envType: "cloud",
-          repos: [{ url: "# startingRef: "main" }],
+          repos: [{ url: "#", startingRef: "main" }],
         },
       },
     });
