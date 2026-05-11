@@ -1,21 +1,20 @@
+import * as p from "@clack/prompts";
+import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { spawnSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import * as p from "@clack/prompts";
 import pc from "picocolors";
-import { bootstrapCeoInvite } from "./auth-bootstrap-ceo.js";
-import { onboard } from "./onboard.js";
-import { doctor } from "./doctor.js";
 import { loadPaperclipEnvFile } from "../config/env.js";
-import { configExists, resolveConfigPath } from "../config/store.js";
-import type { PaperclipConfig } from "../config/schema.js";
-import { readConfig } from "../config/store.js";
 import {
-  describeLocalInstancePaths,
-  resolvePaperclipHomeDir,
-  resolvePaperclipInstanceId,
+    describeLocalInstancePaths,
+    resolvePaperclipHomeDir,
+    resolvePaperclipInstanceId,
 } from "../config/home.js";
+import type { PaperclipConfig } from "../config/schema.js";
+import { configExists, readConfig, resolveConfigPath } from "../config/store.js";
+import { bootstrapCeoInvite } from "./auth-bootstrap-ceo.js";
+import { doctor } from "./doctor.js";
+import { onboard } from "./onboard.js";
 
 interface RunOptions {
   config?: string;
@@ -46,7 +45,7 @@ export async function runCommand(opts: RunOptions): Promise<void> {
   process.env.PAPERCLIP_CONFIG = configPath;
   loadPaperclipEnvFile(configPath);
 
-  p.intro(pc.bgCyan(pc.black(" paperclipai run ")));
+  p.intro(pc.bgCyan(pc.black(" jasminia run ")));
   p.log.message(pc.dim(`Home: ${paths.homeDir}`));
   p.log.message(pc.dim(`Instance: ${paths.instanceId}`));
   p.log.message(pc.dim(`Config: ${configPath}`));
@@ -54,7 +53,7 @@ export async function runCommand(opts: RunOptions): Promise<void> {
   if (!configExists(configPath)) {
     if (!process.stdin.isTTY || !process.stdout.isTTY) {
       p.log.error("No config found and terminal is non-interactive.");
-      p.log.message(`Run ${pc.cyan("paperclipai onboard")} once, then retry ${pc.cyan("paperclipai run")}.`);
+      p.log.message(`Run ${pc.cyan("jasminia onboard")} once, then retry ${pc.cyan("jasminia run")}.`);
       process.exit(1);
     }
 
@@ -182,22 +181,22 @@ async function importServerEntry(): Promise<StartedServer> {
     return await startServerFromModule(mod, devEntry);
   }
 
-  // Production mode: import the published @paperclipai/server package
+  // Production mode: import the published @jasminia/server package
   try {
-    const mod = await import("@paperclipai/server");
-    return await startServerFromModule(mod, "@paperclipai/server");
+    const mod = await import("@jasminia/server");
+    return await startServerFromModule(mod, "@jasminia/server");
   } catch (err) {
     const missingSpecifier = getMissingModuleSpecifier(err);
-    const missingServerEntrypoint = !missingSpecifier || missingSpecifier === "@paperclipai/server";
+    const missingServerEntrypoint = !missingSpecifier || missingSpecifier === "@jasminia/server";
     if (isModuleNotFoundError(err) && missingServerEntrypoint) {
       throw new Error(
-        `Could not locate a Paperclip server entrypoint.\n` +
-          `Tried: ${devEntry}, @paperclipai/server\n` +
+        `Could not locate a Jasmin.ia server entrypoint.\n` +
+          `Tried: ${devEntry}, @jasminia/server\n` +
           `${formatError(err)}`,
       );
     }
     throw new Error(
-      `Paperclip server failed to start.\n` +
+      `Jasmin.ia server failed to start.\n` +
         `${formatError(err)}`,
     );
   }
@@ -210,7 +209,7 @@ function shouldGenerateBootstrapInviteAfterStart(config: PaperclipConfig): boole
 async function startServerFromModule(mod: unknown, label: string): Promise<StartedServer> {
   const startServer = (mod as { startServer?: () => Promise<StartedServer> }).startServer;
   if (typeof startServer !== "function") {
-    throw new Error(`Paperclip server entrypoint did not export startServer(): ${label}`);
+    throw new Error(`Jasmin.ia server entrypoint did not export startServer(): ${label}`);
   }
   return await startServer();
 }

@@ -37,43 +37,43 @@ importers:
       '@clack/prompts':
         specifier: ^0.10.0
         version: 0.10.1
-      '@paperclipai/adapter-acpx-local':
+      '@jasminia/adapter-acpx-local':
         specifier: workspace:*
         version: link:../packages/adapters/acpx-local
-      '@paperclipai/adapter-claude-local':
+      '@jasminia/adapter-claude-local':
         specifier: workspace:*
         version: link:../packages/adapters/claude-local
-      '@paperclipai/adapter-codex-local':
+      '@jasminia/adapter-codex-local':
         specifier: workspace:*
         version: link:../packages/adapters/codex-local
-      '@paperclipai/adapter-cursor-cloud':
+      '@jasminia/adapter-cursor-cloud':
         specifier: workspace:*
         version: link:../packages/adapters/cursor-cloud
-      '@paperclipai/adapter-cursor-local':
+      '@jasminia/adapter-cursor-local':
         specifier: workspace:*
         version: link:../packages/adapters/cursor-local
-      '@paperclipai/adapter-gemini-local':
+      '@jasminia/adapter-gemini-local':
         specifier: workspace:*
         version: link:../packages/adapters/gemini-local
-      '@paperclipai/adapter-openclaw-gateway':
+      '@jasminia/adapter-openclaw-gateway':
         specifier: workspace:*
         version: link:../packages/adapters/openclaw-gateway
-      '@paperclipai/adapter-opencode-local':
+      '@jasminia/adapter-opencode-local':
         specifier: workspace:*
         version: link:../packages/adapters/opencode-local
-      '@paperclipai/adapter-pi-local':
+      '@jasminia/adapter-pi-local':
         specifier: workspace:*
         version: link:../packages/adapters/pi-local
-      '@paperclipai/adapter-utils':
+      '@jasminia/adapter-utils':
         specifier: workspace:*
         version: link:../packages/adapter-utils
-      '@paperclipai/db':
+      '@jasminia/db':
         specifier: workspace:*
         version: link:../packages/db
-      '@paperclipai/server':
+      '@jasminia/server':
         specifier: workspace:*
         version: link:../server
-      '@paperclipai/shared':
+      '@jasminia/shared':
         specifier: workspace:*
         version: link:../packages/shared
       commander:
@@ -116,7 +116,7 @@ importers:
       '@agentclientprotocol/claude-agent-acp':
         specifier: ^0.31.4
         version: 0.31.4
-      '@paperclipai/adapter-utils':
+      '@jasminia/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       '@zed-industries/codex-acp':
@@ -138,7 +138,7 @@ importers:
 
   packages/adapters/claude-local:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@jasminia/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -154,7 +154,7 @@ importers:
 
   packages/adapters/codex-local:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@jasminia/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -173,7 +173,7 @@ importers:
       '@cursor/sdk':
         specifier: ^1.0.12
         version: 1.0.12
-      '@paperclipai/adapter-utils':
+      '@jasminia/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -189,7 +189,7 @@ importers:
 
   packages/adapters/cursor-local:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@jasminia/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -205,7 +205,7 @@ importers:
 
   packages/adapters/gemini-local:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@jasminia/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -221,7 +221,7 @@ importers:
 
   packages/adapters/openclaw-gateway:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@jasminia/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -243,7 +243,7 @@ importers:
 
   packages/adapters/opencode-local:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@jasminia/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -259,7 +259,7 @@ importers:
 
   packages/adapters/pi-local:
     dependencies:
-      '@paperclipai/adapter-utils':
+      '@jasminia/adapter-utils':
         specifier: workspace:*
         version: link:../../adapter-utils
       picocolors:
@@ -275,7 +275,7 @@ importers:
 
   packages/db:
     dependencies:
-      '@paperclipai/shared':
+      '@jasminia/shared':
         specifier: workspace:*
         version: link:../shared
       drizzle-orm:
@@ -306,12 +306,12 @@ importers:
 
   packages/mcp-server:
     dependencies:
+      '@jasminia/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@modelcontextprotocol/sdk':
         specifier: ^1.29.0
         version: 1.29.0(zod@3.25.76)
-      '@paperclipai/shared':
-        specifier: workspace:*
-        version: link:../shared
       zod:
         specifier: ^3.24.2
         version: 3.25.76
@@ -328,7 +328,7 @@ importers:
 
   packages/plugins/create-paperclip-plugin:
     dependencies:
-      '@paperclipai/plugin-sdk':
+      '@jasminia/plugin-sdk':
         specifier: workspace:*
         version: link:../sdk
     devDependencies:
@@ -341,7 +341,7 @@ importers:
 
   packages/plugins/examples/plugin-authoring-smoke-example:
     dependencies:
-      '@paperclipai/plugin-sdk':
+      '@jasminia/plugin-sdk':
         specifier: workspace:*
         version: link:../../sdk
       react:
@@ -390,12 +390,12 @@ importers:
       '@codemirror/view':
         specifier: ^6.28.0
         version: 6.39.15
+      '@jasminia/plugin-sdk':
+        specifier: workspace:*
+        version: link:../../sdk
       '@lezer/highlight':
         specifier: ^1.2.1
         version: 1.2.3
-      '@paperclipai/plugin-sdk':
-        specifier: workspace:*
-        version: link:../../sdk
       codemirror:
         specifier: ^6.0.1
         version: 6.0.2
@@ -424,7 +424,7 @@ importers:
 
   packages/plugins/examples/plugin-hello-world-example:
     dependencies:
-      '@paperclipai/plugin-sdk':
+      '@jasminia/plugin-sdk':
         specifier: workspace:*
         version: link:../../sdk
     devDependencies:
@@ -449,10 +449,10 @@ importers:
 
   packages/plugins/examples/plugin-kitchen-sink-example:
     dependencies:
-      '@paperclipai/plugin-sdk':
+      '@jasminia/plugin-sdk':
         specifier: workspace:*
         version: link:../../sdk
-      '@paperclipai/shared':
+      '@jasminia/shared':
         specifier: workspace:*
         version: link:../../../shared
     devDependencies:
@@ -480,7 +480,7 @@ importers:
 
   packages/plugins/paperclip-plugin-fake-sandbox:
     dependencies:
-      '@paperclipai/plugin-sdk':
+      '@jasminia/plugin-sdk':
         specifier: workspace:*
         version: link:../sdk
     devDependencies:
@@ -496,7 +496,7 @@ importers:
 
   packages/plugins/sdk:
     dependencies:
-      '@paperclipai/shared':
+      '@jasminia/shared':
         specifier: workspace:*
         version: link:../../shared
       react:
@@ -531,43 +531,43 @@ importers:
       '@aws-sdk/client-s3':
         specifier: ^3.888.0
         version: 3.994.0
-      '@paperclipai/adapter-acpx-local':
+      '@jasminia/adapter-acpx-local':
         specifier: workspace:*
         version: link:../packages/adapters/acpx-local
-      '@paperclipai/adapter-claude-local':
+      '@jasminia/adapter-claude-local':
         specifier: workspace:*
         version: link:../packages/adapters/claude-local
-      '@paperclipai/adapter-codex-local':
+      '@jasminia/adapter-codex-local':
         specifier: workspace:*
         version: link:../packages/adapters/codex-local
-      '@paperclipai/adapter-cursor-cloud':
+      '@jasminia/adapter-cursor-cloud':
         specifier: workspace:*
         version: link:../packages/adapters/cursor-cloud
-      '@paperclipai/adapter-cursor-local':
+      '@jasminia/adapter-cursor-local':
         specifier: workspace:*
         version: link:../packages/adapters/cursor-local
-      '@paperclipai/adapter-gemini-local':
+      '@jasminia/adapter-gemini-local':
         specifier: workspace:*
         version: link:../packages/adapters/gemini-local
-      '@paperclipai/adapter-openclaw-gateway':
+      '@jasminia/adapter-openclaw-gateway':
         specifier: workspace:*
         version: link:../packages/adapters/openclaw-gateway
-      '@paperclipai/adapter-opencode-local':
+      '@jasminia/adapter-opencode-local':
         specifier: workspace:*
         version: link:../packages/adapters/opencode-local
-      '@paperclipai/adapter-pi-local':
+      '@jasminia/adapter-pi-local':
         specifier: workspace:*
         version: link:../packages/adapters/pi-local
-      '@paperclipai/adapter-utils':
+      '@jasminia/adapter-utils':
         specifier: workspace:*
         version: link:../packages/adapter-utils
-      '@paperclipai/db':
+      '@jasminia/db':
         specifier: workspace:*
         version: link:../packages/db
-      '@paperclipai/plugin-sdk':
+      '@jasminia/plugin-sdk':
         specifier: workspace:*
         version: link:../packages/plugins/sdk
-      '@paperclipai/shared':
+      '@jasminia/shared':
         specifier: workspace:*
         version: link:../packages/shared
       ajv:
@@ -688,45 +688,45 @@ importers:
       '@dnd-kit/utilities':
         specifier: ^3.2.2
         version: 3.2.2(react@19.2.4)
+      '@jasminia/adapter-acpx-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/acpx-local
+      '@jasminia/adapter-claude-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/claude-local
+      '@jasminia/adapter-codex-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/codex-local
+      '@jasminia/adapter-cursor-cloud':
+        specifier: workspace:*
+        version: link:../packages/adapters/cursor-cloud
+      '@jasminia/adapter-cursor-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/cursor-local
+      '@jasminia/adapter-gemini-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/gemini-local
+      '@jasminia/adapter-openclaw-gateway':
+        specifier: workspace:*
+        version: link:../packages/adapters/openclaw-gateway
+      '@jasminia/adapter-opencode-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/opencode-local
+      '@jasminia/adapter-pi-local':
+        specifier: workspace:*
+        version: link:../packages/adapters/pi-local
+      '@jasminia/adapter-utils':
+        specifier: workspace:*
+        version: link:../packages/adapter-utils
+      '@jasminia/shared':
+        specifier: workspace:*
+        version: link:../packages/shared
       '@lexical/link':
         specifier: 0.35.0
         version: 0.35.0
       '@mdxeditor/editor':
         specifier: ^3.52.4
         version: 3.52.4(@codemirror/language@6.12.1)(@lezer/highlight@1.2.3)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(yjs@13.6.29)
-      '@paperclipai/adapter-acpx-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/acpx-local
-      '@paperclipai/adapter-claude-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/claude-local
-      '@paperclipai/adapter-codex-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/codex-local
-      '@paperclipai/adapter-cursor-cloud':
-        specifier: workspace:*
-        version: link:../packages/adapters/cursor-cloud
-      '@paperclipai/adapter-cursor-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/cursor-local
-      '@paperclipai/adapter-gemini-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/gemini-local
-      '@paperclipai/adapter-openclaw-gateway':
-        specifier: workspace:*
-        version: link:../packages/adapters/openclaw-gateway
-      '@paperclipai/adapter-opencode-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/opencode-local
-      '@paperclipai/adapter-pi-local':
-        specifier: workspace:*
-        version: link:../packages/adapters/pi-local
-      '@paperclipai/adapter-utils':
-        specifier: workspace:*
-        version: link:../packages/adapter-utils
-      '@paperclipai/shared':
-        specifier: workspace:*
-        version: link:../packages/shared
       '@radix-ui/react-slot':
         specifier: ^1.2.4
         version: 1.2.4(@types/react@19.2.14)(react@19.2.4)

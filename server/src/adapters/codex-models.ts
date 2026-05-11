@@ -1,10 +1,10 @@
 import type { AdapterModel } from "./types.js";
-import { models as codexFallbackModels } from "@paperclipai/adapter-codex-local";
+import { models as codexFallbackModels } from "@jasminia/adapter-codex-local";
 import { readConfigFile } from "../config-file.js";
 
-const OPENAI_MODELS_ENDPOINT = "https://api.openai.com/v1/models";
-const OPENAI_MODELS_TIMEOUT_MS = 5000;
-const OPENAI_MODELS_CACHE_TTL_MS = 60_000;
+const NVIDIA_MODELS_ENDPOINT = "https://integrate.api.nvidia.com/v1/models";
+const NVIDIA_MODELS_TIMEOUT_MS = 5000;
+const NVIDIA_MODELS_CACHE_TTL_MS = 60_000;
 
 let cached: { keyFingerprint: string; expiresAt: number; models: AdapterModel[] } | null = null;
 
@@ -31,21 +31,21 @@ function mergedWithFallback(models: AdapterModel[]): AdapterModel[] {
   ]).sort((a, b) => a.id.localeCompare(b.id, "en", { numeric: true, sensitivity: "base" }));
 }
 
-function resolveOpenAiApiKey(): string | null {
-  const envKey = process.env.OPENAI_API_KEY?.trim();
+function resolveNvidiaApiKey(): string | null {
+  const envKey = process.env.NVIDIA_API_KEY?.trim();
   if (envKey) return envKey;
 
   const config = readConfigFile();
-  if (config?.llm?.provider !== "openai") return null;
+  if (config?.llm?.provider !== "nvidia") return null;
   const configKey = config.llm.apiKey?.trim();
   return configKey && configKey.length > 0 ? configKey : null;
 }
 
-async function fetchOpenAiModels(apiKey: string): Promise<AdapterModel[]> {
+async function fetchNvidiaModels(apiKey: string): Promise<AdapterModel[]> {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), OPENAI_MODELS_TIMEOUT_MS);
+  const timeout = setTimeout(() => controller.abort(), NVIDIA_MODELS_TIMEOUT_MS);
   try {
-    const response = await fetch(OPENAI_MODELS_ENDPOINT, {
+    const response = await fetch(NVIDIA_MODELS_ENDPOINT, {
       headers: {
         Authorization: `Bearer ${apiKey}`,
       },
@@ -72,7 +72,7 @@ async function fetchOpenAiModels(apiKey: string): Promise<AdapterModel[]> {
 
 async function loadCodexModels(options?: { forceRefresh?: boolean }): Promise<AdapterModel[]> {
   const forceRefresh = options?.forceRefresh === true;
-  const apiKey = resolveOpenAiApiKey();
+  const apiKey = resolveNvidiaApiKey();
   const fallback = dedupeModels(codexFallbackModels);
   if (!apiKey) return fallback;
 
@@ -82,12 +82,12 @@ async function loadCodexModels(options?: { forceRefresh?: boolean }): Promise<Ad
     return cached.models;
   }
 
-  const fetched = await fetchOpenAiModels(apiKey);
+  const fetched = await fetchNvidiaModels(apiKey);
   if (fetched.length > 0) {
     const merged = mergedWithFallback(fetched);
     cached = {
       keyFingerprint,
-      expiresAt: now + OPENAI_MODELS_CACHE_TTL_MS,
+      expiresAt: now + NVIDIA_MODELS_CACHE_TTL_MS,
       models: merged,
     };
     return merged;

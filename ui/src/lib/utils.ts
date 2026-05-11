@@ -99,6 +99,7 @@ export function providerDisplayName(provider: string): string {
     anthropic: "Anthropic",
     aws_bedrock: "AWS Bedrock",
     openai: "OpenAI",
+    nvidia: "NVIDIA NIM",
     openrouter: "OpenRouter",
     chatgpt: "ChatGPT",
     google: "Google",

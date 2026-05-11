@@ -530,7 +530,7 @@ export async function onboard(opts: OnboardOptions): Promise<void> {
             s.stop(pc.yellow("Could not validate API key — continuing anyway"));
           }
         } else {
-          const res = await fetch("https://api.openai.com/v1/models", {
+          const res = await fetch("https://integrate.api.nvidia.com/v1/models", {
             headers: { Authorization: `Bearer ${llm.apiKey}` },
           });
           if (res.ok) {

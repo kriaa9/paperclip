@@ -1,14 +1,14 @@
 {
-  "name": "@paperclipai/server",
+  "name": "@jasminia/server",
   "version": "0.3.1",
   "license": "MIT",
-  "homepage": "https://github.com/paperclipai/paperclip",
+  "homepage": "https://github.com/jasminia/jasminia",
   "bugs": {
-    "url": "https://github.com/paperclipai/paperclip/issues"
+    "url": "https://github.com/jasminia/jasminia/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/paperclipai/paperclip",
+    "url": "https://github.com/jasminia/jasminia",
     "directory": "server"
   },
   "type": "module",
@@ -40,23 +40,23 @@
     "postpack": "rm -rf ui-dist",
     "clean": "rm -rf dist",
     "start": "node dist/index.js",
-    "typecheck": "pnpm --filter @paperclipai/plugin-sdk ensure-build-deps && tsc --noEmit"
+    "typecheck": "pnpm --filter @jasminia/plugin-sdk ensure-build-deps && tsc --noEmit"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.888.0",
-    "@paperclipai/adapter-acpx-local": "workspace:*",
-    "@paperclipai/adapter-claude-local": "workspace:*",
-    "@paperclipai/adapter-codex-local": "workspace:*",
-    "@paperclipai/adapter-cursor-cloud": "workspace:*",
-    "@paperclipai/adapter-cursor-local": "workspace:*",
-    "@paperclipai/adapter-gemini-local": "workspace:*",
-    "@paperclipai/adapter-openclaw-gateway": "workspace:*",
-    "@paperclipai/adapter-opencode-local": "workspace:*",
-    "@paperclipai/adapter-pi-local": "workspace:*",
-    "@paperclipai/adapter-utils": "workspace:*",
-    "@paperclipai/db": "workspace:*",
-    "@paperclipai/plugin-sdk": "workspace:*",
-    "@paperclipai/shared": "workspace:*",
+    "@jasminia/adapter-acpx-local": "workspace:*",
+    "@jasminia/adapter-claude-local": "workspace:*",
+    "@jasminia/adapter-codex-local": "workspace:*",
+    "@jasminia/adapter-cursor-cloud": "workspace:*",
+    "@jasminia/adapter-cursor-local": "workspace:*",
+    "@jasminia/adapter-gemini-local": "workspace:*",
+    "@jasminia/adapter-openclaw-gateway": "workspace:*",
+    "@jasminia/adapter-opencode-local": "workspace:*",
+    "@jasminia/adapter-pi-local": "workspace:*",
+    "@jasminia/adapter-utils": "workspace:*",
+    "@jasminia/db": "workspace:*",
+    "@jasminia/plugin-sdk": "workspace:*",
+    "@jasminia/shared": "workspace:*",
     "ajv": "^8.18.0",
     "ajv-formats": "^3.0.1",
     "better-auth": "1.4.18",

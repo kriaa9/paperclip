@@ -1,11 +1,11 @@
 import { z } from "zod";
 import {
-  AUTH_BASE_URL_MODES,
-  BIND_MODES,
-  DEPLOYMENT_EXPOSURES,
-  DEPLOYMENT_MODES,
-  SECRET_PROVIDERS,
-  STORAGE_PROVIDERS,
+    AUTH_BASE_URL_MODES,
+    BIND_MODES,
+    DEPLOYMENT_EXPOSURES,
+    DEPLOYMENT_MODES,
+    SECRET_PROVIDERS,
+    STORAGE_PROVIDERS,
 } from "./constants.js";
 import { validateConfiguredBindMode } from "./network-bind.js";
 
@@ -16,7 +16,7 @@ export const configMetaSchema = z.object({
 });
 
 export const llmConfigSchema = z.object({
-  provider: z.enum(["claude", "openai"]),
+  provider: z.enum(["claude", "nvidia"]),
   apiKey: z.string().optional(),
 });
 

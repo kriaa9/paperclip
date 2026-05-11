@@ -1,39 +1,39 @@
 import { Command } from "commander";
-import { onboard } from "./commands/onboard.js";
-import { doctor } from "./commands/doctor.js";
-import { envCommand } from "./commands/env.js";
-import { configure } from "./commands/configure.js";
 import { addAllowedHostname } from "./commands/allowed-hostname.js";
-import { heartbeatRun } from "./commands/heartbeat-run.js";
-import { runCommand } from "./commands/run.js";
 import { bootstrapCeoInvite } from "./commands/auth-bootstrap-ceo.js";
-import { dbBackupCommand } from "./commands/db-backup.js";
-import { registerEnvLabCommands } from "./commands/env-lab.js";
-import { registerContextCommands } from "./commands/client/context.js";
-import { registerCompanyCommands } from "./commands/client/company.js";
-import { registerIssueCommands } from "./commands/client/issue.js";
+import { registerActivityCommands } from "./commands/client/activity.js";
 import { registerAgentCommands } from "./commands/client/agent.js";
 import { registerApprovalCommands } from "./commands/client/approval.js";
-import { registerActivityCommands } from "./commands/client/activity.js";
+import { registerClientAuthCommands } from "./commands/client/auth.js";
+import { registerCompanyCommands } from "./commands/client/company.js";
+import { registerContextCommands } from "./commands/client/context.js";
 import { registerDashboardCommands } from "./commands/client/dashboard.js";
-import { registerRoutineCommands } from "./commands/routines.js";
 import { registerFeedbackCommands } from "./commands/client/feedback.js";
+import { registerIssueCommands } from "./commands/client/issue.js";
+import { registerPluginCommands } from "./commands/client/plugin.js";
 import { registerSecretCommands } from "./commands/client/secrets.js";
+import { configure } from "./commands/configure.js";
+import { dbBackupCommand } from "./commands/db-backup.js";
+import { doctor } from "./commands/doctor.js";
+import { registerEnvLabCommands } from "./commands/env-lab.js";
+import { envCommand } from "./commands/env.js";
+import { heartbeatRun } from "./commands/heartbeat-run.js";
+import { onboard } from "./commands/onboard.js";
+import { registerRoutineCommands } from "./commands/routines.js";
+import { runCommand } from "./commands/run.js";
+import { registerWorktreeCommands } from "./commands/worktree.js";
 import { applyDataDirOverride, type DataDirOptionLike } from "./config/data-dir.js";
 import { loadPaperclipEnvFile } from "./config/env.js";
-import { initTelemetryFromConfigFile, flushTelemetry } from "./telemetry.js";
-import { registerWorktreeCommands } from "./commands/worktree.js";
-import { registerPluginCommands } from "./commands/client/plugin.js";
-import { registerClientAuthCommands } from "./commands/client/auth.js";
+import { flushTelemetry, initTelemetryFromConfigFile } from "./telemetry.js";
 import { cliVersion } from "./version.js";
 
 const program = new Command();
 const DATA_DIR_OPTION_HELP =
-  "Paperclip data directory root (isolates state from ~/.paperclip)";
+  "Jasmin.ia data directory root (isolates state from ~/.jasminia)";
 
 program
-  .name("paperclipai")
-  .description("Paperclip CLI — setup, diagnose, and configure your instance")
+  .name("jasminia")
+  .description("Jasmin.ia CLI — setup, diagnose, and configure your instance")
   .version(cliVersion);
 
 program.hook("preAction", (_thisCommand, actionCommand) => {
@@ -59,7 +59,7 @@ program
 
 program
   .command("doctor")
-  .description("Run diagnostic checks on your Paperclip setup")
+  .description("Run diagnostic checks on your Jasmin.ia setup")
   .option("-c, --config <path>", "Path to config file")
   .option("-d, --data-dir <path>", DATA_DIR_OPTION_HELP)
   .option("--repair", "Attempt to repair issues automatically")
@@ -107,7 +107,7 @@ program
 
 program
   .command("run")
-  .description("Bootstrap local setup (onboard + doctor) and run Paperclip")
+  .description("Bootstrap local setup (onboard + doctor) and run Jasmin.ia")
   .option("-c, --config <path>", "Path to config file")
   .option("-d, --data-dir <path>", DATA_DIR_OPTION_HELP)
   .option("-i, --instance <id>", "Local instance id (default: default)")
